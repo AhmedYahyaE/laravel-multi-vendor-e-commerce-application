@@ -27,4 +27,4 @@ require __DIR__.'/auth.php';
 
 
 // Admin Dashboard Route without admin group:
-Route::get('/admin/dashboard', 'App\Http\Controllers\Admin\AdminController@dashboard');
+Route::get('/admin/dashboard', ['App\Http\Controllers\Admin\AdminController', 'dashboard']); // is the same as:    Route::get('/admin/dashboard', 'App\Http\Controllers\Admin\AdminController@dashboard');
