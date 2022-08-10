@@ -26,12 +26,37 @@ require __DIR__.'/auth.php';
 
 
 
+// dd(Illuminate\Support\Facades\Auth::class);
+// dd(Illuminate\Support\Facades\Auth::user());
+// dd(auth());
+// dd(auth()->user());
+
+
+
+// OUR WEBSITE WILL HAVE TWO SECTIONS: ADMIN ROUTES & FRONT ROUTES
 // Route Group (for routes starting with 'admin' (Admin Route Group)) (https://laravel.com/docs/9.x/routing#route-group-prefixes)
 Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function() {
     // Matches the '/admin/login' URL
     Route::match(['get', 'post'], 'login', 'AdminController@login'); // match() method is used to use more than one HTTP request method for the same route (e.g. GET and POST)
     // Matches the '/admin/dashboard' URL
-    Route::get('dashboard', 'AdminController@dashboard');
+    // Route::get('dashboard', 'AdminController@dashboard');
+
+
+
+    // Protected routes or protecting routes:
+    // Route Groups: https://laravel.com/docs/9.x/routing#route-groups
+    // Route Group (A middleware Route Group) (Applying our 'admin' middleware (our App\Http\Middleware\Admin))
+    /*
+    Route::middleware(['admin'])->group(function() {
+        Route::get('dashboard', 'AdminController@dashboard');
+    });
+    */
+    // This is the same as last couple of lines of code
+    Route::group(['middleware' => ['admin']], function() {
+        Route::get('dashboard', 'AdminController@dashboard');
+    });
+
+
 });
 
 // Admin Login page Route WTIHOUT Admin Group
