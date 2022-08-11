@@ -42,6 +42,7 @@ return [
         ],
 
         // Our code: (Check Admin.php model    protected $guard = 'admin';    )
+        // Multiple Authentication: https://www.youtube.com/watch?v=y8FmOIRRi2I&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=11    // https://laravel.com/docs/9.x/passport#multiple-authentication-guards
         'admin' => [
             'driver' => 'session',
             'provider' => 'admins'
@@ -72,6 +73,7 @@ return [
         ],
 
         // Our code: (Check Admin.php model    protected $guard = 'admin';    )
+        // Multiple Authentication: https://www.youtube.com/watch?v=y8FmOIRRi2I&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=11    // https://laravel.com/docs/9.x/passport#multiple-authentication-guards
         'admins' => [
             'driver' => 'eloquent',
             'model' => App\Models\Admin::class,
