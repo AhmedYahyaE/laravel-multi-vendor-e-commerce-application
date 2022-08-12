@@ -31,11 +31,26 @@
                                 <h6 class="font-weight-light">Sign in to continue.</h6>
 
 
-                                {{-- Our Bootstrap error code: --}}
+                                {{-- Our Bootstrap error code in case of wrong credentials when logging in: --}}
                                 {{-- Determining If An Item Exists In The Session (using has() method): https://laravel.com/docs/9.x/session#determining-if-an-item-exists-in-the-session --}}
                                 @if (Session::has('error_message')) <!-- Check AdminController.php -->
                                     <div class="alert alert-danger alert-dismissible fade show" role="alert">
                                         <strong>Error:</strong> {{ Session::get('error_message') }}
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                @endif
+                                
+                                {{-- Displaying Laravel Validation Errors: https://laravel.com/docs/9.x/validation#quick-displaying-the-validation-errors --}}    {{-- Check 7:25 in https://www.youtube.com/watch?v=IiyqoBUrkZA&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=12 --}}
+                                @if ($errors->any())
+                                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                        {{-- <strong>Error:</strong> {{ Session::get('error_message') }} --}}
+
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+
                                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                         </button>
@@ -46,10 +61,10 @@
                                 {{-- https://laravel.com/docs/9.x/csrf#preventing-csrf-requests --}}
                                 <form class="pt-3" action="{{ url('/admin/login') }}" method="post">    @csrf
                                     <div class="form-group">
-                                        <input type="email" name="email" id="email" class="form-control form-control-lg" id="exampleInputEmail1" placeholder="Username" >
+                                        <input type="email" name="email" id="email" class="form-control form-control-lg" id="exampleInputEmail1" placeholder="Username" required>
                                     </div>
                                     <div class="form-group">
-                                        <input type="password" name="password" id="password" class="form-control form-control-lg" id="exampleInputPassword1" placeholder="Password" >
+                                        <input type="password" name="password" id="password" class="form-control form-control-lg" id="exampleInputPassword1" placeholder="Password" required>
                                     </div>
                                     <div class="mt-3">
                                         {{-- <a class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn" href="../../index.html">SIGN IN</a> --}}
