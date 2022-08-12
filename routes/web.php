@@ -33,7 +33,10 @@ require __DIR__.'/auth.php';
 
 
 
-// OUR WEBSITE WILL HAVE TWO SECTIONS: ADMIN ROUTES & FRONT ROUTES
+// Note: OUR WEBSITE WILL HAVE TWO MAJOR SECTIONS: ADMIN ROUTES & FRONT ROUTES!
+
+
+
 // Route Group (for routes starting with 'admin' (Admin Route Group)) (https://laravel.com/docs/9.x/routing#route-group-prefixes)
 Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function() {
     // Matches the '/admin/login' URL
@@ -52,8 +55,9 @@ Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function
     });
     */
     // This is the same as last couple of lines of code
-    Route::group(['middleware' => ['admin']], function() {
+    Route::group(['middleware' => ['admin']], function() { // using our 'admin' guard (which we created in auth.php)
         Route::get('dashboard', 'AdminController@dashboard');
+        Route::get('logout', 'AdminController@logout'); // Admin logout
     });
 
 

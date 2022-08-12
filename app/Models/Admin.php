@@ -10,7 +10,9 @@ use Illuminate\Foundation\Auth\User as Authenticatable; // https://laravel.com/d
 
 
 
-class Admin extends Model
+// class Admin extends Model
+// Check 12:47 in https://www.youtube.com/watch?v=_vBCl-77GYc&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=11
+class Admin extends Authenticatable // Check 12:47 in https://www.youtube.com/watch?v=_vBCl-77GYc&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=11
 {
     use HasFactory;
 
