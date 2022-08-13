@@ -69,7 +69,29 @@ class AdminController extends Controller
         return redirect('admin/login');
     }
 
-    public function updateAdminPassword() {
+    public function updateAdminPassword(Request $request) {
+        // Handling the update admin password <form> submission (POST request) in update_admin_password.blade.php    // Check https://www.youtube.com/watch?v=oAZKXYrkcr4&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=17
+        if ($request->isMethod('post')) {
+            $data = $request->all();
+            // dd($data);
+
+            // Check first if the entered admin current password is corret
+            if (\Illuminate\Support\Facades\Hash::check($data['current_password'], Auth::guard('admin')->user()->password)) { // ['current_password'] comes from the AJAX call in custom.js page from the data object inside $.ajax() method
+                // Check if the new password is matching with confirm password
+                if ($data['confirm_password'] == $data['new_password']) {
+                    // dd(\App\Models\Admin::where('id', Auth::guard('admin')->user()->id));
+                    // echo '<pre>', var_dump(\App\Models\Admin::where('id', Auth::guard('admin')->user()->id)), '</pre>';
+                    \App\Models\Admin::where('id', Auth::guard('admin')->user()->id)->update(['password' => bcrypt($data['new_password'])]); // we persist (update) the hashed password (not the password itself)
+                    return redirect()->back()->with('success_message', 'Admin Password has been updated successfully!');
+                } else { // If new password and confirm password are not matching each other
+                    return redirect()->back()->with('error_message', 'New Password and Confirm Password does not match!');
+                }
+            } else {
+                return redirect()->back()->with('error_message', 'Your current admin password is Incorrect!');
+            }
+        }
+
+
         // Get data from 'admin' Authentication Guard to be able to show them in the <form> of update_admin_password.blade.php page: Check 19:10 in https://www.youtube.com/watch?v=b4ISE_polCo&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=15
         // dd(Auth::guard('admin'));
         // dd(Auth::guard('admin')->user());

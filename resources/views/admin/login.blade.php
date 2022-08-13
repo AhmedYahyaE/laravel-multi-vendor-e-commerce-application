@@ -33,7 +33,7 @@
 
                                 {{-- Our Bootstrap error code in case of wrong credentials when logging in: --}}
                                 {{-- Determining If An Item Exists In The Session (using has() method): https://laravel.com/docs/9.x/session#determining-if-an-item-exists-in-the-session --}}
-                                @if (Session::has('error_message')) <!-- Check AdminController.php -->
+                                @if (Session::has('error_message')) <!-- Check AdminController.php, login() method -->
                                     <div class="alert alert-danger alert-dismissible fade show" role="alert">
                                         <strong>Error:</strong> {{ Session::get('error_message') }}
                                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
