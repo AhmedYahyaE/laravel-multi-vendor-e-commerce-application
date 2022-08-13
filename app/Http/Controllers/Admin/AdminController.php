@@ -82,4 +82,18 @@ class AdminController extends Controller
         $adminDetails = \App\Models\Admin::where('email', Auth::guard('admin')->user()->email)->first()->toArray(); // 'Admin' is the Admin.php model    // Auth::guard('admin') is the authenticated user using the 'admin' guard we created in auth.php    // https://laravel.com/docs/9.x/eloquent#retrieving-models
         return view('admin/settings/update_admin_password')->with(compact('adminDetails')); // Passing Data To Views: https://laravel.com/docs/9.x/views#sharing-data-with-all-views
     }
+
+    public function checkAdminPassword(Request $request) { // This method is called from the AJAX call in custom.js page 
+        $data = $request->all();
+        // dd($data); // THIS DOESN'T WORK WITH AJAX - SHOWS AN ERROR!!
+        // echo '<pre>', var_dump($data), '</pre>';
+
+        // Check 15:06 in https://www.youtube.com/watch?v=maEXuJNzE8M&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=17
+        // Hashing Passwords: https://laravel.com/docs/9.x/hashing#hashing-passwords
+        if (\Illuminate\Support\Facades\Hash::check($data['current_password'], Auth::guard('admin')->user()->password)) { // ['current_password'] comes from the AJAX call in custom.js page from the data object inside $.ajax() method
+            return 'true';
+        } else {
+            return 'false';
+        }
+    }
 }

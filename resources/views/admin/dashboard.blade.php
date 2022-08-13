@@ -8,7 +8,7 @@
             <div class="col-md-12 grid-margin">
                 <div class="row">
                     <div class="col-12 col-xl-8 mb-4 mb-xl-0">
-                        <h3 class="font-weight-bold">Welcome {{ Auth::guard('admin')->user()->name }}</h3> <!-- https://laravel.com/docs/9.x/eloquent#retrieving-models -->
+                        <h3 class="font-weight-bold">Welcome {{ Auth::guard('admin')->user()->name }}</h3> <!-- https://laravel.com/docs/9.x/authentication#retrieving-the-authenticated-user --> <!-- https://laravel.com/docs/9.x/authentication#accessing-specific-guard-instances --> <!-- https://laravel.com/docs/9.x/eloquent#retrieving-models -->
                         <h6 class="font-weight-normal mb-0">All systems are running smoothly!</h6>
                     </div>
                     <div class="col-12 col-xl-4">
