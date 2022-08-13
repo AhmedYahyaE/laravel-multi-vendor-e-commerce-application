@@ -37,7 +37,7 @@ class AdminController extends Controller
             ]);
             */
 
-            // Customizing Laravel's Validation Error Messages: https://laravel.com/docs/9.x/validation#customizing-the-error-messages    // Check 9:24 in https://www.youtube.com/watch?v=IiyqoBUrkZA&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=12
+            // Customizing Laravel's Validation Error Messages: https://laravel.com/docs/9.x/validation#customizing-the-error-messages    // Customizing Validation Rules: https://laravel.com/docs/9.x/validation#custom-validation-rules    // Check 9:24 in https://www.youtube.com/watch?v=IiyqoBUrkZA&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=12
             // https://laravel.com/docs/9.x/validation#manual-customizing-the-error-messages
             $rules = [
                 'email'    => 'required|email|max:255',
@@ -117,5 +117,36 @@ class AdminController extends Controller
         } else {
             return 'false';
         }
+    }
+
+    public function updateAdminDetails(Request $request) { // the update_admin_details.blade.php
+        // dd(\Illuminate\Support\Facades\Auth::guard('admin')->user()); // Retrieving the authenticated user using a certain guard ('admin' Authentication Guard which we created in auth.php)
+        // dd(\Illuminate\Support\Facades\Auth::guard('admin')->user()->email); // Retrieving the authenticated user using a certain guard ('admin' Authentication Guard which we created in auth.php)
+        if ($request->isMethod('post')) { // if the update <form> is submitted
+            $data = $request->all();
+            // dd($data);
+
+            // Laravel's Validation    // Check 14:49 in https://www.youtube.com/watch?v=ydubcZC3Hbw&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=18
+            // Customizing Laravel's Validation Error Messages: https://laravel.com/docs/9.x/validation#customizing-the-error-messages    // Customizing Validation Rules: https://laravel.com/docs/9.x/validation#custom-validation-rules    // Check 14:49 in https://www.youtube.com/watch?v=ydubcZC3Hbw&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=18
+            $rules = [
+                'admin_name'   => 'required|regex:/^[\pL\s\-]+$/u', // only alphabetical characters and spaces
+                'admin_mobile' => 'required|numeric',
+            ];
+            $customMessages = [
+                'admin_name.required' => 'Name is required',
+                'admin_name.regex' => 'Valid Name is required',
+                'admin_mobile.required' => 'Mobile is required',
+                'admin_mobile.numeric' => 'Valid Mobile is required',
+            ];
+            $this->validate($request, $rules, $customMessages);
+
+
+            // Update Admin Details
+            \App\Models\Admin::where('id', Auth::guard('admin')->user()->id)->update(['name' => $data['admin_name'], 'mobile' => $data['admin_mobile']]);
+            return redirect()->back()->with('success_message', 'Admin details updated successfully!');
+        }
+
+        
+        return view('admin/settings/update_admin_details');
     }
 }

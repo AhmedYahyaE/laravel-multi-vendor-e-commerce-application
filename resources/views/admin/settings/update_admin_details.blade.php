@@ -49,6 +49,23 @@
 
 
 
+                        {{-- Displaying Laravel Validation Errors: https://laravel.com/docs/9.x/validation#quick-displaying-the-validation-errors --}}    {{-- Check 17:38 in https://www.youtube.com/watch?v=ydubcZC3Hbw&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=18 --}}
+                        @if ($errors->any())
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            {{-- <strong>Error:</strong> {{ Session::get('error_message') }} --}}
+
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        @endif
+
+
+
                         {{-- Our Bootstrap success message in case of updating admin password is successful: --}}
                         {{-- https://www.youtube.com/watch?v=oAZKXYrkcr4&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=17 --}}
                         {{-- Determining If An Item Exists In The Session (using has() method): https://laravel.com/docs/9.x/session#determining-if-an-item-exists-in-the-session --}}
@@ -61,28 +78,25 @@
                             </div>
                         @endif
               
-                        <h4 class="card-title">Update Admin Password</h4>
-                        <form class="forms-sample" action="{{ url('/admin/update-admin-password') }}" method="post">  @csrf
+
+                        {{-- https://www.youtube.com/watch?v=ydubcZC3Hbw&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=18 --}}
+                        <h4 class="card-title">Update Admin Details</h4>
+                        <form class="forms-sample" action="{{ url('/admin/update-admin-details') }}" method="post"> @csrf
                             <div class="form-group">
                                 <label>Admin Username/Email</label>
-                                <input class="form-control" value="{{ $adminDetails['email'] }}" readonly> <!-- Check updateAdminPassword() method in AdminController.php -->
+                                <input class="form-control" value="{{ Auth::guard('admin')->user()->email }}" readonly> <!-- Check updateAdminPassword() method in AdminController.php -->
                             </div>
                             <div class="form-group">
                                 <label>Admin Type</label>
-                                <input class="form-control" value="{{ $adminDetails['type'] }}" readonly>
+                                <input class="form-control" value="{{ Auth::guard('admin')->user()->type }}" readonly>
                             </div>
                             <div class="form-group">
-                                <label for="current_password">Current Password</label>
-                                <input type="password" class="form-control" id="current_password" placeholder="Enter Current Password" name="current_password" required>
-                                <span id="check_password"></span> <!-- We'll use it in the AJAX call in custom.js to show if the password is correct or not -->
+                                <label for="admin_name">Name</label>
+                                <input type="text" class="form-control" id="admin_name" name="admin_name" value="{{ Auth::guard('admin')->user()->name }}" required>
                             </div>
                             <div class="form-group">
-                                <label for="new_password">New Password</label>
-                                <input type="password" class="form-control" id="new_password" placeholder="Enter New Password" name="new_password" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="confirm_password">Confirm Password</label>
-                                <input type="password" class="form-control" id="confirm_password" placeholder="Confirm Password" name="confirm_password" required>
+                                <label for="admin_mobile">Mobile</label>
+                                <input type="text" class="form-control" id="admin_mobile" placeholder="Enter 10 Digit Mobile Number" name="admin_mobile" value="{{ Auth::guard('admin')->user()->mobile }}" maxlength="10" minlength="10" required>
                             </div>
                             <button type="submit" class="btn btn-primary mr-2">Submit</button>
                             <button class="btn btn-light">Cancel</button>
