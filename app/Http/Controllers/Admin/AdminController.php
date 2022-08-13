@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Auth; // Check the Admin.php model and 12:47 in https://www.youtube.com/watch?v=_vBCl-77GYc&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=11
+use Symfony\Component\VarDumper\VarDumper;
 
 class AdminController extends Controller
 {
@@ -66,5 +67,19 @@ class AdminController extends Controller
     public function logout() {
         Auth::guard('admin')->logout(); // Logging out using our 'admin' guard that we created in auth.php
         return redirect('admin/login');
+    }
+
+    public function updateAdminPassword() {
+        // Get data from 'admin' Authentication Guard to be able to show them in the <form> of update_admin_password.blade.php page: Check 19:10 in https://www.youtube.com/watch?v=b4ISE_polCo&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=15
+        // dd(Auth::guard('admin'));
+        // dd(Auth::guard('admin')->user());
+        // echo '<pre>', var_dump(\App\Models\Admin::where('email', Auth::guard('admin')->user()->email)), '</pre>';
+        // echo '<pre>', var_dump(\App\Models\Admin::where('email', Auth::guard('admin')->user()->email)->first()), '</pre>';
+        // echo '<pre>', var_dump(\App\Models\Admin::where('email', Auth::guard('admin')->user()->email)->first()->toArray()), '</pre>';
+        // exit;
+        // dd(Auth::guard('admin')->user()->email); // https://laravel.com/docs/9.x/eloquent#examining-attribute-changes
+        // dd(Auth::guard('admin')->user()->email)->first(); // https://laravel.com/docs/9.x/eloquent#examining-attribute-changes
+        $adminDetails = \App\Models\Admin::where('email', Auth::guard('admin')->user()->email)->first()->toArray(); // 'Admin' is the Admin.php model    // Auth::guard('admin') is the authenticated user using the 'admin' guard we created in auth.php    // https://laravel.com/docs/9.x/eloquent#retrieving-models
+        return view('admin/settings/update_admin_password')->with(compact('adminDetails')); // Passing Data To Views: https://laravel.com/docs/9.x/views#sharing-data-with-all-views
     }
 }
