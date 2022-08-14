@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('admins', function (Blueprint $table) {
             $table->id();
+
             $table->string('name');
             $table->string('type'); // superadmin, admin, subadmin, or vendor
             $table->integer('vendor_id'); // if the    $table->string('type');    , add the 'vendor_id', otherwise, all the other 'type's will be zero 0 'vendor_id'
@@ -23,6 +24,7 @@ return new class extends Migration
             $table->string('password');
             $table->string('image');
             $table->tinyInteger('status');
+    
             $table->timestamps();
         });
     }

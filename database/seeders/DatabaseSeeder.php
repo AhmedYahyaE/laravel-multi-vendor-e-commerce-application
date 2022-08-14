@@ -25,6 +25,8 @@ class DatabaseSeeder extends Seeder
 
         // Our code:
         // Database Seeding: Check    AdminsTableSeeder.php    // Calling Additional Seeders: https://laravel.com/docs/9.x/seeding#calling-additional-seeders
+        // Databas Seeding: Check 15:59 in https://www.youtube.com/watch?v=LfK-eMcUJsw&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=20
         $this->call(AdminsTableSeeder::class);
+        $this->call(VendorsTableSeeder::class);
     }
 }
