@@ -83,7 +83,9 @@ class AdminController extends Controller
                 if ($data['confirm_password'] == $data['new_password']) {
                     // dd(\App\Models\Admin::where('id', Auth::guard('admin')->user()->id));
                     // echo '<pre>', var_dump(\App\Models\Admin::where('id', Auth::guard('admin')->user()->id)), '</pre>';
-                    \App\Models\Admin::where('id', Auth::guard('admin')->user()->id)->update(['password' => bcrypt($data['new_password'])]); // we persist (update) the hashed password (not the password itself)
+                    \App\Models\Admin::where('id', Auth::guard('admin')->user()->id)->update([
+                        'password' => bcrypt($data['new_password'])
+                    ]); // we persist (update) the hashed password (not the password itself)
                     return redirect()->back()->with('success_message', 'Admin Password has been updated successfully!');
                 } else { // If new password and confirm password are not matching each other
                     return redirect()->back()->with('error_message', 'New Password and Confirm Password does not match!');
@@ -170,11 +172,105 @@ class AdminController extends Controller
 
 
             // Update Admin Details
-            \App\Models\Admin::where('id', Auth::guard('admin')->user()->id)->update(['name' => $data['admin_name'], 'mobile' => $data['admin_mobile'], 'image' => $imageName]); // Note that the image name is the random image name that we generated
+            \App\Models\Admin::where('id', Auth::guard('admin')->user()->id)->update([
+                'name'   => $data['admin_name'],
+                'mobile' => $data['admin_mobile'],
+                'image'  => $imageName
+            ]); // Note that the image name is the random image name that we generated
             return redirect()->back()->with('success_message', 'Admin details updated successfully!');
         }
 
         
         return view('admin/settings/update_admin_details');
+    }
+
+    public function updateVendorDetails($slug, Request $request) { // $slug can only be: 'personal', 'business' or 'bank'    // https://www.youtube.com/watch?v=9l8YuyPjAUg&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=22
+        if ($slug == 'personal') {
+            // Handling update vendor personal details <form> submission
+            if ($request->isMethod('post')) { // if the <form> is submitted
+                $data = $request->all();
+                // dd($data);
+
+                // Laravel's Validation    // Check 25:15 in https://www.youtube.com/watch?v=9l8YuyPjAUg&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=22
+                // Customizing Laravel's Validation Error Messages: https://laravel.com/docs/9.x/validation#customizing-the-error-messages    // Customizing Validation Rules: https://laravel.com/docs/9.x/validation#custom-validation-rules    // Check 14:49 in https://www.youtube.com/watch?v=ydubcZC3Hbw&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=18
+                $rules = [
+                    'vendor_name'   => 'required|regex:/^[\pL\s\-]+$/u', // only alphabetical characters and spaces
+                    'vendor_city'   => 'required|regex:/^[\pL\s\-]+$/u', // only alphabetical characters and spaces
+                    'vendor_mobile' => 'required|numeric',
+                ];
+                $customMessages = [
+                    'vendor_name.required'   => 'Name is required',
+                    'vendor_city.required'   => 'City is required',
+                    'vendor_city.regex'      => 'Valid City alphabetical is required',
+                    'vendor_name.regex'      => 'Valid Name is required',
+                    'vendor_mobile.required' => 'Mobile is required',
+                    'vendor_mobile.numeric'  => 'Valid Mobile is required',
+                ];
+                $this->validate($request, $rules, $customMessages);
+
+
+                // Uploading Admin Photo    // Check 5:08 in https://www.youtube.com/watch?v=dvVbp4poGfQ&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=19
+                // Retrieving Uploaded Files: https://laravel.com/docs/9.x/requests#retrieving-uploaded-files
+                // Using the Intervention package for uploading images
+                if ($request->hasFile('vendor_image')) { // the HTML name attribute    name="admin_name"    in update_admin_details.blade.php
+                    $image_tmp = $request->file('vendor_image');
+                    if ($image_tmp->isValid()) {
+                        // Get the image extension
+                        $extension = $image_tmp->getClientOriginalExtension();
+
+                        // Generate a random name for the uploaded image
+                        $imageName = rand(111, 99999) . '.' . $extension;
+
+                        // Assigning the uploaded images path inside the 'public' folder
+                        $imagePath = 'admin/images/photos/' . $imageName;
+
+                        // Upload the image using the Intervention package and save it in our path inside the 'public' folder
+                        \Image::make($image_tmp)->save($imagePath); // '\Image' is the Intervention package
+                    }
+                } else if (!empty($data['current_vendor_image'])) { // In case the admins updates other fields but doesn't update the image itself (doesn't upload a new image), but there's an already existing old image
+                    $imageName = $data['current_vendor_image'];
+                } else { // In case the admins updates other fields but doesn't update the image itself (doesn't upload a new image), and originally there wasn't any image uploaded in the first place
+                    $imageName = '';
+                }
+
+
+                // Vendor details need to be updated in BOTH `admins` and `vendors` tables:
+
+                // Update Vendor Details in 'admins' table
+                \App\Models\Admin::where('id', Auth::guard('admin')->user()->id)->update([
+                    'name'   => $data['vendor_name'],
+                    'mobile' => $data['vendor_mobile'],
+                    'image'  => $imageName
+                ]); // Note that the image name is the random image name that we generated
+
+                // Update Vendor Details in 'vendors' table
+                \App\Models\Vendor::where('id', Auth::guard('admin')->user()->vendor_id)->update([
+                    'name'    => $data['vendor_name'],
+                    'mobile'  => $data['vendor_mobile'],
+                    'address' => $data['vendor_address'],
+                    'city'    => $data['vendor_city'],
+                    'state'   => $data['vendor_state'],
+                    'country'   => $data['vendor_country'],
+                    'pincode'   => $data['vendor_pincode'],
+                ]);
+
+
+                return redirect()->back()->with('success_message', 'Vendor details updated successfully!');
+            }
+
+
+
+            // The 'GET' request: to show the update_vendor_details.blade.php page
+            $vendorDetails = \App\Models\Vendor::where('id', Auth::guard('admin')->user()->vendor_id)->first()->toArray();
+        } else if ($slug == 'business') {
+
+        } else if ($slug == 'bank') {
+
+        }
+
+
+
+        // We'll create one view (not 3) for the 3 pages, but parts inside it will change depending on the $slug value
+        return view('admin/settings/update_vendor_details')->with(compact('slug', 'vendorDetails')); // compact('slug', 'vendorDetails') is used to pass $slug and $vendorDetails to the view
     }
 }

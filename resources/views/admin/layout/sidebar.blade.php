@@ -7,19 +7,43 @@
             <span class="menu-title">Dashboard</span>
             </a>
         </li>
-        <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
-            <i class="icon-layout menu-icon"></i>
-            <span class="menu-title">Admin Settings</span>
-            <i class="menu-arrow"></i>
-            </a>
-            <div class="collapse" id="ui-basic">
-                <ul class="nav flex-column sub-menu">
-                    <li class="nav-item"> <a class="nav-link" href="{{ url('admin/update-admin-password') }}">Update Admin Password</a></li>
-                    <li class="nav-item"> <a class="nav-link" href="{{ url('admin/update-admin-details') }}">Update Admin Details</a></li>
-                </ul>
-            </div>
-        </li>
+
+
+
+        {{-- In case the authenticated user (using the 'admin' Authentication Guard in auth.php) type is vendor: https://www.youtube.com/watch?v=9l8YuyPjAUg&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=22 --}}
+        @if (Auth::guard('admin')->user()->type == 'vendor')
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
+                <i class="icon-layout menu-icon"></i>
+                <span class="menu-title">Vendor Details</span>
+                <i class="menu-arrow"></i>
+                </a>
+                <div class="collapse" id="ui-basic">
+                    <ul class="nav flex-column sub-menu">
+                        <li class="nav-item"> <a class="nav-link" href="{{ url('admin/update-vendor-details/personal') }}">Personal Details</a></li>
+                        <li class="nav-item"> <a class="nav-link" href="{{ url('admin/update-vendor-details/business') }}">Business Details</a></li>
+                        <li class="nav-item"> <a class="nav-link" href="{{ url('admin/update-vendor-details/bank') }}">Bank Details</a></li>
+                    </ul>
+                </div>
+            </li>
+        @else {{-- In case the authenticated user (using the 'admin' Authentication Guard in auth.php) type is 'superadmin', or 'admin', or 'subadmin' --}}
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
+                <i class="icon-layout menu-icon"></i>
+                <span class="menu-title">SuperAdmin/Admin/Subadmin Settings</span>
+                <i class="menu-arrow"></i>
+                </a>
+                <div class="collapse" id="ui-basic">
+                    <ul class="nav flex-column sub-menu">
+                        <li class="nav-item"> <a class="nav-link" href="{{ url('admin/update-admin-password') }}">Update Admin Password</a></li>
+                        <li class="nav-item"> <a class="nav-link" href="{{ url('admin/update-admin-details') }}">Update Admin Details</a></li>
+                    </ul>
+                </div>
+            </li>
+        @endif
+
+
+
         <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#form-elements" aria-expanded="false" aria-controls="form-elements">
             <i class="icon-columns menu-icon"></i>
