@@ -48,7 +48,9 @@ class AdminController extends Controller
                 'email.email'       => 'Valid Email Address is required',
                 'password.required' => 'Password is required!',
             ];
-            $this->validate($request, $rules, $customMessages);
+            $this->validate($request, $rules, $customMessages);            
+
+
 
             // Logging in using our 'admin' guard we created in auth.php    // Check 5:44 in https://www.youtube.com/watch?v=_vBCl-77GYc&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=11
             // Manually Authenticating Users (using attempt() method()): https://laravel.com/docs/9.x/authentication#authenticating-users
@@ -133,16 +135,42 @@ class AdminController extends Controller
                 'admin_mobile' => 'required|numeric',
             ];
             $customMessages = [
-                'admin_name.required' => 'Name is required',
-                'admin_name.regex' => 'Valid Name is required',
+                'admin_name.required'   => 'Name is required',
+                'admin_name.regex'      => 'Valid Name is required',
                 'admin_mobile.required' => 'Mobile is required',
-                'admin_mobile.numeric' => 'Valid Mobile is required',
+                'admin_mobile.numeric'  => 'Valid Mobile is required',
             ];
             $this->validate($request, $rules, $customMessages);
 
 
+
+            // Uploading Admin Photo    // Check 5:08 in https://www.youtube.com/watch?v=dvVbp4poGfQ&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=19
+            // Retrieving Uploaded Files: https://laravel.com/docs/9.x/requests#retrieving-uploaded-files
+            // Using the Intervention package for uploading images
+            if ($request->hasFile('admin_image')) { // the HTML name attribute    name="admin_name"    in update_admin_details.blade.php
+                $image_tmp = $request->file('admin_image');
+                if ($image_tmp->isValid()) {
+                    // Get the image extension
+                    $extension = $image_tmp->getClientOriginalExtension();
+
+                    // Generate a random name for the uploaded image
+                    $imageName = rand(111, 99999) . '.' . $extension;
+
+                    // Assigning the uploaded images path inside the 'public' folder
+                    $imagePath = 'admin/images/photos/' . $imageName;
+
+                    // Upload the image using the Intervention package and save it in our path inside the 'public' folder
+                    \Image::make($image_tmp)->save($imagePath); // '\Image' is the Intervention package
+                }
+            } else if (!empty($data['current_admin_image'])) { // In case the admins updates other fields but doesn't update the image itself (doesn't upload a new image), but there's an already existing old image
+                $imageName = $data['current_admin_image'];
+            } else { // In case the admins updates other fields but doesn't update the image itself (doesn't upload a new image), and originally there wasn't any image uploaded in the first place
+                $imageName = '';
+            }
+
+
             // Update Admin Details
-            \App\Models\Admin::where('id', Auth::guard('admin')->user()->id)->update(['name' => $data['admin_name'], 'mobile' => $data['admin_mobile']]);
+            \App\Models\Admin::where('id', Auth::guard('admin')->user()->id)->update(['name' => $data['admin_name'], 'mobile' => $data['admin_mobile'], 'image' => $imageName]); // Note that the image name is the random image name that we generated
             return redirect()->back()->with('success_message', 'Admin details updated successfully!');
         }
 
