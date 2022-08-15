@@ -333,7 +333,45 @@ class AdminController extends Controller
 
             $vendorDetails = \App\Models\VendorsBusinessDetail::where('vendor_id', Auth::guard('admin')->user()->vendor_id)->first()->toArray();
         } else if ($slug == 'bank') {
+            if ($request->isMethod('post')) { // if the <form> is submitted
+                $data = $request->all();
+                // dd($data);
 
+                // Laravel's Validation    // Check 25:15 in https://www.youtube.com/watch?v=9l8YuyPjAUg&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=22
+                // Customizing Laravel's Validation Error Messages: https://laravel.com/docs/9.x/validation#customizing-the-error-messages    // Customizing Validation Rules: https://laravel.com/docs/9.x/validation#custom-validation-rules    // Check 14:49 in https://www.youtube.com/watch?v=ydubcZC3Hbw&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=18
+                $rules = [
+                    'account_holder_name' => 'required|regex:/^[\pL\s\-]+$/u', // only alphabetical characters and spaces
+                    'bank_name'           => 'required', // only alphabetical characters and spaces
+                    'account_number'      => 'required|numeric',
+                    'bank_ifsc_code'      => 'required',
+                ];
+                $customMessages = [
+                    'account_holder_name.required' => 'Account Holder Name is required',
+                    'bank_name.required'           => 'Bank Name is required',
+                    'account_holder_name.regex'    => 'Valid Account Holder Name is required',
+                    'account_number.required'      => 'Account Number is required',
+                    'account_number.numeric'       => 'Valid Account Number is required',
+                    'bank_ifsc_code.required'      => 'Bank IFSC Code is required',
+                ];
+                $this->validate($request, $rules, $customMessages);
+
+
+
+                // Update `vendors_bank_details` table
+                \App\Models\VendorsBankDetail::where('vendor_id', Auth::guard('admin')->user()->vendor_id)->update([
+                    'account_holder_name' => $data['account_holder_name'],
+                    'bank_name'           => $data['bank_name'],
+                    'account_number'      => $data['account_number'],
+                    'bank_ifsc_code'      => $data['bank_ifsc_code'],
+                ]);
+
+
+                return redirect()->back()->with('success_message', 'Vendor details updated successfully!');
+            }
+
+
+
+            $vendorDetails = \App\Models\VendorsBankDetail::where('vendor_id', Auth::guard('admin')->user()->vendor_id)->first()->toArray();
         }
 
 
