@@ -250,8 +250,8 @@ class AdminController extends Controller
                     'address' => $data['vendor_address'],
                     'city'    => $data['vendor_city'],
                     'state'   => $data['vendor_state'],
-                    'country'   => $data['vendor_country'],
-                    'pincode'   => $data['vendor_pincode'],
+                    'country' => $data['vendor_country'],
+                    'pincode' => $data['vendor_pincode'],
                 ]);
 
 
@@ -259,17 +259,86 @@ class AdminController extends Controller
             }
 
 
-
-            // The 'GET' request: to show the update_vendor_details.blade.php page
             $vendorDetails = \App\Models\Vendor::where('id', Auth::guard('admin')->user()->vendor_id)->first()->toArray();
         } else if ($slug == 'business') {
+            if ($request->isMethod('post')) { // if the <form> is submitted
+                $data = $request->all();
+                // dd($data);
 
+                // Laravel's Validation    // Check 25:15 in https://www.youtube.com/watch?v=9l8YuyPjAUg&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=22
+                // Customizing Laravel's Validation Error Messages: https://laravel.com/docs/9.x/validation#customizing-the-error-messages    // Customizing Validation Rules: https://laravel.com/docs/9.x/validation#custom-validation-rules    // Check 14:49 in https://www.youtube.com/watch?v=ydubcZC3Hbw&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=18
+                $rules = [
+                    'shop_name'           => 'required|regex:/^[\pL\s\-]+$/u', // only alphabetical characters and spaces
+                    'shop_city'           => 'required|regex:/^[\pL\s\-]+$/u', // only alphabetical characters and spaces
+                    'shop_mobile'         => 'required|numeric',
+                    'address_proof'       => 'required',
+                ];
+                $customMessages = [
+                    'shop_name.required'           => 'Name is required',
+                    'shop_city.required'           => 'City is required',
+                    'shop_city.regex'              => 'Valid City alphabetical is required',
+                    'shop_name.regex'              => 'Valid Name is required',
+                    'shop_mobile.required'         => 'Mobile is required',
+                    'shop_mobile.numeric'          => 'Valid Mobile is required',
+                ];
+                $this->validate($request, $rules, $customMessages);
+
+
+                // Uploading Admin Photo    // Check 5:08 in https://www.youtube.com/watch?v=dvVbp4poGfQ&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=19
+                // Retrieving Uploaded Files: https://laravel.com/docs/9.x/requests#retrieving-uploaded-files
+                // Using the Intervention package for uploading images
+                if ($request->hasFile('address_proof_image')) { // the HTML name attribute    name="admin_name"    in update_admin_details.blade.php
+                    $image_tmp = $request->file('address_proof_image');
+                    if ($image_tmp->isValid()) {
+                        // Get the image extension
+                        $extension = $image_tmp->getClientOriginalExtension();
+
+                        // Generate a random name for the uploaded image
+                        $imageName = rand(111, 99999) . '.' . $extension;
+
+                        // Assigning the uploaded images path inside the 'public' folder
+                        $imagePath = 'admin/images/proofs/' . $imageName;
+
+                        // Upload the image using the Intervention package and save it in our path inside the 'public' folder
+                        \Image::make($image_tmp)->save($imagePath); // '\Image' is the Intervention package
+                    }
+                } else if (!empty($data['current_address_proof'])) { // In case the admins updates other fields but doesn't update the image itself (doesn't upload a new image), but there's an already existing old image
+                    $imageName = $data['current_address_proof'];
+                } else { // In case the admins updates other fields but doesn't update the image itself (doesn't upload a new image), and originally there wasn't any image uploaded in the first place
+                    $imageName = '';
+                }
+
+
+
+                // Update `vendors_business_details` table
+                \App\Models\VendorsBusinessDetail::where('vendor_id', Auth::guard('admin')->user()->vendor_id)->update([
+                    'shop_name'               => $data['shop_name'],
+                    'shop_mobile'             => $data['shop_mobile'],
+                    'shop_address'            => $data['shop_address'],
+                    'shop_city'               => $data['shop_city'],
+                    'shop_state'              => $data['shop_state'],
+                    'shop_country'            => $data['shop_country'],
+                    'shop_pincode'            => $data['shop_pincode'],
+                    'business_license_number' => $data['business_license_number'],
+                    'gst_number'              => $data['gst_number'],
+                    'pan_number'              => $data['pan_number'],
+                    'address_proof'           => $data['address_proof'],
+                    'address_proof_image'     => $imageName,
+                ]);
+
+
+                return redirect()->back()->with('success_message', 'Vendor details updated successfully!');
+            }
+
+
+            $vendorDetails = \App\Models\VendorsBusinessDetail::where('vendor_id', Auth::guard('admin')->user()->vendor_id)->first()->toArray();
         } else if ($slug == 'bank') {
 
         }
 
 
 
+        // The 'GET' request: to show the update_vendor_details.blade.php page
         // We'll create one view (not 3) for the 3 pages, but parts inside it will change depending on the $slug value
         return view('admin/settings/update_vendor_details')->with(compact('slug', 'vendorDetails')); // compact('slug', 'vendorDetails') is used to pass $slug and $vendorDetails to the view
     }

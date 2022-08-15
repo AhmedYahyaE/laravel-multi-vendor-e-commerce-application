@@ -33,6 +33,7 @@
             <div class="col-md-6 grid-margin stretch-card">
                 <div class="card">
                     <div class="card-body">
+                        <h4 class="card-title">Update Admin Details</h4>
 
 
                         {{-- Our Bootstrap error code in case of wrong current password or the new password and confirm password are not matching: --}}
@@ -80,7 +81,6 @@
               
 
                         {{-- https://www.youtube.com/watch?v=ydubcZC3Hbw&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=18 --}}
-                        <h4 class="card-title">Update Admin Details</h4>
                         <form class="forms-sample" action="{{ url('/admin/update-admin-details') }}" method="post" enctype="multipart/form-data"> @csrf <!-- Using the enctype="multipart/form-data" to allow uploading files (images). Check 2:39 in https://www.youtube.com/watch?v=dvVbp4poGfQ&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=19 -->
                             <div class="form-group">
                                 <label>Admin Username/Email</label>
