@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+// Auth without a namespace here works fine because the Admin.php model extends Authenticatable
 use Auth; // Check the Admin.php model and 12:47 in https://www.youtube.com/watch?v=_vBCl-77GYc&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=11
 use Symfony\Component\VarDumper\VarDumper;
 
@@ -379,5 +380,28 @@ class AdminController extends Controller
         // The 'GET' request: to show the update_vendor_details.blade.php page
         // We'll create one view (not 3) for the 3 pages, but parts inside it will change depending on the $slug value
         return view('admin/settings/update_vendor_details')->with(compact('slug', 'vendorDetails')); // compact('slug', 'vendorDetails') is used to pass $slug and $vendorDetails to the view
+    }
+
+    public function admins($type = null) { // $type is the `type` column in the `admins` which can only be: superadmin, admin, subadmin or vendor    // A default value of null (to allow not passing a {type} slug, and in this case, the page will view ALL of the superadmin, admins, subadmins and vendors at the same time)
+        // $admins = new \App\Models\Admin();
+        // dd($admins);
+
+        // $admins = \App\Models\Admin::all(); // is the same as:    $admins = \App\Models\Admin::get();
+        // $admins = \App\Models\Admin::get(); // is the same as:    $admins = \App\Models\Admin::all();
+        $admins = \App\Models\Admin::query(); // https://www.youtube.com/watch?v=yviVaX7-wT4
+        // $admins = \App\Models\Admin::get()->toArray(); // toArray() method converts the Collection object to a plain PHP array
+        // dd($admins);
+
+        if (!empty($type)) { // in this case, $type can be: superadmin, admin, subadmin or vendor
+            $admins = $admins->where('type', $type);
+            $title = ucfirst($type) . 's';
+        } else { // if there's no $type is passed, show ALL of the admins, subadmins and vendors
+            $title = 'All Admins/Subadmins/Vendors';
+        }
+
+        $admins = $admins->get()->toArray(); // toArray() method converts the Collection object to a plain PHP array    // is the same as: $admins = \App\Models\Admin::all()->toArray();
+        // dd($admins);
+
+        return view('admin/admins/admins')->with(compact('admins', 'title'));
     }
 }
