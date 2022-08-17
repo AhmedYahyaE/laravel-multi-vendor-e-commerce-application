@@ -11,6 +11,10 @@ use Symfony\Component\VarDumper\VarDumper;
 class AdminController extends Controller
 {
     public function dashboard() {
+        // Correcting issues in the Skydash Admin Panel Sidebar using Session:  Check 6:33 in https://www.youtube.com/watch?v=i_SUdNILIrc&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=29
+        \Session::put('page', 'dashboard');
+        
+        
         return view('admin/dashboard'); // is the same as:    return view('admin.dashboard');
     }
 
@@ -73,6 +77,11 @@ class AdminController extends Controller
     }
 
     public function updateAdminPassword(Request $request) {
+        // Correcting issues in the Skydash Admin Panel Sidebar using Session:  Check 6:33 in https://www.youtube.com/watch?v=i_SUdNILIrc&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=29
+        \Session::put('page', 'update_admin_password');
+
+
+
         // Handling the update admin password <form> submission (POST request) in update_admin_password.blade.php    // Check https://www.youtube.com/watch?v=oAZKXYrkcr4&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=17
         if ($request->isMethod('post')) {
             $data = $request->all();
@@ -125,6 +134,11 @@ class AdminController extends Controller
     }
 
     public function updateAdminDetails(Request $request) { // the update_admin_details.blade.php
+        // Correcting issues in the Skydash Admin Panel Sidebar using Session:  Check 6:33 in https://www.youtube.com/watch?v=i_SUdNILIrc&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=29
+        \Session::put('page', 'update_admin_details');
+
+
+
         // dd(\Illuminate\Support\Facades\Auth::guard('admin')->user()); // Retrieving the authenticated user using a certain guard ('admin' Authentication Guard which we created in auth.php)
         // dd(\Illuminate\Support\Facades\Auth::guard('admin')->user()->email); // Retrieving the authenticated user using a certain guard ('admin' Authentication Guard which we created in auth.php)
         if ($request->isMethod('post')) { // if the update <form> is submitted
@@ -187,6 +201,11 @@ class AdminController extends Controller
 
     public function updateVendorDetails($slug, Request $request) { // $slug can only be: 'personal', 'business' or 'bank'    // https://www.youtube.com/watch?v=9l8YuyPjAUg&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=22
         if ($slug == 'personal') {
+            // Correcting issues in the Skydash Admin Panel Sidebar using Session:  Check 6:33 in https://www.youtube.com/watch?v=i_SUdNILIrc&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=29
+            \Session::put('page', 'update_personal_details');
+
+
+
             // Handling update vendor personal details <form> submission
             if ($request->isMethod('post')) { // if the <form> is submitted
                 $data = $request->all();
@@ -262,6 +281,11 @@ class AdminController extends Controller
 
             $vendorDetails = \App\Models\Vendor::where('id', Auth::guard('admin')->user()->vendor_id)->first()->toArray();
         } else if ($slug == 'business') {
+            // Correcting issues in the Skydash Admin Panel Sidebar using Session:  Check 6:33 in https://www.youtube.com/watch?v=i_SUdNILIrc&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=29
+            \Session::put('page', 'update_business_details');
+
+
+
             if ($request->isMethod('post')) { // if the <form> is submitted
                 $data = $request->all();
                 // dd($data);
@@ -334,6 +358,11 @@ class AdminController extends Controller
 
             $vendorDetails = \App\Models\VendorsBusinessDetail::where('vendor_id', Auth::guard('admin')->user()->vendor_id)->first()->toArray();
         } else if ($slug == 'bank') {
+            // Correcting issues in the Skydash Admin Panel Sidebar using Session:  Check 6:33 in https://www.youtube.com/watch?v=i_SUdNILIrc&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=29
+            \Session::put('page', 'update_bank_details');
+
+
+
             if ($request->isMethod('post')) { // if the <form> is submitted
                 $data = $request->all();
                 // dd($data);
@@ -395,8 +424,14 @@ class AdminController extends Controller
         if (!empty($type)) { // in this case, $type can be: superadmin, admin, subadmin or vendor
             $admins = $admins->where('type', $type);
             $title = ucfirst($type) . 's';
+
+            // Correcting issues in the Skydash Admin Panel Sidebar using Session:  Check 6:33 in https://www.youtube.com/watch?v=i_SUdNILIrc&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=29
+            \Session::put('page', 'view_' . strtolower($title));
         } else { // if there's no $type is passed, show ALL of the admins, subadmins and vendors
             $title = 'All Admins/Subadmins/Vendors';
+
+            // Correcting issues in the Skydash Admin Panel Sidebar using Session:  Check 6:33 in https://www.youtube.com/watch?v=i_SUdNILIrc&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=29
+            \Session::put('page', 'view_all');
         }
 
         $admins = $admins->get()->toArray(); // toArray() method converts the Collection object to a plain PHP array    // is the same as: $admins = \App\Models\Admin::all()->toArray();
@@ -421,7 +456,7 @@ class AdminController extends Controller
         return view('admin/admins/view_vendor_details')->with(compact('vendorDetails'));
     }
 
-    public function updateAdminStatus(Request $request) { // Update Admin Status using AJAX in admins.blade.php
+    public function updateAdminStatus(Request $request) { // Update Admin Status using AJAX in admins.blade.php    // https://www.youtube.com/watch?v=zabqYC14oKU&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=28
         if ($request->ajax()) { // if the request is coming from an AJAX call
             $data = $request->all();
             // dd($data); // THIS DOESN'T WORK WITH AJAX! - SHOWS AN ERROR!! USE var_dump() INSTEAD!

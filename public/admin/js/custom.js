@@ -1,6 +1,12 @@
 // Using jQuery:
 $(document).ready(function() {
 
+    // Correcting issues in the Skydash Admin Panel Sidebar: https://www.youtube.com/watch?v=i_SUdNILIrc&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=29
+    $('.nav-item').removeClass('active');
+    $('.nav-link').removeClass('active');
+
+
+
     // Check if the Admin Password is correct using AJAX in update_admin_password.blade.php page
     $('#current_password').keyup(function() {
         // console.log(this);
@@ -28,7 +34,7 @@ $(document).ready(function() {
 
 
 
-    // Updating admin status (active/inactive) using AJAX in admins.blade.php
+    // Updating admin status (active/inactive) using AJAX in admins.blade.php    // https://www.youtube.com/watch?v=zabqYC14oKU&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=28
     $(document).on('click', '.updateAdminStatus', function() { // '.updateAdminStatus' is the anchor link <a> CSS class    // This is the same as    $('.updateAdminStatus').on('click', function() {
         // alert('test');
 
