@@ -110,9 +110,9 @@ class AdminController extends Controller
         return view('admin/settings/update_admin_password')->with(compact('adminDetails')); // Passing Data To Views: https://laravel.com/docs/9.x/views#sharing-data-with-all-views
     }
 
-    public function checkAdminPassword(Request $request) { // This method is called from the AJAX call in custom.js page 
+    public function checkAdminPassword(Request $request) { // This method is called from the AJAX call in custom.js page
         $data = $request->all();
-        // dd($data); // THIS DOESN'T WORK WITH AJAX - SHOWS AN ERROR!!
+        // dd($data); // THIS DOESN'T WORK WITH AJAX! - SHOWS AN ERROR!! USE var_dump() INSTEAD!
         // echo '<pre>', var_dump($data), '</pre>';
 
         // Check 15:06 in https://www.youtube.com/watch?v=maEXuJNzE8M&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=17
@@ -419,5 +419,28 @@ class AdminController extends Controller
         // dd($vendorDetails);
 
         return view('admin/admins/view_vendor_details')->with(compact('vendorDetails'));
+    }
+
+    public function updateAdminStatus(Request $request) { // Update Admin Status using AJAX in admins.blade.php
+        if ($request->ajax()) { // if the request is coming from an AJAX call
+            $data = $request->all();
+            // dd($data); // THIS DOESN'T WORK WITH AJAX! - SHOWS AN ERROR!! USE var_dump() INSTEAD!
+            // echo '<pre>', var_dump($data), '</pre>';
+
+            if ($data['status'] == 'Active') { // $data['status'] comes from the 'data' object inside the $.ajax() method    // reverse the 'status' from (ative/inactive) 0 to 1 and 1 to 0 (and vice versa)
+                $status = 0;
+            } else {
+                $status = 1;
+            }
+
+
+            \App\Models\Admin::where('id', $data['admin_id'])->update(['status' => $status]);
+            // echo '<pre>', var_dump($data), '</pre>';
+
+            return response()->json([
+                'status'   => $status,
+                'admin_id' => $data['admin_id']
+            ]);
+        }
     }
 }
