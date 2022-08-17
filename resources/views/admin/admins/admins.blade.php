@@ -38,12 +38,18 @@
                                             <td><img src="{{ asset('/admin/images/photos/' . $admin['image']) }}"></td>
                                             <td>
                                                 @if ($admin['status'] == 1)
-                                                    Active
+                                                    <i style="font-size: 25px" class="mdi mdi-bookmark-check"></i> {{-- Icons from Skydash Admin Panel Template --}}
                                                 @else
-                                                    Inactive  
+                                                    <i style="font-size: 25px" class="mdi mdi-bookmark-outline"></i> {{-- Icons from Skydash Admin Panel Template --}}
                                                 @endif
                                             </td>
-                                            <td></td>
+                                            <td>
+                                                @if ($admin['type'] == 'vendor') {{-- if the admin `type` is vendor, show their further details --}}
+                                                    <a href="{{ url('admin/view-vendor-details/' . $admin['id']) }}">
+                                                        <i style="font-size: 25px" class="mdi mdi-file-document"></i> {{-- Icons from Skydash Admin Panel Template --}}
+                                                    </a>
+                                                @endif
+                                            </td>
                                         </tr>
                                     @endforeach
                                 </tbody>

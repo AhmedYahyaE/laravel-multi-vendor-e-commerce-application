@@ -404,4 +404,20 @@ class AdminController extends Controller
 
         return view('admin/admins/admins')->with(compact('admins', 'title'));
     }
+
+    public function viewVendorDetails($id) { // // View further 'vendor' details inside Admin Management table (if the authenticated user is superadmin, admin or subadmin)
+        // $vendorDetails = \App\Models\Admin::where('vendor_id', $id);
+        // $vendorDetails = \App\Models\Admin::where('id', $id)->first();
+
+        /*
+        $vendor = \App\Models\Admin::find(2)->vendorPersonal;
+        dd($vendor);
+        */
+
+        $vendorDetails = \App\Models\Admin::with('vendorPersonal', 'vendorBusiness','vendorBank')->where('id', $id)->first(); // Using the relationship defined in the Admin.php model to be able to get data from `vendors`, `vendors_business_details` and `vendors_bank_details` tables
+        $vendorDetails = json_decode(json_encode($vendorDetails), true); // We used json_decode(json_encode($variable), true) to convert $vendorDetails to an array instead of Laravel's toArray() method
+        // dd($vendorDetails);
+
+        return view('admin/admins/view_vendor_details')->with(compact('vendorDetails'));
+    }
 }
