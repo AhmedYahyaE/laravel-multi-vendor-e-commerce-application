@@ -406,9 +406,15 @@ class AdminController extends Controller
 
 
 
+        // Fetch all of the world countries from the database table `country`: https://www.youtube.com/watch?v=zENahhmAM0w&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=30
+        $countries = \App\Models\Country::where('status', 1)->get()->toArray(); // get the countries which have stats = 1 (to ignore the blacklisted countries, in case)
+        // dd($countries);
+
+
+
         // The 'GET' request: to show the update_vendor_details.blade.php page
         // We'll create one view (not 3) for the 3 pages, but parts inside it will change depending on the $slug value
-        return view('admin/settings/update_vendor_details')->with(compact('slug', 'vendorDetails')); // compact('slug', 'vendorDetails') is used to pass $slug and $vendorDetails to the view
+        return view('admin/settings/update_vendor_details')->with(compact('slug', 'vendorDetails', 'countries')); // compact('slug', 'vendorDetails') is used to pass $slug and $vendorDetails to the view
     }
 
     public function admins($type = null) { // $type is the `type` column in the `admins` which can only be: superadmin, admin, subadmin or vendor    // A default value of null (to allow not passing a {type} slug, and in this case, the page will view ALL of the superadmin, admins, subadmins and vendors at the same time)
