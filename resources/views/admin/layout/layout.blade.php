@@ -31,6 +31,10 @@
         <link rel="stylesheet" href="{{ url('admin/css/vertical-layout-light/style.css') }}">
         <!-- endinject -->
         <link rel="shortcut icon" href="{{ url('admin/images/favicon.png') }}" />
+
+        {{-- DataTable: Check 18:55 in https://www.youtube.com/watch?v=1XJ7908SJcM&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=34 --}}
+        <link rel="stylesheet" href="{{ url('admin/css/bootstrap.css') }}">
+        <link rel="stylesheet" href="{{ url('admin/css/dataTables.bootstrap4.min.css') }}">
     </head>
     <body>
         <div class="container-scroller">

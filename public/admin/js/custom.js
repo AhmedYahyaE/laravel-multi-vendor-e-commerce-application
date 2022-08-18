@@ -1,6 +1,12 @@
 // Using jQuery:
 $(document).ready(function() {
 
+
+    // Calling the DataTable class: Check 18:55 in https://www.youtube.com/watch?v=1XJ7908SJcM&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=34
+    $('#sections').DataTable();
+
+
+
     // Correcting issues in the Skydash Admin Panel Sidebar: https://www.youtube.com/watch?v=i_SUdNILIrc&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=29
     $('.nav-item').removeClass('active');
     $('.nav-link').removeClass('active');
@@ -71,6 +77,44 @@ $(document).ready(function() {
         });
     });
 
+
+
+    // Updating section status (active/inactive) using AJAX in sections.blade.php    // https://www.youtube.com/watch?v=1XJ7908SJcM&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=34
+    $(document).on('click', '.updateSectionStatus', function() { // '.updateSectionStatus' is the anchor link <a> CSS class    // This is the same as    $('.updateSectionStatus').on('click', function() {
+        // alert('test');
+
+        // var status = $(this).children();
+        // var status = $(this).children('i');
+        var status   = $(this).children('i').attr('status'); // Using HTML Custom Attributes
+        var section_id = $(this).attr('section_id'); // Using HTML Custom Attributes
+        // console.log(status);
+        // console.log(section_id);
+        // var status = $(this).children(); // the child of the <a> anchor link
+
+        
+        $.ajax({
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}, // X-CSRF-TOKEN: https://laravel.com/docs/9.x/csrf#csrf-x-csrf-token    // Check 12:37 in https://www.youtube.com/watch?v=maEXuJNzE8M&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=16
+            type   : 'post',
+            url    : '/admin/update-section-status', // check the web.php for this route and check the SectionController for the updateSectionStatus() method
+            data   : {status: status, section_id: section_id}, // we pass the status and section_id
+            success: function(resp) {
+                // alert(resp);
+                // console.log(resp);
+                // console.log(resp.status);
+                // console.log(resp.section_id);
+                // console.log('#section-' + section_id);
+                // console.log($('#section-' + section_id));
+                if (resp.status == 0) { // in case of success, reverse the status (active/inactive) and show the right icon in the frontend    // Or the same    if (resp['status'] == 0) {
+                    $('#section-' + section_id).html('<i style="font-size: 25px" class="mdi mdi-bookmark-outline" status="Inactive"></i>');
+                } else if (resp.status == 1) {
+                    $('#section-' + section_id).html('<i style="font-size: 25px" class="mdi mdi-bookmark-check" status="Active"></i>');
+                }
+            },
+            error: function() {
+                alert('Error');
+            }
+        });
+    });
 
 
 }); // End of $(document).ready()
