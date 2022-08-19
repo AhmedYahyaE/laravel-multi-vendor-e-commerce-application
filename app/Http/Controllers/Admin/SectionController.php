@@ -39,4 +39,12 @@ class SectionController extends Controller
             ]);
         }
     }
+
+    public function deleteSection($id) { // https://www.youtube.com/watch?v=6TfdD5w-kls&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=33
+        \App\Models\Section::where('id', $id)->delete(); // https://laravel.com/docs/9.x/queries#delete-statements
+        
+        $message = 'Section has been deleted successfully!';
+        
+        return redirect()->back()->with('success_message', $message);
+    }
 }

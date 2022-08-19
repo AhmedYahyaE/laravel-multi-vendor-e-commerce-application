@@ -117,4 +117,51 @@ $(document).ready(function() {
     });
 
 
+
+    // Confirm Deletion alert using Pure JavaScript: Check 5:02 in https://www.youtube.com/watch?v=6TfdD5w-kls&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=33
+    // $('.confirmDelete').click(function() {
+    //     var title = $(this).attr('title');
+    //     // alert(title);
+
+    //     if (confirm('Are you sure you want to delete this ' + title + '?')) {
+    //         return true; // return true    means COMPLETE THE EXECUTION!, you can do whatever you want to do
+    //     } else {
+    //         return false; // return true    means STOP THE EXECUTION!, you can't do what you want to do
+    //     }
+    // });
+
+
+
+    // Confirm Deletion using SweetAlert JavaScript package/plugin: Check 5:02 in https://www.youtube.com/watch?v=6TfdD5w-kls&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=33
+    $('.confirmDelete').click(function() {
+        var module   = $(this).attr('module');
+        var moduleid = $(this).attr('moduleid');
+        // alert(module);
+        // alert(moduleid);
+        // return; // Just STOP function execution!    // This is the same as:    return false;
+
+
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+              Swal.fire(
+                'Deleted!',
+                'Your file has been deleted.',
+                'success'
+              )
+
+              // We added this line by ourselves
+              window.location = '/admin/delete-' + module + '/' + moduleid; // e.g.    '/admin/delete-sections/3'
+            }
+        })
+    });
+
+
 }); // End of $(document).ready()

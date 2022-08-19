@@ -100,5 +100,8 @@
         {{-- Start: Our Custom Admin JS --}}
         <script src="{{ url('admin/js/custom.js') }}"></script>
         {{-- End: Our Custom Admin JS --}}
+
+        {{-- The SweetAlert2 package for Confirm Deletion Message in sections.blade.php. Check 5:02 in https://www.youtube.com/watch?v=6TfdD5w-kls&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=33 --}}
+        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     </body>
 </html>

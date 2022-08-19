@@ -70,6 +70,7 @@ Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function
         // Sections (Sections, Categories, Subcategories, Products, Attributes)
         Route::get('sections', 'SectionController@sections');
         Route::post('update-section-status', 'SectionController@updateSectionStatus'); // Update Sections Status using AJAX in sections.blade.php    // https://www.youtube.com/watch?v=1XJ7908SJcM&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=34
+        Route::get('delete-section/{id}', 'SectionController@deleteSection'); // Delete a section in sections.blade.php    // https://www.youtube.com/watch?v=6TfdD5w-kls&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=33
     });
 });
 

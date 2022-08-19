@@ -13,6 +13,21 @@
                         {{-- <p class="card-description">
                             Add class <code>.table-bordered</code>
                         </p> --}}
+
+
+                        {{-- Our Bootstrap success message in case of updating admin password is successful: --}}
+                        {{-- https://www.youtube.com/watch?v=oAZKXYrkcr4&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=17 --}}
+                        {{-- Determining If An Item Exists In The Session (using has() method): https://laravel.com/docs/9.x/session#determining-if-an-item-exists-in-the-session --}}
+                        @if (Session::has('success_message')) <!-- Check AdminController.php, updateAdminPassword() method -->
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                <strong>Success:</strong> {{ Session::get('success_message') }}
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        @endif
+
+
                         <div class="table-responsive pt-3">
                             {{-- DataTable: Check 18:55 in https://www.youtube.com/watch?v=1XJ7908SJcM&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=34 --}}
                             <table id="sections" class="table table-bordered"> {{-- using the id here for the DataTable --}}
@@ -44,7 +59,12 @@
                                                 <a href="{{ url('admin/add-edit-section/' . $section['id']) }}">
                                                     <i style="font-size: 25px" class="mdi mdi-pencil-box"></i> {{-- Icons from Skydash Admin Panel Template --}}
                                                 </a>
-                                                <a href="{{ url('admin/delete-section/' . $section['id']) }}">
+
+                                                {{-- Confirm Deletion JS alert and Sweet Alert: Check 5:02 in https://www.youtube.com/watch?v=6TfdD5w-kls&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=33 --}}
+                                                {{-- <a title="Section" class="confirmDelete" href="{{ url('admin/delete-section/' . $section['id']) }}"> --}}
+                                                    {{-- <i style="font-size: 25px" class="mdi mdi-file-excel-box"></i> --}} {{-- Icons from Skydash Admin Panel Template --}}
+                                                {{-- </a> --}}
+                                                <a href="JavaScript:void(0)" class="confirmDelete" module="section" moduleid="{{ $section['id'] }}">
                                                     <i style="font-size: 25px" class="mdi mdi-file-excel-box"></i> {{-- Icons from Skydash Admin Panel Template --}}
                                                 </a>
                                             </td>
