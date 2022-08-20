@@ -34,7 +34,7 @@ class SectionController extends Controller
             }
 
 
-            \App\Models\Section::where('id', $data['section_id'])->update(['status' => $status]);
+            \App\Models\Section::where('id', $data['section_id'])->update(['status' => $status]); // $data['section_id'] comes from the 'data' object inside the $.ajax() method
             // echo '<pre>', var_dump($data), '</pre>';
 
             return response()->json([

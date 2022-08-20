@@ -3,7 +3,8 @@ $(document).ready(function() {
 
 
     // Calling the DataTable class: Check 18:55 in https://www.youtube.com/watch?v=1XJ7908SJcM&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=34
-    $('#sections').DataTable();
+    $('#sections').DataTable(); // in sections.blade.php
+    $('#categories').DataTable(); // in categories.blade.php
 
 
 
@@ -162,6 +163,45 @@ $(document).ready(function() {
             }
         })
     });
+
+
+
+    // Updating Category status (active/inactive) using AJAX in categories.blade.php    // https://www.youtube.com/watch?v=sfLCZzuL1Ts&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=36
+    $(document).on('click', '.updateCategoryStatus', function() { // '.updateCategoryStatus' is the anchor link <a> CSS class    // This is the same as    $('.updateCategoryStatus').on('click', function() {
+        // alert('test');
+
+        // var status = $(this).children();
+        // var status = $(this).children('i');
+        var status      = $(this).children('i').attr('status'); // Using HTML Custom Attributes
+        var category_id = $(this).attr('category_id'); // Using HTML Custom Attributes
+        // console.log(status);
+        // console.log(category_id);
+        // var status = $(this).children(); // the child of the <a> anchor link
+
+        
+        $.ajax({
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}, // X-CSRF-TOKEN: https://laravel.com/docs/9.x/csrf#csrf-x-csrf-token    // Check 12:37 in https://www.youtube.com/watch?v=maEXuJNzE8M&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=16
+            type   : 'post',
+            url    : '/admin/update-category-status', // check the web.php for this route and check the CategoryController for the updateCategoryStatus() method
+            data   : {status: status, category_id: category_id}, // we pass the status and category_id
+            success: function(resp) {
+                // alert(resp);
+                // console.log(resp);
+                // console.log(resp.status);
+                // console.log(resp.category_id);
+                // console.log('#category-' + category_id);
+                // console.log($('#category-' + category_id));
+                if (resp.status == 0) { // in case of success, reverse the status (active/inactive) and show the right icon in the frontend    // Or the same    if (resp['status'] == 0) {
+                    $('#category-' + category_id).html('<i style="font-size: 25px" class="mdi mdi-bookmark-outline" status="Inactive"></i>');
+                } else if (resp.status == 1) {
+                    $('#category-' + category_id).html('<i style="font-size: 25px" class="mdi mdi-bookmark-check" status="Active"></i>');
+                }
+            },
+            error: function() {
+                alert('Error');
+            }
+        });
+    })
 
 
 }); // End of $(document).ready()
