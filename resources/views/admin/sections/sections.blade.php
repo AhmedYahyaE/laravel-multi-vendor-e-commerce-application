@@ -15,6 +15,9 @@
                         </p> --}}
 
 
+                        {{-- https://www.youtube.com/watch?v=YqBzJmwrh8I&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=37 --}}
+                        <a href="{{ url('/admin/add-edit-section') }}" style="max-width: 150px; float: right; display: inline-block" class="btn btn-block btn-primary">Add Section</a>
+
                         {{-- Our Bootstrap success message in case of updating admin password is successful: --}}
                         {{-- https://www.youtube.com/watch?v=oAZKXYrkcr4&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=17 --}}
                         {{-- Determining If An Item Exists In The Session (using has() method): https://laravel.com/docs/9.x/session#determining-if-an-item-exists-in-the-session --}}

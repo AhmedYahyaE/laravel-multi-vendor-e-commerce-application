@@ -1,3 +1,7 @@
+{{-- https://www.youtube.com/watch?v=YqBzJmwrh8I&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=37 --}}
+
+
+
 @extends('admin.layout.layout')
 @section('content')
 <div class="main-panel">
@@ -33,7 +37,7 @@
             <div class="col-md-6 grid-margin stretch-card">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title">Update Admin Details</h4>
+                        <h4 class="card-title">{{ $title }}</h4>
 
 
                         {{-- Our Bootstrap error code in case of wrong current password or the new password and confirm password are not matching: --}}
@@ -81,31 +85,13 @@
               
 
                         {{-- https://www.youtube.com/watch?v=ydubcZC3Hbw&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=18 --}}
-                        <form class="forms-sample" action="{{ url('/admin/update-admin-details') }}" method="post" enctype="multipart/form-data"> @csrf <!-- Using the enctype="multipart/form-data" to allow uploading files (images). Check 2:39 in https://www.youtube.com/watch?v=dvVbp4poGfQ&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=19 -->
+
+
+                        {{-- https://www.youtube.com/watch?v=YqBzJmwrh8I&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=37 --}}
+                        <form class="forms-sample"   @if (empty($section['id'])) action="{{ url('/admin/add-edit-section') }}" @else action="{{ url('/admin/add-edit-section/' . $section['id']) }}" @endif   method="post" enctype="multipart/form-data"> @csrf  <!-- If the id is not passed in from the route, this measn 'Add a new Section', but if the id is passed in from the route, this means 'Edit the Section' --> <!-- Using the enctype="multipart/form-data" to allow uploading files (images). Check 2:39 in https://www.youtube.com/watch?v=dvVbp4poGfQ&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=19 -->
                             <div class="form-group">
-                                <label>Admin Username/Email</label>
-                                <input class="form-control" value="{{ Auth::guard('admin')->user()->email }}" readonly> <!-- Check updateAdminPassword() method in AdminController.php -->
-                            </div>
-                            <div class="form-group">
-                                <label>Admin Type</label>
-                                <input class="form-control" value="{{ Auth::guard('admin')->user()->type }}" readonly>
-                            </div>
-                            <div class="form-group">
-                                <label for="admin_name">Name</label>
-                                <input type="text" class="form-control" id="admin_name" placeholder="Enter Name" name="admin_name" value="{{ Auth::guard('admin')->user()->name }}">
-                            </div>
-                            <div class="form-group">
-                                <label for="admin_mobile">Mobile</label>
-                                <input type="text" class="form-control" id="admin_mobile" placeholder="Enter 10 Digit Mobile Number" name="admin_mobile" value="{{ Auth::guard('admin')->user()->mobile }}" maxlength="10" minlength="10">
-                            </div>
-                            <div class="form-group">
-                                <label for="admin_image">Admin Photo</label>
-                                <input type="file" class="form-control" id="admin_image" name="admin_image">
-                                {{-- Show the admin image if exists: Check 14:34 in https://www.youtube.com/watch?v=dvVbp4poGfQ&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=19 --}}
-                                @if (!empty(Auth::guard('admin')->user()->image))
-                                    <a target="_blank" href="{{ url('/admin/images/photos/' . Auth::guard('admin')->user()->image) }}">View Image</a> <!-- We used    target="_blank"    to open the image in another separate page -->
-                                    <input type="hidden" name="current_admin_image" value="{{ Auth::guard('admin')->user()->image }}"> <!-- to send the current admin image url all the time with all the requests -->
-                                @endif
+                                <label for="section_name">Section Name</label>
+                                <input type="text" class="form-control" id="section_name" placeholder="Enter Section Name" name="section_name" @if (!empty($section['name'])) value="{{ $section['name'] }}" @else value="{{ old('section_name') }}" @endif> <!-- Check 10:10 in https://www.youtube.com/watch?v=YqBzJmwrh8I&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=37 -->
                             </div>
                             <button type="submit" class="btn btn-primary mr-2">Submit</button>
                             <button class="btn btn-light">Cancel</button>
