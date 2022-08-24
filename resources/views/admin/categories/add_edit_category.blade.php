@@ -1,0 +1,162 @@
+{{-- https://www.youtube.com/watch?v=YqBzJmwrh8I&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=37 --}}
+
+
+
+@extends('admin.layout.layout')
+@section('content')
+<div class="main-panel">
+    <div class="content-wrapper">
+        <div class="row">
+            <div class="col-md-12 grid-margin">
+                <div class="row">
+                    <div class="col-12 col-xl-8 mb-4 mb-xl-0">
+                        {{-- <h3 class="font-weight-bold">Catalogue Management</h3>
+                        <h6 class="font-weight-normal mb-0">Categories</h6> --}}
+                        <h4 class="card-title">Categories</h4>
+                    </div>
+                    <div class="col-12 col-xl-4">
+                        <div class="justify-content-end d-flex">
+                            <div class="dropdown flex-md-grow-1 flex-xl-grow-0">
+                                <button class="btn btn-sm btn-light bg-white dropdown-toggle" type="button" id="dropdownMenuDate2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                <i class="mdi mdi-calendar"></i> Today (10 Jan 2021)
+                                </button>
+                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuDate2">
+                                    <a class="dropdown-item" href="#">January - March</a>
+                                    <a class="dropdown-item" href="#">March - June</a>
+                                    <a class="dropdown-item" href="#">June - August</a>
+                                    <a class="dropdown-item" href="#">August - November</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">{{ $title }}</h4>
+
+
+                        {{-- Our Bootstrap error code in case of wrong current password or the new password and confirm password are not matching: --}}
+                        {{-- https://www.youtube.com/watch?v=oAZKXYrkcr4&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=17 --}}
+                        {{-- Determining If An Item Exists In The Session (using has() method): https://laravel.com/docs/9.x/session#determining-if-an-item-exists-in-the-session --}}
+                        @if (Session::has('error_message')) <!-- Check AdminController.php, updateAdminPassword() method -->
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <strong>Error:</strong> {{ Session::get('error_message') }}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        @endif
+
+
+
+                        {{-- Displaying Laravel Validation Errors: https://laravel.com/docs/9.x/validation#quick-displaying-the-validation-errors --}}    {{-- Check 17:38 in https://www.youtube.com/watch?v=ydubcZC3Hbw&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=18 --}}
+                        @if ($errors->any())
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            {{-- <strong>Error:</strong> {{ Session::get('error_message') }} --}}
+
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        @endif
+
+
+
+                        {{-- Our Bootstrap success message in case of updating admin password is successful: --}}
+                        {{-- https://www.youtube.com/watch?v=oAZKXYrkcr4&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=17 --}}
+                        {{-- Determining If An Item Exists In The Session (using has() method): https://laravel.com/docs/9.x/session#determining-if-an-item-exists-in-the-session --}}
+                        @if (Session::has('success_message')) <!-- Check AdminController.php, updateAdminPassword() method -->
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                <strong>Success:</strong> {{ Session::get('success_message') }}
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        @endif
+              
+
+                        {{-- https://www.youtube.com/watch?v=ydubcZC3Hbw&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=18 --}}
+
+
+                        {{-- https://www.youtube.com/watch?v=YqBzJmwrh8I&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=37 --}}
+                        <form class="forms-sample"   @if (empty($category['id'])) action="{{ url('/admin/add-edit-category') }}" @else action="{{ url('/admin/add-edit-category/' . $category['id']) }}" @endif   method="post" enctype="multipart/form-data"> @csrf  <!-- If the id is not passed in from the route, this measn 'Add a new Category', but if the id is passed in from the route, this means 'Edit the Category' --> <!-- Using the enctype="multipart/form-data" to allow uploading files (images). Check 2:39 in https://www.youtube.com/watch?v=dvVbp4poGfQ&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=19 -->
+                            <div class="form-group">
+                                <label for="category_name">Category Name</label>
+                                <input type="text" class="form-control" id="category_name" placeholder="Enter Category Name" name="category_name" @if (!empty($category['category_name'])) value="{{ $category['category_name'] }}" @else value="{{ old('category_name') }}" @endif> <!-- Check 10:10 in https://www.youtube.com/watch?v=YqBzJmwrh8I&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=37 -->
+                            </div>
+
+                            {{-- https://www.youtube.com/watch?v=1G21b3-9cPo&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=39 --}}
+                            <div class="form-group">
+                                <label for="section_id">Select Section</label>
+                                {{-- <input type="text" class="form-control" id="section_id" placeholder="Enter Section Name" name="section_id" @if (!empty($category['name'])) value="{{ $category['section_id'] }}" @else value="{{ old('section_id') }}" @endif> <!-- Check 10:10 in https://www.youtube.com/watch?v=YqBzJmwrh8I&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=37 --> --}}
+                                <select name="section_id" id="section_id" class="form-control">
+                                    <option value="">Select Section</option>
+                                    @foreach ($getSections as $section)
+                                        <option value="{{ $section['id'] }}"  @if (!empty($category['section_id']) && $category['section_id'] == $section['id']) selected @endif >{{ $section['name'] }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+
+
+                            <div id="appendCategoriesLevel"> {{-- We create this <div> in a separate file in order for the appendCategoryLevel() method inside the CategoryController to be able to return the whole file as a response to the AJAX call in custom.js to show the proper/relevant categories <select> box <option> depending on the choosed Section --}}
+                                @include('admin.categories.append_categories_level')
+                            </div>
+
+
+
+                            <div class="form-group">
+                                <label for="category_image">Category Image</label>
+                                <input type="file" class="form-control" id="category_image" name="category_image">
+                                {{-- Show the admin image if exists: Check 14:34 in https://www.youtube.com/watch?v=dvVbp4poGfQ&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=19 --}}
+                                {{-- @if (!empty(Auth::guard('admin')->user()->image))
+                                    <a target="_blank" href="{{ url('/admin/images/photos/' . Auth::guard('admin')->user()->image) }}">View Image</a> <!-- We used    target="_blank"    to open the image in another separate page -->
+                                    <input type="hidden" name="current_category_image" value="{{ Auth::guard('admin')->user()->image }}"> <!-- to send the current admin image url all the time with all the requests -->
+                                @endif --}}
+                            </div>
+                            <div class="form-group">
+                                <label for="category_discount">Category Discount</label>
+                                <input type="text" class="form-control" id="category_discount" placeholder="Enter Category Discount" name="category_discount"   @if (!empty($category['category_discount'])) value="{{ $category['category_discount'] }}" @else value="{{ old('category_discount') }}" @endif > <!-- Check 10:10 in https://www.youtube.com/watch?v=YqBzJmwrh8I&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=37 -->
+                            </div>
+                            <div class="form-group">
+                                <label for="description">Category Description</label>
+                                {{-- <input type="text" class="form-control" id="category_discount" placeholder="Enter Category Description" name="category_discount"   @if (!empty($category['category_discount'])) value="{{ $category['category_discount'] }}" @else value="{{ old('category_discount') }}" @endif > <!-- Check 10:10 in https://www.youtube.com/watch?v=YqBzJmwrh8I&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=37 --> --}}
+                                <textarea name="description" id="description" class="form-control" rows="3">{{ $category['description'] }}</textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="url">Category URL</label>
+                                <input type="text" class="form-control" id="url" placeholder="Enter Category URL" name="url"   @if (!empty($category['url'])) value="{{ $category['url'] }}" @else value="{{ old('url') }}" @endif > <!-- Check 10:10 in https://www.youtube.com/watch?v=YqBzJmwrh8I&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=37 -->
+                            </div>
+                            <div class="form-group">
+                                <label for="meta_title">Meta Title</label>
+                                <input type="text" class="form-control" id="meta_title" placeholder="Enter Meta Title" name="meta_title"   @if (!empty($category['meta_title'])) value="{{ $category['meta_title'] }}" @else value="{{ old('meta_title') }}" @endif > <!-- Check 10:10 in https://www.youtube.com/watch?v=YqBzJmwrh8I&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=37 -->
+                            </div>
+                            <div class="form-group">
+                                <label for="meta_description">Meta Description</label>
+                                <input type="text" class="form-control" id="meta_description" placeholder="Enter Meta Description" name="meta_description"   @if (!empty($category['meta_description'])) value="{{ $category['meta_description'] }}" @else value="{{ old('meta_description') }}" @endif > <!-- Check 10:10 in https://www.youtube.com/watch?v=YqBzJmwrh8I&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=37 -->
+                            </div>
+                            <div class="form-group">
+                                <label for="meta_keywords">Meta Keywords</label>
+                                <input type="text" class="form-control" id="meta_keywords" placeholder="Enter Meta Keywords" name="meta_keywords"   @if (!empty($category['meta_keywords'])) value="{{ $category['meta_keywords'] }}" @else value="{{ old('meta_keywords') }}" @endif > <!-- Check 10:10 in https://www.youtube.com/watch?v=YqBzJmwrh8I&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=37 -->
+                            </div>
+                            <button type="submit" class="btn btn-primary mr-2">Submit</button>
+                            <button class="btn btn-light">Cancel</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- content-wrapper ends -->
+    @include('admin.layout.footer')
+    <!-- partial -->
+</div>
+@endsection

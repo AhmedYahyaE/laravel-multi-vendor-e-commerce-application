@@ -201,7 +201,31 @@ $(document).ready(function() {
                 alert('Error');
             }
         });
-    })
+    });
 
+
+
+    // Show Categories <select> <option> depending on the choosed Section (show the relevant categories of the choosed section) in append_categories_level.blade.php page    // https://www.youtube.com/watch?v=GS2sCr4olJo&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=42    // https://www.w3schools.com/jquery/event_change.asp
+    $('#section_id').change(function() { // When the sections <select> <option> HTML element in add_edit_category.blade.php is selected or changed
+        // console.log(this);
+        var section_id = $(this).val();
+        // console.log(section_id);
+
+
+        $.ajax({
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}, // X-CSRF-TOKEN: https://laravel.com/docs/9.x/csrf#csrf-x-csrf-token    // Check 12:37 in https://www.youtube.com/watch?v=maEXuJNzE8M&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=16
+            type   : 'get',
+            url    : '/admin/append-categories-level',
+            data   : {section_id: section_id}, // name/value pair sent to server
+            success: function(resp) {
+                // alert(resp);
+                // console.log(resp);
+
+                // console.log($('#appendCategoriesLevel'));
+                $('#appendCategoriesLevel').html(resp); // $('#appendCategoriesLeve') is the <div> in add_edit_category.blade.php
+            },
+            error  : function() {alert('Error');}
+        });
+    });
 
 }); // End of $(document).ready()
