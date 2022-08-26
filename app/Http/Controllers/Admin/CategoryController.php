@@ -113,9 +113,27 @@ class CategoryController extends Controller
             $data = $request->all();
             // dd($data);
 
-            if ($data['category_discount'] == '') {
-                $data['category_discount'] = 0;
-            }
+
+            // Laravel's Validation    // Check 14:49 in https://www.youtube.com/watch?v=ydubcZC3Hbw&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=18
+            // Customizing Laravel's Validation Error Messages: https://laravel.com/docs/9.x/validation#customizing-the-error-messages    // Customizing Validation Rules: https://laravel.com/docs/9.x/validation#custom-validation-rules    // Check 14:49 in https://www.youtube.com/watch?v=ydubcZC3Hbw&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=18
+            $rules = [
+                'category_name' => 'required|regex:/^[\pL\s\-]+$/u', // only alphabetical characters and spaces
+                'section_id'    => 'required',
+                'url'           => 'required',
+            ];
+            $customMessages = [
+                'category_name.required' => 'Category Name is required',
+                'category_name.regex'    => 'Valid Category Name is required',
+                'section_id.required'    => 'Section is required',
+                'url.required'           => 'Category URL is required',
+            ];
+            $this->validate($request, $rules, $customMessages);
+
+
+
+            // if ($data['category_discount'] == '') {
+            //     $data['category_discount'] = 0;
+            // }
 
             
             // Uploading Category Image    // Check 5:08 in https://www.youtube.com/watch?v=dvVbp4poGfQ&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=19
@@ -131,7 +149,7 @@ class CategoryController extends Controller
                     $imageName = rand(111, 99999) . '.' . $extension;
 
                     // Assigning the uploaded images path inside the 'public' folder
-                    $imagePath = 'admin/front/images/category_images' . $imageName;
+                    $imagePath = 'front/images/category_images/' . $imageName;
 
                     // Upload the image using the Intervention package and save it in our path inside the 'public' folder
                     \Image::make($image_tmp)->save($imagePath); // '\Image' is the Intervention package
@@ -157,19 +175,6 @@ class CategoryController extends Controller
             $category->save();
 
             return redirect('admin/categories')->with('success_message', $message);
-
-
-
-            // Laravel's Validation    // Check 14:49 in https://www.youtube.com/watch?v=ydubcZC3Hbw&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=18
-            // Customizing Laravel's Validation Error Messages: https://laravel.com/docs/9.x/validation#customizing-the-error-messages    // Customizing Validation Rules: https://laravel.com/docs/9.x/validation#custom-validation-rules    // Check 14:49 in https://www.youtube.com/watch?v=ydubcZC3Hbw&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=18
-            // $rules = [
-            //     'category_name' => 'required|regex:/^[\pL\s\-]+$/u', // only alphabetical characters and spaces
-            // ];
-            // $customMessages = [
-            //     'category_name.required' => 'Category Name is required',
-            //     'category_name.regex'    => 'Valid Category Name is required',
-            // ];
-            // $this->validate($request, $rules, $customMessages);
 
             
             // // Saving inserted/updated data    // Inserting & Updating Models: https://laravel.com/docs/9.x/eloquent#inserts AND https://laravel.com/docs/9.x/eloquent#updates
@@ -206,5 +211,34 @@ class CategoryController extends Controller
             
             return view('admin.categories.append_categories_level')->with(compact('getCategories')); // returning the WHOLE append_categories_level.blade.php page
         }
+    }
+
+    public function deleteCategory($id) { // https://www.youtube.com/watch?v=uHYf4HmJTS8&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=41
+        \App\Models\Category::where('id', $id)->delete(); // https://laravel.com/docs/9.x/queries#delete-statements
+        
+        $message = 'Category has been deleted successfully!';
+        
+        return redirect()->back()->with('success_message', $message);
+    }
+
+    public function deleteCategoryImage($id) { // AJAX call from custom.js    // Delete the category image from BOTH SERVER (FILESYSTEM) & DATABASE    // https://www.youtube.com/watch?v=uHYf4HmJTS8&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=42
+        // Category image record in the database
+        $categoryImage = \App\Models\Category::select('category_image')->where('id', $id)->first(); // https://laravel.com/docs/9.x/queries#delete-statements
+        // dd($categoryImage);
+        
+        // Category image path on the server (filesystem)
+        $category_image_path = 'front/images/category_images/';
+
+        // Delete the category image on server (filesystem) (from the 'category_images' folder)
+        if (file_exists($category_image_path . $categoryImage->category_image)) {
+            unlink($category_image_path . $categoryImage->category_image);
+        }
+
+        // Delete the category image name from the `categories` database table (Note: We won't use delete() method because we're not deleting a complete record (entry), we will just use update() method to update the category image to name to an empty string value '')
+        \App\Models\Category::where('id', $id)->update(['category_image' => '']);
+
+        $message = 'Category Image has been deleted successfully!';
+
+        return redirect()->back()->with('success_message', $message);
     }
 }

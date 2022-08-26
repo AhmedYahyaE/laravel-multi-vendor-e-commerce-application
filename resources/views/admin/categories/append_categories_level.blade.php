@@ -6,7 +6,7 @@
 
 <div class="form-group">
     <label for="parent_id">Select Category Level</label> {{-- The relationship between a category and its parent category inside the same table i.e. `categories` table --}}
-    <select name="parent_id" id="parent_id" class="form-control">
+    <select name="parent_id" id="parent_id" class="form-control"  style="color: #000">
         <option value="0"  @if (isset($category['parent_id']) && $category['parent_id'] == 0) selected @endif >Main Category</option>
         @if (!empty($getCategories))
             @foreach ($getCategories as $parentCategory) {{-- $getCategories are all the parent categories, and their child categories --}}

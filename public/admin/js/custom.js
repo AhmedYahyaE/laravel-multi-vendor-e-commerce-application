@@ -134,6 +134,7 @@ $(document).ready(function() {
 
 
     // Confirm Deletion using SweetAlert JavaScript package/plugin: Check 5:02 in https://www.youtube.com/watch?v=6TfdD5w-kls&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=33
+    // Delete category image in add_edit_category.blade.php. Check https://www.youtube.com/watch?v=uHYf4HmJTS8&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=42
     $('.confirmDelete').click(function() {
         var module   = $(this).attr('module');
         var moduleid = $(this).attr('moduleid');
@@ -159,7 +160,7 @@ $(document).ready(function() {
               )
 
               // We added this line by ourselves
-              window.location = '/admin/delete-' + module + '/' + moduleid; // e.g.    '/admin/delete-sections/3'
+              window.location = '/admin/delete-' + module + '/' + moduleid; // e.g.    '/admin/delete-sections/3'    or    '/admin/delete-category/5'    or    '/admin/delete-category-image/4'
             }
         })
     });

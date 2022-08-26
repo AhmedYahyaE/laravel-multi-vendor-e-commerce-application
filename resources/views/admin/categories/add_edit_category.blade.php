@@ -97,7 +97,7 @@
                             <div class="form-group">
                                 <label for="section_id">Select Section</label>
                                 {{-- <input type="text" class="form-control" id="section_id" placeholder="Enter Section Name" name="section_id" @if (!empty($category['name'])) value="{{ $category['section_id'] }}" @else value="{{ old('section_id') }}" @endif> <!-- Check 10:10 in https://www.youtube.com/watch?v=YqBzJmwrh8I&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=37 --> --}}
-                                <select name="section_id" id="section_id" class="form-control">
+                                <select name="section_id" id="section_id" class="form-control" style="color: #000">
                                     <option value="">Select Section</option>
                                     @foreach ($getSections as $section)
                                         <option value="{{ $section['id'] }}"  @if (!empty($category['section_id']) && $category['section_id'] == $section['id']) selected @endif >{{ $section['name'] }}</option>
@@ -121,6 +121,13 @@
                                     <a target="_blank" href="{{ url('/admin/images/photos/' . Auth::guard('admin')->user()->image) }}">View Image</a> <!-- We used    target="_blank"    to open the image in another separate page -->
                                     <input type="hidden" name="current_category_image" value="{{ Auth::guard('admin')->user()->image }}"> <!-- to send the current admin image url all the time with all the requests -->
                                 @endif --}}
+
+
+                                {{-- Show the category image, if any (if exits) --}}
+                                @if (!empty($category['category_image']))
+                                    <a target="_blank" href="{{ url('front/images/category_images/' . $category['category_image']) }}">View Category Image</a>&nbsp;|&nbsp;
+                                    <a href="JavaScript:void(0)" class="confirmDelete" module="category-image" moduleid="{{ $category['id'] }}">Delete Category Image</a> {{-- Delete the category image from BOTH SERVER (FILESYSTEM) & DATABASE --}}    {{-- Check custom.js and web.php (routes) --}}
+                                @endif
                             </div>
                             <div class="form-group">
                                 <label for="category_discount">Category Discount</label>
