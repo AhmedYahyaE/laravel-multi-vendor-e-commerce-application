@@ -1,10 +1,10 @@
 // Using jQuery:
 $(document).ready(function() {
 
-
     // Calling the DataTable class: Check 18:55 in https://www.youtube.com/watch?v=1XJ7908SJcM&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=34
     $('#sections').DataTable(); // in sections.blade.php
     $('#categories').DataTable(); // in categories.blade.php
+    $('#brands').DataTable(); // in brands.blade.php
 
 
 
@@ -227,6 +227,45 @@ $(document).ready(function() {
                 $('#appendCategoriesLevel').html(resp); // $('#appendCategoriesLeve') is the <div> in add_edit_category.blade.php
             },
             error  : function() {alert('Error');}
+        });
+    });
+
+
+
+    // Updating Brand status (active/inactive) using AJAX in brands.blade.php    // https://www.youtube.com/watch?v=sfLCZzuL1Ts&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=36
+    $(document).on('click', '.updateBrandStatus', function() { // '.updateBrandStatus' is the anchor link <a> CSS class    // This is the same as    $('.updateBrandStatus').on('click', function() {
+        // alert('test');
+
+        // var status = $(this).children();
+        // var status = $(this).children('i');
+        var status      = $(this).children('i').attr('status'); // Using HTML Custom Attributes
+        var brand_id = $(this).attr('brand_id'); // Using HTML Custom Attributes
+        // console.log(status);
+        // console.log(brand_id);
+        // var status = $(this).children(); // the child of the <a> anchor link
+
+        
+        $.ajax({
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}, // X-CSRF-TOKEN: https://laravel.com/docs/9.x/csrf#csrf-x-csrf-token    // Check 12:37 in https://www.youtube.com/watch?v=maEXuJNzE8M&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=16
+            type   : 'post',
+            url    : '/admin/update-brand-status', // check the web.php for this route and check the BrandController for the updateBrandStatus() method
+            data   : {status: status, brand_id: brand_id}, // we pass the status and brand_id
+            success: function(resp) {
+                // alert(resp);
+                // console.log(resp);
+                // console.log(resp.status);
+                // console.log(resp.brand_id);
+                // console.log('#brand-' + brand_id);
+                // console.log($('#brand-' + brand_id));
+                if (resp.status == 0) { // in case of success, reverse the status (active/inactive) and show the right icon in the frontend    // Or the same    if (resp['status'] == 0) {
+                    $('#brand-' + brand_id).html('<i style="font-size: 25px" class="mdi mdi-bookmark-outline" status="Inactive"></i>');
+                } else if (resp.status == 1) {
+                    $('#brand-' + brand_id).html('<i style="font-size: 25px" class="mdi mdi-bookmark-check" status="Active"></i>');
+                }
+            },
+            error: function() {
+                alert('Error');
+            }
         });
     });
 
