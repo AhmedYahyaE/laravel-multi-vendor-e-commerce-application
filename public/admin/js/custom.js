@@ -5,6 +5,7 @@ $(document).ready(function() {
     $('#sections').DataTable(); // in sections.blade.php
     $('#categories').DataTable(); // in categories.blade.php
     $('#brands').DataTable(); // in brands.blade.php
+    $('#products').DataTable(); // in products.blade.php
 
 
 
@@ -261,6 +262,43 @@ $(document).ready(function() {
                     $('#brand-' + brand_id).html('<i style="font-size: 25px" class="mdi mdi-bookmark-outline" status="Inactive"></i>');
                 } else if (resp.status == 1) {
                     $('#brand-' + brand_id).html('<i style="font-size: 25px" class="mdi mdi-bookmark-check" status="Active"></i>');
+                }
+            },
+            error: function() {
+                alert('Error');
+            }
+        });
+    });
+
+    // Updating Product status (active/inactive) using AJAX in products.blade.php    // https://www.youtube.com/watch?v=sfLCZzuL1Ts&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=36
+    $(document).on('click', '.updateProductStatus', function() { // '.updateProductStatus' is the anchor link <a> CSS class    // This is the same as    $('.updateProductStatus').on('click', function() {
+        // alert('test');
+
+        // var status = $(this).children();
+        // var status = $(this).children('i');
+        var status      = $(this).children('i').attr('status'); // Using HTML Custom Attributes
+        var product_id = $(this).attr('product_id'); // Using HTML Custom Attributes
+        // console.log(status);
+        // console.log(product_id);
+        // var status = $(this).children(); // the child of the <a> anchor link
+
+        
+        $.ajax({
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}, // X-CSRF-TOKEN: https://laravel.com/docs/9.x/csrf#csrf-x-csrf-token    // Check 12:37 in https://www.youtube.com/watch?v=maEXuJNzE8M&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=16
+            type   : 'post',
+            url    : '/admin/update-product-status', // check the web.php for this route and check the ProductController for the updateProductStatus() method
+            data   : {status: status, product_id: product_id}, // we pass the status and product_id
+            success: function(resp) {
+                // alert(resp);
+                // console.log(resp);
+                // console.log(resp.status);
+                // console.log(resp.product_id);
+                // console.log('#product-' + product_id);
+                // console.log($('#product-' + product_id));
+                if (resp.status == 0) { // in case of success, reverse the status (active/inactive) and show the right icon in the frontend    // Or the same    if (resp['status'] == 0) {
+                    $('#product-' + product_id).html('<i style="font-size: 25px" class="mdi mdi-bookmark-outline" status="Inactive"></i>');
+                } else if (resp.status == 1) {
+                    $('#product-' + product_id).html('<i style="font-size: 25px" class="mdi mdi-bookmark-check" status="Active"></i>');
                 }
             },
             error: function() {
