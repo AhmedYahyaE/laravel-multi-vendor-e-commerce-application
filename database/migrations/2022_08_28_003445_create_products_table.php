@@ -19,7 +19,8 @@ return new class extends Migration
             $table->integer('section_id');
             $table->integer('category_id');
             $table->integer('brand_id');
-            $table->integer('vendor_id'); // in case the product has been added by a some vendor (in case the product has been added by another entity like a superadmin, admin or subadmin, the value will be 0 zero)
+            $table->integer('vendor_id'); // in case the product has been added by a some vendor (And in case the product has been added by another entity like a superadmin, admin or subadmin, the value will be 0 zero)
+            $table->integer('admin_id'); // whether a vendor or a superadmin/admin/subadmin (from the `admins` table)
             $table->string('admin_type'); // can be vendor, superadmin, admin or subadmin
             $table->string('product_name');
             $table->string('product_code');

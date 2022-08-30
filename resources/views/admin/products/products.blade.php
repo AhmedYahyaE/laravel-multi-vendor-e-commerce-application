@@ -40,6 +40,9 @@
                                         <th>Product Name</th>
                                         <th>Product Code</th>
                                         <th>Product Color</th>
+                                        <th>Category</th> {{-- Through the relationship --}}
+                                        <th>Section</th> {{-- Through the relationship --}}
+                                        <th>Added by</th> {{-- Through the relationship --}}
                                         <th>URL</th>
                                         <th>Actions</th>
                                     </tr>
@@ -51,6 +54,15 @@
                                             <td>{{ $product['product_name'] }}</td>
                                             <td>{{ $product['product_code'] }}</td>
                                             <td>{{ $product['product_color'] }}</td>
+                                            <td>{{ $product['category']['category_name'] }}</td> {{-- Through the relationship --}}
+                                            <td>{{ $product['section']['name'] }}</td> {{-- Through the relationship --}}
+                                            <td>
+                                                @if ($product['admin_type'] == 'vendor')
+                                                    <a target="_blank" href="{{ url('admin/view-vendor-details/' . $product['admin_id']) }}">{{ ucfirst($product['admin_type']) }}</a>
+                                                @else
+                                                    {{ ucfirst($product['admin_type']) }}
+                                                @endif
+                                            </td>
                                             <td>
                                                 @if ($product['status'] == 1)
                                                     <a class="updateProductStatus" id="product-{{ $product['id'] }}" product_id="{{ $product['id'] }}" href="javascript:void(0)"> {{-- Using HTML Custom Attributes --}}

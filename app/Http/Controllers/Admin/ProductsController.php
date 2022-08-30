@@ -13,8 +13,14 @@ class ProductsController extends Controller
 
     
     public function products() {
-        // $products = \App\Models\Product::get();
-        $products = \App\Models\Product::get()->toArray();
+        // $products = \App\Models\Product::get()->toArray();
+        // $products = \App\Models\Product::with(['section', 'category'])->get(); // ['section', 'category'] are the relationships methods names
+        // $products = \App\Models\Product::with(['section', 'category'])->get()->toArray(); // ['section', 'category'] are the relationships methods names
+        $products = \App\Models\Product::with(['section' => function($query) {
+            $query->select('id', 'name');
+        }, 'category' => function($query) {
+            $query->select('id', 'category_name');
+        }])->get()->toArray(); // Using subqueries with Eager Loading for a better performance (Check 9:40 in https://www.youtube.com/watch?v=iDpDS9vNswE&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=46) AND Constraining Eager Loads: https://laravel.com/docs/9.x/eloquent-relationships#constraining-eager-loads    // ['section', 'category'] are the relationships methods names
         // dd($products);
 
         return view('admin.products.products')->with(compact('products'));
