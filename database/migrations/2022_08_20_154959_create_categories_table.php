@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('categories', function (Blueprint $table) {
             $table->id();
 
-            $table->integer('parent_id'); // it will be zero 0 in case there's no parent category
+            $table->integer('parent_id'); // Note: It will have a value of the parent category (from the same table), and will be zero 0 in case there's no parent category (if it's a 'Root' category)
             $table->integer('section_id');
             $table->string('category_name');
             $table->string('category_image');

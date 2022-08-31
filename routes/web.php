@@ -91,6 +91,7 @@ Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function
         Route::get('products', 'ProductsController@products'); // Products in Catalogue Management in Admin Panel
         Route::post('update-product-status', 'ProductsController@updateProductStatus'); // Update Products Status using AJAX in products.blade.php
         Route::get('delete-product/{id}', 'ProductsController@deleteProduct'); // Delete a product in products.blade.php
+        Route::match(['get', 'post'], 'add-edit-product/{id?}', 'ProductsController@addEditProduct'); // the slug (URL parameter) {id?} is an optional parameter, so if it's passed, this means 'Edit the Product', and if not passed, this means' Add a Product'    // GET request to render the add_edit_product.blade.php view, and POST request to submit the <form> in that view    // https://www.youtube.com/watch?v=-Lnk1N1jTNQ&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=47
     });
 });
 
