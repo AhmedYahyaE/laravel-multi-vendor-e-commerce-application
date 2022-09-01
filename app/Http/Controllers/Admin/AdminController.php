@@ -60,7 +60,7 @@ class AdminController extends Controller
             // Logging in using our 'admin' guard we created in auth.php    // Check 5:44 in https://www.youtube.com/watch?v=_vBCl-77GYc&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=11
             // Manually Authenticating Users (using attempt() method()): https://laravel.com/docs/9.x/authentication#authenticating-users
             // if (\Illuminate\Support\Facades\Auth::guard('admin')->attempt(['email' => $data['email'], 'password' => $data['password'], 'status' => 1])) { // Check the Admin.php model and 12:47 in https://www.youtube.com/watch?v=_vBCl-77GYc&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=11
-            if (Auth::guard('admin')->attempt([
+            if (\Auth::guard('admin')->attempt([
                 'email'    => $data['email'],
                 'password' => $data['password'],
                 'status'   => 1
@@ -76,7 +76,7 @@ class AdminController extends Controller
     }
 
     public function logout() {
-        Auth::guard('admin')->logout(); // Logging out using our 'admin' guard that we created in auth.php
+        \Auth::guard('admin')->logout(); // Logging out using our 'admin' guard that we created in auth.php
         return redirect('admin/login');
     }
 
@@ -92,12 +92,12 @@ class AdminController extends Controller
             // dd($data);
 
             // Check first if the entered admin current password is corret
-            if (\Illuminate\Support\Facades\Hash::check($data['current_password'], Auth::guard('admin')->user()->password)) { // ['current_password'] comes from the AJAX call in custom.js page from the data object inside $.ajax() method
+            if (\Illuminate\Support\Facades\Hash::check($data['current_password'], \Auth::guard('admin')->user()->password)) { // ['current_password'] comes from the AJAX call in custom.js page from the data object inside $.ajax() method
                 // Check if the new password is matching with confirm password
                 if ($data['confirm_password'] == $data['new_password']) {
-                    // dd(\App\Models\Admin::where('id', Auth::guard('admin')->user()->id));
-                    // echo '<pre>', var_dump(\App\Models\Admin::where('id', Auth::guard('admin')->user()->id)), '</pre>';
-                    \App\Models\Admin::where('id', Auth::guard('admin')->user()->id)->update([
+                    // dd(\App\Models\Admin::where('id', \Auth::guard('admin')->user()->id));
+                    // echo '<pre>', var_dump(\App\Models\Admin::where('id', \Auth::guard('admin')->user()->id)), '</pre>';
+                    \App\Models\Admin::where('id', \Auth::guard('admin')->user()->id)->update([
                         'password' => bcrypt($data['new_password'])
                     ]); // we persist (update) the hashed password (not the password itself)
                     return redirect()->back()->with('success_message', 'Admin Password has been updated successfully!');
@@ -111,15 +111,15 @@ class AdminController extends Controller
 
 
         // Get data from 'admin' Authentication Guard to be able to show them in the <form> of update_admin_password.blade.php page: Check 19:10 in https://www.youtube.com/watch?v=b4ISE_polCo&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=15
-        // dd(Auth::guard('admin'));
-        // dd(Auth::guard('admin')->user());
-        // echo '<pre>', var_dump(\App\Models\Admin::where('email', Auth::guard('admin')->user()->email)), '</pre>';
-        // echo '<pre>', var_dump(\App\Models\Admin::where('email', Auth::guard('admin')->user()->email)->first()), '</pre>';
-        // echo '<pre>', var_dump(\App\Models\Admin::where('email', Auth::guard('admin')->user()->email)->first()->toArray()), '</pre>';
+        // dd(\Auth::guard('admin'));
+        // dd(\Auth::guard('admin')->user());
+        // echo '<pre>', var_dump(\App\Models\Admin::where('email', \Auth::guard('admin')->user()->email)), '</pre>';
+        // echo '<pre>', var_dump(\App\Models\Admin::where('email', \Auth::guard('admin')->user()->email)->first()), '</pre>';
+        // echo '<pre>', var_dump(\App\Models\Admin::where('email', \Auth::guard('admin')->user()->email)->first()->toArray()), '</pre>';
         // exit;
         // dd(Auth::guard('admin')->user()->email); // https://laravel.com/docs/9.x/eloquent#examining-attribute-changes
         // dd(Auth::guard('admin')->user()->email)->first(); // https://laravel.com/docs/9.x/eloquent#examining-attribute-changes
-        $adminDetails = \App\Models\Admin::where('email', Auth::guard('admin')->user()->email)->first()->toArray(); // 'Admin' is the Admin.php model    // Auth::guard('admin') is the authenticated user using the 'admin' guard we created in auth.php    // https://laravel.com/docs/9.x/eloquent#retrieving-models
+        $adminDetails = \App\Models\Admin::where('email', \Auth::guard('admin')->user()->email)->first()->toArray(); // 'Admin' is the Admin.php model    // \Auth::guard('admin') is the authenticated user using the 'admin' guard we created in auth.php    // https://laravel.com/docs/9.x/eloquent#retrieving-models
         return view('admin/settings/update_admin_password')->with(compact('adminDetails')); // Passing Data To Views: https://laravel.com/docs/9.x/views#sharing-data-with-all-views
     }
 
@@ -130,7 +130,7 @@ class AdminController extends Controller
 
         // Check 15:06 in https://www.youtube.com/watch?v=maEXuJNzE8M&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=17
         // Hashing Passwords: https://laravel.com/docs/9.x/hashing#hashing-passwords
-        if (\Illuminate\Support\Facades\Hash::check($data['current_password'], Auth::guard('admin')->user()->password)) { // ['current_password'] comes from the AJAX call in custom.js page from the data object inside $.ajax() method
+        if (\Illuminate\Support\Facades\Hash::check($data['current_password'], \Auth::guard('admin')->user()->password)) { // ['current_password'] comes from the AJAX call in custom.js page from the data object inside $.ajax() method
             return 'true';
         } else {
             return 'false';
@@ -191,7 +191,7 @@ class AdminController extends Controller
 
 
             // Update Admin Details
-            \App\Models\Admin::where('id', Auth::guard('admin')->user()->id)->update([
+            \App\Models\Admin::where('id', \Auth::guard('admin')->user()->id)->update([
                 'name'   => $data['admin_name'],
                 'mobile' => $data['admin_mobile'],
                 'image'  => $imageName
@@ -261,14 +261,14 @@ class AdminController extends Controller
                 // Vendor details need to be updated in BOTH `admins` and `vendors` tables:
 
                 // Update Vendor Details in 'admins' table
-                \App\Models\Admin::where('id', Auth::guard('admin')->user()->id)->update([
+                \App\Models\Admin::where('id', \Auth::guard('admin')->user()->id)->update([
                     'name'   => $data['vendor_name'],
                     'mobile' => $data['vendor_mobile'],
                     'image'  => $imageName
                 ]); // Note that the image name is the random image name that we generated
 
                 // Update Vendor Details in 'vendors' table
-                \App\Models\Vendor::where('id', Auth::guard('admin')->user()->vendor_id)->update([
+                \App\Models\Vendor::where('id', \Auth::guard('admin')->user()->vendor_id)->update([
                     'name'    => $data['vendor_name'],
                     'mobile'  => $data['vendor_mobile'],
                     'address' => $data['vendor_address'],
@@ -283,7 +283,7 @@ class AdminController extends Controller
             }
 
 
-            $vendorDetails = \App\Models\Vendor::where('id', Auth::guard('admin')->user()->vendor_id)->first()->toArray();
+            $vendorDetails = \App\Models\Vendor::where('id', \Auth::guard('admin')->user()->vendor_id)->first()->toArray();
         } else if ($slug == 'business') {
             // Correcting issues in the Skydash Admin Panel Sidebar using Session:  Check 6:33 in https://www.youtube.com/watch?v=i_SUdNILIrc&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=29
             \Session::put('page', 'update_business_details');
@@ -340,7 +340,7 @@ class AdminController extends Controller
 
 
                 // Update `vendors_business_details` table
-                \App\Models\VendorsBusinessDetail::where('vendor_id', Auth::guard('admin')->user()->vendor_id)->update([
+                \App\Models\VendorsBusinessDetail::where('vendor_id', \Auth::guard('admin')->user()->vendor_id)->update([
                     'shop_name'               => $data['shop_name'],
                     'shop_mobile'             => $data['shop_mobile'],
                     'shop_address'            => $data['shop_address'],
@@ -360,7 +360,7 @@ class AdminController extends Controller
             }
 
 
-            $vendorDetails = \App\Models\VendorsBusinessDetail::where('vendor_id', Auth::guard('admin')->user()->vendor_id)->first()->toArray();
+            $vendorDetails = \App\Models\VendorsBusinessDetail::where('vendor_id', \Auth::guard('admin')->user()->vendor_id)->first()->toArray();
         } else if ($slug == 'bank') {
             // Correcting issues in the Skydash Admin Panel Sidebar using Session:  Check 6:33 in https://www.youtube.com/watch?v=i_SUdNILIrc&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=29
             \Session::put('page', 'update_bank_details');
@@ -392,7 +392,7 @@ class AdminController extends Controller
 
 
                 // Update `vendors_bank_details` table
-                \App\Models\VendorsBankDetail::where('vendor_id', Auth::guard('admin')->user()->vendor_id)->update([
+                \App\Models\VendorsBankDetail::where('vendor_id', \Auth::guard('admin')->user()->vendor_id)->update([
                     'account_holder_name' => $data['account_holder_name'],
                     'bank_name'           => $data['bank_name'],
                     'account_number'      => $data['account_number'],
@@ -405,7 +405,7 @@ class AdminController extends Controller
 
 
 
-            $vendorDetails = \App\Models\VendorsBankDetail::where('vendor_id', Auth::guard('admin')->user()->vendor_id)->first()->toArray();
+            $vendorDetails = \App\Models\VendorsBankDetail::where('vendor_id', \Auth::guard('admin')->user()->vendor_id)->first()->toArray();
         }
 
 

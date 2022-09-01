@@ -27,6 +27,7 @@ class Admin
         // Determining If The Current User Is Authenticated: https://laravel.com/docs/9.x/authentication#determining-if-the-current-user-is-authenticated
         // Accessing Specific Guard Instances: https://laravel.com/docs/9.x/authentication#accessing-specific-guard-instances
         if (!\Illuminate\Support\Facades\Auth::guard('admin')->check()) { // If the user making the incoming HTTP request is not authenticated, redirect to login page
+        // if (!\Auth::guard('admin')->check()) { // If the user making the incoming HTTP request is not authenticated, redirect to login page
             return redirect('/admin/login');
         }
 

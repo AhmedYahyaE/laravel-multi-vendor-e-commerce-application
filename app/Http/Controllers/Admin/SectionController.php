@@ -88,10 +88,10 @@ class SectionController extends Controller
             // Saving inserted/updated data    // Inserting & Updating Models: https://laravel.com/docs/9.x/eloquent#inserts AND https://laravel.com/docs/9.x/eloquent#updates
             $section->name   = $data['section_name']; // WHETHER ADDING or UPDATING
             $section->status = 1;  // WHETHER ADDING or UPDATING
-            $section->save();
+            $section->save(); // Save all data in the database
 
 
-            return redirect('admin/sections')->with('success_message', $message);
+            return redirect('admin/products')->with('success_message', $message);
         }
 
 

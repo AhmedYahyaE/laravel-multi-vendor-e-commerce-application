@@ -172,7 +172,7 @@ class CategoryController extends Controller
             $category->meta_keywords     = $data['meta_keywords'];
             $category->status            = 1;
 
-            $category->save();
+            $category->save(); // Save all data in the database
 
             return redirect('admin/categories')->with('success_message', $message);
 
@@ -180,7 +180,7 @@ class CategoryController extends Controller
             // // Saving inserted/updated data    // Inserting & Updating Models: https://laravel.com/docs/9.x/eloquent#inserts AND https://laravel.com/docs/9.x/eloquent#updates
             // $category->name   = $data['category_name']; // WHETHER ADDING or UPDATING
             // $category->status = 1;  // WHETHER ADDING or UPDATING
-            // $category->save();
+            // $category->save(); // Save all data in the database
 
 
             // return redirect('admin/categories')->with('success_message', $message);

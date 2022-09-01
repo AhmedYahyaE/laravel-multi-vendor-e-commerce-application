@@ -28,12 +28,12 @@ return new class extends Migration
             $table->string('product_price');
             $table->string('product_discount');
             $table->string('product_weight');
-            $table->string('product_image');
-            $table->string('product_video');
+            $table->string('product_image')->nullable();
+            $table->string('product_video')->nullable();
             $table->string('description')->nullable();
-            $table->string('meta_title'); // For SEO
-            $table->string('meta_keywords');  // For SEO
-            $table->string('meta_description'); // For SEO
+            $table->string('meta_title')->nullable(); // For SEO
+            $table->string('meta_keywords')->nullable();  // For SEO
+            $table->string('meta_description')->nullable(); // For SEO
             $table->enum('is_featured', ['No', 'Yes']);
             $table->tinyInteger('status');
 

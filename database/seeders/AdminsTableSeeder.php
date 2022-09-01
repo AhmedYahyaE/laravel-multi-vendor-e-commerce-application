@@ -23,7 +23,7 @@ class AdminsTableSeeder extends Seeder
         $adminRecords = [
             [
                 'id'        => 1,
-                'name'      => 'Super Admin',
+                'name'      => 'Ahmed Yahya',
                 'type'      => 'superadmin',
                 'vendor_id' => 0,
                 'mobile'    => '9800000000',
@@ -36,7 +36,7 @@ class AdminsTableSeeder extends Seeder
             // Check 19:39 in https://www.youtube.com/watch?v=LfK-eMcUJsw&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=20
             [
                 'id'        => 2,
-                'name'      => 'John',
+                'name'      => 'John Singh - Vendor',
                 'type'      => 'vendor',
                 'vendor_id' => 1,
                 'mobile'    => '9700000000',

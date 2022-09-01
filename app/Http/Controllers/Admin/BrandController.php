@@ -71,6 +71,7 @@ class BrandController extends Controller
             $message = 'Brand updated successfully!';
         }
 
+
         if ($request->isMethod('post')) { // WHETHER Add or Update <form> submission!!
             $data = $request->all();
             // dd($data);
@@ -90,7 +91,7 @@ class BrandController extends Controller
             // Saving inserted/updated data    // Inserting & Updating Models: https://laravel.com/docs/9.x/eloquent#inserts AND https://laravel.com/docs/9.x/eloquent#updates
             $brand->name   = $data['brand_name']; // WHETHER ADDING or UPDATING
             $brand->status = 1;  // WHETHER ADDING or UPDATING
-            $brand->save();
+            $brand->save(); // Save all data in the database
 
 
             return redirect('admin/brands')->with('success_message', $message);

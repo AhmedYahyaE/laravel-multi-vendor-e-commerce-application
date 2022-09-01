@@ -100,9 +100,9 @@
                                     @foreach ($categories as $section) {{-- Check ProductsController.php --}}
                                         <optgroup label="{{ $section['name'] }}">
                                             @foreach ($section['categories'] as $category) {{-- Check ProductsController.php --}}
-                                                <option value="{{ $category['category_name'] }}">{{ $category['category_name'] }}</option>
+                                                <option value="{{ $category['id'] }}">{{ $category['category_name'] }}</option>
                                                 @foreach ($category['sub_categories'] as $subcategory) {{-- Check ProductsController.php --}}
-                                                    <option value="{{ $subcategory['category_name'] }}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--&nbsp;{{ $subcategory['category_name'] }}</option>
+                                                    <option value="{{ $subcategory['id'] }}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--&nbsp;{{ $subcategory['category_name'] }}</option>
                                                 @endforeach
                                             @endforeach
                                         </optgroup>
