@@ -38,14 +38,14 @@ return [
     'guards' => [
         'web' => [
             'driver' => 'session',
-            'provider' => 'users', // `users` database table
+            'provider' => 'users', // the `users' provider     // `users` database table
         ],
 
         // Our code: (Check Admin.php model    protected $guard = 'admin';    )
         // Multiple Authentication: https://www.youtube.com/watch?v=y8FmOIRRi2I&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=11    // https://laravel.com/docs/9.x/passport#multiple-authentication-guards
         'admin' => [
             'driver' => 'session',
-            'provider' => 'admins' // `admins` database table
+            'provider' => 'admins' // the `admins' provider    // `admins` database table
         ]
     ],
 
@@ -69,14 +69,14 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model' => App\Models\User::class,
+            'model' => App\Models\User::class, // the User.php Model of the `users` database table
         ],
 
         // Our code: (Check Admin.php model    protected $guard = 'admin';    )
         // Multiple Authentication: https://www.youtube.com/watch?v=y8FmOIRRi2I&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=11    // https://laravel.com/docs/9.x/passport#multiple-authentication-guards
         'admins' => [
             'driver' => 'eloquent',
-            'model' => App\Models\Admin::class,
+            'model' => App\Models\Admin::class, // the Admin.php Model of the `admins` database table
         ],
 
         // 'users' => [

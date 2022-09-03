@@ -174,7 +174,7 @@ class AdminController extends Controller
                     // Get the image extension
                     $extension = $image_tmp->getClientOriginalExtension();
 
-                    // Generate a random name for the uploaded image
+                    // Generate a random name for the uploaded image (to avoid that the image might get overwritten if its name is repeated)
                     $imageName = rand(111, 99999) . '.' . $extension;
 
                     // Assigning the uploaded images path inside the 'public' folder
@@ -242,7 +242,7 @@ class AdminController extends Controller
                         // Get the image extension
                         $extension = $image_tmp->getClientOriginalExtension();
 
-                        // Generate a random name for the uploaded image
+                        // Generate a random name for the uploaded image (to avoid that the image might get overwritten if its name is repeated)
                         $imageName = rand(111, 99999) . '.' . $extension;
 
                         // Assigning the uploaded images path inside the 'public' folder
@@ -322,7 +322,7 @@ class AdminController extends Controller
                         // Get the image extension
                         $extension = $image_tmp->getClientOriginalExtension();
 
-                        // Generate a random name for the uploaded image
+                        // Generate a random name for the uploaded image (to avoid that the image might get overwritten if its name is repeated)
                         $imageName = rand(111, 99999) . '.' . $extension;
 
                         // Assigning the uploaded images path inside the 'public' folder

@@ -77,6 +77,7 @@ class ProductsController extends Controller
         if ($request->isMethod('post')) { // WHETHER 'Add a Product' or 'Update a Product' <form> is submitted (THE SAME <form>)!!
             $data = $request->all();
             // dd($data);
+            // dd($product->is_featured);
 
             // Laravel's Validation    // Check 14:49 in https://www.youtube.com/watch?v=ydubcZC3Hbw&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=18
             // Customizing Laravel's Validation Error Messages: https://laravel.com/docs/9.x/validation#customizing-the-error-messages    // Customizing Validation Rules: https://laravel.com/docs/9.x/validation#custom-validation-rules    // Check 14:49 in https://www.youtube.com/watch?v=ydubcZC3Hbw&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=18
@@ -101,7 +102,60 @@ class ProductsController extends Controller
             ];
             $this->validate($request, $rules, $customMessages);
 
-            
+            // Upload Product Image after Resize
+            // Important Note: There are going to be 3 three sizes for the product image: Admin will upload the image with the recommended size which 1000*1000 which is the 'large' size, but then we're going to use 'Intervention' package to get another two sizes: 500*500 which is the 'medium' size and 250*250 which is the 'small' size
+            // The 3 three image sizes: large: 1000x1000, medium: 500x500, small: 250x250
+            if ($request->hasFile('product_image')) { // Retrieving Uploaded Files: https://laravel.com/docs/9.x/requests#retrieving-uploaded-files
+                $image_tmp = $request->file('product_image');
+                if ($image_tmp->isValid()) { // Validating Successful Uploads: https://laravel.com/docs/9.x/requests#validating-successful-uploads
+                    // Get image extension
+                    $extension = $image_tmp->getClientOriginalExtension();
+
+                    // Generate a new random name for the uploaded image (to avoid that the image might get overwritten if its name is repeated)
+                    $imageName = rand(111, 99999) . '.' . $extension; // e.g. 5954.png
+
+                    // Assigning the uploaded images path inside the 'public' folder
+                    // We will have three folders: small, medium and large, depending on the images sizes
+                    $largeImagePath  = 'front/images/product_images/large/'  . $imageName; // 'large'  images folder
+                    $mediumImagePath = 'front/images/product_images/medium/' . $imageName; // 'medium' images folder
+                    $smallImagePath  = 'front/images/product_images/small/'  . $imageName; // 'small'  images folder
+
+                    // Upload the image using the 'Intervention' package and save it in our THREE paths (folders) inside the 'public' folder
+                    \Image::make($image_tmp)->resize(1000, 1000)->save($largeImagePath);  // resize the 'large'  image size then store it in the 'large'  folder
+                    \Image::make($image_tmp)->resize(500,   500)->save($mediumImagePath); // resize the 'medium' image size then store it in the 'medium' folder
+                    \Image::make($image_tmp)->resize(250,   250)->save($smallImagePath);  // resize the 'small'  image size then store it in the 'small'  folder
+                
+                    // Insert the image name in the database table
+                    $product->product_image = $imageName;
+                }
+            }
+
+
+            // Upload Product Video
+            if ($request->hasFile('product_video')) { // Retrieving Uploaded Files: https://laravel.com/docs/9.x/requests#retrieving-uploaded-files
+                $video_tmp = $request->file('product_video');
+
+                if ($video_tmp->isValid()) { // Validating Successful Uploads: https://laravel.com/docs/9.x/requests#validating-successful-uploads
+                    // Upload video
+                    // $video_name = $video_tmp->getClientOriginalName();
+                    $extension  = $video_tmp->getClientOriginalExtension();
+                    
+                    // Generate a new random name for the uploaded video (to avoid that the video might get overwritten if its name is repeated)
+                    // $videoName = $video_name . '-' . rand() . '.' . $extension; // e.g.    shirtVideo-75935.mp4
+                    $videoName = rand() . '.' . $extension; // e.g.    75935.mp4
+
+                    // Assigning the uploaded videos path inside the 'public' folder
+                    $videoPath = 'front/videos/product_videos/';
+
+                    // Move the video from the temporary path (which is assigned by the web server) to our assigned path inside the 'public' folder    // Copying & Moving Files: https://laravel.com/docs/9.x/filesystem#copying-moving-files
+                    $video_tmp->move($videoPath, $videoName);
+
+                    // Insert the video name in the database table
+                    $product->product_video = $videoName;
+                }
+            }
+
+
             // Saving BOTH inserted ('Add a product' <form>) AND updated ('Update a Product' <form>) data in `products` database table    // Inserting & Updating Models: https://laravel.com/docs/9.x/eloquent#inserts AND https://laravel.com/docs/9.x/eloquent#updates
             $categoryDetails = \App\Models\Category::find($data['category_id']); // Get the section from the submitted category
             // dd($categoryDetails);
@@ -134,9 +188,14 @@ class ProductsController extends Controller
             $product->meta_description = $data['meta_description'];
             $product->meta_keywords    = $data['meta_keywords'];
             
+
+            // dd($product->is_featured);
+
             if (!empty($product->is_featured)) {
+                // dd($data);
                 $product->is_featured = $data['is_featured'];
             } else {
+                // dd($data);
                 $product->is_featured = 'No';
             }
 

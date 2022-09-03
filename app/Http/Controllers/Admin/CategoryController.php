@@ -145,15 +145,16 @@ class CategoryController extends Controller
                     // Get the image extension
                     $extension = $image_tmp->getClientOriginalExtension();
 
-                    // Generate a random name for the uploaded image
+                    // Generate a random name for the uploaded image (to avoid that the image might get overwritten if its name is repeated)
                     $imageName = rand(111, 99999) . '.' . $extension;
 
                     // Assigning the uploaded images path inside the 'public' folder
                     $imagePath = 'front/images/category_images/' . $imageName;
 
-                    // Upload the image using the Intervention package and save it in our path inside the 'public' folder
+                    // Upload the image using the 'Intervention' package and save it in our path inside the 'public' folder
                     \Image::make($image_tmp)->save($imagePath); // '\Image' is the Intervention package
 
+                    // Insert the image name in the database table
                     $category->category_image = $imageName; // Check 31:58 in https://www.youtube.com/watch?v=1G21b3-9cPo&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=39
                 }
             } else { // In case the admins updates other fields but doesn't update the image itself (doesn't upload a new image), and originally there wasn't any image uploaded in the first place
