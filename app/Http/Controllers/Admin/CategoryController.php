@@ -222,7 +222,7 @@ class CategoryController extends Controller
         return redirect()->back()->with('success_message', $message);
     }
 
-    public function deleteCategoryImage($id) { // AJAX call from custom.js    // Delete the category image from BOTH SERVER (FILESYSTEM) & DATABASE    // https://www.youtube.com/watch?v=uHYf4HmJTS8&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=42
+    public function deleteCategoryImage($id) { // AJAX call from custom.js    // Delete the category image from BOTH SERVER (FILESYSTEM) & DATABASE    // $id is passed as a URL parameter    // https://www.youtube.com/watch?v=uHYf4HmJTS8&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=42
         // Category image record in the database
         $categoryImage = \App\Models\Category::select('category_image')->where('id', $id)->first(); // https://laravel.com/docs/9.x/queries#delete-statements
         // dd($categoryImage);
@@ -235,7 +235,7 @@ class CategoryController extends Controller
             unlink($category_image_path . $categoryImage->category_image);
         }
 
-        // Delete the category image name from the `categories` database table (Note: We won't use delete() method because we're not deleting a complete record (entry), we will just use update() method to update the category image to name to an empty string value '')
+        // Delete the category image name from the `categories` database table (Note: We won't use delete() method because we're not deleting a complete record (entry) (we're just deleting a one column `category_image` value), we will just use update() method to update the `category_image` name to an empty string value '')
         \App\Models\Category::where('id', $id)->update(['category_image' => '']);
 
         $message = 'Category Image has been deleted successfully!';

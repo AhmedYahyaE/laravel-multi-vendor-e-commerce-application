@@ -69,15 +69,15 @@ class ProductsController extends Controller
             $message = 'Product added successfully!';
         } else { // if the $id is passed in the route/URL parameters, this means Edit the Product
             $title = 'Edit Product';
-            // $product = \App\Models\Product::find($id);
+            $product = \App\Models\Product::find($id);
             // dd($product);
-            // $message = 'Product updated successfully!';
+            $message = 'Product updated successfully!';
         }
 
         if ($request->isMethod('post')) { // WHETHER 'Add a Product' or 'Update a Product' <form> is submitted (THE SAME <form>)!!
             $data = $request->all();
             // dd($data);
-            // dd($product->is_featured);
+
 
             // Laravel's Validation    // Check 14:49 in https://www.youtube.com/watch?v=ydubcZC3Hbw&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=18
             // Customizing Laravel's Validation Error Messages: https://laravel.com/docs/9.x/validation#customizing-the-error-messages    // Customizing Validation Rules: https://laravel.com/docs/9.x/validation#custom-validation-rules    // Check 14:49 in https://www.youtube.com/watch?v=ydubcZC3Hbw&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=18
@@ -132,6 +132,7 @@ class ProductsController extends Controller
 
 
             // Upload Product Video
+            // Important Note: Default php.ini file upload Maximum file size is 2MB (If you upload a file with a larger size, it won't be uploaded!). Check upload_max_filesize using phpinfo() method.
             if ($request->hasFile('product_video')) { // Retrieving Uploaded Files: https://laravel.com/docs/9.x/requests#retrieving-uploaded-files
                 $video_tmp = $request->file('product_video');
 
@@ -139,6 +140,8 @@ class ProductsController extends Controller
                     // Upload video
                     // $video_name = $video_tmp->getClientOriginalName();
                     $extension  = $video_tmp->getClientOriginalExtension();
+
+                    // exit;
                     
                     // Generate a new random name for the uploaded video (to avoid that the video might get overwritten if its name is repeated)
                     // $videoName = $video_name . '-' . rand() . '.' . $extension; // e.g.    shirtVideo-75935.mp4
@@ -170,12 +173,13 @@ class ProductsController extends Controller
             $admin_id  = \Auth::guard('admin')->user()->id; // Get the `id` column value of the `admins` table through Retrieving The Authenticated User (the logged in user) using the 'admin' guard which we defined in auth.php page: https://laravel.com/docs/9.x/authentication#retrieving-the-authenticated-user
             
             $product->admin_type = $adminType;
+            $product->admin_id   = $admin_id;
             if ($adminType == 'vendor') {
                 $product->vendor_id  = $vendor_id;
             } else {
                 $product->vendor_id = 0;
             }
-            $product->admin_id   = $admin_id;
+
 
             $product->product_name     = $data['product_name'];
             $product->product_code     = $data['product_code'];
@@ -187,11 +191,10 @@ class ProductsController extends Controller
             $product->meta_title       = $data['meta_title'];
             $product->meta_description = $data['meta_description'];
             $product->meta_keywords    = $data['meta_keywords'];
-            
 
-            // dd($product->is_featured);
 
-            if (!empty($product->is_featured)) {
+
+            if (!empty($data['is_featured'])) {
                 // dd($data);
                 $product->is_featured = $data['is_featured'];
             } else {
@@ -219,5 +222,60 @@ class ProductsController extends Controller
 
         // return view('admin.products.add_edit_product')->with(compact('title', 'product'));
         return view('admin.products.add_edit_product')->with(compact('title', 'product', 'categories', 'brands'));
+    }
+
+    public function deleteProductImage($id) { // AJAX call from custom.js    // Delete the product image from BOTH SERVER (FILESYSTEM) & DATABASE    // $id is passed as a URL parameter    // https://www.youtube.com/watch?v=0vLLzemWUmk&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=53
+        // Get the product image record stored in the database
+        $productImage = \App\Models\Product::select('product_image')->where('id', $id)->first(); // https://laravel.com/docs/9.x/queries#delete-statements
+        // dd($productImage);
+        
+        // Get the product image three paths on the server (filesystem) ('small', 'medium' and 'large' folders)
+        $small_image_path  = 'front/images/product_images/small/';
+        $medium_image_path = 'front/images/product_images/medium/';
+        $large_image_path  = 'front/images/product_images/large/';
+
+        // Delete the product images on server (filesystem) (from the the THREE folders)
+        // First: Delete from the 'small' folder
+        if (file_exists($small_image_path . $productImage->product_image)) {
+            unlink($small_image_path . $productImage->product_image);
+        }
+        // Second: Delete from the 'medium' folder
+        if (file_exists($medium_image_path . $productImage->product_image)) {
+            unlink($medium_image_path . $productImage->product_image);
+        }
+        // Third: Delete from the 'large' folder
+        if (file_exists($large_image_path . $productImage->product_image)) {
+            unlink($large_image_path . $productImage->product_image);
+        }
+
+
+
+        // Delete the product image name (record) from the `products` database table (Note: We won't use delete() method because we're not deleting a complete record (entry) (we're just deleting a one column `product_image` value), we will just use update() method to update the `product_image` name to an empty string value '')
+        \App\Models\Product::where('id', $id)->update(['product_image' => '']);
+
+        $message = 'Product Image has been deleted successfully!';
+
+        return redirect()->back()->with('success_message', $message);
+    }
+
+    public function deleteProductVideo($id) { // AJAX call from custom.js    // Delete the product video from BOTH SERVER (FILESYSTEM) & DATABASE    // $id is passed as a URL parameter    // https://www.youtube.com/watch?v=0vLLzemWUmk&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=53
+        // Get the product video record stored in the database
+        $productVideo = \App\Models\Product::select('product_video')->where('id', $id)->first(); // https://laravel.com/docs/9.x/queries#delete-statements
+        // dd($productVideo);
+        
+        // Get the product video path on the server (filesystem)
+        $product_video_path = 'front/videos/product_videos/';
+
+        // Delete the product videos on server (filesystem) (from the the 'product_videos' folder)
+        if (file_exists($product_video_path . $productVideo->product_video)) {
+            unlink($product_video_path . $productVideo->product_video);
+        }
+
+        // Delete the product video name (record) from the `products` database table (Note: We won't use delete() method because we're not deleting a complete record (entry) (we're just deleting a one column `product_video` value), we will just use update() method to update the `product_video` name to an empty string value '')
+        \App\Models\Product::where('id', $id)->update(['product_video' => '']);
+
+        $message = 'Product Video has been deleted successfully!';
+
+        return redirect()->back()->with('success_message', $message);
     }
 }
