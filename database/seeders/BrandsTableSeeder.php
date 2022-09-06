@@ -25,7 +25,7 @@ class BrandsTableSeeder extends Seeder
             ['id' => 4, 'name' => 'Samsung', 'status' => 1],
             ['id' => 5, 'name' => 'LG'     , 'status' => 1],
             ['id' => 6, 'name' => 'Lenovo' , 'status' => 1],
-            ['id' => 7, 'name' => 'MI'     , 'status' => 1]
+            ['id' => 7, 'name' => 'MI'     , 'status' => 1],
         ];
         // Note: Check DatabaseSeeder.php!
         \App\Models\Brand::insert($brandRecords);

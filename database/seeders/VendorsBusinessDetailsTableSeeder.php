@@ -34,7 +34,7 @@ class VendorsBusinessDetailsTableSeeder extends Seeder
                 'business_license_number' => '1234556',
                 'gst_number'              => '446444664',
                 'pan_number'              => '2135446',
-            ]
+            ],
         ];
         // Note: Check DatabaseSeeder.php
         \App\Models\VendorsBusinessDetail::insert($vendorsBusinessDetailsRecords);
