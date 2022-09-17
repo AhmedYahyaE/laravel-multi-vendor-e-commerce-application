@@ -18,4 +18,9 @@ class Product extends Model
     public function category() {
         return $this->belongsTo('App\Models\Category', 'category_id'); // 'category_id' is the foreign key
     }
+
+    // Every product has many attributes
+    public function attributes() {
+        return $this->hasMany('App\Models\ProductsAttribute');
+    }
 }

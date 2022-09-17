@@ -37,12 +37,12 @@ require __DIR__.'/auth.php';
 
 
 
-// NOTE: ALL THE ROUTES INSIDE THIS PREFIX STATRT WITH '/admin/', SO THOSE ROUTES INSIDE THE PREFIX, YOU DON'T WRITE '/admin' WHEN YOU DEFINE THEM, IT'LL BE DEFINED AUTOMATICALLY!!
+// NOTE: ALL THE ROUTES INSIDE THIS PREFIX STATRT WITH 'admin/', SO THOSE ROUTES INSIDE THE PREFIX, YOU DON'T WRITE '/admin' WHEN YOU DEFINE THEM, IT'LL BE DEFINED AUTOMATICALLY!!
 // Route Group (for routes starting with 'admin' (Admin Route Group)) (https://laravel.com/docs/9.x/routing#route-group-prefixes)
 Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function() {
-    // Matches the '/admin/login' URL
+    // Matches the 'admin/login' URL
     Route::match(['get', 'post'], 'login', 'AdminController@login'); // match() method is used to use more than one HTTP request method for the same route, so GET for rendering the login.php page, and POST for the login.php page <form> submission (e.g. GET and POST)
-    // Matches the '/admin/dashboard' URL
+    // Matches the 'admin/dashboard' URL
     // Route::get('dashboard', 'AdminController@dashboard');
 
     // Protected routes or protecting routes:
@@ -54,7 +54,7 @@ Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function
     });
     */
     // This is the same as last couple of lines of code
-    // This a Route Group for routes that ALL start with '/admin/-something' and utilized the 'admin' Authentication Guard    // Note: You must remove the '/admin'/ part from the routes that are written inside this Route Group
+    // This a Route Group for routes that ALL start with 'admin/-something' and utilized the 'admin' Authentication Guard    // Note: You must remove the '/admin'/ part from the routes that are written inside this Route Group
     Route::group(['middleware' => ['admin']], function() { // using our 'admin' guard (which we created in auth.php)
         Route::get('dashboard', 'AdminController@dashboard'); // Admin login
         Route::get('logout', 'AdminController@logout'); // Admin logout
@@ -94,12 +94,17 @@ Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function
         Route::match(['get', 'post'], 'add-edit-product/{id?}', 'ProductsController@addEditProduct'); // the slug (URL parameter) {id?} is an optional parameter, so if it's passed, this means 'Edit the Product', and if not passed, this means' Add a Product'    // GET request to render the add_edit_product.blade.php view, and POST request to submit the <form> in that view    // https://www.youtube.com/watch?v=-Lnk1N1jTNQ&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=47
         Route::get('delete-product-image/{id}', 'ProductsController@deleteProductImage'); // Delete a product images (in the three folders: small, medium and large) in add_edit_product.blade.php page from BOTH SERVER (FILESYSTEM) & DATABASE    // https://www.youtube.com/watch?v=0vLLzemWUmk&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=53
         Route::get('delete-product-video/{id}', 'ProductsController@deleteProductVideo'); // Delete a product video in add_edit_product.blade.php page from BOTH SERVER (FILESYSTEM) & DATABASE    // https://www.youtube.com/watch?v=0vLLzemWUmk&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=53
-        
+
+        // Attributes
+        Route::match(['get', 'post'], 'add-edit-attributes/{id}', 'ProductsController@addAttributes'); // GET request to render the add_edit_attributes.blade.php view, and POST request to submit the <form> in that view    // https://www.youtube.com/watch?v=gaLXLO5knpc&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=52
+        Route::post('update-attribute-status', 'ProductsController@updateAttributeStatus'); // Update Attributes Status using AJAX in add_edit_attributes.blade.php
+        Route::get('delete-attribute/{id}', 'ProductsController@deleteAttribute'); // Delete an attribute in add_edit_attributes.blade.php
+        Route::match(['get', 'post'], 'edit-attributes/{id}', 'ProductsController@editAttributes'); // in add_edit_attributes.blade.php
     });
 });
 
 // Admin Login page Route WTIHOUT Admin Group
-// Route::get('/admin/login', ['App\Http\Controllers\Admin\AdminController', 'login']); // is the same as:    Route::get('/admin/dashboard', 'App\Http\Controllers\Admin\AdminController@login');
+// Route::get('admin/login', ['App\Http\Controllers\Admin\AdminController', 'login']); // is the same as:    Route::get('admin/dashboard', 'App\Http\Controllers\Admin\AdminController@login');
 
 // Admin Dashboard Route WTIHOUT Admin Route Group
-// Route::get('/admin/dashboard', ['App\Http\Controllers\Admin\AdminController', 'dashboard']); // is the same as:    Route::get('/admin/dashboard', 'App\Http\Controllers\Admin\AdminController@dashboard');
+// Route::get('admin/dashboard', ['App\Http\Controllers\Admin\AdminController', 'dashboard']); // is the same as:    Route::get('admin/dashboard', 'App\Http\Controllers\Admin\AdminController@dashboard');

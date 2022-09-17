@@ -35,7 +35,7 @@
                                             <td>{{ $admin['type'] }}</td>
                                             <td>{{ $admin['mobile'] }}</td>
                                             <td>{{ $admin['email'] }}</td>
-                                            <td><img src="{{ asset('/admin/images/photos/' . $admin['image']) }}"></td>
+                                            <td><img src="{{ asset('admin/images/photos/' . $admin['image']) }}"></td>
                                             <td>
                                                 @if ($admin['status'] == 1)
                                                     <a class="updateAdminStatus" id="admin-{{ $admin['id'] }}" admin_id="{{ $admin['id'] }}" href="javascript:void(0)"> {{-- Using HTML Custom Attributes --}}

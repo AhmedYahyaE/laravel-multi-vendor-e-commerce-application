@@ -59,7 +59,10 @@
 
                                 {{-- Our code: https://www.youtube.com/watch?v=_vBCl-77GYc&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=11 --}}
                                 {{-- https://laravel.com/docs/9.x/csrf#preventing-csrf-requests --}}
-                                <form class="pt-3" action="{{ url('/admin/login') }}" method="post">    @csrf
+                                <form class="pt-3" action="{{ url('admin/login') }}" method="post">
+                                    @csrf
+
+
                                     <div class="form-group">
                                         <input type="email" name="email" id="email" class="form-control form-control-lg" id="exampleInputEmail1" placeholder="Username" required>
                                     </div>

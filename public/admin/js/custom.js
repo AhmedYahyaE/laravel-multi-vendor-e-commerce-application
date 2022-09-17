@@ -87,7 +87,7 @@ $(document).ready(function() {
 
         // var status = $(this).children();
         // var status = $(this).children('i');
-        var status   = $(this).children('i').attr('status'); // Using HTML Custom Attributes
+        var status     = $(this).children('i').attr('status'); // Using HTML Custom Attributes
         var section_id = $(this).attr('section_id'); // Using HTML Custom Attributes
         // console.log(status);
         // console.log(section_id);
@@ -134,7 +134,7 @@ $(document).ready(function() {
 
 
 
-    // This method will be COMMON and SHARED with many things that are going to be deleted in different pages, but they ALL must have both the HTML custom attributs: module and module_id to use them here to redirect to the relevant proper route (Check down a little bit    window.location = ....)
+    // This method will be GLOBAL/COMMON and SHARED with many things that are going to be deleted in different pages, but they ALL must have both the HTML custom attributs: module and module_id to use them here to redirect to the relevant proper route (Check down a little bit    window.location = ....)
     // Confirm Deletion using SweetAlert JavaScript package/plugin: Check 5:02 in https://www.youtube.com/watch?v=6TfdD5w-kls&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=33
     // Delete category image in add_edit_category.blade.php. Check https://www.youtube.com/watch?v=uHYf4HmJTS8&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=42
     $('.confirmDelete').click(function() {
@@ -239,7 +239,7 @@ $(document).ready(function() {
 
         // var status = $(this).children();
         // var status = $(this).children('i');
-        var status      = $(this).children('i').attr('status'); // Using HTML Custom Attributes
+        var status   = $(this).children('i').attr('status'); // Using HTML Custom Attributes
         var brand_id = $(this).attr('brand_id'); // Using HTML Custom Attributes
         // console.log(status);
         // console.log(brand_id);
@@ -276,7 +276,7 @@ $(document).ready(function() {
 
         // var status = $(this).children();
         // var status = $(this).children('i');
-        var status      = $(this).children('i').attr('status'); // Using HTML Custom Attributes
+        var status     = $(this).children('i').attr('status'); // Using HTML Custom Attributes
         var product_id = $(this).attr('product_id'); // Using HTML Custom Attributes
         // console.log(status);
         // console.log(product_id);
@@ -286,7 +286,7 @@ $(document).ready(function() {
         $.ajax({
             headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}, // X-CSRF-TOKEN: https://laravel.com/docs/9.x/csrf#csrf-x-csrf-token    // Check 12:37 in https://www.youtube.com/watch?v=maEXuJNzE8M&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=16
             type   : 'post',
-            url    : '/admin/update-product-status', // check the web.php for this route and check the ProductController for the updateProductStatus() method
+            url    : '/admin/update-product-status', // check the web.php for this route and check the ProductsController for the updateProductStatus() method
             data   : {status: status, product_id: product_id}, // we pass the status and product_id
             success: function(resp) {
                 // alert(resp);
@@ -305,6 +305,68 @@ $(document).ready(function() {
                 alert('Error');
             }
         });
+    });
+
+    // Updating Attribute status (active/inactive) using AJAX in add_edit_attributes.blade.php    // https://www.youtube.com/watch?v=n6mvuKbje-A&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=56
+    $(document).on('click', '.updateAttributeStatus', function() { // '.updateAttributeStatus' is the anchor link <a> CSS class    // This is the same as    $('.updateAttributetatus').on('click', function() {
+        // alert('test');
+
+        // var status = $(this).children();
+        // var status = $(this).children('i');
+        var status       = $(this).children('i').attr('status'); // Using HTML Custom Attributes
+        var attribute_id = $(this).attr('attribute_id'); // Using HTML Custom Attributes
+        // console.log(status);
+        // console.log(attribute_id);
+        // var status = $(this).children(); // the child of the <a> anchor link
+
+        
+        $.ajax({
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}, // X-CSRF-TOKEN: https://laravel.com/docs/9.x/csrf#csrf-x-csrf-token    // Check 12:37 in https://www.youtube.com/watch?v=maEXuJNzE8M&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=16
+            type   : 'post',
+            url    : '/admin/update-attribute-status', // check the web.php for this route and check the ProductsController for the updateAttributeStatus() method
+            data   : {status: status, attribute_id: attribute_id}, // we pass the status and attribute_id
+            success: function(resp) {
+                // alert(resp);
+                // console.log(resp);
+                // console.log(resp.status);
+                // console.log(resp.attribute_id);
+                // console.log('#attribute-' + attribute_id);
+                // console.log($('#attribute-' + attribute_id));
+                if (resp.status == 0) { // in case of success, reverse the status (active/inactive) and show the right icon in the frontend    // Or the same    if (resp['status'] == 0) {
+                    $('#attribute-' + attribute_id).html('<i style="font-size: 25px" class="mdi mdi-bookmark-outline" status="Inactive"></i>');
+                } else if (resp.status == 1) {
+                    $('#attribute-' + attribute_id).html('<i style="font-size: 25px" class="mdi mdi-bookmark-check" status="Active"></i>');
+                }
+            },
+            error: function() {
+                alert('Error');
+            }
+        });
+    });
+
+
+    // Add Remove Input Fields Dynamically using jQuery: https://www.codexworld.com/add-remove-input-fields-dynamically-using-jquery/    // https://www.youtube.com/watch?v=gaLXLO5knpc&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=57
+    // Products attributes add//remove input fields dynamically using jQuery
+    var maxField = 10; //Input fields increment limitation
+    var addButton = $('.add_button'); //Add button selector
+    var wrapper = $('.field_wrapper'); //Input field wrapper
+    var fieldHTML = '<div><div style="height:10px"></div><input type="text" name="size[]" placeholder="Size" style="width:100px">&nbsp;<input type="text" name="sku[]" placeholder="SKU" style="width:100px">&nbsp;<input type="text" name="price[]" placeholder="Price" style="width:100px">&nbsp;<input type="text" name="stock[]" placeholder="Stock" style="width:100px">&nbsp;<a href="javascript:void(0);" class="remove_button">Remove</a></div>'; //New input field html 
+    var x = 1; //Initial field counter is 1
+    
+    //Once add button is clicked
+    $(addButton).click(function(){
+        //Check maximum number of input fields
+        if(x < maxField){ 
+            x++; //Increment field counter
+            $(wrapper).append(fieldHTML); //Add field html
+        }
+    });
+    
+    //Once remove button is clicked
+    $(wrapper).on('click', '.remove_button', function(e){
+        e.preventDefault();
+        $(this).parent('div').remove(); //Remove field html
+        x--; //Decrement field counter
     });
 
 }); // End of $(document).ready()

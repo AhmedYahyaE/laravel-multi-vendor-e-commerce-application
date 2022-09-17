@@ -72,7 +72,7 @@
                             <div class="form-group">
                                 <label for="vendor_image">Vendor Photo</label>
                                 <br>
-                                <img style="width: 200px" src="{{ url('/admin/images/photos/' . $vendorDetails['image']) }}">
+                                <img style="width: 200px" src="{{ url('admin/images/photos/' . $vendorDetails['image']) }}">
                             </div>
                         @endif
                     </div>
@@ -138,7 +138,7 @@
                             <div class="form-group">
                                 <label for="vendor_image">Address Proof Image</label>
                                 <br>
-                                <img style="width: 200px" src="{{ url('/admin/images/proofs/' . $vendorDetails['vendor_business']['address_proof_image']) }}">
+                                <img style="width: 200px" src="{{ url('admin/images/proofs/' . $vendorDetails['vendor_business']['address_proof_image']) }}">
                             </div>
                         @endif
                     </div>

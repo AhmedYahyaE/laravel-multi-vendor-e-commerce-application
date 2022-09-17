@@ -13,6 +13,8 @@ class ProductsController extends Controller
 
     
     public function products() {
+        \Session::put('page', 'products');
+
         // $products = \App\Models\Product::get()->toArray();
         // $products = \App\Models\Product::with(['section', 'category'])->get(); // ['section', 'category'] are the relationships methods names
         // $products = \App\Models\Product::with(['section', 'category'])->get()->toArray(); // ['section', 'category'] are the relationships methods names
@@ -59,7 +61,7 @@ class ProductsController extends Controller
 
     public function addEditProduct(Request $request, $id = null) { // If the $id is not passed, this means 'Add a Product', if not, this means 'Edit the Product'    // https://www.youtube.com/watch?v=-Lnk1N1jTNQ&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=47
         // Correcting issues in the Skydash Admin Panel Sidebar using Session:  Check 6:33 in https://www.youtube.com/watch?v=i_SUdNILIrc&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=29
-        // \Session::put('page', 'products');
+        \Session::put('page', 'products');
 
 
         if ($id == '') { // if there's no $id is passed in the route/URL parameters, this means 'Add a new product'
@@ -277,5 +279,111 @@ class ProductsController extends Controller
         $message = 'Product Video has been deleted successfully!';
 
         return redirect()->back()->with('success_message', $message);
+    }
+
+    public function addAttributes(Request $request, $id) { // Add/Edit Attributes function    // https://www.youtube.com/watch?v=gaLXLO5knpc&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=52
+        \Session::put('page', 'products');
+
+        // $product = \App\Models\Product::find($id);
+        // $product = \App\Models\Product::with('attributes')->find($id); // with('attributes') is the relationship method name in the Product.php model
+        // $product = \App\Models\Product::with('attributes')->find($id)->toArray(); // with('attributes') is the relationship method name in the Product.php model
+        $product = \App\Models\Product::select('id', 'product_name', 'product_code', 'product_color', 'product_price', 'product_image')->with('attributes')->find($id); // with('attributes') is the relationship method name in the Product.php model
+        // dd($product);
+        // dd(json_decode(json_encode($product), true));
+        // dd($product->attributes); // is the same as:    dd($product['attributes']);
+        // dd($product['attributes']);  // is the same as:    dd($product->attributes);
+
+        if ($request->isMethod('post')) { // When the <form> is submitted
+            $data = $request->all();
+            // dd($data);
+            // dd($data['sku']);
+
+            foreach ($data['sku'] as $key => $value) { // or instead could be: $data['size'], $data['price'] or $data['stock']
+                // echo '<pre>', var_dump($key), '</pre>';
+                // echo '<pre>', var_dump($value), '</pre>';
+                
+                if (!empty($value)) {
+                    // Validation:
+                    // SKU duplicate check (Prevent duplicate SKU) because SKU is UNIQUE for every product
+                    $skuCount = \App\Models\ProductsAttribute::where('sku', $value)->count();
+                    if ($skuCount > 0) { // if there's an SKU for the product ALREADY EXISTING
+                        return redirect()->back()->with('error_message', 'SKU already exists! Please add another SKU!');
+                    }
+
+                    // Size duplicate check (Prevent duplicate Size) because Size is UNIQUE for every product
+                    $sizeCount = \App\Models\ProductsAttribute::where(['product_id' => $id, 'size' => $data['size'][$key]])->count();
+                    if ($sizeCount > 0) { // if there's an SKU for the product ALREADY EXISTING
+                        return redirect()->back()->with('error_message', 'Size already exists! Please add another Size!');
+                    }
+
+
+                    // $attribute = new \app\Models\ProductsAttribute();
+                    $attribute = new \App\Models\ProductsAttribute;
+
+                    $attribute->product_id = $id; // $id is passed in up there to the addAttributes() method
+                    $attribute->sku        = $value;
+                    $attribute->size       = $data['size'][$key];  // $key denotes the iteration/loop cycle number (0, 1, 2, ...), e.g. $data['size'][0]
+                    $attribute->price      = $data['price'][$key]; // $key denotes the iteration/loop cycle number (0, 1, 2, ...), e.g. $data['price'][0]
+                    $attribute->stock      = $data['stock'][$key]; // $key denotes the iteration/loop cycle number (0, 1, 2, ...), e.g. $data['stock'][0]
+                    $attribute->status     = 1;
+                    
+                    $attribute->save();
+                }
+            }
+            return redirect()->back()->with('success_message', 'Product Attributes have been addded successfully!');
+        }
+        // exit;
+
+        return view('admin.attributes.add_edit_attributes')->with(compact('product'));
+    }
+
+    public function updateAttributeStatus(Request $request) { // Update Attribute Status using AJAX in add_edit_attributes.blade.php
+        if ($request->ajax()) { // if the request is coming from an AJAX call
+            $data = $request->all();
+            // dd($data); // THIS DOESN'T WORK WITH AJAX! - SHOWS AN ERROR!! USE var_dump() INSTEAD!
+            // echo '<pre>', var_dump($data), '</pre>';
+
+            if ($data['status'] == 'Active') { // $data['status'] comes from the 'data' object inside the $.ajax() method    // reverse the 'status' from (ative/inactive) 0 to 1 and 1 to 0 (and vice versa)
+                $status = 0;
+            } else {
+                $status = 1;
+            }
+
+
+            \App\Models\ProductsAttribute::where('id', $data['attribute_id'])->update(['status' => $status]); // $data['attribute_id'] comes from the 'data' object inside the $.ajax() method
+            // echo '<pre>', var_dump($data), '</pre>';
+
+            return response()->json([
+                'status'       => $status,
+                'attribute_id' => $data['attribute_id']
+            ]);
+        }
+    }
+
+    public function editAttributes(Request $request) {
+        \Session::put('page', 'products');
+
+        if ($request->isMethod('post')) { // if the <form> is submitted
+            $data = $request->all();
+            // dd($data);
+            // dd($request->attributeId);
+            // dd($data['attributeId']);
+
+            foreach ($data['attributeId'] as $key => $attribute) {
+                // dd($key);
+                // dd($attribute);
+
+                if (!empty($attribute)) {
+                    \App\Models\ProductsAttribute::where([
+                        'id' => $data['attributeId'][$key]
+                    ])->update([
+                        'price' => $data['price'][$key],
+                        'stock' => $data['stock'][$key]
+                    ]);
+                }
+            }
+
+            return redirect()->back()->with('success_message', 'Product Attributes have been updated successfully!');
+        }
     }
 }

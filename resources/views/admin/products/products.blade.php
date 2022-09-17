@@ -16,7 +16,7 @@
 
 
                         {{-- https://www.youtube.com/watch?v=YqBzJmwrh8I&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=37 --}}
-                        <a href="{{ url('/admin/add-edit-product') }}" style="max-width: 150px; float: right; display: inline-block" class="btn btn-block btn-primary">Add Product</a>
+                        <a href="{{ url('admin/add-edit-product') }}" style="max-width: 150px; float: right; display: inline-block" class="btn btn-block btn-primary">Add Product</a>
 
                         {{-- Our Bootstrap success message in case of updating admin password is successful: --}}
                         {{-- https://www.youtube.com/watch?v=oAZKXYrkcr4&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=17 --}}
@@ -57,9 +57,9 @@
                                             <td>{{ $product['product_color'] }}</td>
                                             <td>
                                                 @if (!empty($product['product_image']))
-                                                    <img style="width: 120; height: 120" src="{{ asset('front/images/product_images/small/' . $product['product_image']) }}"> {{-- Show the 'small' image size from the 'small' folder --}}
+                                                    <img style="width:120px; height:100px" src="{{ asset('front/images/product_images/small/' . $product['product_image']) }}"> {{-- Show the 'small' image size from the 'small' folder --}}
                                                 @else
-                                                    <img style="width: 120; height: 120" src="{{ asset('front/images/product_images/small/no-image.png') }}"> {{-- Show the 'no-image' Dummy Image: If you have for example a table with an 'images' column (that can exist or not exist), use a 'Dummy Image' in case there's no image. Example: https://dummyimage.com/ . Check 20:22 in https://www.youtube.com/watch?v=UOutFy8rL-s&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=50 --}}
+                                                    <img style="width:120px; height:100px" src="{{ asset('front/images/product_images/small/no-image.png') }}"> {{-- Show the 'no-image' Dummy Image: If you have for example a table with an 'images' column (that can exist or not exist), use a 'Dummy Image' in case there's no image. Example: https://dummyimage.com/ . Check 20:22 in https://www.youtube.com/watch?v=UOutFy8rL-s&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=50 --}}
                                                 @endif
                                             </td>
                                             <td>{{ $product['category']['category_name'] }}</td> {{-- Through the relationship --}}
@@ -85,6 +85,9 @@
                                             <td>
                                                 <a href="{{ url('admin/add-edit-product/' . $product['id']) }}">
                                                     <i style="font-size: 25px" class="mdi mdi-pencil-box"></i> {{-- Icons from Skydash Admin Panel Template --}}
+                                                </a>
+                                                <a href="{{ url('admin/add-edit-attributes/' . $product['id']) }}">
+                                                    <i style="font-size: 25px" class="mdi mdi-plus-box"></i> {{-- Icons from Skydash Admin Panel Template --}}
                                                 </a>
 
                                                 {{-- Confirm Deletion JS alert and Sweet Alert: Check 5:02 in https://www.youtube.com/watch?v=6TfdD5w-kls&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=33 --}}

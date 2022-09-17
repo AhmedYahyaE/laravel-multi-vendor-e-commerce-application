@@ -62,7 +62,7 @@
                         @endif
               
                         <h4 class="card-title">Update Admin Password</h4>
-                        <form class="forms-sample" action="{{ url('/admin/update-admin-password') }}" method="post">  @csrf
+                        <form class="forms-sample" action="{{ url('admin/update-admin-password') }}" method="post">  @csrf
                             <div class="form-group">
                                 <label>Admin Username/Email</label>
                                 <input class="form-control" value="{{ $adminDetails['email'] }}" readonly> <!-- Check updateAdminPassword() method in AdminController.php -->
