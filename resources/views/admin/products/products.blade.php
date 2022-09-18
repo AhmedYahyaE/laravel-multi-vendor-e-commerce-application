@@ -83,11 +83,14 @@
                                                 @endif
                                             </td>
                                             <td>
-                                                <a href="{{ url('admin/add-edit-product/' . $product['id']) }}">
+                                                <a title="Edit Product" href="{{ url('admin/add-edit-product/' . $product['id']) }}">
                                                     <i style="font-size: 25px" class="mdi mdi-pencil-box"></i> {{-- Icons from Skydash Admin Panel Template --}}
                                                 </a>
-                                                <a href="{{ url('admin/add-edit-attributes/' . $product['id']) }}">
+                                                <a title="Add Attributes" href="{{ url('admin/add-edit-attributes/' . $product['id']) }}">
                                                     <i style="font-size: 25px" class="mdi mdi-plus-box"></i> {{-- Icons from Skydash Admin Panel Template --}}
+                                                </a>
+                                                <a title="Add Multiple Images" href="{{ url('admin/add-images/' . $product['id']) }}">
+                                                    <i style="font-size: 25px" class="mdi mdi-library-plus"></i> {{-- Icons from Skydash Admin Panel Template --}}
                                                 </a>
 
                                                 {{-- Confirm Deletion JS alert and Sweet Alert: Check 5:02 in https://www.youtube.com/watch?v=6TfdD5w-kls&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=33 --}}

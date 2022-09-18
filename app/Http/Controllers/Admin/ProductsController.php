@@ -386,4 +386,26 @@ class ProductsController extends Controller
             return redirect()->back()->with('success_message', 'Product Attributes have been updated successfully!');
         }
     }
+
+    public function addImages(Request $request, $id) { // $id is the URL Paramter (slug) passed from the URL
+        \Session::put('page', 'products');
+
+        $product = \App\Models\Product::select('id', 'product_name', 'product_code', 'product_color', 'product_price', 'product_image')->with('images')->find($id); // with('images') is the relationship method name in the Product.php model
+
+
+        if ($request->isMethod('post')) { // if the <form> is submitted
+            if ($request->hasFile('images')) {
+                $data = $request->all();
+                dd($data);
+
+                $images = $request->file('images');
+                dd($images);
+            }
+            
+            
+        }
+
+
+        return view('admin.images.add_images')->with(compact('product'));
+    }
 }
