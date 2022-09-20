@@ -151,14 +151,18 @@
                                         </td>
                                         <td>
                                             @if ($image['status'] == 1)
-                                                <a class="updateAttributeStatus" id="image-{{ $image['id'] }}" image_id="{{ $image['id'] }}" href="javascript:void(0)"> {{-- Using HTML Custom Attributes --}}
+                                                <a class="updateImageStatus" id="image-{{ $image['id'] }}" image_id="{{ $image['id'] }}" href="javascript:void(0)"> {{-- Using HTML Custom Attributes --}}
                                                     <i style="font-size: 25px" class="mdi mdi-bookmark-check" status="Active"></i> {{-- Icons from Skydash Admin Panel Template --}}
                                                 </a>
                                             @else {{-- if the admin status is inactive --}}
-                                                <a class="updateAttributeStatus" id="image-{{ $image['id'] }}" image_id="{{ $image['id'] }}" href="javascript:void(0)"> {{-- Using HTML Custom Attributes --}}
+                                                <a class="updateImageStatus" id="image-{{ $image['id'] }}" image_id="{{ $image['id'] }}" href="javascript:void(0)"> {{-- Using HTML Custom Attributes --}}
                                                     <i style="font-size: 25px" class="mdi mdi-bookmark-outline" status="Inactive"></i> {{-- Icons from Skydash Admin Panel Template --}}
                                                 </a>
                                             @endif
+                                            &nbsp;
+                                            <a href="JavaScript:void(0)" class="confirmDelete" module="image" moduleid="{{ $image['id'] }}"> {{-- Check custom.js and web.php (routes) --}}
+                                                <i style="font-size: 25px" class="mdi mdi-file-excel-box"></i> {{-- Icons from Skydash Admin Panel Template --}}
+                                            </a>
                                         </td>
                                     </tr>
                                 @endforeach

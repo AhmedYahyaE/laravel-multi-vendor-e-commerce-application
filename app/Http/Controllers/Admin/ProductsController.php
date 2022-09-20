@@ -394,18 +394,111 @@ class ProductsController extends Controller
 
 
         if ($request->isMethod('post')) { // if the <form> is submitted
-            if ($request->hasFile('images')) {
-                $data = $request->all();
-                dd($data);
+            $data = $request->all();
+            // dd($data);
 
+            if ($request->hasFile('images')) {
                 $images = $request->file('images');
-                dd($images);
+                // dd($images);
+
+                foreach ($images as $key => $image) {
+                    // Uploading the images:
+                    // Generate Temmp Image
+                    $image_tmp = \Image::make($image);
+
+                    // Get image name
+                    $image_name = $image->getClientOriginalName();
+                    // dd($image_tmp);
+
+                    // Get image extension
+                    $extension = $image->getClientOriginalExtension();
+
+                    // Generate a new random name for the uploaded image (to avoid that the image might get overwritten if its name is repeated)
+                    $imageName = $image_name . rand(111, 99999) . '.' . $extension; // e.g. 5954.png
+
+                    // Assigning the uploaded images path inside the 'public' folder
+                    // We will have three folders: small, medium and large, depending on the images sizes
+                    $largeImagePath  = 'front/images/product_images/large/'  . $imageName; // 'large'  images folder
+                    $mediumImagePath = 'front/images/product_images/medium/' . $imageName; // 'medium' images folder
+                    $smallImagePath  = 'front/images/product_images/small/'  . $imageName; // 'small'  images folder
+
+                    // Upload the image using the 'Intervention' package and save it in our THREE paths (folders) inside the 'public' folder
+                    \Image::make($image_tmp)->resize(1000, 1000)->save($largeImagePath);  // resize the 'large'  image size then store it in the 'large'  folder
+                    \Image::make($image_tmp)->resize(500,   500)->save($mediumImagePath); // resize the 'medium' image size then store it in the 'medium' folder
+                    \Image::make($image_tmp)->resize(250,   250)->save($smallImagePath);  // resize the 'small'  image size then store it in the 'small'  folder
+                
+                    // Insert the image name in the database table `products_images`
+                    $image = new \App\Models\ProductsImage;
+
+                    $image->image      = $imageName;
+                    $image->product_id = $id;
+                    $image->status     = 1;
+
+                    $image->save();
+                }
             }
-            
-            
+
+            return redirect()->back()->with('success_message', 'Product Images have been added successfully!');
         }
 
 
         return view('admin.images.add_images')->with(compact('product'));
+    }
+
+    public function updateImageStatus(Request $request) { // Update Image Status using AJAX in add_images.blade.php
+        if ($request->ajax()) { // if the request is coming from an AJAX call
+            $data = $request->all();
+            // dd($data); // THIS DOESN'T WORK WITH AJAX! - SHOWS AN ERROR!! USE var_dump() INSTEAD!
+            // echo '<pre>', var_dump($data), '</pre>';
+
+            if ($data['status'] == 'Active') { // $data['status'] comes from the 'data' object inside the $.ajax() method    // reverse the 'status' from (ative/inactive) 0 to 1 and 1 to 0 (and vice versa)
+                $status = 0;
+            } else {
+                $status = 1;
+            }
+
+
+            \App\Models\ProductsImage::where('id', $data['image_id'])->update(['status' => $status]); // $data['image_id'] comes from the 'data' object inside the $.ajax() method
+            // echo '<pre>', var_dump($data), '</pre>';
+
+            return response()->json([
+                'status'       => $status,
+                'image_id' => $data['image_id']
+            ]);
+        }
+    }
+
+    public function deleteImage($id) { // AJAX call from custom.js    // Delete the product image from BOTH SERVER (FILESYSTEM) & DATABASE    // $id is passed as a URL parameter    // https://www.youtube.com/watch?v=N4LL5J2daCE&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=60
+        // Get the product image record stored in the database
+        $productImage = \App\Models\ProductsImage::select('image')->where('id', $id)->first(); // https://laravel.com/docs/9.x/queries#delete-statements
+        // dd($productImage);
+        
+        // Get the product image three paths on the server (filesystem) ('small', 'medium' and 'large' folders)
+        $small_image_path  = 'front/images/product_images/small/';
+        $medium_image_path = 'front/images/product_images/medium/';
+        $large_image_path  = 'front/images/product_images/large/';
+
+        // Delete the product images on server (filesystem) (from the the THREE folders)
+        // First: Delete from the 'small' folder
+        if (file_exists($small_image_path . $productImage->image)) {
+            unlink($small_image_path . $productImage->image);
+        }
+        // Second: Delete from the 'medium' folder
+        if (file_exists($medium_image_path . $productImage->image)) {
+            unlink($medium_image_path . $productImage->image);
+        }
+        // Third: Delete from the 'large' folder
+        if (file_exists($large_image_path . $productImage->image)) {
+            unlink($large_image_path . $productImage->image);
+        }
+
+
+
+        // Delete the product image name (record) from the `products_images` database table
+        \App\Models\ProductsImage::where('id', $id)->delete();
+
+        $message = 'Product Image has been deleted successfully!';
+
+        return redirect()->back()->with('success_message', $message);
     }
 }
