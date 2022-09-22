@@ -95,7 +95,7 @@
                                 <input type="text" class="form-control" id="section_name" placeholder="Enter Section Name" name="section_name" @if (!empty($section['name'])) value="{{ $section['name'] }}" @else value="{{ old('section_name') }}" @endif> <!-- Check 10:10 in https://www.youtube.com/watch?v=YqBzJmwrh8I&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=37 -->
                             </div>
                             <button type="submit" class="btn btn-primary mr-2">Submit</button>
-                            <button class="btn btn-light">Cancel</button>
+                            <button type="reset"  class="btn btn-light">Cancel</button>
                         </form>
                     </div>
                 </div>

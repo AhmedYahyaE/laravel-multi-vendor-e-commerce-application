@@ -95,7 +95,7 @@
                                 <input type="text" class="form-control" id="brand_name" placeholder="Enter Brand Name" name="brand_name" @if (!empty($brand['name'])) value="{{ $brand['name'] }}" @else value="{{ old('brand_name') }}" @endif> <!-- Check 10:10 in https://www.youtube.com/watch?v=YqBzJmwrh8I&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=37 -->
                             </div>
                             <button type="submit" class="btn btn-primary mr-2">Submit</button>
-                            <button class="btn btn-light">Cancel</button>
+                            <button type="reset"  class="btn btn-light">Cancel</button>
                         </form>
                     </div>
                 </div>

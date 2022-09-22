@@ -155,7 +155,7 @@
                                 <input type="text" class="form-control" id="meta_keywords" placeholder="Enter Meta Keywords" name="meta_keywords"   @if (!empty($category['meta_keywords'])) value="{{ $category['meta_keywords'] }}" @else value="{{ old('meta_keywords') }}" @endif > <!-- Check 10:10 in https://www.youtube.com/watch?v=YqBzJmwrh8I&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=37 -->
                             </div>
                             <button type="submit" class="btn btn-primary mr-2">Submit</button>
-                            <button class="btn btn-light">Cancel</button>
+                            <button type="reset"  class="btn btn-light">Cancel</button>
                         </form>
                     </div>
                 </div>
