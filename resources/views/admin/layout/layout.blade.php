@@ -65,6 +65,7 @@
 
 
 
+                <!-- Middle Content (varies from a page to another) -->
                 @yield('content')
 
 

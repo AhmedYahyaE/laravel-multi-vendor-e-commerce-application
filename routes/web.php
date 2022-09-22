@@ -38,7 +38,7 @@ require __DIR__.'/auth.php';
 
 
 // NOTE: ALL THE ROUTES INSIDE THIS PREFIX STATRT WITH 'admin/', SO THOSE ROUTES INSIDE THE PREFIX, YOU DON'T WRITE '/admin' WHEN YOU DEFINE THEM, IT'LL BE DEFINED AUTOMATICALLY!!
-// Route Group (for routes starting with 'admin' (Admin Route Group)) (https://laravel.com/docs/9.x/routing#route-group-prefixes)
+// The website 'ADMIN' Section: Route Group (for routes starting with 'admin' (Admin Route Group)) (https://laravel.com/docs/9.x/routing#route-group-prefixes)
 Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function() {
     // Matches the 'admin/login' URL
     Route::match(['get', 'post'], 'login', 'AdminController@login'); // match() method is used to use more than one HTTP request method for the same route, so GET for rendering the login.php page, and POST for the login.php page <form> submission (e.g. GET and POST)
@@ -113,3 +113,12 @@ Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function
 
 // Admin Dashboard Route WTIHOUT Admin Route Group
 // Route::get('admin/dashboard', ['App\Http\Controllers\Admin\AdminController', 'dashboard']); // is the same as:    Route::get('admin/dashboard', 'App\Http\Controllers\Admin\AdminController@dashboard');
+
+
+
+
+
+// The website 'FRONT' Section routes: (Route Groups: https://laravel.com/docs/9.x/routing#route-groups)
+Route::namespace('App\Http\Controllers\Front')->group(function() {
+    Route::get('/', 'IndexController@index');
+});
