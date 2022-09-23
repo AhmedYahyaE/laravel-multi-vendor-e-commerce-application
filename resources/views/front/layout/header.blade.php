@@ -1,3 +1,10 @@
+<?php
+// Getting the 'enabled' sections ONLY and their child categories (using the 'categories' relationship method) which, in turn, include their 'subcategories`
+$sections = \App\Models\Section::sections();
+// dd($sections);
+?>
+
+
 <!-- Header -->
 <header>
     <!-- Top-Header -->
@@ -104,9 +111,12 @@
                                     <option selected="selected" value="">
                                         All
                                     </option>
-                                    <option value="">Clothing</option>
-                                    <option value="">Electronics</option>
-                                    <option value="">Appliances</option>
+
+                                    @foreach ($sections as $section)
+                                        <option value="">{{ $section['name'] }}</option> {{-- the search bar dropdown menu at the top --}}
+                                    @endforeach
+
+                        
                                 </select>
                             </div>
                         </div>
@@ -219,233 +229,57 @@
                         <nav>
                             <div class="v-wrapper">
                                 <ul class="v-list animated fadeIn">
-                                    <li class="js-backdrop">
-                                        <a href="shop-v1-root-category.html">
-                                        <i class="ion-ios-add-circle"></i>
-                                        Clothing
-                                        <i class="ion ion-ios-arrow-forward"></i>
-                                        </a>
-                                        <button class="v-button ion ion-md-add"></button>
-                                        <div class="v-drop-right" style="width: 700px;">
-                                            <div class="row">
-                                                <div class="col-lg-4">
-                                                    <ul class="v-level-2">
-                                                        <li>
-                                                            <a href="listing.html">Men</a>
-                                                            <ul>
-                                                                <li>
-                                                                    <a href="shop-v3-sub-sub-category.html">T-Shirts</a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="shop-v3-sub-sub-category.html">Shirts</a>
-                                                                </li>
-                                                            </ul>
-                                                        </li>
-                                                    </ul>
+
+
+
+                                    @foreach ($sections as $section)
+                                        @if (count($section['categories']) > 0) {{-- if the section has child categories, show the section name, but if it doesn't, don't show it --}}
+                                            <li class="js-backdrop">
+                                                <a href="javascript:;">
+                                                <i class="ion-ios-add-circle"></i>
+
+
+                                                {{ $section['name'] }} {{-- Show section name --}}
+
+
+                                                <i class="ion ion-ios-arrow-forward"></i>
+                                                </a>
+                                                <button class="v-button ion ion-md-add"></button>
+                                                <div class="v-drop-right" style="width: 700px;">
+                                                    <div class="row">
+
+
+
+                                                        @foreach ($section['categories'] as $category) {{-- Show the section child categories --}}
+                                                            <div class="col-lg-4">
+                                                                <ul class="v-level-2">
+                                                                    <li>
+                                                                        <a href="{{ url($category['url']) }}">{{ $category['category_name'] }}</a>
+                                                                        <ul>
+
+
+ 
+                                                                            @foreach ($category['sub_categories'] as $subcategory) {{-- Show the section child categories child Subcategories --}}
+                                                                            <li>
+                                                                                <a href="{{ url($subcategory['url']) }}">{{ $subcategory['category_name'] }}</a>
+                                                                            </li>
+                                                                            @endforeach
+
+
+
+                                                                        </ul>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        @endforeach
+                                                    </div>
                                                 </div>
-                                                <div class="col-lg-4">
-                                                    <ul class="v-level-2">
-                                                        <li>
-                                                            <a href="listing.html">Women</a>
-                                                            <ul>
-                                                                <li>
-                                                                    <a href="shop-v3-sub-sub-category.html">Tops</a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="shop-v3-sub-sub-category.html">Denims</a>
-                                                                </li>
-                                                            </ul>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                                <div class="col-lg-4">
-                                                    <ul class="v-level-2">
-                                                        <li>
-                                                            <a href="listing.html">Kids</a>
-                                                            <ul>
-                                                                <li>
-                                                                    <a href="shop-v3-sub-sub-category.html">T-Shirts
-                                                                    </a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="shop-v3-sub-sub-category.html">Shirts</a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="shop-v3-sub-sub-category.html">Shorts</a>
-                                                                </li>
-                                                            </ul>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="js-backdrop">
-                                        <a href="shop-v1-root-category.html">
-                                        <i class="ion-ios-add-circle"></i>
-                                        Electronics
-                                        <i class="ion ion-ios-arrow-forward"></i>
-                                        </a>
-                                        <button class="v-button ion ion-md-add"></button>
-                                        <div class="v-drop-right" style="width: 700px;">
-                                            <div class="row">
-                                                <div class="col-lg-4">
-                                                    <ul class="v-level-2">
-                                                        <li>
-                                                            <a href="listing.html">Computers</a>
-                                                            <ul>
-                                                                <li>
-                                                                    <a href="shop-v3-sub-sub-category.html">Desktops</a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="shop-v3-sub-sub-category.html">Laptops
-                                                                    </a>
-                                                                </li>
-                                                            </ul>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                                <div class="col-lg-4">
-                                                    <ul class="v-level-2">
-                                                        <li>
-                                                            <a href="listing.html">Mobiles</a>
-                                                            <ul>
-                                                                <li>
-                                                                    <a href="shop-v3-sub-sub-category.html">Smartphones</a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="shop-v3-sub-sub-category.html">Basic Mobiles
-                                                                    </a>
-                                                                </li>
-                                                            </ul>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                                <div class="col-lg-4">
-                                                    <ul class="v-level-2">
-                                                        <li>
-                                                            <a href="listing.html">Accessories</a>
-                                                            <ul>
-                                                                <li>
-                                                                    <a href="shop-v3-sub-sub-category.html">Computer Accessories</a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="shop-v3-sub-sub-category.html">Mobile Accessories
-                                                                    </a>
-                                                                </li>
-                                                            </ul>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="js-backdrop">
-                                        <a href="shop-v1-root-category.html">
-                                        <i class="ion-ios-add-circle"></i>
-                                        Appliances
-                                        <i class="ion ion-ios-arrow-forward"></i>
-                                        </a>
-                                        <button class="v-button ion ion-md-add"></button>
-                                        <div class="v-drop-right" style="width: 700px;">
-                                            <div class="row">
-                                                <div class="col-lg-4">
-                                                    <ul class="v-level-2">
-                                                        <li>
-                                                            <a href="listing.html">Televisions</a>
-                                                            <ul>
-                                                                <li>
-                                                                    <a href="shop-v3-sub-sub-category.html">Smart Televisions</a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="shop-v3-sub-sub-category.html">Standard Televisions
-                                                                    </a>
-                                                                </li>
-                                                            </ul>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                                <div class="col-lg-4">
-                                                    <ul class="v-level-2">
-                                                        <li>
-                                                            <a href="listing.html">Headphones</a>
-                                                            <ul>
-                                                                <li>
-                                                                    <a href="shop-v3-sub-sub-category.html">In-Ear</a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="shop-v3-sub-sub-category.html">On-Ear
-                                                                    </a>
-                                                                </li>
-                                                            </ul>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                                <div class="col-lg-4">
-                                                    <ul class="v-level-2">
-                                                        <li>
-                                                            <a href="listing.html">Cameras
-                                                            </a>
-                                                            <ul>
-                                                                <li>
-                                                                    <a href="shop-v3-sub-sub-category.html">Accessories
-                                                                    </a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="listing.html">DSLR Cameras
-                                                                    </a>
-                                                                </li>
-                                                            </ul>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="js-backdrop v-none" style="display: none">
-                                        <a href="shop-v1-root-category.html">
-                                        <i class="ion ion-md-rocket"></i>
-                                        Accessories
-                                        <i class="ion ion-ios-arrow-forward"></i>
-                                        </a>
-                                        <button class="v-button ion ion-md-add"></button>
-                                        <div class="v-drop-right" style="width: 700px;">
-                                            <div class="row">
-                                                <div class="col-lg-4">
-                                                    <ul class="v-level-2">
-                                                        <li>
-                                                            <a href="listing.html">Watches</a>
-                                                            <ul>
-                                                                <li>
-                                                                    <a href="shop-v3-sub-sub-category.html">Casual Watches</a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="shop-v3-sub-sub-category.html">Formal Watches
-                                                                    </a>
-                                                                </li>
-                                                            </ul>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                                <div class="col-lg-4">
-                                                    <ul class="v-level-2">
-                                                        <li>
-                                                            <a href="listing.html">Belts</a>
-                                                            <ul>
-                                                                <li>
-                                                                    <a href="shop-v3-sub-sub-category.html">Casual Belts</a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="shop-v3-sub-sub-category.html">Leather Belts
-                                                                    </a>
-                                                                </li>
-                                                            </ul>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
+                                            </li>
+                                        @endif
+                                    @endforeach
+
+                                    
+
                                     <li>
                                         <a class="v-more">
                                         <i class="ion ion-md-add"></i>

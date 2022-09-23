@@ -131,9 +131,9 @@ class CategoryController extends Controller
 
 
 
-            // if ($data['category_discount'] == '') {
-            //     $data['category_discount'] = 0;
-            // }
+            if ($data['category_discount'] == '') {
+                $data['category_discount'] = 0;
+            }
 
             
             // Uploading Category Image    // Check 5:08 in https://www.youtube.com/watch?v=dvVbp4poGfQ&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=19
@@ -196,7 +196,7 @@ class CategoryController extends Controller
         return view('admin.categories.add_edit_category')->with(compact('title', 'category', 'getSections', 'getCategories'));
     }
 
-    public function appendCategoryLevel(Request $request) { // Show Categories <select> <option> depending on the choosed Section (show the relevant categories of the choosed section) using AJAX in custom.js in append_categories_level.blade.php page    // https://www.youtube.com/watch?v=GS2sCr4olJo&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=42
+    public function appendCategoryLevel(Request $request) { // (AJAX) Show Categories <select> <option> depending on the choosed Section (show the relevant categories of the choosed section) using AJAX in custom.js in append_categories_level.blade.php page    // https://www.youtube.com/watch?v=GS2sCr4olJo&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=42
         // Note: We created the <div> in a separate file in order for the appendCategoryLevel() method inside the CategoryController to be able to return the whole file as a response to the AJAX call in custom.js to show the proper/relevant categories <select> box <option> depending on the choosed Section
         if ($request->ajax()) { // if the request is coming from an AJAX call
             // if ($request->isMethod('get')) {

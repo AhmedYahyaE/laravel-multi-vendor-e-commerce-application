@@ -18,4 +18,11 @@ class Section extends Model
             'status'    => 1
         ])->with('subCategories'); // Using the subCategories() relationship in the Category.php Model itself to get the 'subcategories' where `parent_id` is NOT 0 zero    // Check 17:00 in https://www.youtube.com/watch?v=-Lnk1N1jTNQ&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=47
     }
+
+
+
+    public static function sections() { // A STATIC function to use it in header.blade.php inside 'layout' folder inside 'front' folder    // https://www.youtube.com/watch?v=EVnpIehuQb8&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=64
+        $getSections = Section::with('categories')->where('status', 1)->get()->toArray(); // Getting the 'enabled' sections ONLY and their child categories (using the 'categories' relationship method) which, in turn, include their 'subcategories`
+        return $getSections;
+    }
 }
