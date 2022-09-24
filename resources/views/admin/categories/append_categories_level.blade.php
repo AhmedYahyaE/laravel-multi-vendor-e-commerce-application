@@ -31,7 +31,11 @@
                         <option value="{{ $subcategory['id'] }}"  @if (isset($subcategory['parent_id']) && $subcategory['parent_id'] == $subcategory['id']) selected @endif >&nbsp;&raquo;&nbsp;{{ $subcategory['category_name'] }}</option> {{-- https://www.w3schools.com/charsets/ref_html_entities_r.asp --}}
                     @endforeach
                 @endif
+
+
             @endforeach
+
+
         @endif
     </select>
 </div>
