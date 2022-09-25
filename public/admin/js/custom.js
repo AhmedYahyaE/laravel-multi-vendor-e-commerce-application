@@ -6,6 +6,7 @@ $(document).ready(function() {
     $('#categories').DataTable(); // in categories.blade.php
     $('#brands').DataTable(); // in brands.blade.php
     $('#products').DataTable(); // in products.blade.php
+    $('#banners').DataTable(); // in banners.blade.php
 
 
 
@@ -373,6 +374,43 @@ $(document).ready(function() {
                     $('#image-' + image_id).html('<i style="font-size: 25px" class="mdi mdi-bookmark-outline" status="Inactive"></i>');
                 } else if (resp.status == 1) {
                     $('#image-' + image_id).html('<i style="font-size: 25px" class="mdi mdi-bookmark-check" status="Active"></i>');
+                }
+            },
+            error: function() {
+                alert('Error');
+            }
+        });
+    });
+
+    // Updating Banner status (active/inactive) using AJAX in banners.blade.php    // https://www.youtube.com/watch?v=R5_4PoNxnVQ&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=67
+    $(document).on('click', '.updateBannerStatus', function() { // '.updateBannerStatus' is the anchor link <a> CSS class    // This is the same as    $('.updateBannerstatus').on('click', function() {
+        // alert('test');
+
+        // var status = $(this).children();
+        // var status = $(this).children('i');
+        var status   = $(this).children('i').attr('status'); // Using HTML Custom Attributes
+        var banner_id = $(this).attr('banner_id'); // Using HTML Custom Attributes
+        // console.log(status);
+        // console.log(banner_id);
+        // var status = $(this).children(); // the child of the <a> anchor link
+
+        
+        $.ajax({
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}, // X-CSRF-TOKEN: https://laravel.com/docs/9.x/csrf#csrf-x-csrf-token    // Check 12:37 in https://www.youtube.com/watch?v=maEXuJNzE8M&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=16
+            type   : 'post',
+            url    : '/admin/update-banner-status', // check the web.php for this route and check the ProductsController for the updateBannerStatus() method
+            data   : {status: status, banner_id: banner_id}, // we pass the status and banner_id
+            success: function(resp) {
+                // alert(resp);
+                // console.log(resp);
+                // console.log(resp.status);
+                // console.log(resp.banner_id);
+                // console.log('#banner-' + banner_id);
+                // console.log($('#banner-' + banner_id));
+                if (resp.status == 0) { // in case of success, reverse the status (active/inactive) and show the right icon in the frontend    // Or the same    if (resp['status'] == 0) {
+                    $('#banner-' + banner_id).html('<i style="font-size: 25px" class="mdi mdi-bookmark-outline" status="Inactive"></i>');
+                } else if (resp.status == 1) {
+                    $('#banner-' + banner_id).html('<i style="font-size: 25px" class="mdi mdi-bookmark-check" status="Active"></i>');
                 }
             },
             error: function() {
