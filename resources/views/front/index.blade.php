@@ -4,18 +4,20 @@
 <!-- Main-Slider -->
 <div class="default-height ph-item">
     <div class="slider-main owl-carousel">
-        <div class="bg-image">
-            <div class="slide-content">
-                <h1><img src="{{ asset('front/images/banners/banner-1.png') }}"></h1>
-                <h2>Spring Collection</h2>
+
+        {{-- Show the banner dynamically depending on the Admin Panel choice --}} {{-- https://www.youtube.com/watch?v=rC6K7PLHzPw&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=68 --}}
+        @foreach ($banners as $banner)
+            <div class="bg-image">
+                <div class="slide-content">
+                    <h1>
+                        <a @if (!empty($banner['link'])) href="{{ url($banner['link']) }}" @else href="javascript:;" @endif>
+                            <img src="{{ asset('front/images/banner_images/' . $banner['image']) }}" title="{{ $banner['title'] }}" alt="{{ $banner['title'] }}">
+                        </a>
+                    </h1>
+                    <h2>{{ $banner['title'] }}</h2>
+                </div>
             </div>
-        </div>
-        <div class="bg-image">
-            <div class="slide-content">
-                <h1><img src="{{ asset('front/images/banners/banner-2.png') }}"></h1>
-                <h2>Summer Collection</h2>
-            </div>
-        </div>
+        @endforeach
     </div>
 </div>
 <!-- Main-Slider /- -->
