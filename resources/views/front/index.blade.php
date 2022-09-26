@@ -6,7 +6,7 @@
     <div class="slider-main owl-carousel">
 
         {{-- Show the banner dynamically depending on the Admin Panel choice --}} {{-- https://www.youtube.com/watch?v=rC6K7PLHzPw&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=68 --}}
-        @foreach ($banners as $banner)
+        @foreach ($sliderBanners as $banner)
             <div class="bg-image">
                 <div class="slide-content">
                     <h1>
@@ -21,17 +21,26 @@
     </div>
 </div>
 <!-- Main-Slider /- -->
-<!-- Banner-Layer -->
-<div class="banner-layer">
-    <div class="container">
-        <div class="image-banner">
-            <a target="_blank" rel="nofollow" href="https://youtube.com/stackdevelopers" class="mx-auto banner-hover effect-dark-opacity">
-            <img class="img-fluid" src="{{ asset('front/images/banners/stack-developers.png') }}" alt="Winter Season Banner">
-            </a>
+
+
+
+{{-- https://www.youtube.com/watch?v=GC_5WN0PeeM&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=70 --}}
+@if (isset($fixBanners[1]['image']))
+    <!-- Banner-Layer -->
+    <div class="banner-layer">
+        <div class="container">
+            <div class="image-banner">
+                <a target="_blank" rel="nofollow" href="{{ url($fixBanners[1]['link']) }}" class="mx-auto banner-hover effect-dark-opacity">
+                    <img class="img-fluid" src="{{ asset('front/images/banner_images/' . $fixBanners[1]['image']) }}" alt="{{ $fixBanners[1]['alt'] }}" title="{{ $fixBanners[1]['title'] }}">
+                </a>
+            </div>
         </div>
     </div>
-</div>
-<!-- Banner-Layer /- -->
+    <!-- Banner-Layer /- -->    
+@endif
+
+
+
 <!-- Top Collection -->
 <section class="section-maker">
     <div class="container">
@@ -1087,17 +1096,26 @@
     </div>
 </section>
 <!-- Top Collection /- -->
-<!-- Banner-Layer -->
-<div class="banner-layer">
-    <div class="container">
-        <div class="image-banner">
-            <a target="_blank" rel="nofollow" href="https://youtube.com/stackdevelopers" class="mx-auto banner-hover effect-dark-opacity">
-            <img class="img-fluid" src="{{ asset('front/images/banners/stack-developers.png') }}" alt="Winter Season Banner">
-            </a>
+
+
+
+{{-- https://www.youtube.com/watch?v=GC_5WN0PeeM&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=70 --}}
+@if (isset($fixBanners[1]['image']))
+    <!-- Banner-Layer -->
+    <div class="banner-layer">
+        <div class="container">
+            <div class="image-banner">
+                <a target="_blank" rel="nofollow" href="{{ url($fixBanners[1]['link']) }}" class="mx-auto banner-hover effect-dark-opacity">
+                    <img class="img-fluid" src="{{ asset('front/images/banner_images/' . $fixBanners[1]['image']) }}" alt="{{ $fixBanners[1]['alt'] }}" title="{{ $fixBanners[1]['title'] }}">
+                </a>
+            </div>
         </div>
     </div>
-</div>
-<!-- Banner-Layer /- -->
+    <!-- Banner-Layer /- -->    
+@endif
+
+
+
 <!-- Site-Priorities -->
 <section class="app-priority">
     <div class="container">

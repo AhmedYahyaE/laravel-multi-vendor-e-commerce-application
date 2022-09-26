@@ -84,10 +84,20 @@ class BannersController extends Controller
             $data = $request->all();
             // dd($data);
 
+            $banner->type   = $data['type'];
             $banner->link   = $data['link'];
             $banner->title  = $data['title'];
             $banner->alt    = $data['alt'];
             $banner->status = 1;
+
+            // Check 10:42 in https://www.youtube.com/watch?v=GC_5WN0PeeM&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=70
+            if ($data['type'] == 'Slider') {
+                $width  = '1920';
+                $height = '720';
+            } else if ($data['type'] == 'Fix') {
+                $width  = '1920';
+                $height = '450';
+            }
 
             // Uploading Banner Image    // Check 5:08 in https://www.youtube.com/watch?v=dvVbp4poGfQ&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=19
             // Retrieving Uploaded Files: https://laravel.com/docs/9.x/requests#retrieving-uploaded-files
@@ -105,7 +115,8 @@ class BannersController extends Controller
                     $imagePath = 'front/images/banner_images/' . $imageName;
 
                     // Upload the image using the 'Intervention' package and save it in our path inside the 'public' folder
-                    \Image::make($image_tmp)->resize(1920, 720)->save($imagePath); // '\Image' is the Intervention package
+                    // \Image::make($image_tmp)->resize(1920, 720)->save($imagePath); // '\Image' is the Intervention package
+                    \Image::make($image_tmp)->resize($width, $height)->save($imagePath); // '\Image' is the Intervention package
 
                     // Insert the image name in the database table
                     $banner->image = $imageName; // Check 31:58 in https://www.youtube.com/watch?v=1G21b3-9cPo&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=39

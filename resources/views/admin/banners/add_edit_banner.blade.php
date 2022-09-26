@@ -13,7 +13,7 @@
                     <div class="col-12 col-xl-8 mb-4 mb-xl-0">
                         {{-- <h3 class="font-weight-bold">Catalogue Management</h3>
                         <h6 class="font-weight-normal mb-0">Banners</h6> --}}
-                        <h4 class="card-title">Banners</h4>
+                        <h4 class="card-title">Home Page Banners</h4>
                     </div>
                     <div class="col-12 col-xl-4">
                         <div class="justify-content-end d-flex">
@@ -88,8 +88,17 @@
 
 
                         {{-- https://www.youtube.com/watch?v=YqBzJmwrh8I&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=37 --}}
-                        <form class="forms-sample"   @if (empty($banner['id'])) action="{{ url('admin/add-edit-banner') }}" @else action="{{ url('admin/add-edit-banner/' . $banner['id']) }}" @endif   method="post" enctype="multipart/form-data"> @csrf  <!-- If the id is not passed in from the route, this measn 'Add a new Banner', but if the id is passed in from the route, this means 'Edit the Banner' --> <!-- Using the enctype="multipart/form-data" to allow uploading files (images). Check 2:39 in https://www.youtube.com/watch?v=dvVbp4poGfQ&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=19 -->
+                        <form class="forms-sample"   @if (empty($banner['id'])) action="{{ url('admin/add-edit-banner') }}" @else action="{{ url('admin/add-edit-banner/' . $banner['id']) }}" @endif   method="post" enctype="multipart/form-data"> <!-- If the id is not passed in from the route, this measn 'Add a new Banner', but if the id is passed in from the route, this means 'Edit the Banner' --> <!-- Using the enctype="multipart/form-data" to allow uploading files (images). Check 2:39 in https://www.youtube.com/watch?v=dvVbp4poGfQ&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=19 -->
+                            @csrf
 
+                            <div class="form-group"> {{-- https://www.youtube.com/watch?v=GC_5WN0PeeM&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=70 --}}
+                                <label for="type">Banner Type</label>
+                                <select class="form-control" id="type" name="type" required>
+                                    <option value="">Select</option>
+                                    <option  @if (!empty($banner['type']) && $banner['type'] == 'Slider') selected @endif  value="Slider">Slider</option>
+                                    <option  @if (!empty($banner['type']) && $banner['type'] == 'Fix')    selected @endif  value="Fix">Fix</option>
+                                </select>
+                            </div>
                             <div class="form-group">
                                 <label for="image">Banner Image</label>
                                 <input type="file" class="form-control" id="image" name="image">
