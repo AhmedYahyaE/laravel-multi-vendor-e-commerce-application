@@ -25,9 +25,12 @@ return new class extends Migration
             $table->string('product_name');
             $table->string('product_code');
             $table->string('product_color');
-            $table->string('product_price');
-            $table->string('product_discount');
-            $table->string('product_weight');
+            // $table->string('product_price');
+            $table->float('product_price');
+            // $table->string('product_discount');
+            $table->float('product_discount');
+            // $table->string('product_weight');
+            $table->integer('product_weight');
             $table->string('product_image')->nullable();
             $table->string('product_video')->nullable();
             $table->string('description')->nullable();
