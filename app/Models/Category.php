@@ -22,9 +22,32 @@ class Category extends Model
         return $this->belongsTo('App\Models\Category', 'parent_id')->select('id', 'category_name'); // 'parent_id' is the `categories` table foreign key to the same table (the relationship between a category and its parent category inside the same table (`categories` table))    // select('id', 'category_name') means select `id` and `category_name` columns ONLY from the `sections` table for a better performance
     }
 
-
-
     public function subCategories() { // this method could be better named 'children'    // This relationship brings the categories that point to the current category (using their `parent_id`) (Example: If the current category with `id` = 4, i.e. \App\Models\Category::find(4), the relationship brings all the categories that their `parent_id` = 4)    // A one category can have many subcategories (this is a relationship inside the same table `categories` (not between two different tables))    // Check 14:47 in https://www.youtube.com/watch?v=GS2sCr4olJo&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=41
         return $this->hasMany('App\Models\Category', 'parent_id')->where('status', 1);
+    }
+
+
+
+    public static function categoryDetails($url) { // this method is used inside listing.blade.php page    // Note: if the url is a 'category', we need to fetch its products as well as its subcategories products, but if the url is a subcategory, we need to fetch the subcategory products only    // Check 24:00 in https://www.youtube.com/watch?v=JzKi78lyz0g&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=76
+        $categoryDetails = \App\Models\Category::select('id', 'category_name', 'url')->with('subCategories')->where('url', $url)->first()->toArray(); // using the relationship subCategories() method with with() method    // Get the parent category and its subcategories
+        // dd($categoryDetails);
+        // dd($categoryDetails['subCategories']); // Doesn't work!
+        // dd($categoryDetails['sub_categories']); // Works!
+
+        $catIds = array(); // this array will contain both the parent category ids and its subcategories ids too
+        $catIds[] = $categoryDetails['id']; // Get the PARENT category id
+
+        foreach ($categoryDetails['sub_categories'] as $key => $subcat) { // Get the SUBCATEGORIES ids of the PARENT category
+            $catIds[] = $subcat['id'];
+        }
+
+        // dd($catIds);
+
+        $resp = array(
+            'catIds'          => $catIds,
+            'categoryDetails' => $categoryDetails
+        );
+
+        return $resp;
     }
 }

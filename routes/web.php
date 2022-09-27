@@ -127,4 +127,14 @@ Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function
 // The website 'FRONT' Section routes: (Route Groups: https://laravel.com/docs/9.x/routing#route-groups)
 Route::namespace('App\Http\Controllers\Front')->group(function() {
     Route::get('/', 'IndexController@index');
+
+
+    // Dynamic Routes for the `url` column in the `categories` table using a foreach loop    // Check 8:42 in https://www.youtube.com/watch?v=JzKi78lyz0g&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=76
+    // Listing/Categories Routes
+    // $catUrls = \App\Models\Category::select('url')->where('status', 1)->get()->toArray();
+    $catUrls = \App\Models\Category::select('url')->where('status', 1)->get()->pluck('url')->toArray(); // https://laravel.com/docs/9.x/collections#method-pluck
+    // dd($catUrls);
+    foreach ($catUrls as $key => $url) {
+        Route::get('/' . $url, 'ProductsController@listing');
+    }
 });
