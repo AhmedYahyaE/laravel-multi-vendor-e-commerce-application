@@ -195,6 +195,10 @@
                                 <label for="is_featured">Featured Item (Yes/No)</label>
                                 <input type="checkbox" name="is_featured" id="is_featured" value="Yes" @if (!empty($product['is_featured']) && $product['is_featured'] == 'Yes') checked @endif>
                             </div>
+                            <div class="form-group">
+                                <label for="is_bestseller">Best Seller Item (Yes/No)</label> {{-- Note: Only 'superadmin' can mark a product as 'bestseller', but 'vendor' can't --}}
+                                <input type="checkbox" name="is_bestseller" id="is_bestseller" value="Yes" @if (!empty($product['is_bestseller']) && $product['is_bestseller'] == 'Yes') checked @endif>
+                            </div>
                             <button type="submit" class="btn btn-primary mr-2">Submit</button>
                             <button type="reset"  class="btn btn-light">Cancel</button>
                         </form>

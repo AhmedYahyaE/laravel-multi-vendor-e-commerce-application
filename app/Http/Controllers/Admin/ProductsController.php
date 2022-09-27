@@ -85,8 +85,9 @@ class ProductsController extends Controller
             // Customizing Laravel's Validation Error Messages: https://laravel.com/docs/9.x/validation#customizing-the-error-messages    // Customizing Validation Rules: https://laravel.com/docs/9.x/validation#custom-validation-rules    // Check 14:49 in https://www.youtube.com/watch?v=ydubcZC3Hbw&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=18
             $rules = [
                 'category_id'   => 'required',
-                'product_name'  => 'required|regex:/^[\pL\s\-]+$/u', // only alphabetical characters and spaces
-                'product_code'  => 'required|regex:/^\w+$/', // Alphanumeric regular expression
+                // 'product_name'  => 'required|regex:/^[\pL\s\-]+$/u', // only alphabetical characters and spaces
+                'product_name'  => 'required', // only alphabetical characters and spaces
+                'product_code'  => 'required|regex:/^\w+$/', // alphanumeric regular expression
                 'product_price' => 'required|numeric',
                 'product_color' => 'required|regex:/^[\pL\s\-]+$/u', // only alphabetical characters and spaces
             ];
@@ -213,7 +214,18 @@ class ProductsController extends Controller
                 $product->is_featured = 'No';
             }
 
+
+            if (!empty($data['is_bestseller'])) {
+                // dd($data);
+                $product->is_bestseller = $data['is_bestseller'];
+            } else {
+                // dd($data);
+                $product->is_bestseller = 'No';
+            }
+
+
             $product->status = 1;
+
 
             $product->save(); // Save all data in the database
 
