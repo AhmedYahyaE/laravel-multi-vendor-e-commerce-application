@@ -115,10 +115,14 @@
                                                 </div>
                                             </div>
 
+
+
                                             {{-- Call the static getDiscountPrice() method in the Product.php Model to determine the final price of a product because a product can have a discount from TWO things: either a `CATEGORY` discount or `PRODUCT` discout    // Check 19:09 in https://www.youtube.com/watch?v=T_CWdKW5he0&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=72 --}}
                                             @php
                                                 $getDiscountPrice = \App\Models\Product::getDiscountPrice($product['id']);
                                             @endphp
+
+
                                             @if ($getDiscountPrice > 0)
                                                 <div class="price-template">
                                                     <div class="item-new-price">
@@ -135,6 +139,9 @@
                                                     </div>
                                                 </div>
                                             @endif
+
+
+
                                         </div>
                                         <div class="tag new">
                                             <span>NEW</span>

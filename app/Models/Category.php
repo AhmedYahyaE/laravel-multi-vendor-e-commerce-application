@@ -28,7 +28,7 @@ class Category extends Model
 
 
 
-    public static function categoryDetails($url) { // this method is used inside listing.blade.php page    // Note: if the url is a 'category', we need to fetch its products as well as its subcategories products, but if the url is a subcategory, we need to fetch the subcategory products only    // Check 24:00 in https://www.youtube.com/watch?v=JzKi78lyz0g&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=76
+    public static function categoryDetails($url) { // this method is used inside ProductsController.php    // Note: if the URL is a 'category', we need to fetch its related products as well as its subcategories related products, but if the url is a subcategory, we need to fetch the subcategory related products only    // Check 24:00 in https://www.youtube.com/watch?v=JzKi78lyz0g&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=76
         $categoryDetails = \App\Models\Category::select('id', 'category_name', 'url')->with('subCategories')->where('url', $url)->first()->toArray(); // using the relationship subCategories() method with with() method    // Get the parent category and its subcategories
         // dd($categoryDetails);
         // dd($categoryDetails['subCategories']); // Doesn't work!

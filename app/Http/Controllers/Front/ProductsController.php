@@ -20,11 +20,18 @@ class ProductsController extends Controller
         // dd($categoryCount);
 
         if ($categoryCount > 0) { // if the category entered as a URL in the browser address bar exists
-            // Get category details
+            // Get the entered URL in the browser address bar category details
             $categoryDetails = \App\Models\Category::categoryDetails($url);
-            dd($categoryDetails);
+            // dd($categoryDetails);
             // dd($categoryDetails['sub_categories']);
             // dd('category exists');
+
+            // Get the categories related products    // Note: if the entered URL in the browser address bar is a 'category', we need to fetch its related products as well as its subcategories related products, but if the URL is a subcategory, we need to fetch the subcategory related products only
+            $categoryProducts = \App\Models\Product::whereIn('category_id', $categoryDetails['catIds'])->where('status', 1)->get()->toArray(); // https://laravel.com/docs/9.x/queries#additional-where-clauses
+            // dd($categoryProducts);
+
+
+            return view('front.products.listing')->with(compact('categoryDetails', 'categoryProducts'));
 
         } else {
             abort(404); // we will create the 404 page later on    // https://laravel.com/docs/9.x/helpers#method-abort
