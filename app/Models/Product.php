@@ -19,6 +19,10 @@ class Product extends Model
         return $this->belongsTo('App\Models\Category', 'category_id'); // 'category_id' is the foreign key
     }
 
+    public function brand() { // Every product belongs to some brand    // this relationship method is used in Front/ProductsController.php    // https://www.youtube.com/watch?v=8kf1WDELK6o&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=77
+        return $this->belongsTo('App\Models\Brand', 'brand_id'); // 'brand_id' is the foreign key
+    }
+
     // Every product has many attributes
     public function attributes() {
         return $this->hasMany('App\Models\ProductsAttribute');

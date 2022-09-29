@@ -29,14 +29,17 @@
         <div class="shop-intro">
             <ul class="bread-crumb">
                 <li class="has-separator">
-                    <a href="index.html">Home</a>
+                    <a href="{{ url('/') }}">Home</a>
                 </li>
-                <li class="has-separator">
-                    <a href="shop-v1-root-category.html">Men Clothing </a>
-                </li>
-                <li class="is-marked">
-                    <a href="listing.html">T-Shirts</a>
-                </li>
+
+
+                {{-- Breadcrumbs --}} {{-- https://www.youtube.com/watch?v=8kf1WDELK6o&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=77 --}}
+                <?php
+                    echo $categoryDetails['breadcrumbs'];
+                ?>
+
+
+
             </ul>
         </div>
         <!-- Shop-Intro /- -->
@@ -76,13 +79,22 @@
                     </div>
                     <!-- //end Toolbar Sorter 1  -->
                     <!-- Toolbar Sorter 2  -->
-                    <div class="toolbar-sorter-2">
+                    {{-- <div class="toolbar-sorter-2">
                         <div class="select-box-wrapper">
                             <label class="sr-only" for="show-records">Show Records Per Page</label>
                             <select class="select-box" id="show-records">
                                 <option selected="selected" value="">Show: 8</option>
                                 <option value="">Show: 16</option>
                                 <option value="">Show: 28</option>
+                            </select>
+                        </div>
+                    </div> --}}
+                    <div class="toolbar-sorter-2">
+                        <div class="select-box-wrapper">
+                            <label class="sr-only" for="show-records">Show Records Per Page</label>
+                            <select class="select-box" id="show-records">
+                                <option selected="selected" value="">Showing: {{ count($categoryProducts) }}</option>
+                                <option value="">Showing: All</option>
                             </select>
                         </div>
                     </div>
@@ -130,8 +142,11 @@
                                             <li class="has-separator">
                                                 <a href="shop-v1-root-category.html">{{ $product['product_code'] }}</a>
                                             </li>
-                                            <li>
+                                            <li class="has-separator">
                                                 <a href="listing.html">{{ $product['product_color'] }}</a>
+                                            </li>
+                                            <li>
+                                                <a href="listing.html">{{ $product['brand']['name'] }}</a>
                                             </li>
                                         </ul>
                                         <h6 class="item-title">
@@ -186,6 +201,12 @@
 
                 </div>
                 <!-- Row-of-Product-Container /- -->
+
+
+
+                {{-- Show the category and subcategory description --}} {{-- Check 12:39 in https://www.youtube.com/watch?v=8kf1WDELK6o&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=77 --}}
+                <div>{{ $categoryDetails['categoryDetails']['description'] }}</div>
+
 
 
             </div>
