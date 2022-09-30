@@ -191,9 +191,21 @@
 
 
                                 </div>
-                                <div class="tag new">
-                                    <span>NEW</span>
-                                </div>
+
+
+
+                                {{-- https://www.youtube.com/watch?v=tQNmKdQ-f-s&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=79 --}}
+                                @php
+                                    $isProductNew = \App\Models\Product::isProductNew($product['id'])
+                                @endphp
+                                @if ($isProductNew == 'Yes')
+                                    <div class="tag new">
+                                        <span>NEW</span>
+                                    </div>
+                                @endif
+
+
+                                
                             </div>
                         </div>
                     @endforeach
@@ -204,6 +216,11 @@
 
 
 
+                {{-- Laravel Pagination and showing it using Bootstrap Pagination --}} {{-- https://www.youtube.com/watch?v=tQNmKdQ-f-s&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=79 --}}
+                <div>{{ $categoryProducts->links() }}</div>
+
+                <div>&nbsp;</div>
+
                 {{-- Show the category and subcategory description --}} {{-- Check 12:39 in https://www.youtube.com/watch?v=8kf1WDELK6o&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=77 --}}
                 <div>{{ $categoryDetails['categoryDetails']['description'] }}</div>
 
@@ -211,8 +228,11 @@
 
             </div>
             <!-- Shop-Right-Wrapper /- -->
+
+
             <!-- Shop-Pagination -->
-            <div class="pagination-area">
+
+            {{-- <div class="pagination-area">
                 <div class="pagination-number">
                     <ul>
                         <li style="display: none">
@@ -242,8 +262,11 @@
                         </li>
                     </ul>
                 </div>
-            </div>
+            </div> --}}
+
             <!-- Shop-Pagination /- -->
+
+
         </div>
     </div>
 </div>

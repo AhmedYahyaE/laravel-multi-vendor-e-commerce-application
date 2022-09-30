@@ -34,6 +34,7 @@ class Product extends Model
     }
 
 
+
     // A static method (to be able to be called directly without instantiating an object in index.blade.php) to determine the final price of a product because a product can have a discount from TWO things: either a `CATEGORY` discount or `PRODUCT` discout    // Check 19:09 in https://www.youtube.com/watch?v=T_CWdKW5he0&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=72
     public static function getDiscountPrice($product_id) { // this method is called in front/index.blade.php
         // Get the product PRICE, DISCOUNT and CATEGORY ID
@@ -59,5 +60,24 @@ class Product extends Model
         return $discount_price;
     }
 
+
+
+    public static function isProductNew($product_id) { // https://www.youtube.com/watch?v=tQNmKdQ-f-s&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=79
+        // Get the last (latest) three 3 added products ids
+        // $productIds = \App\Models\Product::select('id')->where('status', 1)->orderBy('id', 'Desc')->limit(3)->get()->toArray();
+        $productIds = \App\Models\Product::select('id')->where('status', 1)->orderBy('id', 'Desc')->limit(3)->pluck('id');
+        // dd($productIds);
+        $productIds = json_decode(json_encode($productIds, true));
+        // dd($productIds);
+
+        if (in_array($product_id, $productIds)) { // if the passed in $product_id is in the array of the last (latest) 3 added products ids
+            $isProductNew = 'Yes';
+        } else {
+            $isProductNew = 'No';
+        }
+
+
+        return $isProductNew;
+    }
 
 }
