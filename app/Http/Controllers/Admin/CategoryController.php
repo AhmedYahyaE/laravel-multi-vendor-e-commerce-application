@@ -37,7 +37,7 @@ class CategoryController extends Controller
             }
 
 
-            \App\Models\Category::where('id', $data['category_id'])->update(['status' => $status]); // $data['category_id'] comes from the 'data' object inside the $.ajax() method in custom.js
+            \App\Models\Category::where('id', $data['category_id'])->update(['status' => $status]); // $data['category_id'] comes from the 'data' object inside the $.ajax() method in admin/js/custom.js
             // echo '<pre>', var_dump($data), '</pre>';
 
             return response()->json([
@@ -196,8 +196,8 @@ class CategoryController extends Controller
         return view('admin.categories.add_edit_category')->with(compact('title', 'category', 'getSections', 'getCategories'));
     }
 
-    public function appendCategoryLevel(Request $request) { // (AJAX) Show Categories <select> <option> depending on the choosed Section (show the relevant categories of the choosed section) using AJAX in custom.js in append_categories_level.blade.php page    // https://www.youtube.com/watch?v=GS2sCr4olJo&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=42
-        // Note: We created the <div> in a separate file in order for the appendCategoryLevel() method inside the CategoryController to be able to return the whole file as a response to the AJAX call in custom.js to show the proper/relevant categories <select> box <option> depending on the choosed Section
+    public function appendCategoryLevel(Request $request) { // (AJAX) Show Categories <select> <option> depending on the choosed Section (show the relevant categories of the choosed section) using AJAX in admin/js/custom.js in append_categories_level.blade.php page    // https://www.youtube.com/watch?v=GS2sCr4olJo&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=42
+        // Note: We created the <div> in a separate file in order for the appendCategoryLevel() method inside the CategoryController to be able to return the whole file as a response to the AJAX call in admin/js/custom.js to show the proper/relevant categories <select> box <option> depending on the choosed Section
         if ($request->ajax()) { // if the request is coming from an AJAX call
             // if ($request->isMethod('get')) {
                 $data = $request->all();
@@ -206,7 +206,7 @@ class CategoryController extends Controller
                 
                 $getCategories = \App\Models\Category::with('subCategories')->where([ // 'subCategories' is the relationship method inside the Category.php model    // $getCategories are all the parent categories, and their child categories    // https://www.youtube.com/watch?v=GS2sCr4olJo&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=40
                     'parent_id'  => 0,
-                    'section_id' => $data['section_id'] // $data['section_id'] comes from the 'data' object inside the $.ajax() method in custom.js
+                    'section_id' => $data['section_id'] // $data['section_id'] comes from the 'data' object inside the $.ajax() method in admin/js/custom.js
                 ])->get();
             // }
             
@@ -222,7 +222,7 @@ class CategoryController extends Controller
         return redirect()->back()->with('success_message', $message);
     }
 
-    public function deleteCategoryImage($id) { // AJAX call from custom.js    // Delete the category image from BOTH SERVER (FILESYSTEM) & DATABASE    // $id is passed as a URL parameter    // https://www.youtube.com/watch?v=uHYf4HmJTS8&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=42
+    public function deleteCategoryImage($id) { // AJAX call from admin/js/custom.js    // Delete the category image from BOTH SERVER (FILESYSTEM) & DATABASE    // $id is passed as a URL parameter    // https://www.youtube.com/watch?v=uHYf4HmJTS8&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=42
         // Category image record in the database
         $categoryImage = \App\Models\Category::select('category_image')->where('id', $id)->first(); // https://laravel.com/docs/9.x/queries#delete-statements
         // dd($categoryImage);

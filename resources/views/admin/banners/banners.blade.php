@@ -77,7 +77,7 @@
                                                 {{-- <a title="Banner" class="confirmDelete" href="{{ url('admin/delete-banner/' . $banner['id']) }}"> --}}
                                                     {{-- <i style="font-size: 25px" class="mdi mdi-file-excel-box"></i> --}} {{-- Icons from Skydash Admin Panel Template --}}
                                                 {{-- </a> --}}
-                                                <a href="JavaScript:void(0)" class="confirmDelete" module="banner" moduleid="{{ $banner['id'] }}"> {{-- Check custom.js and web.php (routes) --}}
+                                                <a href="JavaScript:void(0)" class="confirmDelete" module="banner" moduleid="{{ $banner['id'] }}"> {{-- Check admin/js/custom.js and web.php (routes) --}}
                                                     <i style="font-size: 25px" class="mdi mdi-file-excel-box"></i> {{-- Icons from Skydash Admin Panel Template --}}
                                                 </a>
                                             </td>

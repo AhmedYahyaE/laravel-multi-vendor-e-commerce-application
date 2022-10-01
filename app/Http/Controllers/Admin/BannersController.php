@@ -31,7 +31,7 @@ class BannersController extends Controller
             }
 
 
-            \App\Models\Banner::where('id', $data['banner_id'])->update(['status' => $status]); // $data['banner_id'] comes from the 'data' object inside the $.ajax() method in custom.js
+            \App\Models\Banner::where('id', $data['banner_id'])->update(['status' => $status]); // $data['banner_id'] comes from the 'data' object inside the $.ajax() method in admin/js/custom.js
             // echo '<pre>', var_dump($data), '</pre>';
 
             return response()->json([

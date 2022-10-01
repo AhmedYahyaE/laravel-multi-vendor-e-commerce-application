@@ -122,5 +122,9 @@
         <script type="text/javascript" src="{{ url('front/js/owl.carousel.min.js') }}"></script>
         <!-- Main -->
         <script type="text/javascript" src="{{ url('front/js/app.js') }}"></script>
+
+
+        <!-- Our front/js/custom.js file --> {{-- https://www.youtube.com/watch?v=u2NiZzjRL8U&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=80 --}}
+        <script type="text/javascript" src="{{ url('front/js/custom.js') }}"></script>
     </body>
 </html>

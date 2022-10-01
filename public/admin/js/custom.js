@@ -1,4 +1,4 @@
-// Using jQuery:
+// Using jQuery for the website ADMIN section:
 $(document).ready(function() {
 
     // Calling the DataTable class: Check 18:55 in https://www.youtube.com/watch?v=1XJ7908SJcM&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=34

@@ -107,7 +107,7 @@
 
 
 
-                            <div id="appendCategoriesLevel"> {{-- We create this <div> in a separate file in order for the appendCategoryLevel() method inside the CategoryController to be able to return the whole file as a response to the AJAX call in custom.js to show the proper/relevant categories <select> box <option> depending on the choosed Section --}}
+                            <div id="appendCategoriesLevel"> {{-- We create this <div> in a separate file in order for the appendCategoryLevel() method inside the CategoryController to be able to return the whole file as a response to the AJAX call in admin/js/custom.js to show the proper/relevant categories <select> box <option> depending on the choosed Section --}}
                                 @include('admin.categories.append_categories_level')
                             </div>
 
@@ -126,7 +126,7 @@
                                 {{-- Show the category image, if any (if exits) --}}
                                 @if (!empty($category['category_image']))
                                     <a target="_blank" href="{{ url('front/images/category_images/' . $category['category_image']) }}">View Category Image</a>&nbsp;|&nbsp;
-                                    <a href="JavaScript:void(0)" class="confirmDelete" module="category-image" moduleid="{{ $category['id'] }}">Delete Category Image</a> {{-- Delete the category image from BOTH SERVER (FILESYSTEM) & DATABASE --}}    {{-- Check custom.js and web.php (routes) --}}
+                                    <a href="JavaScript:void(0)" class="confirmDelete" module="category-image" moduleid="{{ $category['id'] }}">Delete Category Image</a> {{-- Delete the category image from BOTH SERVER (FILESYSTEM) & DATABASE --}}    {{-- Check admin/js/custom.js and web.php (routes) --}}
                                 @endif
                             </div>
                             <div class="form-group">

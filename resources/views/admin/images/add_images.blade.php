@@ -160,7 +160,7 @@
                                                 </a>
                                             @endif
                                             &nbsp;
-                                            <a href="JavaScript:void(0)" class="confirmDelete" module="image" moduleid="{{ $image['id'] }}"> {{-- Check custom.js and web.php (routes) --}}
+                                            <a href="JavaScript:void(0)" class="confirmDelete" module="image" moduleid="{{ $image['id'] }}"> {{-- Check admin/js/custom.js and web.php (routes) --}}
                                                 <i style="font-size: 25px" class="mdi mdi-file-excel-box"></i> {{-- Icons from Skydash Admin Panel Template --}}
                                             </a>
                                         </td>
