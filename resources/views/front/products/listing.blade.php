@@ -56,20 +56,24 @@
             <div class="col-lg-9 col-md-9 col-sm-12">
                 <!-- Page-Bar -->
                 <div class="page-bar clearfix">
-                    <div class="shop-settings">
-                        <a id="list-anchor">
-                            <i class="fas fa-th-list"></i>
-                        </a>
-                        <a id="grid-anchor" class="active"> {{-- make this 'grid' layout the DEFAULT layout --}} {{-- Check 10:25 in https://www.youtube.com/watch?v=A5hIj_0L648&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=77 --}}
-                            <i class="fas fa-th"></i>
-                        </a>
-                    </div>
+                    {{-- <div class="shop-settings"> --}}
+                        {{-- <a id="list-anchor"> --}}
+                            {{-- <i class="fas fa-th-list"></i> --}}
+                        {{-- </a> --}}
+                        {{-- <a id="grid-anchor" class="active"> --}} {{-- make this 'grid' layout the DEFAULT layout --}} {{-- Check 10:25 in https://www.youtube.com/watch?v=A5hIj_0L648&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=77 --}}
+                            {{-- <i class="fas fa-th"></i> --}}
+                        {{-- </a> --}}
+                    {{-- </div> --}}
                     
 
 
                     <!-- Toolbar Sorter 1  -->
                     {{-- Sorting Filter WITHOUT AJAX (using HTML <form> and jQuery). Check front/js/custom.js file for the related script --}} {{-- https://www.youtube.com/watch?v=u2NiZzjRL8U&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=80 --}}
                     <form name="sortProducts" id="sortProducts"> {{-- Absence of the "action" attribute means submitting the <form> data to the same page --}}
+                        
+                        {{-- Sorting Filter WITH AJAX. Check ajax_products_listing.blade.php --}} {{-- https://www.youtube.com/watch?v=APPKmLlWEBY&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu --}}
+                        <input type="hidden" name="url" id="url" value="{{ $url }}">
+
                         <div class="toolbar-sorter">
                             <div class="select-box-wrapper">
                                 <label class="sr-only" for="sort-by">Sort By</label>
@@ -117,114 +121,12 @@
 
 
                 <!-- Row-of-Product-Container -->
-                <div class="row product-container list-style">
 
-
-                    @foreach ($categoryProducts as $product)
-                        <div class="product-item col-lg-4 col-md-6 col-sm-6">
-                            <div class="item">
-                                <div class="image-container">
-                                    <a class="item-img-wrapper-link" href="single-product.html">
-
-
-
-                                        @php
-                                            $product_image_path = 'front/images/product_images/small/' . $product['product_image'];
-                                        @endphp
-
-
-                                        @if (!empty($product['product_image']) && file_exists($product_image_path)) {{-- if the product image exists in BOTH database table AND filesystem (on server) --}}
-                                            <img class="img-fluid" src="{{ asset($product_image_path) }}" alt="Product">
-                                        @else {{-- show the dummy image --}}
-                                            <img class="img-fluid" src="{{ asset('front/images/product_images/small/no-image.png') }}" alt="Product">
-                                        @endif
-
-
-
-                                    </a>
-                                    <div class="item-action-behaviors">
-                                        <a class="item-quick-look" data-toggle="modal" href="#quick-view">Quick Look</a>
-                                        <a class="item-mail" href="javascript:void(0)">Mail</a>
-                                        <a class="item-addwishlist" href="javascript:void(0)">Add to Wishlist</a>
-                                        <a class="item-addCart" href="javascript:void(0)">Add to Cart</a>
-                                    </div>
-                                </div>
-                                <div class="item-content">
-                                    <div class="what-product-is">
-                                        <ul class="bread-crumb">
-                                            <li class="has-separator">
-                                                <a href="shop-v1-root-category.html">{{ $product['product_code'] }}</a>
-                                            </li>
-                                            <li class="has-separator">
-                                                <a href="listing.html">{{ $product['product_color'] }}</a>
-                                            </li>
-                                            <li>
-                                                <a href="listing.html">{{ $product['brand']['name'] }}</a>
-                                            </li>
-                                        </ul>
-                                        <h6 class="item-title">
-                                            <a href="single-product.html">{{ $product['product_name'] }}</a>
-                                        </h6>
-                                        <div class="item-description">
-                                            <p>{{ $product['description'] }}</p>
-                                        </div>
-                                        {{-- <div class="item-stars">
-                                            <div class='star' title="4.5 out of 5 - based on 23 Reviews">
-                                                <span style='width:67px'></span>
-                                            </div>
-                                            <span>(23)</span>
-                                        </div> --}}
-                                    </div>
-
-
-
-                                    {{-- Call the static getDiscountPrice() method in the Product.php Model to determine the final price of a product because a product can have a discount from TWO things: either a `CATEGORY` discount or `PRODUCT` discout    // Check 19:09 in https://www.youtube.com/watch?v=T_CWdKW5he0&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=72 --}}
-                                    @php
-                                        $getDiscountPrice = \App\Models\Product::getDiscountPrice($product['id']);
-                                    @endphp
-
-
-                                    @if ($getDiscountPrice > 0)
-                                        <div class="price-template">
-                                            <div class="item-new-price">
-                                                Rs . {{ $getDiscountPrice }} {{-- 'Rs' means Rupees the Indian currency --}}
-                                            </div>
-                                            <div class="item-old-price">
-                                                Rs . {{ $product['product_price'] }}
-                                            </div>
-                                        </div>
-                                    @else
-                                        <div class="price-template">
-                                            <div class="item-new-price">
-                                                Rs . {{ $product['product_price'] }}
-                                            </div>
-                                        </div>
-                                    @endif
-
-
-
-                                </div>
-
-
-
-                                {{-- https://www.youtube.com/watch?v=tQNmKdQ-f-s&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=79 --}}
-                                @php
-                                    $isProductNew = \App\Models\Product::isProductNew($product['id'])
-                                @endphp
-                                @if ($isProductNew == 'Yes')
-                                    <div class="tag new">
-                                        <span>NEW</span>
-                                    </div>
-                                @endif
-
-
-                                
-                            </div>
-                        </div>
-                    @endforeach
-
-
+                {{-- Sorting Filter WITH AJAX. Check ajax_products_listing.blade.php --}} {{-- https://www.youtube.com/watch?v=APPKmLlWEBY&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu --}}
+                <div class="filter_products">
+                    @include('front.products.ajax_products_listing')
                 </div>
+                
                 <!-- Row-of-Product-Container /- -->
 
 
