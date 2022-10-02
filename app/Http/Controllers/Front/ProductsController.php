@@ -63,7 +63,6 @@ class ProductsController extends Controller
     
     
                 return view('front.products.ajax_products_listing')->with(compact('categoryDetails', 'categoryProducts', 'url'));
-    
             } else {
                 abort(404); // we will create the 404 page later on    // https://laravel.com/docs/9.x/helpers#method-abort
             }
@@ -114,12 +113,10 @@ class ProductsController extends Controller
     
     
                 return view('front.products.listing')->with(compact('categoryDetails', 'categoryProducts', 'url'));
-    
             } else {
                 abort(404); // we will create the 404 page later on    // https://laravel.com/docs/9.x/helpers#method-abort
             }
         }
-
     }
 
 }

@@ -1,6 +1,6 @@
 {{-- https://www.youtube.com/watch?v=GS2sCr4olJo&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=42 --}}
 {{-- NOTE: THIS WHOLE PAGE IS INCLUDED IN add_edit_category.blade.php!!    (    <div id="appendCategoriesLevel">    ) --}}
-{{-- Show Categories <select> <option> depending on the choosed selected Section (show the relevant categories of the choosed section) in append_categories_level.blade.php page --}}
+{{-- Show Categories <select> <option> depending on the choosed selected Section (show the relevant categories of the choosed section) in append_categories_level.blade.php page using AJAX --}}
 {{-- We created this <div> in a separate file in order for the appendCategoryLevel() method inside the CategoryController to be able to return the whole file as a response to the AJAX call in admin/js/custom.js to show the proper/relevant categories <select> box <option> depending on the choosed selected Section --}}
 
 
