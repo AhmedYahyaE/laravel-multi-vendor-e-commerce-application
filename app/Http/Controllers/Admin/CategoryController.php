@@ -40,7 +40,7 @@ class CategoryController extends Controller
             \App\Models\Category::where('id', $data['category_id'])->update(['status' => $status]); // $data['category_id'] comes from the 'data' object inside the $.ajax() method in admin/js/custom.js
             // echo '<pre>', var_dump($data), '</pre>';
 
-            return response()->json([
+            return response()->json([ // JSON Responses: https://laravel.com/docs/9.x/responses#json-responses
                 'status'      => $status,
                 'category_id' => $data['category_id']
             ]);

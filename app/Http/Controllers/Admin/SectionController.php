@@ -37,7 +37,7 @@ class SectionController extends Controller
             \App\Models\Section::where('id', $data['section_id'])->update(['status' => $status]); // $data['section_id'] comes from the 'data' object inside the $.ajax() method
             // echo '<pre>', var_dump($data), '</pre>';
 
-            return response()->json([
+            return response()->json([ // JSON Responses: https://laravel.com/docs/9.x/responses#json-responses
                 'status'     => $status,
                 'section_id' => $data['section_id']
             ]);

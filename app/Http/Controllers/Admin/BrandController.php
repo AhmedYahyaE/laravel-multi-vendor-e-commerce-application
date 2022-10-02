@@ -38,7 +38,7 @@ class BrandController extends Controller
             \App\Models\Brand::where('id', $data['brand_id'])->update(['status' => $status]); // $data['brand_id'] comes from the 'data' object inside the $.ajax() method
             // echo '<pre>', var_dump($data), '</pre>';
 
-            return response()->json([
+            return response()->json([ // JSON Responses: https://laravel.com/docs/9.x/responses#json-responses
                 'status'     => $status,
                 'brand_id' => $data['brand_id']
             ]);

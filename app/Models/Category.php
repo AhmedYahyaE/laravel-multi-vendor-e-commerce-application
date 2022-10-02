@@ -76,4 +76,15 @@ class Category extends Model
 
         return $resp;
     }
+
+
+
+    // this method is called in admin\filters\filters.blade.php to be able to translate the filter cat_ids column to category names to show them in the table in filters.blade.php in the Admin Panel    // Check 21:30 in https://www.youtube.com/watch?v=0eFPxTAwqnQ&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=83
+    public static function getCategoryName($category_id) {
+        $getCategoryName = \App\Models\Category::select('category_name')->where('id', $category_id)->first();
+        // dd($getCategoryName);
+
+
+        return $getCategoryName->category_name;
+    }
 }

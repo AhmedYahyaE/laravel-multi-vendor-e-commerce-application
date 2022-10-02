@@ -66,7 +66,7 @@
             </li>
 
             <li class="nav-item">
-                <a @if (Session::get('page') == 'sections' || Session::get('page') == 'categories' || Session::get('page') == 'products' || Session::get('page') == 'brands') style="background: #4B49AC !important; color: #FFF !important" @endif class="nav-link" data-toggle="collapse" href="#ui-catalogue" aria-expanded="false" aria-controls="ui-catalogue">
+                <a @if (Session::get('page') == 'sections' || Session::get('page') == 'categories' || Session::get('page') == 'products' || Session::get('page') == 'brands' || Session::get('page') == 'filters') style="background: #4B49AC !important; color: #FFF !important" @endif class="nav-link" data-toggle="collapse" href="#ui-catalogue" aria-expanded="false" aria-controls="ui-catalogue">
                 <i class="icon-layout menu-icon"></i>
                 <span class="menu-title">Catalogue Management</span>
                 <i class="menu-arrow"></i>
@@ -77,6 +77,7 @@
                         <li class="nav-item"> <a @if (Session::get('page') == 'categories') style="background: #4B49AC !important; color: #FFF !important" @else style="background: #fff !important; color: #4B49AC !important" @endif class="nav-link" href="{{ url('admin/categories') }}">Categories</a></li>
                         <li class="nav-item"> <a @if (Session::get('page') == 'brands')     style="background: #4B49AC !important; color: #FFF !important" @else style="background: #fff !important; color: #4B49AC !important" @endif class="nav-link" href="{{ url('admin/brands') }}">Brands</a></li> {{-- https://www.youtube.com/watch?v=dG7wmOhIcTM&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=41 --}}
                         <li class="nav-item"> <a @if (Session::get('page') == 'products')   style="background: #4B49AC !important; color: #FFF !important" @else style="background: #fff !important; color: #4B49AC !important" @endif class="nav-link" href="{{ url('admin/products') }}">Products</a></li>
+                        <li class="nav-item"> <a @if (Session::get('page') == 'filters')    style="background: #4B49AC !important; color: #FFF !important" @else style="background: #fff !important; color: #4B49AC !important" @endif class="nav-link" href="{{ url('admin/filters') }}">Filters</a></li>
                     </ul>
                 </div>
             </li>

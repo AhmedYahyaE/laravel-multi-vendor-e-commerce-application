@@ -46,7 +46,7 @@ class ProductsController extends Controller
             \App\Models\Product::where('id', $data['product_id'])->update(['status' => $status]); // $data['product_id'] comes from the 'data' object inside the $.ajax() method
             // echo '<pre>', var_dump($data), '</pre>';
 
-            return response()->json([
+            return response()->json([ // JSON Responses: https://laravel.com/docs/9.x/responses#json-responses
                 'status'     => $status,
                 'product_id' => $data['product_id']
             ]);
@@ -376,7 +376,7 @@ class ProductsController extends Controller
             \App\Models\ProductsAttribute::where('id', $data['attribute_id'])->update(['status' => $status]); // $data['attribute_id'] comes from the 'data' object inside the $.ajax() method
             // echo '<pre>', var_dump($data), '</pre>';
 
-            return response()->json([
+            return response()->json([ // JSON Responses: https://laravel.com/docs/9.x/responses#json-responses
                 'status'       => $status,
                 'attribute_id' => $data['attribute_id']
             ]);
@@ -484,7 +484,7 @@ class ProductsController extends Controller
             \App\Models\ProductsImage::where('id', $data['image_id'])->update(['status' => $status]); // $data['image_id'] comes from the 'data' object inside the $.ajax() method
             // echo '<pre>', var_dump($data), '</pre>';
 
-            return response()->json([
+            return response()->json([ // JSON Responses: https://laravel.com/docs/9.x/responses#json-responses
                 'status'       => $status,
                 'image_id' => $data['image_id']
             ]);
