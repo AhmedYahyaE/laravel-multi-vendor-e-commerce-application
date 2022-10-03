@@ -89,4 +89,100 @@ class FilterController extends Controller
 
         return view('admin.filters.filters_values')->with(compact('filters_values'));
     }
+
+    public function addEditFilter(Request $request, $id = null) { // If the $id is not passed, this means 'Add a Filter', but if it's passed, this means 'Edit the Filter'    // https://www.youtube.com/watch?v=pGepSLCXH1Q&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=84
+        // Correcting issues in the Skydash Admin Panel Sidebar using Session:  Check 6:33 in https://www.youtube.com/watch?v=i_SUdNILIrc&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=29
+        \Session::put('page', 'filters');
+
+
+        // FIRSTLY, IF THE REQUEST METHOS IS 'GET', THEN RENDER THE add_edit_filter.blade.php PAGE:
+        if ($id == '') { // if there's no $id passed in the route/URL parameters, this means 'Add a new Filter'
+            $title   = 'Add Filter Columns';
+            $filter  = new \App\Models\ProductsFilter;
+            $message = 'Filter added successfully!';
+        } else { // if the $id is passed in the route/URL parameter, this means Edit (Update) the Filter
+            $title   = 'Edit Filter Columns';
+            $filter  = \App\Models\ProductsFilter::find($id);
+            $message = 'Filter updated successfully!';
+        }
+
+
+        // SECONDLY, IF THE REQUEST METHOS IS 'POST', THEN SUBMIT THE HTML <form> IN add_edit_filter.blade.php PAGE (WHETHER ADD OR UPDATE A BANNER):
+        if ($request->isMethod('post')) { // WHETHER Add or Update <form> submission!!
+            $data = $request->all();
+            // dd($data);
+
+            $cat_ids = implode(',', $request['cat_ids']); // implode() converts array to string (to be able to store data as a string in `cat_ids` column of the `products_filters` database table)    // Note:    $request['cat_ids']    comes form the <select>s box "value" HTML attributes (Select Category) (using the "multiple" HTML attribute in the <select>) in add_edit_filter.blade.php
+
+
+            // Important Note: A DATABASE TRANSACTION!: We'll save the inserted data (whether Add or Update a Filter) in `products_filters` database table, and then save the inserted `filter_column` value as a new column in `products` database table after `description` column    // Database Transactions: https://laravel.com/docs/9.x/database#database-transactions
+            // Firstly: Save inserted data (whether Add or Update a Filter) in `products_filters` database table
+            $filter->cat_ids       = $cat_ids;
+            $filter->filter_name   = $data['filter_name'];
+            $filter->filter_column = $data['filter_column'];
+            $filter->status        = 1;
+
+            $filter->save(); // save inserted data (whether Add or Update a Filter) in `products_filters` database table
+
+
+            // Secondly: Save inserted `filter_column` as a new column in `products` database table after `description` column
+            \Illuminate\Support\Facades\DB::statement('ALTER TABLE `products` ADD ' . $data['filter_column'] . ' VARCHAR(255) AFTER `description`'); // Running A General Statement: https://laravel.com/docs/9.x/database#running-a-general-statement
+
+
+            return redirect('admin/filters')->with('success_message', $message); // $message was defined in the first if-else statement (in case Add or Update cases)
+        }
+
+
+        // Note: Dynamic Filters are applied to `categories` (parent categories and subcategories (child categories)), and not `sections`!
+        // Get ALL the Sections with their Categories and Subcategories (Get all sections with its categories and subcategories) to select them while adding or updating a filter (to select the fitler's respective categories)    // $categories are ALL the `sections` with their related 'parent' categories (if any (if exist)) and their subcategories or 'child' categories (if any (if exist))    // https://www.youtube.com/watch?v=-Lnk1N1jTNQ&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=47
+        // $categories = \App\Models\Section::find(1)->categories->toArray();
+        $categories = \App\Models\Section::with('categories')->get()->toArray(); // with('categories') is the relationship method name in the Section.php Model
+        // dd($categories);
+
+
+        return view('admin.filters.add_edit_filter')->with(compact('title', 'categories', 'filter'));
+    }
+
+        public function addEditFilterValue(Request $request, $id = null) { // If the $id is not passed, this means 'Add Filter Value', but if it's passed, this means 'Edit the Filter Value'    // https://www.youtube.com/watch?v=mT_mMOM3KzM&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=85
+        // Correcting issues in the Skydash Admin Panel Sidebar using Session:  Check 6:33 in https://www.youtube.com/watch?v=i_SUdNILIrc&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=29
+        \Session::put('page', 'filters');
+
+
+        // FIRSTLY, IF THE REQUEST METHOS IS 'GET', THEN RENDER THE add_edit_filter_value.blade.php PAGE:
+        if ($id == '') { // if there's no $id passed in the route/URL parameters, this means 'Add a new Filter'
+            $title   = 'Add Filter Value';
+            $filter  = new \App\Models\ProductsFiltersValue;
+            $message = 'Filter Value added successfully!';
+        } else { // if the $id is passed in the route/URL parameter, this means Edit (Update) the Filter
+            $title   = 'Edit Filter Value';
+            $filter  = \App\Models\ProductsFiltersValue::find($id);
+            $message = 'Filter Value updated successfully!';
+        }
+
+
+        // SECONDLY, IF THE REQUEST METHOS IS 'POST', THEN SUBMIT THE HTML <form> IN add_edit_filter_value.blade.php PAGE (WHETHER ADD OR UPDATE A BANNER):
+        if ($request->isMethod('post')) { // WHETHER Add or Update <form> submission!!
+            $data = $request->all();
+            // dd($data);
+
+
+            // Save inserted data (whether Add or Update a Filter Value) in `products_filters_values` database table
+            $filter->filter_id     = $data['filter_id'];
+            $filter->filter_value  = $data['filter_value'];
+            $filter->status        = 1;
+
+            $filter->save(); // save (persist) inserted data (whether Add or Update a Filter Value) in `products_filters_values` database table
+
+
+            return redirect('admin/filters-values')->with('success_message', $message); // $message was defined in the first if-else statement (in case Add or Update cases)
+        }
+
+
+        // Get ALL the enabled (active) filters (from `products_filters` table)
+        $filters = \App\Models\ProductsFilter::where('status', 1)->get()->toArray();
+        // dd($filters);
+
+
+        return view('admin.filters.add_edit_filter_value')->with(compact('title', 'filter', 'filters'));
+    }
 }

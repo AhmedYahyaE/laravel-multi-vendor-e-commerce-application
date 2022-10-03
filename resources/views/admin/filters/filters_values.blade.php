@@ -20,7 +20,7 @@
 
                         {{-- https://www.youtube.com/watch?v=0eFPxTAwqnQ&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=83 --}}
                         <a href="{{ url('admin/filters') }}"               style="max-width: 163px; float: right; display: inline-block" class="btn btn-block btn-primary">View Filters</a>
-                        <a href="{{ url('admin/add-edit-filter-value') }}" style="max-width: 150px; float: left;  display: inline-block" class="btn btn-block btn-primary">Add Filter Values</a>
+                        <a href="{{ url('admin/add-edit-filter-value') }}" style="max-width: 150px; float: left;  display: inline-block" class="btn btn-block btn-primary">Add Filter Value</a>
 
                         {{-- Our Bootstrap success message in case of updating admin password is successful: --}}
                         {{-- https://www.youtube.com/watch?v=oAZKXYrkcr4&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=17 --}}

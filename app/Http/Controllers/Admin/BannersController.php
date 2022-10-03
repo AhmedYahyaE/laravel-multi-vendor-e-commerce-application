@@ -61,7 +61,7 @@ class BannersController extends Controller
         return redirect()->back()->with('success_message', $message);
     }
 
-    public function addEditBanner(Request $request, $id = null) { // If the $id is not passed, this means Add a Banner, if not, this means Edit the Banner    // https://www.youtube.com/watch?v=YErUqekh47E&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=67
+    public function addEditBanner(Request $request, $id = null) { // If the $id is not passed, this means 'Add a Banner', but if it's passed, this means 'Edit the Banner'    // https://www.youtube.com/watch?v=YErUqekh47E&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=67
         // Correcting issues in the Skydash Admin Panel Sidebar using Session:  Check 6:33 in https://www.youtube.com/watch?v=i_SUdNILIrc&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=29
         \Session::put('page', 'banners');
 
