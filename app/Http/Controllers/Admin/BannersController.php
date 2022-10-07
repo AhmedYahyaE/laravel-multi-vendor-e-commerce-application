@@ -21,7 +21,7 @@ class BannersController extends Controller
     public function updateBannerStatus(Request $request) { // Update Banner Status using AJAX in banners.blade.php    // https://www.youtube.com/watch?v=R5_4PoNxnVQ&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=66
         if ($request->ajax()) { // if the request is coming from an AJAX call
             $data = $request->all();
-            // dd($data); // THIS DOESN'T WORK WITH AJAX! - SHOWS AN ERROR!! USE var_dump() INSTEAD!
+            // dd($data); // dd() DOESN'T WORK WITH AJAX! - SHOWS AN ERROR!! USE var_dump() INSTEAD!
             // echo '<pre>', var_dump($data), '</pre>';
 
             if ($data['status'] == 'Active') { // $data['status'] comes from the 'data' object inside the $.ajax() method    // reverse the 'status' from (ative/inactive) 0 to 1 and 1 to 0 (and vice versa)

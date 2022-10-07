@@ -92,7 +92,7 @@ class AdminController extends Controller
             // dd($data);
 
             // Check first if the entered admin current password is corret
-            if (\Illuminate\Support\Facades\Hash::check($data['current_password'], \Auth::guard('admin')->user()->password)) { // ['current_password'] comes from the AJAX call in admin/js/custom.js page from the data object inside $.ajax() method
+            if (\Illuminate\Support\Facades\Hash::check($data['current_password'], \Auth::guard('admin')->user()->password)) { // ['current_password'] comes from the AJAX call in admin/js/custom.js page from the 'data' object inside $.ajax() method
                 // Check if the new password is matching with confirm password
                 if ($data['confirm_password'] == $data['new_password']) {
                     // dd(\App\Models\Admin::where('id', \Auth::guard('admin')->user()->id));
@@ -125,12 +125,12 @@ class AdminController extends Controller
 
     public function checkAdminPassword(Request $request) { // This method is called from the AJAX call in admin/js/custom.js page
         $data = $request->all();
-        // dd($data); // THIS DOESN'T WORK WITH AJAX! - SHOWS AN ERROR!! USE var_dump() INSTEAD!
+        // dd($data); // dd() DOESN'T WORK WITH AJAX! - SHOWS AN ERROR!! USE var_dump() INSTEAD!
         // echo '<pre>', var_dump($data), '</pre>';
 
         // Check 15:06 in https://www.youtube.com/watch?v=maEXuJNzE8M&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=17
         // Hashing Passwords: https://laravel.com/docs/9.x/hashing#hashing-passwords
-        if (\Illuminate\Support\Facades\Hash::check($data['current_password'], \Auth::guard('admin')->user()->password)) { // ['current_password'] comes from the AJAX call in admin/js/custom.js page from the data object inside $.ajax() method
+        if (\Illuminate\Support\Facades\Hash::check($data['current_password'], \Auth::guard('admin')->user()->password)) { // ['current_password'] comes from the AJAX call in admin/js/custom.js page from the 'data' object inside $.ajax() method
             return 'true';
         } else {
             return 'false';
@@ -469,7 +469,7 @@ class AdminController extends Controller
     public function updateAdminStatus(Request $request) { // Update Admin Status using AJAX in admins.blade.php    // https://www.youtube.com/watch?v=zabqYC14oKU&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=28
         if ($request->ajax()) { // if the request is coming from an AJAX call
             $data = $request->all();
-            // dd($data); // THIS DOESN'T WORK WITH AJAX! - SHOWS AN ERROR!! USE var_dump() INSTEAD!
+            // dd($data); // dd() DOESN'T WORK WITH AJAX! - SHOWS AN ERROR!! USE var_dump() INSTEAD!
             // echo '<pre>', var_dump($data), '</pre>';
 
             if ($data['status'] == 'Active') { // $data['status'] comes from the 'data' object inside the $.ajax() method    // reverse the 'status' from (ative/inactive) 0 to 1 and 1 to 0 (and vice versa)

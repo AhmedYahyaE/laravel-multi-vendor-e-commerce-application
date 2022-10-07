@@ -19,4 +19,43 @@ class ProductsFilter extends Model
 
         return $getFilterName->filter_name;
     }
+
+
+
+    // Every Product Dynamic Filter has many Product Filter Values (hasMany) (A 'RAM' product dynamic filter has many values like: 4GB, 6GB, 8GB, ...)    // https://www.youtube.com/watch?v=Rr2tkfVtVMc&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=86
+    public function filter_values() {
+        return $this->hasMany('App\Models\ProductsFiltersValue', 'filter_id'); // 'filter_id' is the foreign key
+    }
+
+
+
+    // Get all the (enabled/active) Filters
+    public static function productFilters() { // https://www.youtube.com/watch?v=Rr2tkfVtVMc&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=86
+        $productFilters = \App\Models\ProductsFilter::with('filter_values')->where('status', 1)->get()->toArray(); // with('filter_values') is the relationship method name to get the values of a filter
+        // dd($productFilters);
+
+        return $productFilters;
+    }
+
+
+
+    // Check if a specific filter has a said category    // Get the category related filters (to be able to get a some category filters to view them in filters.blade.php)    // https://www.youtube.com/watch?v=Rr2tkfVtVMc&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=86
+    public static function filterAvailable($filter_id, $category_id) {
+        $filterAvailable = \App\Models\ProductsFilter::select('cat_ids')->where([
+            'id'     => $filter_id,
+            'status' => 1
+        ])->first()->toArray();
+
+        $catIdsArray = explode(',', $filterAvailable['cat_ids']); // convert the string `cat_ids` column of the `products_filters` database table to an array
+
+
+        if (in_array($category_id, $catIdsArray)) {
+            $available = 'Yes';
+        } else {
+            $available = 'No';
+        }
+
+
+        return $available;
+    }
 }

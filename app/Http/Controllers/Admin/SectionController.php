@@ -24,7 +24,7 @@ class SectionController extends Controller
     public function updateSectionStatus(Request $request) { // Update Section Status using AJAX in sections.blade.php    // https://www.youtube.com/watch?v=1XJ7908SJcM&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=34
         if ($request->ajax()) { // if the request is coming from an AJAX call
             $data = $request->all();
-            // dd($data); // THIS DOESN'T WORK WITH AJAX! - SHOWS AN ERROR!! USE var_dump() INSTEAD!
+            // dd($data); // dd() DOESN'T WORK WITH AJAX! - SHOWS AN ERROR!! USE var_dump() INSTEAD!
             // echo '<pre>', var_dump($data), '</pre>';
 
             if ($data['status'] == 'Active') { // $data['status'] comes from the 'data' object inside the $.ajax() method    // reverse the 'status' from (ative/inactive) 0 to 1 and 1 to 0 (and vice versa)

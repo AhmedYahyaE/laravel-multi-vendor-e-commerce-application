@@ -110,6 +110,16 @@
                                     {{-- <option value="{{ $category['id'] }}" @if (!empty($product['category_id']) && $product['category_id'] == $category['id']) selected @endif >{{ $category['name'] }}</option> --}}
                                 </select>
                             </div>
+
+
+
+                            {{-- Including the related filters <select> box of a product DEPENDING ON THE SELECTED CATEGORY of the product --}} {{-- https://www.youtube.com/watch?v=T7dcxauNyQc&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=89 --}}
+                            <div class="loadFilters">
+                                @include('admin.filters.category_filters')
+                            </div>
+
+
+
                             <div class="form-group">
                                 <label for="brand_id">Select Brand</label>
                                 <select name="brand_id" id="brand_id" class="form-control text-dark">

@@ -26,7 +26,7 @@ class FilterController extends Controller
     public function updateFilterStatus(Request $request) { // Update Filter Status using AJAX in filters.blade.php    // https://www.youtube.com/watch?v=0eFPxTAwqnQ&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=83
         if ($request->ajax()) { // if the request is coming from an AJAX call
             $data = $request->all();
-            // dd($data); // THIS DOESN'T WORK WITH AJAX! - SHOWS AN ERROR!! USE var_dump() INSTEAD!
+            // dd($data); // dd() DOESN'T WORK WITH AJAX! - SHOWS AN ERROR!! USE var_dump() INSTEAD!
             // echo '<pre>', var_dump($data), '</pre>';
 
             if ($data['status'] == 'Active') { // $data['status'] comes from the 'data' object inside the $.ajax() method    // reverse the 'status' from (ative/inactive) 0 to 1 and 1 to 0 (and vice versa)
@@ -49,7 +49,7 @@ class FilterController extends Controller
     public function updateFilterValueStatus(Request $request) { // Update Filter Value Status using AJAX in filters_values.blade.php    // https://www.youtube.com/watch?v=0eFPxTAwqnQ&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=83
         if ($request->ajax()) { // if the request is coming from an AJAX call
             $data = $request->all();
-            // dd($data); // THIS DOESN'T WORK WITH AJAX! - SHOWS AN ERROR!! USE var_dump() INSTEAD!
+            // dd($data); // dd() DOESN'T WORK WITH AJAX! - SHOWS AN ERROR!! USE var_dump() INSTEAD!
             // echo '<pre>', var_dump($data), '</pre>';
 
             if ($data['status'] == 'Active') { // $data['status'] comes from the 'data' object inside the $.ajax() method    // reverse the 'status' from (ative/inactive) 0 to 1 and 1 to 0 (and vice versa)
@@ -143,7 +143,7 @@ class FilterController extends Controller
         return view('admin.filters.add_edit_filter')->with(compact('title', 'categories', 'filter'));
     }
 
-        public function addEditFilterValue(Request $request, $id = null) { // If the $id is not passed, this means 'Add Filter Value', but if it's passed, this means 'Edit the Filter Value'    // https://www.youtube.com/watch?v=mT_mMOM3KzM&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=85
+    public function addEditFilterValue(Request $request, $id = null) { // If the $id is not passed, this means 'Add Filter Value', but if it's passed, this means 'Edit the Filter Value'    // https://www.youtube.com/watch?v=mT_mMOM3KzM&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=85
         // Correcting issues in the Skydash Admin Panel Sidebar using Session:  Check 6:33 in https://www.youtube.com/watch?v=i_SUdNILIrc&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=29
         \Session::put('page', 'filters');
 
@@ -167,9 +167,9 @@ class FilterController extends Controller
 
 
             // Save inserted data (whether Add or Update a Filter Value) in `products_filters_values` database table
-            $filter->filter_id     = $data['filter_id'];
-            $filter->filter_value  = $data['filter_value'];
-            $filter->status        = 1;
+            $filter->filter_id    = $data['filter_id'];
+            $filter->filter_value = $data['filter_value'];
+            $filter->status       = 1;
 
             $filter->save(); // save (persist) inserted data (whether Add or Update a Filter Value) in `products_filters_values` database table
 
@@ -185,4 +185,22 @@ class FilterController extends Controller
 
         return view('admin.filters.add_edit_filter_value')->with(compact('title', 'filter', 'filters'));
     }
+
+    public function categoryFilters(Request $request) {// Show the related filters depending on the selected category <select> in category_filters.blade.php (which in turn is included by add_edit_product.php) using AJAX. Check admin/js/custom.js    // https://www.youtube.com/watch?v=T7dcxauNyQc&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=89
+        if ($request->ajax()) {
+            $data = $request->all();
+            // dd($data); // dd() DOESN'T WORK WITH AJAX! - SHOWS AN ERROR!! USE var_dump() INSTEAD!
+            // echo '<pre>', var_dump($data), '</pre>';
+
+
+            $category_id = $data['category_id']; // ['category_id'] comes from the AJAX call in admin/js/custom.js page from the 'data' object inside $.ajax() method
+
+
+            return response()->json([ // JSON Responses: https://laravel.com/docs/9.x/responses#json-responses
+                'view' => (String)\Illuminate\Support\Facades\View::make('admin.filters.category_filters')->with(compact('category_id')) // Creating & Rendering Views: https://laravel.com/docs/9.x/views#creating-and-rendering-views
+            ]);
+        }
+    }
+
+
 }

@@ -464,7 +464,7 @@ $(document).ready(function() {
 
 
 
-    // Show Categories <select> <option> depending on the choosed Section (show the relevant categories of the choosed section) in append_categories_level.blade.php page    // https://www.youtube.com/watch?v=GS2sCr4olJo&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=42    // https://www.w3schools.com/jquery/event_change.asp
+    // Show Categories <select> <option> depending on the selected (choosed) Section (show the relevant categories of the choosed section) in append_categories_level.blade.php page    // https://www.youtube.com/watch?v=GS2sCr4olJo&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=42    // https://www.w3schools.com/jquery/event_change.asp
     $('#section_id').change(function() { // When the sections <select> <option> HTML element in add_edit_category.blade.php is selected or changed
         // console.log(this);
         var section_id = $(this).val();
@@ -512,5 +512,25 @@ $(document).ready(function() {
         $(this).parent('div').remove(); //Remove field html
         x--; //Decrement field counter
     });
+
+
+
+    // Show the related filters depending on the selected category in category_filters.blade.php (which in turn is included by add_edit_product.php) using AJAX
+    $('#category_id').on('change', function() {
+        var category_id = $(this).val(); // the category_id of the selected category
+        // console.log(category_id);
+
+        $.ajax({
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}, // X-CSRF-TOKEN: https://laravel.com/docs/9.x/csrf#csrf-x-csrf-token    // Check 12:37 in https://www.youtube.com/watch?v=maEXuJNzE8M&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=16 AND Check 12:06 in https://www.youtube.com/watch?v=APPKmLlWEBY&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu
+            type   : 'post',
+            url    : 'category-filters', // check this route in web.php
+            data   : {category_id: category_id},
+            success: function(resp) {
+                // console.log(resp);
+                $('.loadFilters').html(resp.view);
+            }
+        });
+    });
+
 
 }); // End of $(document).ready()

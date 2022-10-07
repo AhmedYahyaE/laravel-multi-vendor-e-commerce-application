@@ -33,7 +33,7 @@ class ProductsController extends Controller
     public function updateProductStatus(Request $request) { // Update Product Status using AJAX in products.blade.php
         if ($request->ajax()) { // if the request is coming from an AJAX call
             $data = $request->all();
-            // dd($data); // THIS DOESN'T WORK WITH AJAX! - SHOWS AN ERROR!! USE var_dump() INSTEAD!
+            // dd($data); // dd() DOESN'T WORK WITH AJAX! - SHOWS AN ERROR!! USE var_dump() INSTEAD!
             // echo '<pre>', var_dump($data), '</pre>';
 
             if ($data['status'] == 'Active') { // $data['status'] comes from the 'data' object inside the $.ajax() method    // reverse the 'status' from (ative/inactive) 0 to 1 and 1 to 0 (and vice versa)
@@ -149,7 +149,7 @@ class ProductsController extends Controller
                     // exit;
                     
                     // Generate a new random name for the uploaded video (to avoid that the video might get overwritten if its name is repeated)
-                    // $videoName = $video_name . '-' . rand() . '.' . $extension; // e.g.    shirtVideo-75935.mp4
+                    // $videoName = $video_name . '-' . rand() . '.' . $extension; // e.g.    'shirtVideo-75935.mp4'
                     $videoName = rand() . '.' . $extension; // e.g.    75935.mp4
 
                     // Assigning the uploaded videos path inside the 'public' folder
@@ -171,12 +171,47 @@ class ProductsController extends Controller
             $product->section_id  = $categoryDetails['section_id'];
             $product->category_id = $data['category_id'];
             $product->brand_id    = $data['brand_id'];
+
+
+
+            // Check 24:36 in https://www.youtube.com/watch?v=T7dcxauNyQc&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=91
+            // Saving the seleted filter for a product
+            $productFilters = \App\Models\ProductsFilter::productFilters(); // Get ALL the (enabled/active) Filters
+            foreach ($productFilters as $filter) { // get ALL the filters, then check if every filter's `filter_column` is submitted by the category_filters.blade.php page
+                // dd($filter);
+
+                // Data are sent from category_filters.blade.php
+                // dd($data);
+                // dd($data['ram']); // That's an example    // Or    dd($data['fabric']);
+                // echo $data[$filter['filter_column']];  // e.g.    $data['ram'];
+                // exit;
+                // if (isset($data[$filter['filter_column']])) { // check if every filter's `filter_column` is submitted by the category_filters.blade.php page
+                //     echo $data[$filter['filter_column']];
+                // }
+
+                // Firstly, for every filter in the `products_filters` table, Get the filter's (from the foreach loop) `cat_ids` using filterAvailable() method, then check if the current category_id exists in the filter cat_ids, then show the filter, if not, then don't show the filter
+                $filterAvailable = \App\Models\ProductsFilter::filterAvailable($filter['id'], $data['category_id']);
+                if ($filterAvailable == 'Yes') {
+                    if (isset($filter['filter_column']) && $data[$filter['filter_column']]) { // check if every filter's `filter_column` is submitted by the category_filters.blade.php page
+                        // echo $data[$filter['filter_column']];
+                        // exit;
+
+                        // Save the product filter in the `products` table
+                        $product->{$filter['filter_column']} = $data[$filter['filter_column']]; // i.e. $product->filter_column = filter_value    // $data[$filter['filter_column']]    is like    $data['screen_size']    which is equal to the filter value e.g.    $data['screen_size'] = 5 to 5.4 in    // $data comes from the <select> box in category_filters.blade.php
+                    }
+                }
+                                    
+
+            }
+
+
+
             // $adminType = \Auth::guard('admin')->user();
             $adminType = \Auth::guard('admin')->user()->type; // Get the `type` column value of the `admins` table through Retrieving The Authenticated User (the logged in user) using the 'admin' guard which we defined in auth.php page: https://laravel.com/docs/9.x/authentication#retrieving-the-authenticated-user
             // dd($adminType);
             $vendor_id = \Auth::guard('admin')->user()->vendor_id; // Get the `vendor_id` column value of the `admins` table through Retrieving The Authenticated User (the logged in user) using the 'admin' guard which we defined in auth.php page: https://laravel.com/docs/9.x/authentication#retrieving-the-authenticated-user
             $admin_id  = \Auth::guard('admin')->user()->id; // Get the `id` column value of the `admins` table through Retrieving The Authenticated User (the logged in user) using the 'admin' guard which we defined in auth.php page: https://laravel.com/docs/9.x/authentication#retrieving-the-authenticated-user
-            
+
             $product->admin_type = $adminType;
             $product->admin_id   = $admin_id;
             if ($adminType == 'vendor') {
@@ -363,7 +398,7 @@ class ProductsController extends Controller
     public function updateAttributeStatus(Request $request) { // Update Attribute Status using AJAX in add_edit_attributes.blade.php
         if ($request->ajax()) { // if the request is coming from an AJAX call
             $data = $request->all();
-            // dd($data); // THIS DOESN'T WORK WITH AJAX! - SHOWS AN ERROR!! USE var_dump() INSTEAD!
+            // dd($data); // dd() DOESN'T WORK WITH AJAX! - SHOWS AN ERROR!! USE var_dump() INSTEAD!
             // echo '<pre>', var_dump($data), '</pre>';
 
             if ($data['status'] == 'Active') { // $data['status'] comes from the 'data' object inside the $.ajax() method    // reverse the 'status' from (ative/inactive) 0 to 1 and 1 to 0 (and vice versa)
@@ -471,7 +506,7 @@ class ProductsController extends Controller
     public function updateImageStatus(Request $request) { // Update Image Status using AJAX in add_images.blade.php
         if ($request->ajax()) { // if the request is coming from an AJAX call
             $data = $request->all();
-            // dd($data); // THIS DOESN'T WORK WITH AJAX! - SHOWS AN ERROR!! USE var_dump() INSTEAD!
+            // dd($data); // dd() DOESN'T WORK WITH AJAX! - SHOWS AN ERROR!! USE var_dump() INSTEAD!
             // echo '<pre>', var_dump($data), '</pre>';
 
             if ($data['status'] == 'Active') { // $data['status'] comes from the 'data' object inside the $.ajax() method    // reverse the 'status' from (ative/inactive) 0 to 1 and 1 to 0 (and vice versa)

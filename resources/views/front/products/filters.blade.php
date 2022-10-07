@@ -1,3 +1,15 @@
+{{-- This is the filters sidebar which is included by 'listing.blade.php' --}}
+
+
+
+@php
+    // https://www.youtube.com/watch?v=Rr2tkfVtVMc&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=86
+    $productFilters = \App\Models\ProductsFilter::productFilters(); // Get all the (enabled/active) Filters
+    // dd($productFilters);
+@endphp
+
+
+
 <!-- Shop-Left-Side-Bar-Wrapper -->
 <div class="col-lg-3 col-md-3 col-sm-12">
     <!-- Fetch-Categories-from-Root-Category  -->
@@ -43,6 +55,9 @@
         <!-- //end Level 2 -->
     </div>
     <!-- Fetch-Categories-from-Root-Category  /- -->
+
+
+
     <!-- Filters -->
     <!-- Filter-Size -->
     <div class="facet-filter-associates">
@@ -142,6 +157,8 @@
         </form>
     </div>
     <!-- Filter-Color /- -->
+
+
     <!-- Filter-Brand -->
     <div class="facet-filter-associates">
         <h3 class="title-name">Brand</h3>
@@ -167,6 +184,41 @@
         </form>
     </div>
     <!-- Filter-Brand /- -->
+
+
+
+    {{-- https://www.youtube.com/watch?v=Rr2tkfVtVMc&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=86 --}}
+    <!-- Filter -->
+    @foreach ($productFilters as $filter) {{-- $productFilters comes from the far top of this file --}}
+        @php
+            // dd($filter);
+
+            // Firstly, for every filter in the `products_filters` table, Get the filter's (from the foreach loop) `cat_ids` using filterAvailable() method, then check if the current category id (using the $categoryDetails variable and depending on the URL) exists in the filter's `cat_ids`. If it exists, then show the filter, if not, then don't show the filter
+            $filterAvailable = \App\Models\ProductsFilter::filterAvailable($filter['id'], $categoryDetails['categoryDetails']['id']); // $categoryDetails was passed from the listing() method in the Front/ProductsController
+        @endphp
+
+        @if ($filterAvailable == 'Yes') {{-- if the current category has a filter --}}
+            @if (count($filter['filter_values']) > 0) {{-- show ONLY the filters (`filter_name`) which have filter values (`filter_value`) e.g. if the `Operating System` filter doesn't have filter values like: '4GB', '6GB', ..., DON'T show it --}}
+                <div class="facet-filter-associates">
+                    <h3 class="title-name">{{ $filter['filter_name'] }}</h3> {{-- e.g. 'Screen Size' --}}
+                    <form class="facet-form" action="#" method="post">
+                        <div class="associate-wrapper">
+                            @foreach ($filter['filter_values'] as $value) {{-- $value means 'filter value' --}}
+                                <input type="checkbox" class="check-box" id="{{ $value['filter_value'] }}">
+                                <label class="label-text" for="{{ $value['filter_value'] }}">{{ ucwords($value['filter_value']) }}
+                                    {{-- <span class="total-fetch-items">(0)</span> --}}
+                                </label>
+                            @endforeach
+                        </div>
+                    </form>
+                </div>
+            @endif
+        @endif
+
+    @endforeach
+    <!-- Filter -->
+
+
     <!-- Filter-Price -->
     <div class="facet-filter-by-price">
         <h3 class="title-name">Price</h3>

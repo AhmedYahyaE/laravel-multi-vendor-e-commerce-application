@@ -1,4 +1,7 @@
 {{-- https://www.youtube.com/watch?v=A5hIj_0L648&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=77 --}}
+{{-- Note: listing.blade.php is the page that opens when you click on a category in the FRONT home page --}}
+
+
 @extends('front.layout.layout')
 
 
