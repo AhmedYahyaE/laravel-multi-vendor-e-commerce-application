@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 
 class FilterController extends Controller
 {
-    // Dynamic Filters (of products)    // https://www.youtube.com/watch?v=0eFPxTAwqnQ&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=83
+    // Dynamic Filters in the Admin Panel (of products)    // https://www.youtube.com/watch?v=0eFPxTAwqnQ&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=83
 
 
 

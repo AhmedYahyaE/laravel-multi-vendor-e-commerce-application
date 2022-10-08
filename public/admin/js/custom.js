@@ -75,7 +75,7 @@ $(document).ready(function() {
                     $('#admin-' + admin_id).html('<i style="font-size: 25px" class="mdi mdi-bookmark-check" status="Active"></i>');
                 }
             },
-            error: function() {
+            error  : function() {
                 alert('Error');
             }
         });
@@ -112,7 +112,7 @@ $(document).ready(function() {
                     $('#section-' + section_id).html('<i style="font-size: 25px" class="mdi mdi-bookmark-check" status="Active"></i>');
                 }
             },
-            error: function() {
+            error  : function() {
                 alert('Error');
             }
         });
@@ -149,7 +149,7 @@ $(document).ready(function() {
                     $('#category-' + category_id).html('<i style="font-size: 25px" class="mdi mdi-bookmark-check" status="Active"></i>');
                 }
             },
-            error: function() {
+            error  : function() {
                 alert('Error');
             }
         });
@@ -186,7 +186,7 @@ $(document).ready(function() {
                     $('#brand-' + brand_id).html('<i style="font-size: 25px" class="mdi mdi-bookmark-check" status="Active"></i>');
                 }
             },
-            error: function() {
+            error  : function() {
                 alert('Error');
             }
         });
@@ -223,7 +223,7 @@ $(document).ready(function() {
                     $('#product-' + product_id).html('<i style="font-size: 25px" class="mdi mdi-bookmark-check" status="Active"></i>');
                 }
             },
-            error: function() {
+            error  : function() {
                 alert('Error');
             }
         });
@@ -260,7 +260,7 @@ $(document).ready(function() {
                     $('#attribute-' + attribute_id).html('<i style="font-size: 25px" class="mdi mdi-bookmark-check" status="Active"></i>');
                 }
             },
-            error: function() {
+            error  : function() {
                 alert('Error');
             }
         });
@@ -297,7 +297,7 @@ $(document).ready(function() {
                     $('#image-' + image_id).html('<i style="font-size: 25px" class="mdi mdi-bookmark-check" status="Active"></i>');
                 }
             },
-            error: function() {
+            error  : function() {
                 alert('Error');
             }
         });
@@ -334,7 +334,7 @@ $(document).ready(function() {
                     $('#banner-' + banner_id).html('<i style="font-size: 25px" class="mdi mdi-bookmark-check" status="Active"></i>');
                 }
             },
-            error: function() {
+            error  : function() {
                 alert('Error');
             }
         });
@@ -371,7 +371,7 @@ $(document).ready(function() {
                     $('#filter-' + filter_id).html('<i style="font-size: 25px" class="mdi mdi-bookmark-check" status="Active"></i>');
                 }
             },
-            error: function() {
+            error  : function() {
                 alert('Error');
             }
         });
@@ -408,7 +408,7 @@ $(document).ready(function() {
                     $('#filter-' + filter_id).html('<i style="font-size: 25px" class="mdi mdi-bookmark-check" status="Active"></i>');
                 }
             },
-            error: function() {
+            error  : function() {
                 alert('Error');
             }
         });

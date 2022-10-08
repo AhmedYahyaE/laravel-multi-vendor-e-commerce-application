@@ -72,10 +72,11 @@
 
                     <!-- Toolbar Sorter 1  -->
                     {{-- Sorting Filter WITHOUT AJAX (using HTML <form> and jQuery). Check front/js/custom.js file for the related script --}} {{-- https://www.youtube.com/watch?v=u2NiZzjRL8U&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=80 --}}
-                    <form name="sortProducts" id="sortProducts"> {{-- Absence of the "action" attribute means submitting the <form> data to the same page --}}
+                    {{-- Sidenote: There are TWO ways to submit a <form> to the backed: firstly, the regular one using the <button type="submit">, secondly, using AJAX by sending the "value" attributes of the <input> fields --}}
+                    <form name="sortProducts" id="sortProducts"> {{-- Absence of the "action" attribute means submitting the <form> data to the same page, and absence of "method" attribute means the <form> uses the default "method" which is "GET" --}}
                         
                         {{-- Sorting Filter WITH AJAX. Check ajax_products_listing.blade.php --}} {{-- https://www.youtube.com/watch?v=APPKmLlWEBY&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu --}}
-                        <input type="hidden" name="url" id="url" value="{{ $url }}">
+                        <input type="hidden" name="url" id="url" value="{{ $url }}"> {{-- $url is passed in from listing() method in Front/ProductsController.php --}}
 
                         <div class="toolbar-sorter">
                             <div class="select-box-wrapper">
@@ -96,8 +97,8 @@
                     <!-- //end Toolbar Sorter 1  -->
 
 
-                    
-                    
+
+
                     <!-- Toolbar Sorter 2  -->
                     {{-- <div class="toolbar-sorter-2">
                         <div class="select-box-wrapper">
