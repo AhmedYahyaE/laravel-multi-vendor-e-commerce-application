@@ -29,6 +29,7 @@ class Category extends Model
 
 
 
+    // Get the parent category & its subcategories (child categories) of a URL
     public static function categoryDetails($url) { // this method is used inside ProductsController.php to be used in listing.blade.php page    // Note: if the URL is a 'category', we need to fetch its related products as well as its subcategories related products, but if the url is a subcategory, we need to fetch the subcategory related products only    // Check 24:00 in https://www.youtube.com/watch?v=JzKi78lyz0g&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=76
         $categoryDetails = \App\Models\Category::select('id', 'parent_id', 'category_name', 'url', 'description')->with([ // Constraining Eager Loads: https://laravel.com/docs/9.x/eloquent-relationships#constraining-eager-loads    // Subquery Where Clauses: https://laravel.com/docs/9.x/queries#where-clauses
             'subCategories' => function($query) { // the 'subCategories' relationship method in Category.php model (this model)
@@ -40,7 +41,7 @@ class Category extends Model
         // dd($categoryDetails['sub_categories']); // Works!
 
         $catIds = array(); // this array will contain both the parent category ids and its subcategories ids too
-        $catIds[] = $categoryDetails['id']; // Get the PARENT category id
+        $catIds[] = $categoryDetails['id']; // add the PARENT category id to the $catIds array
 
 
 
@@ -61,15 +62,18 @@ class Category extends Model
 
 
 
+        // dd($categoryDetails);
         foreach ($categoryDetails['sub_categories'] as $key => $subcat) { // Get the SUBCATEGORIES ids of the PARENT category
-            $catIds[] = $subcat['id'];
+            // echo '<pre>', var_dump($subcat), '</pre>';
+            // dd($subcat);
+            $catIds[] = $subcat['id']; // add the $subcategories ids of the parent category to the $catIds array
         }
 
         // dd($catIds);
 
         $resp = array(
-            'catIds'          => $catIds,
-            'categoryDetails' => $categoryDetails,
+            'catIds'          => $catIds, // the parent category id and its subcategories (child categories), if any, of a certain URL
+            'categoryDetails' => $categoryDetails, // the category details of a certain URL
             'breadcrumbs'     => $breadcrumbs
         );
 

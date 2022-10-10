@@ -77,6 +77,22 @@ class ProductsController extends Controller
                         $categoryProducts->orderBy('products.product_name', 'Asc');
                     }
                 }
+
+
+
+                // https://www.youtube.com/watch?v=7Y1OOQr-PTs&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=92
+                // Size, price, color, brand, … are also Dynamic Filters, but won't be managed like the other Dynamic Filters, but we will manage every filter of them from the suitable respective database table, like the 'size' Filter from the `products_attributes` database table, 'color' Filter and `price` Filter from `products` table, 'brand' Filter from `brands` table
+                // First: the 'Size' filter (from `products_attributes` database table)
+                if (isset($data['size']) && !empty($data['size'])) { // coming from the AJAX call in front/js/custom.js    // example:    $data['size'] = 'Large'
+                    // echo dd($data['size']); // dd() DOESN'T WORK WITH AJAX! - SHOWS AN ERROR!! USE var_dump() INSTEAD!
+                    // echo '<pre>', var_dump($data['size']), '</pre>';
+                    // exit;
+                    $productIds = \App\Models\ProductsAttribute::select('product_id')->whereIn('size', $data['size'])->pluck('product_id')->toArray(); // fetch the products ids of the $data['size'] from the `products_attributes` table
+
+                    $categoryProducts->whereIn('products.id', $productIds); // `products.id` means that `products` is the table name (means grab the `id` column of the `products` table)
+                }
+
+
     
                 // Pagination (after the Sorting Filter)
                 $categoryProducts = $categoryProducts->paginate(30); // Moved the pagination after checking for the sorting filter <form>

@@ -60,70 +60,35 @@
 
     <!-- Filters -->
     <!-- Filter-Size -->
+
+
+    {{-- https://www.youtube.com/watch?v=7Y1OOQr-PTs&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=92 --}}
+    {{-- Size, price, color, brand, … are also Dynamic Filters, but won't be managed like the other Dynamic Filters, but we will manage every filter of them from the suitable respective database table, like the 'size' Filter from the `products_attributes` database table, 'color' Filter and `price` Filter from `products` table, 'brand' Filter from `brands` table --}}
+    {{-- show the correct relevant product 'size' filter values (e.g. for the 'men' category (small, medium, large, XL, ...) BUT for the mobiles category (64GB-4GB, 128GB-6GB, ...)) depending on the URL --}}
+    @php
+        $getSizes = \App\Models\ProductsFilter::getSizes($url); // get product sizes depending on the URL (to show the proper relevant 'size' filter values (whether small, medium, ... OR 64GB-4GB, 128GB-6GB, ...))    // $url is passed from the Front/ProductsController.php
+        // dd($getSizes);
+    @endphp
+
+
     <div class="facet-filter-associates">
         <h3 class="title-name">Size</h3>
         <form class="facet-form" action="#" method="post">
             <div class="associate-wrapper">
-                <input type="checkbox" class="check-box" id="cbs-01">
-                <label class="label-text" for="cbs-01">Male 2XL
-                    <span class="total-fetch-items">(2)</span>
-                </label>
-                <input type="checkbox" class="check-box" id="cbs-02">
-                <label class="label-text" for="cbs-02">Male 3XL
-                    <span class="total-fetch-items">(2)</span>
-                </label>
-                <input type="checkbox" class="check-box" id="cbs-03">
-                <label class="label-text" for="cbs-03">Kids 4
-                    <span class="total-fetch-items">(0)</span>
-                </label>
-                <input type="checkbox" class="check-box" id="cbs-04">
-                <label class="label-text" for="cbs-04">Kids 6
-                    <span class="total-fetch-items">(0)</span>
-                </label>
-                <input type="checkbox" class="check-box" id="cbs-05">
-                <label class="label-text" for="cbs-05">Kids 8
-                    <span class="total-fetch-items">(0)</span>
-                </label>
-                <input type="checkbox" class="check-box" id="cbs-06">
-                <label class="label-text" for="cbs-06">Kids 10
-                    <span class="total-fetch-items">(2)</span>
-                </label>
-                <input type="checkbox" class="check-box" id="cbs-07">
-                <label class="label-text" for="cbs-07">Kids 12
-                    <span class="total-fetch-items">(2)</span>
-                </label>
-                <input type="checkbox" class="check-box" id="cbs-08">
-                <label class="label-text" for="cbs-08">Female Small
-                    <span class="total-fetch-items">(0)</span>
-                </label>
-                <input type="checkbox" class="check-box" id="cbs-09">
-                <label class="label-text" for="cbs-09">Male Small
-                    <span class="total-fetch-items">(0)</span>
-                </label>
-                <input type="checkbox" class="check-box" id="cbs-10">
-                <label class="label-text" for="cbs-10">Female Medium
-                    <span class="total-fetch-items">(0)</span>
-                </label>
-                <input type="checkbox" class="check-box" id="cbs-11">
-                <label class="label-text" for="cbs-11">Male Medium
-                    <span class="total-fetch-items">(0)</span>
-                </label>
-                <input type="checkbox" class="check-box" id="cbs-12">
-                <label class="label-text" for="cbs-12">Female Large
-                    <span class="total-fetch-items">(0)</span>
-                </label>
-                <input type="checkbox" class="check-box" id="cbs-13">
-                <label class="label-text" for="cbs-13">Male Large
-                    <span class="total-fetch-items">(0)</span>
-                </label>
-                <input type="checkbox" class="check-box" id="cbs-14">
-                <label class="label-text" for="cbs-14">Female XL
-                    <span class="total-fetch-items">(0)</span>
-                </label>
-                <input type="checkbox" class="check-box" id="cbs-15">
-                <label class="label-text" for="cbs-15">Male XL
-                    <span class="total-fetch-items">(0)</span>
-                </label>
+
+
+
+                {{-- https://www.youtube.com/watch?v=7Y1OOQr-PTs&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=92 --}}
+                {{-- Size, price, color, brand, … are also Dynamic Filters, but won't be managed like the other Dynamic Filters, but we will manage every filter of them from the suitable respective database table, like the 'size' Filter from the `products_attributes` database table, 'color' Filter and `price` Filter from `products` table, 'brand' Filter from `brands` table --}}
+                @foreach ($getSizes as $key => $size) {{-- show the correct relevant product 'size' filter values (e.g. for the 'men' category (small, medium, large, XL, ...) BUT for the mobiles category (64GB-4GB, 128GB-6GB, ...)) depending on the URL --}}
+                    <input type="checkbox" class="check-box size" id="size{{ $size }}" name="size[]" value="{{ $size }}"> {{-- Note!!: PLEASE NOTE THE SQUARE BRACKETS [] OF THE "name" ATTRIBUTE!! --}} {{-- echo the $size as a 'CSS class' to be able to use it in jQuery for filtering --}} {{-- the checked checkboxes <input> fields of the size filter values (like Small, medium, large, XL, ...) will be submitted as an ARRAY because we used SQUARE BRACKETS [] with the "name" HTML attribute in the checkbox <input> field in filters.blade.php, or else, AJAX is used to send the <input> values WITHOUT submitting the <form> at all --}}
+                    <label class="label-text" for="size{{ $size }}">{{ $size }}
+                        {{-- <span class="total-fetch-items">(2)</span> --}}
+                    </label>
+                @endforeach
+
+
+
             </div>
         </form>
     </div>
@@ -209,7 +174,7 @@
 
                                 {{-- We used TWO ways to operate the Dynamic Filters: statically for every filter using jQuery and dynamically from Admin Panel. Check https://www.youtube.com/watch?v=r-NjOGA4qFw&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=88 --}}
                                 {{-- First way: Statically using jQuery. Check front/custom.js --}}
-                                <input type="checkbox" class="check-box {{ $filter['filter_column'] }}" id="{{ $value['filter_value'] }}" name="{{ $filter['filter_column'] }}[]" value="{{ $value['filter_value'] }}">{{-- Note!!: PLEASE NOTE THE SQUARE BRACKETS [] OF THE "name" ATTRIBUTE!! --}} {{-- echo the filter name in the CSS class to be able to use it in jQuery for filtering, and also add the "name" (as an array!! PLEASE NOTE THE SQUARE BRACKETS [] !!! e.g.    'fabric' => ['cotton', 'polyester']    ) and "value" HTML attributes too --}}    {{-- the checked checkboxes <input> fields will be submitted as an ARRAY because we used SQUARE BRACKETS [] with the "name" HTML attribute in the checkbox <input> field in filters.blade.php e.g.    'fabric' => ['cotton', 'polyester']    , or else, AJAX is used to send the <input> values WITHOUT submitting the <form> at all --}}
+                                <input type="checkbox" class="check-box {{ $filter['filter_column'] }}" id="{{ $value['filter_value'] }}" name="{{ $filter['filter_column'] }}[]" value="{{ $value['filter_value'] }}"> {{-- Note!!: PLEASE NOTE THE SQUARE BRACKETS [] OF THE "name" ATTRIBUTE!! --}} {{-- echo the filter name as a 'CSS class' to be able to use it in jQuery for filtering, and also add the "name" (as an array!! PLEASE NOTE THE SQUARE BRACKETS [] !!! e.g.    'fabric' => ['cotton', 'polyester']    ) and "value" HTML attributes too --}}    {{-- the checked checkboxes <input> fields will be submitted as an ARRAY because we used SQUARE BRACKETS [] with the "name" HTML attribute in the checkbox <input> field in filters.blade.php e.g.    'fabric' => ['cotton', 'polyester']    , or else, AJAX is used to send the <input> values WITHOUT submitting the <form> at all --}}
                                 <label class="label-text" for="{{ $value['filter_value'] }}">{{ ucwords($value['filter_value']) }}
                                     {{-- <span class="total-fetch-items">(0)</span> --}}
                                 </label>

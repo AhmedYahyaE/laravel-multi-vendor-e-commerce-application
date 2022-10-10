@@ -58,4 +58,25 @@ class ProductsFilter extends Model
 
         return $available;
     }
+
+
+
+    // Get the sizes of a product from a URL (URL of the category)    // https://www.youtube.com/watch?v=7Y1OOQr-PTs&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=92
+    public static function getSizes($url) { // this method is used in filters.blade.php
+        // Get the parent category & its subcategories (child categories) ids of a certain URL
+        $categoryDetails = \App\Models\Category::categoryDetails($url);
+        // echo '<pre>', var_dump($categoryDetails), '</pre>';
+        // dd($categoryDetails);
+
+        // Get the product ids of the fetched categories of the URL
+        $getProductIds = \App\Models\Product::select('id')->whereIn('category_id', $categoryDetails['catIds'])->pluck('id')->toArray();
+        // dd($getProductIds);
+
+        // Get the sizes of the product ids from the `products_attributes` table
+        $getProductSizes = \App\Models\ProductsAttribute::select('size')->whereIn('product_id', $getProductIds)->groupBy('size')->pluck('size')->toArray(); // We used groupBy() method to eliminate the repeated product `size`-s (to not show repeated 'filters'): https://laravel.com/docs/9.x/collections#method-groupby
+        // dd($getProductSizes);
+
+
+        return $getProductSizes;
+    }
 }
