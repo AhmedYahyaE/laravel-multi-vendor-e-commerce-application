@@ -134,5 +134,9 @@
 
         <!-- Our front/js/custom.js file --> {{-- https://www.youtube.com/watch?v=u2NiZzjRL8U&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=80 --}}
         <script type="text/javascript" src="{{ url('front/js/custom.js') }}"></script>
+
+
+        {{-- To enable us to write PHP code within JavaScript code (to operate the Dynamic Filters dynamically (the second way)) --}} {{-- https://www.youtube.com/watch?v=rwj3nRYpUEk&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=90 --}}
+        @include('front.layout.scripts')
     </body>
 </html>
