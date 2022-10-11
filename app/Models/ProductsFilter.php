@@ -68,15 +68,34 @@ class ProductsFilter extends Model
         // echo '<pre>', var_dump($categoryDetails), '</pre>';
         // dd($categoryDetails);
 
-        // Get the product ids of the fetched categories of the URL
+        // Get the product ids of the fetched categories of the URL from `products` table
         $getProductIds = \App\Models\Product::select('id')->whereIn('category_id', $categoryDetails['catIds'])->pluck('id')->toArray();
         // dd($getProductIds);
 
         // Get the sizes of the product ids from the `products_attributes` table
-        $getProductSizes = \App\Models\ProductsAttribute::select('size')->whereIn('product_id', $getProductIds)->groupBy('size')->pluck('size')->toArray(); // We used groupBy() method to eliminate the repeated product `size`-s (to not show repeated 'filters'): https://laravel.com/docs/9.x/collections#method-groupby
+        $getProductSizes = \App\Models\ProductsAttribute::select('size')->whereIn('product_id', $getProductIds)->groupBy('size')->pluck('size')->toArray(); // We used groupBy() method to eliminate the repeated product `size`-s (in order not to show repeated 'filters' values (like small, small, medium, ...)): https://laravel.com/docs/9.x/collections#method-groupby
         // dd($getProductSizes);
 
 
         return $getProductSizes;
+    }
+
+    // Get the colors of a product from a URL (URL of the category)    // https://www.youtube.com/watch?v=kan0Vypzalk&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=92
+    public static function getColors($url) { // this method is used in filters.blade.php
+        // Get the parent category & its subcategories (child categories) ids of a certain URL
+        $categoryDetails = \App\Models\Category::categoryDetails($url);
+        // echo '<pre>', var_dump($categoryDetails), '</pre>';
+        // dd($categoryDetails);
+
+        // Get the product ids of the fetched categories of the URL from `products` table
+        $getProductIds = \App\Models\Product::select('id')->whereIn('category_id', $categoryDetails['catIds'])->pluck('id')->toArray();
+        // dd($getProductIds);
+
+        // Get the colors of the product ids from the `products` table
+        $getProductColors = \App\Models\Product::select('product_color')->whereIn('id', $getProductIds)->groupBy('product_color')->pluck('product_color')->toArray(); // We used groupBy() method to eliminate the repeated product `color`-s (in order not to show repeated 'filters' values (like red, red, green, ...)): https://laravel.com/docs/9.x/collections#method-groupby
+        // dd($getProductColors);
+
+
+        return $getProductColors;
     }
 }

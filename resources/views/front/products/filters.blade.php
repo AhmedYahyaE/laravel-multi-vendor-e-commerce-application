@@ -58,13 +58,16 @@
 
 
 
+
+
+
     <!-- Filters -->
     <!-- Filter-Size -->
 
 
     {{-- https://www.youtube.com/watch?v=7Y1OOQr-PTs&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=92 --}}
     {{-- Size, price, color, brand, … are also Dynamic Filters, but won't be managed like the other Dynamic Filters, but we will manage every filter of them from the suitable respective database table, like the 'size' Filter from the `products_attributes` database table, 'color' Filter and `price` Filter from `products` table, 'brand' Filter from `brands` table --}}
-    {{-- show the correct relevant product 'size' filter values (e.g. for the 'men' category (small, medium, large, XL, ...) BUT for the mobiles category (64GB-4GB, 128GB-6GB, ...)) depending on the URL --}}
+    {{-- First: the 'size' filter (from `products_attributes` database table). Show the correct relevant product 'size' filter values (e.g. for the 'men' category (small, medium, large, XL, ...) BUT for the mobiles category (64GB-4GB, 128GB-6GB, ...)) depending on the URL --}}
     @php
         $getSizes = \App\Models\ProductsFilter::getSizes($url); // get product sizes depending on the URL (to show the proper relevant 'size' filter values (whether small, medium, ... OR 64GB-4GB, 128GB-6GB, ...))    // $url is passed from the Front/ProductsController.php
         // dd($getSizes);
@@ -80,9 +83,10 @@
 
                 {{-- https://www.youtube.com/watch?v=7Y1OOQr-PTs&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=92 --}}
                 {{-- Size, price, color, brand, … are also Dynamic Filters, but won't be managed like the other Dynamic Filters, but we will manage every filter of them from the suitable respective database table, like the 'size' Filter from the `products_attributes` database table, 'color' Filter and `price` Filter from `products` table, 'brand' Filter from `brands` table --}}
+                {{-- First: the 'size' filter (from `products_attributes` database table). Show the correct relevant product 'size' filter values (e.g. for the 'men' category (small, medium, large, XL, ...) BUT for the mobiles category (64GB-4GB, 128GB-6GB, ...)) depending on the URL --}}
                 @foreach ($getSizes as $key => $size) {{-- show the correct relevant product 'size' filter values (e.g. for the 'men' category (small, medium, large, XL, ...) BUT for the mobiles category (64GB-4GB, 128GB-6GB, ...)) depending on the URL --}}
-                    <input type="checkbox" class="check-box size" id="size{{ $size }}" name="size[]" value="{{ $size }}"> {{-- Note!!: PLEASE NOTE THE SQUARE BRACKETS [] OF THE "name" ATTRIBUTE!! --}} {{-- echo the $size as a 'CSS class' to be able to use it in jQuery for filtering --}} {{-- the checked checkboxes <input> fields of the size filter values (like Small, medium, large, XL, ...) will be submitted as an ARRAY because we used SQUARE BRACKETS [] with the "name" HTML attribute in the checkbox <input> field in filters.blade.php, or else, AJAX is used to send the <input> values WITHOUT submitting the <form> at all --}}
-                    <label class="label-text" for="size{{ $size }}">{{ $size }}
+                    <input type="checkbox" class="check-box size" id="size{{ $key }}" name="size[]" value="{{ $size }}"> {{-- Note!!: PLEASE NOTE THE SQUARE BRACKETS [] OF THE "name" ATTRIBUTE!! --}} {{-- echo the $size as a 'CSS class' to be able to use it in jQuery for filtering --}} {{-- the checked checkboxes <input> fields of the size filter values (like Small, medium, large, XL, ...) will be submitted as an ARRAY because we used SQUARE BRACKETS [] with the "name" HTML attribute in the checkbox <input> field in filters.blade.php, or else, AJAX is used to send the <input> values WITHOUT submitting the <form> at all --}}
+                    <label class="label-text" for="size{{ $key }}">{{ $size }}
                         {{-- <span class="total-fetch-items">(2)</span> --}}
                     </label>
                 @endforeach
@@ -93,31 +97,39 @@
         </form>
     </div>
     <!-- Filter-Size -->
+
+
+
+
     <!-- Filter-Color -->
+
+
+    {{-- https://www.youtube.com/watch?v=kan0Vypzalk&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=92 --}}
+    {{-- Size, price, color, brand, … are also Dynamic Filters, but won't be managed like the other Dynamic Filters, but we will manage every filter of them from the suitable respective database table, like the 'size' Filter from the `products_attributes` database table, 'color' Filter and `price` Filter from `products` table, 'brand' Filter from `brands` table --}}
+    {{-- Second: the 'color' filter (from `products` database table). Show the correct relevant product 'color' filter values (e.g. for the 'men' category (red, blue, ...) BUT for the mobiles category (grey, black, ...)) depending on the URL --}}
+    @php
+        $getColors = \App\Models\ProductsFilter::getColors($url); // get product colors depending on the URL (to show the proper relevant 'color' filter values (whether small, medium, ... OR 64GB-4GB, 128GB-6GB, ...))    // $url is passed from the Front/ProductsController.php
+        // dd($getColors);
+    @endphp
     <div class="facet-filter-associates">
         <h3 class="title-name">Color</h3>
         <form class="facet-form" action="#" method="post">
             <div class="associate-wrapper">
-                <input type="checkbox" class="check-box" id="cbs-16">
-                <label class="label-text" for="cbs-16">Heather Grey
-                    <span class="total-fetch-items">(1)</span>
-                </label>
-                <input type="checkbox" class="check-box" id="cbs-17">
-                <label class="label-text" for="cbs-17">Black
-                    <span class="total-fetch-items">(1)</span>
-                </label>
-                <input type="checkbox" class="check-box" id="cbs-18">
-                <label class="label-text" for="cbs-18">White
-                    <span class="total-fetch-items">(3)</span>
-                </label>
-                <input type="checkbox" class="check-box" id="cbs-19">
-                <label class="label-text" for="cbs-19">Mischka Plain
-                    <span class="total-fetch-items">(1)</span>
-                </label>
-                <input type="checkbox" class="check-box" id="cbs-20">
-                <label class="label-text" for="cbs-20">Black Bean
-                    <span class="total-fetch-items">(1)</span>
-                </label>
+
+
+
+                {{-- https://www.youtube.com/watch?v=kan0Vypzalk&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=92 --}}
+                {{-- Size, price, color, brand, … are also Dynamic Filters, but won't be managed like the other Dynamic Filters, but we will manage every filter of them from the suitable respective database table, like the 'size' Filter from the `products_attributes` database table, 'color' Filter and `price` Filter from `products` table, 'brand' Filter from `brands` table --}}
+                {{-- Second: the 'color' filter (from `products` database table). Show the correct relevant product 'color' filter values (e.g. for the 'men' category (red, blue, ...) BUT for the mobiles category (grey, black, ...)) depending on the URL --}}
+                @foreach ($getColors as $key => $color) {{-- show the correct relevant product 'color' filter values (e.g. for the 'men' category (red, blue, ...) BUT for the mobiles category (grey, black, ...)) depending on the URL --}}
+                    <input type="checkbox" class="check-box color" id="color{{ $key }}" name="color[]" value="{{ $color }}"> {{-- Note!!: PLEASE NOTE THE SQUARE BRACKETS [] OF THE "name" ATTRIBUTE!! --}} {{-- echo the $color as a 'CSS class' to be able to use it in jQuery for filtering --}} {{-- the checked checkboxes <input> fields of the color filter values (like red, blue, ...) will be submitted as an ARRAY because we used SQUARE BRACKETS [] with the "name" HTML attribute in the checkbox <input> field in filters.blade.php, or else, AJAX is used to send the <input> values WITHOUT submitting the <form> at all --}}
+                    <label class="label-text" for="color{{ $key }}">{{ $color }}
+                        {{-- <span class="total-fetch-items">(1)</span> --}}
+                    </label>
+                @endforeach
+
+
+
             </div>
         </form>
     </div>
