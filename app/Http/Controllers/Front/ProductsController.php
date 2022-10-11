@@ -48,7 +48,7 @@ class ProductsController extends Controller
                 // Note: the checked checkboxes <input> fields will be submitted as an ARRAY because we used SQUARE BRACKETS [] with the "name" HTML attribute in the checkbox <input> field in filters.blade.php e.g.    'fabric' => ['cotton', 'polyester']    , or else, AJAX is used to send the <input> values WITHOUT submitting the <form> at all    // Sidenote: There are TWO ways to submit a <form> to the backed: firstly, the regular one using the <button type="submit">, secondly, using AJAX by sending the "value" attributes of the <input> fields
                 // if (isset($data['fabric']) && !empty($data['fabric'])) { // coming from the AJAX call in front/js/custom.js
                     // $categoryProducts->whereIn('products.fabric', $data['fabric']); // `products.fabric` means the `fabric` column in the `products` table    // $data['fabric'] is an ARRAY like    $data['fabric'] = ['cotton', 'polyester'] (because the checked checkboxes <input> fields will be submitted as an ARRAY because we used SQUARE BRACKETS [] with the "name" HTML attribute in the checkbox <input> field in filters.blade.php, or else, AJAX is used to send the <input> values WITHOUT submitting the <form> at all)    // https://laravel.com/docs/9.x/queries#additional-where-clauses
-                    // echo dd($data['fabric']); // dd() DOESN'T WORK WITH AJAX! - SHOWS AN ERROR!! USE var_dump() INSTEAD!
+                    // echo dd($data['fabric']); // dd() DOESN'T WORK WITH AJAX! - SHOWS AN ERROR!! USE var_dump() and exit; INSTEAD!
                     // echo '<pre>', var_dump($data['fabric']), '</pre>';
                 // }
 
@@ -84,7 +84,7 @@ class ProductsController extends Controller
                 // Size, price, color, brand, … are also Dynamic Filters, but won't be managed like the other Dynamic Filters, but we will manage every filter of them from the suitable respective database table, like the 'size' Filter from the `products_attributes` database table, 'color' Filter and `price` Filter from `products` table, 'brand' Filter from `brands` table
                 // First: the 'size' filter (from `products_attributes` database table)
                 if (isset($data['size']) && !empty($data['size'])) { // coming from the AJAX call in front/js/custom.js    // example:    $data['size'] = 'Large'
-                    // echo dd($data['size']); // dd() DOESN'T WORK WITH AJAX! - SHOWS AN ERROR!! USE var_dump() INSTEAD!
+                    // echo dd($data['size']); // dd() DOESN'T WORK WITH AJAX! - SHOWS AN ERROR!! USE var_dump() and exit; INSTEAD!
                     // echo '<pre>', var_dump($data['size']), '</pre>';
                     // exit;
                     $productIds = \App\Models\ProductsAttribute::select('product_id')->whereIn('size', $data['size'])->pluck('product_id')->toArray(); // fetch the products ids of the $data['size'] from the `products_attributes` table
@@ -96,10 +96,35 @@ class ProductsController extends Controller
                 // Size, price, color, brand, … are also Dynamic Filters, but won't be managed like the other Dynamic Filters, but we will manage every filter of them from the suitable respective database table, like the 'size' Filter from the `products_attributes` database table, 'color' Filter and `price` Filter from `products` table, 'brand' Filter from `brands` table
                 // Second: the 'color' filter (from `products` database table)
                 if (isset($data['color']) && !empty($data['color'])) { // coming from the AJAX call in front/js/custom.js    // example:    $data['color'] = 'Large'
-                    // echo dd($data['color']); // dd() DOESN'T WORK WITH AJAX! - SHOWS AN ERROR!! USE var_dump() INSTEAD!
+                    // echo dd($data['color']); // dd() DOESN'T WORK WITH AJAX! - SHOWS AN ERROR!! USE var_dump() and exit; INSTEAD!
                     // echo '<pre>', var_dump($data['color']), '</pre>';
                     // exit;
                     $productIds = \App\Models\Product::select('id')->whereIn('product_color', $data['color'])->pluck('id')->toArray(); // fetch the products ids of the $data['color'] from the `products` table
+
+                    $categoryProducts->whereIn('products.id', $productIds); // `products.id` means that `products` is the table name (means grab the `id` column of the `products` table)
+                }
+
+                // https://www.youtube.com/watch?v=0opzfLVfwqg&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=93
+                // Size, price, color, brand, … are also Dynamic Filters, but won't be managed like the other Dynamic Filters, but we will manage every filter of them from the suitable respective database table, like the 'size' Filter from the `products_attributes` database table, 'color' Filter and `price` Filter from `products` table, 'brand' Filter from `brands` table
+                // Third: the 'price' filter (from `products` database table)
+                if (isset($data['price']) && !empty($data['price'])) { // coming from the AJAX call in front/js/custom.js    // example:    $data['price'] = 'Large'
+                    // echo dd($data['price']); // dd() DOESN'T WORK WITH AJAX! - SHOWS AN ERROR!! USE var_dump() and exit; INSTEAD!
+                    // echo '<pre>', var_dump($data['price']), '</pre>';
+                    // exit;
+
+                    $implodePrices = implode('-', $data['price']); // convert the price ranges array to a one string
+                    // echo dd($implodePrices); // dd() DOESN'T WORK WITH AJAX! - SHOWS AN ERROR!! USE var_dump() and exit; INSTEAD!
+                    // echo '<pre>', var_dump($implodePrices), '</pre>';
+                    // exit;
+                    $explodePrices = explode('-', $implodePrices); // convert the string to an array
+                    // echo dd($implodePrices); // dd() DOESN'T WORK WITH AJAX! - SHOWS AN ERROR!! USE var_dump() and exit; INSTEAD!
+                    // echo '<pre>', var_dump($explodePrices), '</pre>';
+                    // exit;
+
+                    $min = reset($explodePrices); // the minimum value of the price ranges checkboxes which are checked by the user in filters.blade.php (which is 'include'-ed by listing.blade.php)
+                    $max = end($explodePrices);   // the maximum value of the price ranges checkboxes which are checked by the user in filters.blade.php (which is 'include'-ed by listing.blade.php)
+
+                    $productIds = \App\Models\Product::select('id')->whereBetween('product_price', [$min, $max])->pluck('id')->toArray(); // fetch the products ids of the $data['price'] from the `products` table    // whereBetween(): https://laravel.com/docs/9.x/queries#additional-where-clauses
 
                     $categoryProducts->whereIn('products.id', $productIds); // `products.id` means that `products` is the table name (means grab the `id` column of the `products` table)
                 }

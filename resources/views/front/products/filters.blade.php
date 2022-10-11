@@ -164,6 +164,36 @@
 
 
 
+    <!-- Filter-Price -->
+
+    {{-- https://www.youtube.com/watch?v=0opzfLVfwqg&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=93 --}}
+    {{-- Size, price, color, brand, … are also Dynamic Filters, but won't be managed like the other Dynamic Filters, but we will manage every filter of them from the suitable respective database table, like the 'size' Filter from the `products_attributes` database table, 'color' Filter and `price` Filter from `products` table, 'brand' Filter from `brands` table --}}
+    {{-- Third: the 'price' filter (from `products` database table). Show the correct relevant product 'price' filter values (e.g. for the 'men' category (red, blue, ...) BUT for the mobiles category (grey, black, ...)) depending on the URL --}}
+    <div class="facet-filter-associates">
+        <h3 class="title-name">Price</h3>
+        <form class="facet-form" action="#" method="post">
+            <div class="associate-wrapper">
+
+
+                {{-- Third: the 'price' filter --}} {{-- https://www.youtube.com/watch?v=0opzfLVfwqg&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=93 --}}
+                @php
+                    // our desired array of price ranges
+                    $prices = array('0-1000', '1000-2000', '2000-5000', '5000-10000', '10000-100000');
+                @endphp
+
+                @foreach ($prices as $key => $price)
+                    <input type="checkbox" class="check-box price" id="price{{ $key }}" name="price[]" value="{{ $price }}"> {{-- Note!!: PLEASE NOTE THE SQUARE BRACKETS [] OF THE "name" ATTRIBUTE!! --}} {{-- echo the $price as a 'CSS class' to be able to use it in jQuery for filtering --}} {{-- the checked checkboxes <input> fields of the price filter values (like '1000-2000', '2000-5000', ...) will be submitted as an ARRAY because we used SQUARE BRACKETS [] with the "name" HTML attribute in the checkbox <input> field in filters.blade.php, or else, AJAX is used to send the <input> values WITHOUT submitting the <form> at all --}}
+                    <label class="label-text" for="price{{ $key }}">Rs. {{ $price }} {{-- Rs. is Rupee --}}
+                        {{-- <span class="total-fetch-items">(0)</span> --}}
+                    </label>
+                @endforeach
+            </div>
+        </form>
+    </div>
+    <!-- Filter-Price /- -->
+
+
+
     {{-- https://www.youtube.com/watch?v=Rr2tkfVtVMc&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=86 --}}
     <!-- Filter -->
     @foreach ($productFilters as $filter) {{-- $productFilters comes from the far top of this file --}}
@@ -202,7 +232,7 @@
 
 
 
-    <!-- Filter-Price -->
+    {{-- <!-- Filter-Price -->
     <div class="facet-filter-by-price">
         <h3 class="title-name">Price</h3>
         <form class="facet-form" action="#" method="post">
@@ -222,6 +252,8 @@
         </form>
     </div>
     <!-- Filter-Price /- -->
+
+
     <!-- Filter-Free-Shipping -->
     <div class="facet-filter-by-shipping">
         <h3 class="title-name">Shipping</h3>
@@ -231,6 +263,8 @@
         </form>
     </div>
     <!-- Filter-Free-Shipping /- -->
+
+
     <!-- Filter-Rating -->
     <div class="facet-filter-by-rating">
         <h3 class="title-name">Rating</h3>
@@ -288,6 +322,8 @@
         </div>
     </div>
     <!-- Filter-Rating -->
-    <!-- Filters /- -->
+    <!-- Filters /- --> --}}
+
+
 </div>
 <!-- Shop-Left-Side-Bar-Wrapper /- -->
