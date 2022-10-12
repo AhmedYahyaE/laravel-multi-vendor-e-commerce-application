@@ -64,7 +64,6 @@
     <!-- Filters -->
     <!-- Filter-Size -->
 
-
     {{-- https://www.youtube.com/watch?v=7Y1OOQr-PTs&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=92 --}}
     {{-- Size, price, color, brand, … are also Dynamic Filters, but won't be managed like the other Dynamic Filters, but we will manage every filter of them from the suitable respective database table, like the 'size' Filter from the `products_attributes` database table, 'color' Filter and `price` Filter from `products` table, 'brand' Filter from `brands` table --}}
     {{-- First: the 'size' filter (from `products_attributes` database table). Show the correct relevant product 'size' filter values (e.g. for the 'men' category (small, medium, large, XL, ...) BUT for the mobiles category (64GB-4GB, 128GB-6GB, ...)) depending on the URL --}}
@@ -103,7 +102,6 @@
 
     <!-- Filter-Color -->
 
-
     {{-- https://www.youtube.com/watch?v=kan0Vypzalk&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=92 --}}
     {{-- Size, price, color, brand, … are also Dynamic Filters, but won't be managed like the other Dynamic Filters, but we will manage every filter of them from the suitable respective database table, like the 'size' Filter from the `products_attributes` database table, 'color' Filter and `price` Filter from `products` table, 'brand' Filter from `brands` table --}}
     {{-- Second: the 'color' filter (from `products` database table). Show the correct relevant product 'color' filter values (e.g. for the 'men' category (red, blue, ...) BUT for the mobiles category (grey, black, ...)) depending on the URL --}}
@@ -137,26 +135,30 @@
 
 
     <!-- Filter-Brand -->
+
+    {{-- https://www.youtube.com/watch?v=Q9-5g1qgsn4&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=94 --}}
+    {{-- Size, price, color, brand, … are also Dynamic Filters, but won't be managed like the other Dynamic Filters, but we will manage every filter of them from the suitable respective database table, like the 'size' Filter from the `products_attributes` database table, 'color' Filter and `price` Filter from `products` table, 'brand' Filter from `brands` table --}}
+    {{-- Fourth: the 'brand' filter (from `products` and `brands` database table). Show the correct relevant product 'price' filter values (e.g. for the 'men' category (LC Waikiki, Concrete, ...) BUT for the mobiles category (iPhone, Xiaomi, ...)) depending on the URL --}}
+    @php
+        $getBrands = \App\Models\ProductsFilter::getBrands($url); // get product brands depending on the URL (to show the proper relevant 'brand' filter values (whether LC Waikiki, Concrete, ... OR iPhone, Xiaomi, ...))    // $url is passed from the Front/ProductsController.php
+        // dd($getColors);
+    @endphp
     <div class="facet-filter-associates">
         <h3 class="title-name">Brand</h3>
         <form class="facet-form" action="#" method="post">
             <div class="associate-wrapper">
-                <input type="checkbox" class="check-box" id="cbs-21">
-                <label class="label-text" for="cbs-21">Calvin Klein
-                    <span class="total-fetch-items">(0)</span>
-                </label>
-                <input type="checkbox" class="check-box" id="cbs-22">
-                <label class="label-text" for="cbs-22">Diesel
-                    <span class="total-fetch-items">(0)</span>
-                </label>
-                <input type="checkbox" class="check-box" id="cbs-23">
-                <label class="label-text" for="cbs-23">Polo
-                    <span class="total-fetch-items">(0)</span>
-                </label>
-                <input type="checkbox" class="check-box" id="cbs-24">
-                <label class="label-text" for="cbs-24">Tommy Hilfiger
-                    <span class="total-fetch-items">(0)</span>
-                </label>
+
+
+
+                {{-- https://www.youtube.com/watch?v=Q9-5g1qgsn4&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=94 --}}
+                {{-- Size, price, color, brand, … are also Dynamic Filters, but won't be managed like the other Dynamic Filters, but we will manage every filter of them from the suitable respective database table, like the 'size' Filter from the `products_attributes` database table, 'color' Filter and `price` Filter from `products` table, 'brand' Filter from `brands` table --}}
+                {{-- Fourth: the 'brand' filter (from `products` and `brands` database table). Show the correct relevant product 'price' filter values (e.g. for the 'men' category (LC Waikiki, Concrete, ...) BUT for the mobiles category (iPhone, Xiaomi, ...)) depending on the URL --}}
+                @foreach ($getBrands as $key => $brand) {{-- show the correct relevant product 'brand' filter values (e.g. for the 'men' category (LC Waikiki, Concrete, ...) BUT for the mobiles category (iPhone, Xiaomi, ...)) depending on the URL --}}
+                    <input type="checkbox" class="check-box brand" id="brand{{ $key }}" name="brand[]" value="{{ $brand['id'] }}"> {{-- Note!!: PLEASE NOTE THE SQUARE BRACKETS [] OF THE "name" ATTRIBUTE!! --}} {{-- echo the $brand as a 'CSS class' to be able to use it in jQuery for filtering --}} {{-- the checked checkboxes <input> fields of the brand filter values (like Concrete, Zara, ...) will be submitted as an ARRAY because we used SQUARE BRACKETS [] with the "name" HTML attribute in the checkbox <input> field in filters.blade.php, or else, AJAX is used to send the <input> values WITHOUT submitting the <form> at all --}}
+                        <label class="label-text" for="brand{{ $key }}">{{ $brand['name'] }}
+                            {{-- <span class="total-fetch-items">(0)</span> --}}
+                    </label>
+                @endforeach
             </div>
         </form>
     </div>
@@ -195,6 +197,7 @@
 
 
     {{-- https://www.youtube.com/watch?v=Rr2tkfVtVMc&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=86 --}}
+    {{-- Dynamic Filters --}}
     <!-- Filter -->
     @foreach ($productFilters as $filter) {{-- $productFilters comes from the far top of this file --}}
         @php

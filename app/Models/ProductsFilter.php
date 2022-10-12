@@ -98,4 +98,33 @@ class ProductsFilter extends Model
 
         return $getProductColors;
     }
+
+    // Get the brand of a product from a URL (URL of the category)    // https://www.youtube.com/watch?v=Q9-5g1qgsn4&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=94
+    public static function getBrands($url) { // this method is used in filters.blade.php
+        // Get the parent category & its subcategories (child categories) ids of a certain URL
+        $categoryDetails = \App\Models\Category::categoryDetails($url);
+        // echo '<pre>', var_dump($categoryDetails), '</pre>';
+        // dd($categoryDetails);
+
+        // Get the product ids of the fetched categories of the URL from `products` table
+        $getProductIds = \App\Models\Product::select('id')->whereIn('category_id', $categoryDetails['catIds'])->pluck('id')->toArray();
+        // dd($getProductIds);
+
+        // Get the Brands of the product ids from the `products` table
+        // $getProductBrands = \App\Models\Product::select('product_brand')->whereIn('id', $getProductIds)->groupBy('product_brand')->pluck('product_brand')->toArray(); // We used groupBy() method to eliminate the repeated product `brand_id`-s (in order not to show repeated 'filters' values (like Samsung, Samsung, LG, ...)): https://laravel.com/docs/9.x/collections#method-groupby
+        // dd($getProductBrands);
+
+
+        // Get the brand ids of the product ids of the fetched categories (depending on the URL)
+        $brandIds = \App\Models\Product::select('brand_id')->whereIn('id', $getProductIds)->groupBy('brand_id')->pluck('brand_id')->toArray(); // We used groupBy() method to eliminate the repeated product `brand_id`-s (in order not to show repeated 'filters' values (like Samsung, Samsung, LG, ...)): https://laravel.com/docs/9.x/collections#method-groupby
+        // dd($brandIds);
+
+
+        // Get the brand names from `brands` table
+        $brandDetails = \App\Models\Brand::select('id', 'name')->whereIn('id', $brandIds)->get()->toArray(); // from `brands` table 
+        // dd($brandDetails);
+
+
+        return $brandDetails;
+    }
 }
