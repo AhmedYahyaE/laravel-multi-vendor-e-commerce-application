@@ -18,11 +18,12 @@ return new class extends Migration
 
             $table->string('name');
             $table->string('type'); // superadmin, admin, subadmin, or vendor
-            $table->integer('vendor_id'); // if the    $table->string('type');    , add the 'vendor_id', otherwise, all the other 'type's will be zero 0 'vendor_id'
+            $table->integer('vendor_id'); // only if the    $table->string('type')    is 'vendor', then 'vendor_id' is one 1, otherwise, all the other 'type'-s, `vendor_id` will be zero 0
             $table->string('mobile');
             $table->string('email')->unique();
             $table->string('password');
             $table->string('image');
+            $table->enum('confirm', ['No', 'Yes']); // added later    // "No" is the default value    // https://www.youtube.com/watch?v=ODwOtaa2GxU&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=98
             $table->tinyInteger('status');
     
             $table->timestamps();

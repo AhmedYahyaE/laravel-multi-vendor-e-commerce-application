@@ -145,6 +145,10 @@ Route::namespace('App\Http\Controllers\Front')->group(function() {
     $catUrls = \App\Models\Category::select('url')->where('status', 1)->get()->pluck('url')->toArray(); // Routes like: /men, /women, /shirts, ...    // https://laravel.com/docs/9.x/collections#method-pluck
     // dd($catUrls);
     foreach ($catUrls as $key => $url) {
-        Route::match(['get', 'post'], '/' . $url, 'ProductsController@listing'); // used match() for the 'POST' method of the AJAX request of the Sorting Filter in listing.blade.php
+        Route::match(['get', 'post'], '/' . $url, 'ProductsController@listing'); // used match() for the 'POST' method of the AJAX request of the Sorting Filter in listing.blade.php    // e.g.    /men    or    /computers
     }
+
+
+    // Vendor Login/Register
+    Route::get('/vendor/login-register', 'VendorController@loginRegister'); // render vendor login and register page
 });

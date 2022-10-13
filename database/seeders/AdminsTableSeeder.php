@@ -25,7 +25,7 @@ class AdminsTableSeeder extends Seeder
                 'id'        => 1,
                 'name'      => 'Ahmed Yahya',
                 'type'      => 'superadmin',
-                'vendor_id' => 0,
+                'vendor_id' => 0, // `vendor_id` is zero 0 because 'type' is not 'vendor' (it's actually 'superadmin')
                 'mobile'    => '9800000000',
                 'email'     => 'admin@admin.com',
                 'password'  => '$2a$12$xvkjSScUPRexfcJTAy9ATutIeGUuRgJrjDIdL/.xlrddEvRZINpeC', // This is the encryption of '123456'    // using https://bcrypt-generator.com/
@@ -38,7 +38,7 @@ class AdminsTableSeeder extends Seeder
                 'id'        => 2,
                 'name'      => 'John Singh - Vendor',
                 'type'      => 'vendor',
-                'vendor_id' => 1,
+                'vendor_id' => 1, // `vendor_id` is one 1 because 'type' is 'vendor'
                 'mobile'    => '9700000000',
                 'email'     => 'john@admin.com',
                 'password'  => '$2a$12$xvkjSScUPRexfcJTAy9ATutIeGUuRgJrjDIdL/.xlrddEvRZINpeC', // This is the encryption of '123456'    // using https://bcrypt-generator.com/

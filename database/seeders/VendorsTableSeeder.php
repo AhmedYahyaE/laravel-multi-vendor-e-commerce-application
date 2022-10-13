@@ -20,7 +20,7 @@ class VendorsTableSeeder extends Seeder
         $vendorRecords = [
             [
                 'id'      => 1,
-                'name'    => 'John',
+                'name'    => 'John Singh - Vendor',
                 'address' => 'CP-112',
                 'city'    => 'New Delhi',
                 'state'   => 'Delhi',
