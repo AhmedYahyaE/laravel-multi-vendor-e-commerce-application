@@ -48,7 +48,7 @@ class AdminController extends Controller
                 'email'    => 'required|email|max:255',
                 'password' => 'required',
             ];
-            $customMessages = [
+            $customMessages = [ // Specifying A Custom Message For A Given Attribute: https://laravel.com/docs/9.x/validation#specifying-a-custom-message-for-a-given-attribute
                 'email.required'    => 'Email Address is required!',
                 'email.email'       => 'Valid Email Address is required',
                 'password.required' => 'Password is required!',
@@ -155,7 +155,7 @@ class AdminController extends Controller
                 'admin_name'   => 'required|regex:/^[\pL\s\-]+$/u', // only alphabetical characters and spaces
                 'admin_mobile' => 'required|numeric',
             ];
-            $customMessages = [
+            $customMessages = [ // Specifying A Custom Message For A Given Attribute: https://laravel.com/docs/9.x/validation#specifying-a-custom-message-for-a-given-attribute
                 'admin_name.required'   => 'Name is required',
                 'admin_name.regex'      => 'Valid Name is required',
                 'admin_mobile.required' => 'Mobile is required',
@@ -222,7 +222,7 @@ class AdminController extends Controller
                     'vendor_city'   => 'required|regex:/^[\pL\s\-]+$/u', // only alphabetical characters and spaces
                     'vendor_mobile' => 'required|numeric',
                 ];
-                $customMessages = [
+                $customMessages = [ // Specifying A Custom Message For A Given Attribute: https://laravel.com/docs/9.x/validation#specifying-a-custom-message-for-a-given-attribute
                     'vendor_name.required'   => 'Name is required',
                     'vendor_city.required'   => 'City is required',
                     'vendor_city.regex'      => 'Valid City alphabetical is required',
@@ -302,7 +302,7 @@ class AdminController extends Controller
                     'shop_mobile'         => 'required|numeric',
                     'address_proof'       => 'required',
                 ];
-                $customMessages = [
+                $customMessages = [ // Specifying A Custom Message For A Given Attribute: https://laravel.com/docs/9.x/validation#specifying-a-custom-message-for-a-given-attribute
                     'shop_name.required'           => 'Name is required',
                     'shop_city.required'           => 'City is required',
                     'shop_city.regex'              => 'Valid City alphabetical is required',
@@ -379,7 +379,7 @@ class AdminController extends Controller
                     'account_number'      => 'required|numeric',
                     'bank_ifsc_code'      => 'required',
                 ];
-                $customMessages = [
+                $customMessages = [ // Specifying A Custom Message For A Given Attribute: https://laravel.com/docs/9.x/validation#specifying-a-custom-message-for-a-given-attribute
                     'account_holder_name.required' => 'Account Holder Name is required',
                     'bank_name.required'           => 'Bank Name is required',
                     'account_holder_name.regex'    => 'Valid Account Holder Name is required',

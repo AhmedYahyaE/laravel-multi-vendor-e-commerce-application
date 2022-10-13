@@ -71,9 +71,10 @@
 
 
 
+                        {{-- Displaying The Validation Errors: https://laravel.com/docs/9.x/validation#quick-displaying-the-validation-errors AND https://laravel.com/docs/9.x/blade#validation-errors --}}
+                        {{-- Determining If An Item Exists In The Session (using has() method): https://laravel.com/docs/9.x/session#determining-if-an-item-exists-in-the-session --}}
                         {{-- Our Bootstrap success message in case of updating admin password is successful: --}}
                         {{-- https://www.youtube.com/watch?v=oAZKXYrkcr4&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=17 --}}
-                        {{-- Determining If An Item Exists In The Session (using has() method): https://laravel.com/docs/9.x/session#determining-if-an-item-exists-in-the-session --}}
                         @if (Session::has('success_message')) <!-- Check AdminController.php, updateAdminPassword() method -->
                             <div class="alert alert-success alert-dismissible fade show" role="alert">
                                 <strong>Success:</strong> {{ Session::get('success_message') }}

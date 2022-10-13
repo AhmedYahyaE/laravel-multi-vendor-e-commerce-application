@@ -78,7 +78,7 @@ class SectionController extends Controller
             $rules = [
                 'section_name' => 'required|regex:/^[\pL\s\-]+$/u', // only alphabetical characters and spaces
             ];
-            $customMessages = [
+            $customMessages = [ // Specifying A Custom Message For A Given Attribute: https://laravel.com/docs/9.x/validation#specifying-a-custom-message-for-a-given-attribute
                 'section_name.required' => 'Section Name is required',
                 'section_name.regex'    => 'Valid Section Name is required',
             ];
