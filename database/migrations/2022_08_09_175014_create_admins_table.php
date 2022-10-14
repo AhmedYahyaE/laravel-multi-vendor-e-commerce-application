@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('mobile');
             $table->string('email')->unique();
             $table->string('password');
-            $table->string('image');
+            $table->string('image')->nullable();
             $table->enum('confirm', ['No', 'Yes']); // added later    // "No" is the default value    // https://www.youtube.com/watch?v=ODwOtaa2GxU&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=98
             $table->tinyInteger('status');
     

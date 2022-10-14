@@ -17,11 +17,11 @@ return new class extends Migration
             $table->id();
 
             $table->string('name');
-            $table->string('address');
-            $table->string('city');
-            $table->string('state');
-            $table->string('country');
-            $table->string('pincode');
+            $table->string('address')->nullable();
+            $table->string('city')->nullable();
+            $table->string('state')->nullable();
+            $table->string('country')->nullable();
+            $table->string('pincode')->nullable();
             $table->string('mobile');
             $table->string('email')->unique();
             $table->enum('confirm', ['No', 'Yes']); // added later    // "No" is the default value    // https://www.youtube.com/watch?v=ODwOtaa2GxU&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=98

@@ -136,7 +136,7 @@
                                 <label for="vendorpassword">Password
                                     <span class="astk">*</span>
                                 </label>
-                                <input type="password" id="vendorpassword" class="text-field" placeholder="Vendor Password">
+                                <input type="password" id="vendorpassword" class="text-field" placeholder="Vendor Password" name="password">
                             </div>
 
                             <div class="u-s-m-b-30"> {{-- "I've read and accept the terms & conditions" Checkbox --}}
