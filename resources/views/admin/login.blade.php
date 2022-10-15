@@ -57,10 +57,10 @@
                                     </div>
                                 @endif
 
+
                                 {{-- Our code: https://www.youtube.com/watch?v=_vBCl-77GYc&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=11 --}}
-                                {{-- https://laravel.com/docs/9.x/csrf#preventing-csrf-requests --}}
                                 <form class="pt-3" action="{{ url('admin/login') }}" method="post">
-                                    @csrf
+                                    @csrf {{-- https://laravel.com/docs/9.x/csrf#preventing-csrf-requests --}}
 
 
                                     <div class="form-group">

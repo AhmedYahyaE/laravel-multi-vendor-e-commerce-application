@@ -86,9 +86,9 @@ Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function
         Route::post('update-brand-status', 'BrandController@updateBrandStatus'); // Update Brands Status using AJAX in brands.blade.php
         Route::get('delete-brand/{id}', 'BrandController@deleteBrand'); // Delete a brand in brands.blade.php
         Route::match(['get', 'post'], 'add-edit-brand/{id?}', 'BrandController@addEditBrand'); // the slug {id?} is an Optional Parameter, so if it's passed, this means Edit the brand, and if not passed, this means Add a Brand    // Optional Parameters: https://laravel.com/docs/9.x/routing#parameters-optional-parameters
-        
+
         // Products    // https://www.youtube.com/watch?v=hTP1Tk1018M&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=45
-        Route::get('products', 'ProductsController@products'); // Products in Catalogue Management in Admin Panel
+        Route::get('products', 'ProductsController@products'); // render products.blade.php in the Admin Panel
         Route::post('update-product-status', 'ProductsController@updateProductStatus'); // Update Products Status using AJAX in products.blade.php
         Route::get('delete-product/{id}', 'ProductsController@deleteProduct'); // Delete a product in products.blade.php
         Route::match(['get', 'post'], 'add-edit-product/{id?}', 'ProductsController@addEditProduct'); // the slug (URL parameter) {id?} is an Optional Parameter, so if it's passed, this means 'Edit the Product', and if not passed, this means' Add a Product'    // GET request to render the add_edit_product.blade.php view, and POST request to submit the <form> in that view    // https://www.youtube.com/watch?v=-Lnk1N1jTNQ&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=47    // Optional Parameters: https://laravel.com/docs/9.x/routing#parameters-optional-parameters

@@ -24,20 +24,20 @@ class VendorController extends Controller
             // Validation (Validation of vendor registration form)    // Manually Creating Validators: https://laravel.com/docs/9.x/validation#manually-creating-validators    // Check 7:57 in https://www.youtube.com/watch?v=QbEFPGnTdBc&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=98
             $rules = [
                 // <input> "name" attribute => its rule
-                                'name'      => 'required',
-                                'email'     => 'required|email|unique:admins|unique:vendors',  // 'unique:admins' and 'unique:vendors' means check the `admins` table and `vendors` table for the `mobile` uniqueness: https://laravel.com/docs/9.x/validation#rule-unique
-                                'mobile'    => 'required|min:10|numeric|unique:admins|unique:vendors', // 'unique:admins' and 'unique:vendors' means check the `admins` table and `vendors` table for the `mobile` uniqueness: https://laravel.com/docs/9.x/validation#rule-unique    // 'min:10|numeric' is the mobile number validation
-                                'accept'    => 'required'
+                            'name'          => 'required',
+                            'email'         => 'required|email|unique:admins|unique:vendors',  // 'unique:admins' and 'unique:vendors' means check the `admins` table and `vendors` table for the `mobile` uniqueness: https://laravel.com/docs/9.x/validation#rule-unique
+                            'mobile'        => 'required|min:10|numeric|unique:admins|unique:vendors', // 'unique:admins' and 'unique:vendors' means check the `admins` table and `vendors` table for the `mobile` uniqueness: https://laravel.com/docs/9.x/validation#rule-unique    // 'min:10|numeric' is the mobile number validation
+                            'accept'        => 'required'
             ];
 
             $customMessages = [ // Specifying A Custom Message For A Given Attribute: https://laravel.com/docs/9.x/validation#specifying-a-custom-message-for-a-given-attribute
                 // <input> "name" attribute.validation rule => validation rule message
-                                    'name.required'         => 'Name is required',
-                                    'email.required'        => 'Email is required',
-                                    'email.unique'          => 'Email alreay exists',
-                                    'mobile.required'       => 'Mobile is required',
-                                    'mobile.unique'         => 'Mobile alreay exists',
-                                    'accept.required'       => 'Please accept Terms & Conditions',
+                                'name.required'             => 'Name is required',
+                                'email.required'            => 'Email is required',
+                                'email.unique'              => 'Email alreay exists',
+                                'mobile.required'           => 'Mobile is required',
+                                'mobile.unique'             => 'Mobile alreay exists',
+                                'accept.required'           => 'Please accept Terms & Conditions',
             ];
 
             $validator = \Validator::make($data, $rules, $customMessages); // Manually Creating Validators: https://laravel.com/docs/9.x/validation#manually-creating-validators
@@ -68,7 +68,7 @@ class VendorController extends Controller
             $vendor->save();
 
             // Get the `id` of the new vendor that we have just saved in the `vendors` table to use it as a value for the `vendor_id` column of the `admins` table to store the new vendor in the `admins` table too
-            $vendor_id = \DB::getPdo()->lastInsertId(); // vendor `id` of the `vendors` table    // Check 3:20 in https://www.youtube.com/watch?v=EvFgN74IFlc&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=99
+            $vendor_id = \DB::getPdo()->lastInsertId(); // get the vendor `id` of the `vendors` table (which has just been inserted) to insert it in the `vendor_id` column of the `admins` table    // Check 3:20 in https://www.youtube.com/watch?v=EvFgN74IFlc&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=99
 
             // Secondly, use the vendor `id` of the `vendors` table to serve a value of the `vendor_id` column in the `admins` table and save the new vendor in the `admins` table
             $admin = new \App\Models\Admin; // Admin.php model which models (represents) the `admins` database table
@@ -131,7 +131,7 @@ class VendorController extends Controller
 
 
                 // Send ANOTHER email to the vendor (The Registration Success email)
-                // Send the Registration Success Email  to the new vendor who has just registered    // https://www.youtube.com/watch?v=UcN-IMTUWOA&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=100
+                // Send the Registration Success Email to the new vendor who has just registered    // https://www.youtube.com/watch?v=UcN-IMTUWOA&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=100
                 $messageData = [
                     'email'  => $email,
                     'name'   => $vendorDetails->name,

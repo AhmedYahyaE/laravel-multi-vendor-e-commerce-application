@@ -73,10 +73,13 @@
             <li class="nav-item nav-profile dropdown">
                 <a class="nav-link dropdown-toggle" href="{{ url('admin/update-admin-details') }}" data-toggle="dropdown" id="profileDropdown">
 
+
                     {{-- Check 9:01 in https://www.youtube.com/watch?v=3YIBKtx0n4M&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=61 --}}
                     {{-- Show the admin image if exists: Check 14:34 in https://www.youtube.com/watch?v=dvVbp4poGfQ&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=19 --}}
                     @if (!empty(Auth::guard('admin')->user()->image))
                         <img src="{{ url('admin/images/photos/' . Auth::guard('admin')->user()->image) }}" alt="profile">
+                    @else
+                        <img src="{{ url('admin/images/photos/no-image.gif') }}" alt="profile">
                     @endif
 
 

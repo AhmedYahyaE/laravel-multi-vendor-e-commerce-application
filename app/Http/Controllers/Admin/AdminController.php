@@ -230,7 +230,6 @@ class AdminController extends Controller
             \Session::put('page', 'update_personal_details');
 
 
-
             // Handling update vendor personal details <form> submission
             if ($request->isMethod('post')) { // if the <form> is submitted
                 $data = $request->all();
@@ -305,6 +304,7 @@ class AdminController extends Controller
 
 
             $vendorDetails = \App\Models\Vendor::where('id', \Auth::guard('admin')->user()->vendor_id)->first()->toArray();
+
         } else if ($slug == 'business') {
             // Correcting issues in the Skydash Admin Panel Sidebar using Session:  Check 6:33 in https://www.youtube.com/watch?v=i_SUdNILIrc&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=29
             \Session::put('page', 'update_business_details');
@@ -327,7 +327,7 @@ class AdminController extends Controller
                     'shop_name.required'           => 'Name is required',
                     'shop_city.required'           => 'City is required',
                     'shop_city.regex'              => 'Valid City alphabetical is required',
-                    'shop_name.regex'              => 'Valid Name is required',
+                    'shop_name.regex'              => 'Valid Shop Name is required',
                     'shop_mobile.required'         => 'Mobile is required',
                     'shop_mobile.numeric'          => 'Valid Mobile is required',
                 ];
@@ -359,29 +359,60 @@ class AdminController extends Controller
                 }
 
 
-
-                // Update `vendors_business_details` table
-                \App\Models\VendorsBusinessDetail::where('vendor_id', \Auth::guard('admin')->user()->vendor_id)->update([
-                    'shop_name'               => $data['shop_name'],
-                    'shop_mobile'             => $data['shop_mobile'],
-                    'shop_address'            => $data['shop_address'],
-                    'shop_city'               => $data['shop_city'],
-                    'shop_state'              => $data['shop_state'],
-                    'shop_country'            => $data['shop_country'],
-                    'shop_pincode'            => $data['shop_pincode'],
-                    'business_license_number' => $data['business_license_number'],
-                    'gst_number'              => $data['gst_number'],
-                    'pan_number'              => $data['pan_number'],
-                    'address_proof'           => $data['address_proof'],
-                    'address_proof_image'     => $imageName,
-                ]);
+                // Correcting the error that appeared in 41:13 in https://www.youtube.com/watch?v=UXUDxtN68XE&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=103
+                $vendorCount = \App\Models\VendorsBusinessDetail::where('vendor_id', \Auth::guard('admin')->user()->vendor_id)->count();
+                if ($vendorCount > 0) { // if there's a vendor already existing, them UPDATE
+                    // UPDATE `vendors_business_details` table
+                    \App\Models\VendorsBusinessDetail::where('vendor_id', \Auth::guard('admin')->user()->vendor_id)->update([
+                        'shop_name'               => $data['shop_name'],
+                        'shop_mobile'             => $data['shop_mobile'],
+                        'shop_website'            => $data['shop_website'],
+                        'shop_address'            => $data['shop_address'],
+                        'shop_city'               => $data['shop_city'],
+                        'shop_state'              => $data['shop_state'],
+                        'shop_country'            => $data['shop_country'],
+                        'shop_pincode'            => $data['shop_pincode'],
+                        'business_license_number' => $data['business_license_number'],
+                        'gst_number'              => $data['gst_number'],
+                        'pan_number'              => $data['pan_number'],
+                        'address_proof'           => $data['address_proof'],
+                        'address_proof_image'     => $imageName,
+                    ]);
+                } else { // if there's no vendor already existing, then INSERT
+                    // INSERT INTO `vendors_business_details` table
+                    \App\Models\VendorsBusinessDetail::insert([
+                        'vendor_id'               => \Auth::guard('admin')->user()->vendor_id,
+                        'shop_name'               => $data['shop_name'],
+                        'shop_mobile'             => $data['shop_mobile'],
+                        'shop_website'            => $data['shop_website'],
+                        'shop_address'            => $data['shop_address'],
+                        'shop_city'               => $data['shop_city'],
+                        'shop_state'              => $data['shop_state'],
+                        'shop_country'            => $data['shop_country'],
+                        'shop_pincode'            => $data['shop_pincode'],
+                        'business_license_number' => $data['business_license_number'],
+                        'gst_number'              => $data['gst_number'],
+                        'pan_number'              => $data['pan_number'],
+                        'address_proof'           => $data['address_proof'],
+                        'address_proof_image'     => $imageName,
+                    ]);
+                }
 
 
                 return redirect()->back()->with('success_message', 'Vendor details updated successfully!');
             }
 
 
-            $vendorDetails = \App\Models\VendorsBusinessDetail::where('vendor_id', \Auth::guard('admin')->user()->vendor_id)->first()->toArray();
+            // Correcting the error appeared in 33:01 in https://www.youtube.com/watch?v=UXUDxtN68XE&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=103
+            $vendorCount = \App\Models\VendorsBusinessDetail::where('vendor_id', \Auth::guard('admin')->user()->vendor_id)->count();
+            if ($vendorCount > 0) {
+                $vendorDetails = \App\Models\VendorsBusinessDetail::where('vendor_id', \Auth::guard('admin')->user()->vendor_id)->first()->toArray();
+            } else {
+                $vendorDetails = array();
+            }
+
+            // $vendorDetails = \App\Models\VendorsBusinessDetail::where('vendor_id', \Auth::guard('admin')->user()->vendor_id)->first()->toArray();
+
         } else if ($slug == 'bank') {
             // Correcting issues in the Skydash Admin Panel Sidebar using Session:  Check 6:33 in https://www.youtube.com/watch?v=i_SUdNILIrc&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=29
             \Session::put('page', 'update_bank_details');
@@ -411,22 +442,41 @@ class AdminController extends Controller
                 $this->validate($request, $rules, $customMessages);
 
 
-
-                // Update `vendors_bank_details` table
-                \App\Models\VendorsBankDetail::where('vendor_id', \Auth::guard('admin')->user()->vendor_id)->update([
-                    'account_holder_name' => $data['account_holder_name'],
-                    'bank_name'           => $data['bank_name'],
-                    'account_number'      => $data['account_number'],
-                    'bank_ifsc_code'      => $data['bank_ifsc_code'],
-                ]);
+                // Correcting the error that appeared in 46:13 in https://www.youtube.com/watch?v=UXUDxtN68XE&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=103
+                $vendorCount = \App\Models\VendorsBankDetail::where('vendor_id', \Auth::guard('admin')->user()->vendor_id)->count();
+                if ($vendorCount > 0) { // if there's a vendor already existing, them UPDATE
+                    // UPDATE `vendors_bank_details` table
+                    \App\Models\VendorsBankDetail::where('vendor_id', \Auth::guard('admin')->user()->vendor_id)->update([
+                        'account_holder_name' => $data['account_holder_name'],
+                        'bank_name'           => $data['bank_name'],
+                        'account_number'      => $data['account_number'],
+                        'bank_ifsc_code'      => $data['bank_ifsc_code'],
+                    ]);
+                } else { // if there's no vendor already existing, then INSERT
+                    // INSERT INTO `vendors_bank_details` table
+                    \App\Models\VendorsBankDetail::insert([
+                        'vendor_id'           => \Auth::guard('admin')->user()->vendor_id,
+                        'account_holder_name' => $data['account_holder_name'],
+                        'bank_name'           => $data['bank_name'],
+                        'account_number'      => $data['account_number'],
+                        'bank_ifsc_code'      => $data['bank_ifsc_code'],
+                    ]);
+                }
 
 
                 return redirect()->back()->with('success_message', 'Vendor details updated successfully!');
             }
 
 
+            // Correcting the error appeared in 39:16 in https://www.youtube.com/watch?v=UXUDxtN68XE&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=103
+            $vendorCount = \App\Models\VendorsBankDetail::where('vendor_id', \Auth::guard('admin')->user()->vendor_id)->count();
+            if ($vendorCount > 0) {
+                $vendorDetails = \App\Models\VendorsBankDetail::where('vendor_id', \Auth::guard('admin')->user()->vendor_id)->first()->toArray();
+            } else {
+                $vendorDetails = array();
+            }
 
-            $vendorDetails = \App\Models\VendorsBankDetail::where('vendor_id', \Auth::guard('admin')->user()->vendor_id)->first()->toArray();
+            // $vendorDetails = \App\Models\VendorsBankDetail::where('vendor_id', \Auth::guard('admin')->user()->vendor_id)->first()->toArray();
         }
 
 
@@ -458,6 +508,7 @@ class AdminController extends Controller
 
             // Correcting issues in the Skydash Admin Panel Sidebar using Session:  Check 6:33 in https://www.youtube.com/watch?v=i_SUdNILIrc&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=29
             \Session::put('page', 'view_' . strtolower($title));
+
         } else { // if there's no $type is passed, show ALL of the admins, subadmins and vendors
             $title = 'All Admins/Subadmins/Vendors';
 
@@ -502,6 +553,23 @@ class AdminController extends Controller
 
             \App\Models\Admin::where('id', $data['admin_id'])->update(['status' => $status]); // $data['admin_id'] comes from the 'data' object inside the $.ajax() method
             // echo '<pre>', var_dump($data), '</pre>';
+
+            // Send a THIRD Approval Email to the vendor when the superadmin or admin approves their account (`status` column in the `admins` table becomes 1 instead of 0) so that they can add their products on the website now    // Check 24:07 in https://www.youtube.com/watch?v=UXUDxtN68XE&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=103
+            $adminDetails = \App\Models\Admin::where('id', $data['admin_id'])->first()->toArray(); // get the admin that his `status` has been approved
+            if ($adminDetails['type'] == 'vendor' && $status == 1) { // if the `type` column value (in `admins` table) is 'vendor', and their `status` became 1 (got approved), send them a THIRD confirmation mail
+                // Send the Approval Success Email to the new vendor    // https://www.youtube.com/watch?v=UcN-IMTUWOA&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=100
+                $email = $adminDetails['email']; // the vendor's email
+                $messageData = [
+                    'email'  => $adminDetails['email'],
+                    'name'   => $adminDetails['name'],
+                    'mobile' => $adminDetails['mobile'],
+                ];
+                \Illuminate\Support\Facades\Mail::send('emails.vendor_approved', $messageData, function ($message) use ($email) { // Sending Mail: https://laravel.com/docs/9.x/mail#sending-mail    // 'emails.vendor_approved' is the vendor_approved.blade.php file inside the 'resources/views/emails' folder that will be sent as an email    // We pass all the variables that vendor_approved.blade.php will use    // https://www.php.net/manual/en/functions.anonymous.php
+                    $message->to($email)->subject('Vendor Account is Approved');
+                });
+            }
+            $adminType = \Auth::guard('admin')->user()->type; // `type` is the column in `admins` table    // Retrieving The Authenticated User and getting their `type`      column in `admins` table    // https://laravel.com/docs/9.x/authentication#retrieving-the-authenticated-user
+
 
             return response()->json([ // JSON Responses: https://laravel.com/docs/9.x/responses#json-responses
                 'status'   => $status,

@@ -11,23 +11,56 @@ class ProductsController extends Controller
 
     // https://www.youtube.com/watch?v=hTP1Tk1018M&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=45
 
-    
-    public function products() {
+
+    public function products() { // render products.blade.php in the Admin Panel
         \Session::put('page', 'products');
 
         // $products = \App\Models\Product::get()->toArray();
         // $products = \App\Models\Product::with(['section', 'category'])->get(); // ['section', 'category'] are the relationships methods names
         // $products = \App\Models\Product::with(['section', 'category'])->get()->toArray(); // ['section', 'category'] are the relationships methods names
+        /*
         $products = \App\Models\Product::with([
-               'section' => function($query) { // the 'section' relationship method in Product.php model
+            'section' => function($query) { // the 'section' relationship method in Product.php model
                 $query->select('id', 'name');
-            }, 'category' => function($query) { // the 'category' relationship method in Product.php model
+            },
+            'category' => function($query) { // the 'category' relationship method in Product.php model
                 $query->select('id', 'category_name');
-        }])->get()->toArray(); // Using subqueries with Eager Loading for a better performance (Check 9:40 in https://www.youtube.com/watch?v=iDpDS9vNswE&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=46)    // Constraining Eager Loads: https://laravel.com/docs/9.x/eloquent-relationships#constraining-eager-loads    // Subquery Where Clauses: https://laravel.com/docs/9.x/queries#where-clauses    // ['section', 'category'] are the relationships methods names
+            }
+        ])->get()->toArray(); // Using subqueries with Eager Loading for a better performance (Check 9:40 in https://www.youtube.com/watch?v=iDpDS9vNswE&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=46)    // Constraining Eager Loads: https://laravel.com/docs/9.x/eloquent-relationships#constraining-eager-loads    // Subquery Where Clauses: https://laravel.com/docs/9.x/queries#where-clauses    // ['section', 'category'] are the relationships methods names
+        // dd($products);
+        */
+
+        // Modify the last $products variable so that ONLY products that BELONG TO the 'vendor' show up in (not ALL products show up) in products.blade.php, and also make sure that the 'vendor' account is active/enabled/approved (`status` is 1) before they can access the products page    // Check 11:44 in https://www.youtube.com/watch?v=UXUDxtN68XE&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=103
+        $adminType = \Auth::guard('admin')->user()->type;      // `type`      is the column in `admins` table    // Retrieving The Authenticated User and getting their `type`      column in `admins` table    // https://laravel.com/docs/9.x/authentication#retrieving-the-authenticated-user
+        $vendor_id = \Auth::guard('admin')->user()->vendor_id; // `vendor_id` is the column in `admins` table    // Retrieving The Authenticated User and getting their `vendor_id` column in `admins` table    // https://laravel.com/docs/9.x/authentication#retrieving-the-authenticated-user
+        
+        if ($adminType == 'vendor') { // if the authenticated user (the logged in user) is 'vendor', check his `status`
+            $vendorStatus = \Auth::guard('admin')->user()->status; // `status` is the column in `admins` table    // Retrieving The Authenticated User and getting their `status` column in `admins` table    // https://laravel.com/docs/9.x/authentication#retrieving-the-authenticated-user
+            if ($vendorStatus == 0) { // if the 'vendor' is inactive/disabled
+                return redirect('admin/update-vendor-details/personal')->with('error_message', 'Your Vendor Account is not approved yet. Please make sure to fill your valid personal, business and bank details'); // the error_message will appear to the vendor in the route: 'admin/update-vendor-details/personal' which is the update_vendor_details.blade.php page
+            }
+        }
+
+        // Get ALL products ($products)
+        $products = \App\Models\Product::with([
+            'section' => function($query) { // the 'section' relationship method in Product.php model
+                $query->select('id', 'name');
+            },
+            'category' => function($query) { // the 'category' relationship method in Product.php model
+                $query->select('id', 'category_name');
+            }
+        ]);
+
+        // if the authenticated user (the logged in user) is 'vendor', show ONLY the products that BELONG TO them (in products.blade.php) ($products)
+        if ($adminType == 'vendor') {
+            $produtcs = $products->where('vendor_id', $vendor_id);
+        }
+
+        $products = $products->get()->toArray(); // $products will be either ALL products Or VENDOR products ONLY (depending on the last if condition)    // Using subqueries with Eager Loading for a better performance (Check 9:40 in https://www.youtube.com/watch?v=iDpDS9vNswE&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=46)    // Constraining Eager Loads: https://laravel.com/docs/9.x/eloquent-relationships#constraining-eager-loads    // Subquery Where Clauses: https://laravel.com/docs/9.x/queries#where-clauses    // ['section', 'category'] are the relationships methods names
         // dd($products);
 
 
-        return view('admin.products.products')->with(compact('products'));
+        return view('admin.products.products')->with(compact('products')); // render products.blade.php page, and pass $products variable to the view
     }
     
     public function updateProductStatus(Request $request) { // Update Product Status using AJAX in products.blade.php
