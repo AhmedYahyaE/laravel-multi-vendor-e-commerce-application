@@ -60,12 +60,33 @@ class AdminController extends Controller
             // Logging in using our 'admin' guard we created in auth.php    // Check 5:44 in https://www.youtube.com/watch?v=_vBCl-77GYc&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=11
             // Manually Authenticating Users (using attempt() method()): https://laravel.com/docs/9.x/authentication#authenticating-users
             // if (\Illuminate\Support\Facades\Auth::guard('admin')->attempt(['email' => $data['email'], 'password' => $data['password'], 'status' => 1])) { // Check the Admin.php model and 12:47 in https://www.youtube.com/watch?v=_vBCl-77GYc&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=11
+            /*
             if (\Auth::guard('admin')->attempt([
                 'email'    => $data['email'],
                 'password' => $data['password'],
                 'status'   => 1
             ])) { // Check the Admin.php model and 12:47 in https://www.youtube.com/watch?v=_vBCl-77GYc&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=11
                 return redirect('/admin/dashboard'); // Let him LOGIN!
+            } else { // If login credentials are incorrect
+                // Redirecting With Flashed Session Data: https://laravel.com/docs/9.x/responses#redirecting-with-flashed-session-data
+                // return back()->with('error_message', 'Invalid Email or Password');
+                return redirect()->back()->with('error_message', 'Invalid Email or Password');
+            }
+            */
+
+            // Enhancing the login and authentication process (add checking if the account is confirmed)    // Check 32:06 in https://www.youtube.com/watch?v=UcN-IMTUWOA&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=102
+            if (\Auth::guard('admin')->attempt([
+                'email'    => $data['email'],
+                'password' => $data['password']
+            ])) { // Check the Admin.php model and 12:47 in https://www.youtube.com/watch?v=_vBCl-77GYc&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=11
+                if (\Auth::guard('admin')->user()->type == 'vendor' && \Auth::guard('admin')->user()->confirm == 'No') { // check the `type` column in the `admins` table for if the logging in user is 'venodr', and check the `confirm` column if the vendor is not yet confirmed (`confirm` = 'No'), then don't allow logging in
+                    return redirect()->back()->with('error_message', 'Please confirm your email to activate your Vendor Account');
+                } else if (\Auth::guard('admin')->user()->type != 'vendor' && \Auth::guard('admin')->user()->status == '0') { // check the `type` column in the `admins` table for if the logging in user is 'admin' or 'superadmin' (not 'vendor'), and check the `status` column if the 'admin' or 'superadmin' is inactive/disabled (`status` = 0), then don't allow logging in
+                    return redirect()->back()->with('error_message', 'Your admin account is not active');
+                } else { // otherwise, login successfully!
+                    return redirect('/admin/dashboard'); // Let them LOGIN!!
+                }
+
             } else { // If login credentials are incorrect
                 // Redirecting With Flashed Session Data: https://laravel.com/docs/9.x/responses#redirecting-with-flashed-session-data
                 // return back()->with('error_message', 'Invalid Email or Password');
