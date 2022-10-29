@@ -18,7 +18,7 @@ class AdminController extends Controller
         return view('admin/dashboard'); // is the same as:    return view('admin.dashboard');
     }
 
-    public function login(Request $request) { // Logging in using our 'admin' guard we created in auth.php
+    public function login(Request $request) { // Logging in using our 'admin' guard (whether 'vendor' or 'admin' (depending on the `type` and `vendor_id` columns in `admins` table)) we created in auth.php
         // Hashing Passwords: https://laravel.com/docs/9.x/hashing#hashing-passwords
         // echo $password = \Illuminate\Support\Facades\Hash::make('123456');
         // die;
@@ -42,6 +42,7 @@ class AdminController extends Controller
             ]);
             */
 
+            // Validation
             // Customizing Laravel's Validation Error Messages: https://laravel.com/docs/9.x/validation#customizing-the-error-messages    // Customizing Validation Rules: https://laravel.com/docs/9.x/validation#custom-validation-rules    // Check 9:24 in https://www.youtube.com/watch?v=IiyqoBUrkZA&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=12
             // https://laravel.com/docs/9.x/validation#manual-customizing-the-error-messages
             $rules = [
@@ -57,6 +58,7 @@ class AdminController extends Controller
 
 
 
+            // Authentication (login/logging in/loggin user in): https://laravel.com/docs/9.x/authentication
             // Logging in using our 'admin' guard we created in auth.php    // Check 5:44 in https://www.youtube.com/watch?v=_vBCl-77GYc&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=11
             // Manually Authenticating Users (using attempt() method()): https://laravel.com/docs/9.x/authentication#authenticating-users
             // if (\Illuminate\Support\Facades\Auth::guard('admin')->attempt(['email' => $data['email'], 'password' => $data['password'], 'status' => 1])) { // Check the Admin.php model and 12:47 in https://www.youtube.com/watch?v=_vBCl-77GYc&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=11
@@ -74,14 +76,14 @@ class AdminController extends Controller
             }
             */
 
+
+
+            // Authentication (login/logging in/loggin user in): https://laravel.com/docs/9.x/authentication
             // Enhancing the login and authentication process (add checking if the account is confirmed)    // Check 32:06 in https://www.youtube.com/watch?v=UcN-IMTUWOA&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=102
-            if (\Auth::guard('admin')->attempt([
-                'email'    => $data['email'],
-                'password' => $data['password']
-            ])) { // Check the Admin.php model and 12:47 in https://www.youtube.com/watch?v=_vBCl-77GYc&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=11
-                if (\Auth::guard('admin')->user()->type == 'vendor' && \Auth::guard('admin')->user()->confirm == 'No') { // check the `type` column in the `admins` table for if the logging in user is 'venodr', and check the `confirm` column if the vendor is not yet confirmed (`confirm` = 'No'), then don't allow logging in
+            if (\Auth::guard('admin')->attempt(['email' => $data['email'], 'password' => $data['password']])) { // Check the Admin.php model and 12:47 in https://www.youtube.com/watch?v=_vBCl-77GYc&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=11
+                if (\Auth::guard('admin')->user()->type == 'vendor' && \Auth::guard('admin')->user()->confirm == 'No') { // if the entity trying to login is 'vendor' and not 'admin' (i.e. `type` column is `vendor`, and `vendor_id` is not zero 0 in `admins` table)    // check the `type` column in the `admins` table for if the logging in user is 'venodr', and check the `confirm` column if the vendor is not yet confirmed (`confirm` = 'No'), then don't allow logging in
                     return redirect()->back()->with('error_message', 'Please confirm your email to activate your Vendor Account');
-                } else if (\Auth::guard('admin')->user()->type != 'vendor' && \Auth::guard('admin')->user()->status == '0') { // check the `type` column in the `admins` table for if the logging in user is 'admin' or 'superadmin' (not 'vendor'), and check the `status` column if the 'admin' or 'superadmin' is inactive/disabled (`status` = 0), then don't allow logging in
+                } else if (\Auth::guard('admin')->user()->type != 'vendor' && \Auth::guard('admin')->user()->status == '0') { // if the entity trying to login is 'admin' and not 'vendor' (i.e. `type` column is `superadmin` or `admin`, and `vendor_id` is zero 0 in `admins` table)    // check the `type` column in the `admins` table for if the logging in user is 'admin' or 'superadmin' (not 'vendor'), and check the `status` column if the 'admin' or 'superadmin' is inactive/disabled (`status` = 0), then don't allow logging in
                     return redirect()->back()->with('error_message', 'Your admin account is not active');
                 } else { // otherwise, login successfully!
                     return redirect('/admin/dashboard'); // Let them LOGIN!!
@@ -551,12 +553,24 @@ class AdminController extends Controller
             }
 
 
+            // Note: Vendor CONFIRMATION occurs automatically through vendor clicking on the confirmation link sent in the email, but vendor ACTIVATION (active/inactive/disabled) occurs manually where 'superadmin' or 'admin' activates the `status` from the Admin Panel in 'Admin Management' tab, then clicks Status. Also, Vendor CONFIRMATION is related to the `confirm` columns in BOTH `admins` and `vendors` tables, but vendor ACTIVATION (active/inactive/disabled) is related to the `status` columns in BOTH `admins` and `vendors` tables!
+            // Note: Vendor receives THREE emails: the first one when they register (please click on the confirmation link mail (in emails/vendor_confirmation.blade.php)), the second one when they click on the confirmation link sent in the first email (telling them that they have been confirmed and asking them to complete filling in their personal, business and bank details to get ACTIVATED/APPROVED (`status gets 1) (in emails/vendor_confirmed.blade.php)), the third email when the 'admin' or 'superadmin' manually activates (`status` becomes 1) the vendor from the Admin Panel from 'Admin Management' tab, then clicks Status (the email tells them they have been approved (activated and `status` became 1) and asks them to add their products on the website (in emails/vendor_approved.blade.php))
+
+            // (!! Database Transaction !!) UPDATE the `status` columns in BOTH `admins` and `vendors` tables (I did the code of `vendors` myself!) (!! Database Transaction !!)
             \App\Models\Admin::where('id', $data['admin_id'])->update(['status' => $status]); // $data['admin_id'] comes from the 'data' object inside the $.ajax() method
             // echo '<pre>', var_dump($data), '</pre>';
 
             // Send a THIRD Approval Email to the vendor when the superadmin or admin approves their account (`status` column in the `admins` table becomes 1 instead of 0) so that they can add their products on the website now    // Check 24:07 in https://www.youtube.com/watch?v=UXUDxtN68XE&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=103
             $adminDetails = \App\Models\Admin::where('id', $data['admin_id'])->first()->toArray(); // get the admin that his `status` has been approved
+
+            // !! My own code !! (change the `status` column in `vendors` table too, just like we did in the `admins` table) !!:
+            \App\Models\Vendor::where('id', $adminDetails['vendor_id'])->update(['status' => $status]);
+            // !! My own code !!
+
             if ($adminDetails['type'] == 'vendor' && $status == 1) { // if the `type` column value (in `admins` table) is 'vendor', and their `status` became 1 (got approved), send them a THIRD confirmation mail
+                // Note: Vendor CONFIRMATION occurs automatically through vendor clicking on the confirmation link sent in the email, but vendor ACTIVATION (active/inactive/disabled) occurs manually where 'superadmin' or 'admin' activates the `status` from the Admin Panel in 'Admin Management' tab, then clicks Status. Also, Vendor CONFIRMATION is related to the `confirm` columns in BOTH `admins` and `vendors` tables, but vendor ACTIVATION (active/inactive/disabled) is related to the `status` columns in BOTH `admins` and `vendors` tables!
+                // Note: Vendor receives THREE emails: the first one when they register (please click on the confirmation link mail (in emails/vendor_confirmation.blade.php)), the second one when they click on the confirmation link sent in the first email (telling them that they have been confirmed and asking them to complete filling in their personal, business and bank details to get ACTIVATED/APPROVED (`status gets 1) (in emails/vendor_confirmed.blade.php)), the third email when the 'admin' or 'superadmin' manually activates (`status` becomes 1) the vendor from the Admin Panel from 'Admin Management' tab, then clicks Status (the email tells them they have been approved (activated and `status` became 1) and asks them to add their products on the website (in emails/vendor_approved.blade.php))
+
                 // Send the Approval Success Email to the new vendor    // https://www.youtube.com/watch?v=UcN-IMTUWOA&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=100
                 $email = $adminDetails['email']; // the vendor's email
                 $messageData = [
@@ -577,4 +591,5 @@ class AdminController extends Controller
             ]);
         }
     }
+
 }

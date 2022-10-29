@@ -237,4 +237,9 @@ class ProductsController extends Controller
         }
     }
 
+    // Render Single Product Detail Page in front/products/detail.blade.php    // Check 19:09 in https://www.youtube.com/watch?v=fv9ZnNRKBBE&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=103
+    public function detail() {
+        return view('front.products.detail');
+    }
+
 }

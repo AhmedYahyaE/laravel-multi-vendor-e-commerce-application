@@ -222,7 +222,7 @@ class CategoryController extends Controller
         return redirect()->back()->with('success_message', $message);
     }
 
-    public function deleteCategoryImage($id) { // AJAX call from admin/js/custom.js    // Delete the category image from BOTH SERVER (FILESYSTEM) & DATABASE    // $id is passed as a URL parameter    // https://www.youtube.com/watch?v=uHYf4HmJTS8&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=42
+    public function deleteCategoryImage($id) { // AJAX call from admin/js/custom.js    // Delete the category image from BOTH SERVER (FILESYSTEM) & DATABASE    // $id is passed as a Route Parameter    // https://www.youtube.com/watch?v=uHYf4HmJTS8&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=42
         // Category image record in the database
         $categoryImage = \App\Models\Category::select('category_image')->where('id', $id)->first(); // https://laravel.com/docs/9.x/queries#delete-statements
         // dd($categoryImage);

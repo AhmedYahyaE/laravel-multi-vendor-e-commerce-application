@@ -317,7 +317,7 @@ class ProductsController extends Controller
         return view('admin.products.add_edit_product')->with(compact('title', 'product', 'categories', 'brands'));
     }
 
-    public function deleteProductImage($id) { // AJAX call from admin/js/custom.js    // Delete the product image from BOTH SERVER (FILESYSTEM) & DATABASE    // $id is passed as a URL parameter    // https://www.youtube.com/watch?v=0vLLzemWUmk&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=53
+    public function deleteProductImage($id) { // AJAX call from admin/js/custom.js    // Delete the product image from BOTH SERVER (FILESYSTEM) & DATABASE    // $id is passed as a Route Parameter    // https://www.youtube.com/watch?v=0vLLzemWUmk&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=53
         // Get the product image record stored in the database
         $productImage = \App\Models\Product::select('product_image')->where('id', $id)->first(); // https://laravel.com/docs/9.x/queries#delete-statements
         // dd($productImage);
@@ -351,7 +351,7 @@ class ProductsController extends Controller
         return redirect()->back()->with('success_message', $message);
     }
 
-    public function deleteProductVideo($id) { // AJAX call from admin/js/custom.js    // Delete the product video from BOTH SERVER (FILESYSTEM) & DATABASE    // $id is passed as a URL parameter    // https://www.youtube.com/watch?v=0vLLzemWUmk&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=53
+    public function deleteProductVideo($id) { // AJAX call from admin/js/custom.js    // Delete the product video from BOTH SERVER (FILESYSTEM) & DATABASE    // $id is passed as a Route Parameter    // https://www.youtube.com/watch?v=0vLLzemWUmk&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=53
         // Get the product video record stored in the database
         $productVideo = \App\Models\Product::select('product_video')->where('id', $id)->first(); // https://laravel.com/docs/9.x/queries#delete-statements
         // dd($productVideo);
@@ -559,7 +559,7 @@ class ProductsController extends Controller
         }
     }
 
-    public function deleteImage($id) { // AJAX call from admin/js/custom.js    // Delete the product image from BOTH SERVER (FILESYSTEM) & DATABASE    // $id is passed as a URL parameter    // https://www.youtube.com/watch?v=N4LL5J2daCE&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=60
+    public function deleteImage($id) { // AJAX call from admin/js/custom.js    // Delete the product image from BOTH SERVER (FILESYSTEM) & DATABASE    // $id is passed as a Route Parameter    // https://www.youtube.com/watch?v=N4LL5J2daCE&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=60
         // Get the product image record stored in the database
         $productImage = \App\Models\ProductsImage::select('image')->where('id', $id)->first(); // https://laravel.com/docs/9.x/queries#delete-statements
         // dd($productImage);
