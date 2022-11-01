@@ -31,34 +31,55 @@
             <!-- Product-Detail -->
             <div class="row">
                 <div class="col-lg-6 col-md-6 col-sm-12">
+
+
+
+                    {{-- EasyZoom plugin for zooming product images upon hover: https://www.youtube.com/watch?v=bWV92NrhyOk&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=108 --}}
+                    {{-- Our EasyZoom (jQuery image zoom plugin): https://i-like-robots.github.io/EasyZoom/ --}}
+
                     <!-- Product-zoom-area -->
-                    <div class="zoom-area">
+                    {{-- <div class="zoom-area"> --}}
+                    <div class="easyzoom easyzoom--overlay easyzoom--with-thumbnails"> {{-- EasyZoom plugin: https://www.youtube.com/watch?v=bWV92NrhyOk&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=108 --}}
+                        <a href="{{ asset('front/images/product_images/large/' . $productDetails['product_image']) }}">
+                            <img src="{{ asset('front/images/product_images/large/' . $productDetails['product_image']) }}" alt="" width="500" height="500" />
+                        </a>
 
             
 
                         {{-- Show the Main image (`product_image` in `products` table) --}}
-                        <img id="zoom-pro" class="img-fluid" src="{{ asset('front/images/product_images/large/' . $productDetails['product_image']) }}" data-zoom-image="{{ asset('front/images/product_images/large/' . $productDetails['product_image']) }}" alt="Zoom Image">
+                        {{-- <img id="zoom-pro" class="img-fluid" src="{{ asset('front/images/product_images/large/' . $productDetails['product_image']) }}" data-zoom-image="{{ asset('front/images/product_images/large/' . $productDetails['product_image']) }}" alt="Zoom Image"> --}}
+                    </div>
 
-                        
-                        <div id="gallery" class="u-s-m-t-10">
+                    {{-- <div id="gallery" class="u-s-m-t-10"> --}}
+                    <div class="thumbnails" style="margin-top: 30px"> {{-- EasyZoom plugin: https://www.youtube.com/watch?v=bWV92NrhyOk&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=108 --}}
+                        <a href="{{ asset('front/images/product_images/large/' . $productDetails['product_image']) }}" data-standard="{{ asset('front/images/product_images/small/' . $productDetails['product_image']) }}">
+                            <img width="120" height="120" src="{{ asset('front/images/product_images/small/' . $productDetails['product_image']) }}" alt="" />
+                        </a>
 
-                            {{-- Show the product main image (`product_image` in `products` table) as the first image --}}
-                            <a class="active" data-image="{{ asset('front/images/product_images/large/' . $productDetails['product_image']) }}" data-zoom-image="{{ asset('front/images/product_images/large/' . $productDetails['product_image']) }}">
-                                <img src="{{ asset('front/images/product_images/large/' . $productDetails['product_image']) }}" alt="Product">
+
+                        {{-- Show the product main image (`product_image` in `products` table) as the first image --}}
+                        {{-- <a class="active" data-image="{{ asset('front/images/product_images/large/' . $productDetails['product_image']) }}" data-zoom-image="{{ asset('front/images/product_images/large/' . $productDetails['product_image']) }}">
+                            <img src="{{ asset('front/images/product_images/large/' . $productDetails['product_image']) }}" alt="Product">
+                        </a> --}}
+
+
+
+                        {{-- Show the product Alternative images (`image` in `products_images` table) --}}
+                        @foreach ($productDetails['images'] as $image)
+
+                            {{-- EasyZoom plugin: https://www.youtube.com/watch?v=bWV92NrhyOk&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=108 --}}
+                            <a href="{{ asset('front/images/product_images/large/' . $image['image']) }}" data-standard="{{ asset('front/images/product_images/small/' . $image['image']) }}">
+                                <img width="120" height="120" src="{{ asset('front/images/product_images/small/' . $image['image']) }}" alt="" />
                             </a>
 
 
-
-                            {{-- Show the product Alternative images (`image` in `products_images` table) --}}
-                            @foreach ($productDetails['images'] as $image)
-                                <a data-image="{{ asset('front/images/product_images/large/' . $image['image']) }}" data-zoom-image="{{ asset('front/images/product_images/large/' . $image['image']) }}">
-                                    <img src="{{ asset('front/images/product_images/large/' . $image['image']) }}" alt="Product">
-                                </a>
-                            @endforeach
+                            {{-- <a data-image="{{ asset('front/images/product_images/large/' . $image['image']) }}" data-zoom-image="{{ asset('front/images/product_images/large/' . $image['image']) }}">
+                                <img width="120" height="120" src="{{ asset('front/images/product_images/large/' . $image['image']) }}" alt="Product">
+                            </a> --}}
+                        @endforeach
 
 
 
-                        </div>
                     </div>
                     <!-- Product-zoom-area /- -->
                 </div>
@@ -288,7 +309,7 @@
                                     <a class="nav-link active" data-toggle="tab" href="#video">Product Video</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" data-toggle="tab" href="#specification">Specifications</a>
+                                    <a class="nav-link" data-toggle="tab" href="#detail">Product Details</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" data-toggle="tab" href="#review">Reviews (15)</a>
@@ -319,69 +340,61 @@
                                 </div>
                             </div>
                             <!-- Description-Tab /- -->
-                            <!-- Specifications-Tab -->
-                            <div class="tab-pane fade" id="specification">
+                            <!-- Details-Tab -->
+                            <div class="tab-pane fade" id="detail">
                                 <div class="specification-whole-container">
-                                    <div class="spec-ul u-s-m-b-50">
-                                        <h4 class="spec-heading">Key Features</h4>
-                                        <ul>
-                                            <li>Heather Grey</li>
-                                            <li>Black</li>
-                                            <li>White</li>
-                                        </ul>
-                                    </div>
-                                    <div class="u-s-m-b-50">
-                                        <h4 class="spec-heading">What's in the Box?</h4>
-                                        <h3 class="spec-answer">1 x hoodie</h3>
-                                    </div>
                                     <div class="spec-table u-s-m-b-50">
-                                        <h4 class="spec-heading">General Information</h4>
+                                        <h4 class="spec-heading">Product Details</h4>
                                         <table>
-                                            <tr>
-                                                <td>Sku</td>
-                                                <td>AY536FA08JT86NAFAMZ</td>
-                                            </tr>
-                                        </table>
-                                    </div>
-                                    <div class="spec-table u-s-m-b-50">
-                                        <h4 class="spec-heading">Product Information</h4>
-                                        <table>
-                                            <tr>
-                                                <td>Main Material</td>
-                                                <td>Cotton</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Color</td>
-                                                <td>Heather Grey, Black, White</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Sleeves</td>
-                                                <td>Long Sleeve</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Top Fit</td>
-                                                <td>Regular</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Print</td>
-                                                <td>Not Printed</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Neck</td>
-                                                <td>Round Neck</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Pieces Count</td>
-                                                <td>1 piece</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Occasion</td>
-                                                <td>Casual</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Shipping Weight (kg)</td>
-                                                <td>0.5</td>
-                                            </tr>
+
+
+
+                                            {{-- https://www.youtube.com/watch?v=iEqfJk_ye7M&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=107 --}}
+                                            @php
+                                                // https://www.youtube.com/watch?v=Rr2tkfVtVMc&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=86
+                                                $productFilters = \App\Models\ProductsFilter::productFilters(); // Get ALL the (enabled/active) Filters
+                                                // dd($productFilters);
+                                            @endphp
+
+                                            @foreach ($productFilters as $filter) {{-- show ALL the (enabled/active) Filters --}}
+                                                @php
+                                                    // echo '<pre>', var_dump($product), '</pre>';
+                                                    // exit;
+                                                    // echo '<pre>', var_dump($filter), '</pre>';
+                                                    // exit;
+                                                    // dd($filter);
+                                                @endphp
+
+                                                @if (isset($productDetails['category_id'])) {{-- which comes from the AJAX call (passed in through the categoryFilters() method in Admin/FilterController.php, and ALSO may come from the if condition above there (in this page) in case of 'Edit Product' (not 'Add a Product') from addEditProduct() method in Admin/ProductsController --}}
+                                                    @php
+                                                        // dd($filter);
+
+                                                        // Firstly, for every filter in the `products_filters` table, Get the filter's (from the foreach loop) `cat_ids` using filterAvailable() method, then check if the current category id (using the $productDetails['category_id'] variable and depending on the URL) exists in the filter's `cat_ids`. If it exists, then show the filter, if not, then don't show the filter
+                                                        $filterAvailable = \App\Models\ProductsFilter::filterAvailable($filter['id'], $productDetails['category_id']);
+                                                    @endphp
+
+                                                    @if ($filterAvailable == 'Yes') {{-- if the filter has the current productDetails['category_id'] in its `cat_ids` --}}
+
+                                                        <tr>
+                                                            <td>{{ $filter['filter_name'] }}</td>
+                                                            <td>
+                                                                @foreach ($filter['filter_values'] as $value) {{-- show the related values of the filter of the product --}}
+                                                                    @php
+                                                                        // echo '<pre>', var_dump($value), '</pre>'; exit;
+                                                                    @endphp
+                                                                    @if (!empty($productDetails[$filter['filter_column']]) && $productDetails[$filter['filter_column']] == $value['filter_value']) {{-- $value['filter_value'] is like '4GB' --}} {{-- $productDetails[$filter['filter_column']]    is like    $productDetails['screen_size']    which in turn, may be equal to    '5 to 5.4 in' --}}
+                                                                        {{ ucwords($value['filter_value']) }}
+                                                                    @endif
+                                                                @endforeach
+                                                            </td>
+                                                        </tr>
+
+                                                    @endif
+                                                @endif
+                                            @endforeach
+
+
+
                                         </table>
                                     </div>
                                 </div>

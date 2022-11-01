@@ -39,6 +39,15 @@
         <link rel="stylesheet" href="{{ url('front/css/utility.css') }}">
         <!-- Main -->
         <link rel="stylesheet" href="{{ url('front/css/bundle.css') }}">
+
+
+
+        {{-- EasyZoom plugin for zooming product images upon hover: https://www.youtube.com/watch?v=bWV92NrhyOk&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=108 --}}
+        {{-- Our EasyZoom (jQuery image zoom plugin): https://i-like-robots.github.io/EasyZoom/ --}}
+        <link rel="stylesheet" href="{{ url('front/css/easyzoom.css') }}">
+
+
+
     </head>
     <body>
         <!-- app -->
@@ -132,11 +141,53 @@
         <script type="text/javascript" src="{{ url('front/js/app.js') }}"></script>
 
 
+
         <!-- Our front/js/custom.js file --> {{-- https://www.youtube.com/watch?v=u2NiZzjRL8U&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=80 --}}
         <script type="text/javascript" src="{{ url('front/js/custom.js') }}"></script>
 
 
+
+        {{-- EasyZoom plugin for zooming product images upon hover: https://www.youtube.com/watch?v=bWV92NrhyOk&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=108 --}}
+        {{-- Our EasyZoom (jQuery image zoom plugin): https://i-like-robots.github.io/EasyZoom/ --}}
+        <script type="text/javascript" src="{{ url('front/js/easyzoom.js') }}"></script>
+        <script>
+            // Instantiate EasyZoom instances
+            var $easyzoom = $('.easyzoom').easyZoom();
+    
+            // Setup thumbnails example
+            var api1 = $easyzoom.filter('.easyzoom--with-thumbnails').data('easyZoom');
+    
+            $('.thumbnails').on('click', 'a', function(e) {
+                var $this = $(this);
+    
+                e.preventDefault();
+    
+                // Use EasyZoom's `swap` method
+                api1.swap($this.data('standard'), $this.attr('href'));
+            });
+    
+            // Setup toggles example
+            var api2 = $easyzoom.filter('.easyzoom--with-toggle').data('easyZoom');
+    
+            $('.toggle').on('click', function() {
+                var $this = $(this);
+    
+                if ($this.data("active") === true) {
+                    $this.text("Switch on").data("active", false);
+                    api2.teardown();
+                } else {
+                    $this.text("Switch off").data("active", true);
+                    api2._init();
+                }
+            });
+        </script>
+
+
+
         {{-- To enable us to write PHP code within JavaScript code (to operate the Dynamic Filters dynamically (the second way)) --}} {{-- https://www.youtube.com/watch?v=rwj3nRYpUEk&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=90 --}}
         @include('front.layout.scripts')
+
+
+
     </body>
 </html>
