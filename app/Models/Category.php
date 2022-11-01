@@ -31,7 +31,7 @@ class Category extends Model
 
     // Get the parent category & its subcategories (child categories) of a URL
     public static function categoryDetails($url) { // this method is used inside ProductsController.php to be used in listing.blade.php page    // Note: if the URL is a 'category', we need to fetch its related products as well as its subcategories related products, but if the url is a subcategory, we need to fetch the subcategory related products only    // Check 24:00 in https://www.youtube.com/watch?v=JzKi78lyz0g&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=76
-        $categoryDetails = \App\Models\Category::select('id', 'parent_id', 'category_name', 'url', 'description')->with([ // Constraining Eager Loads: https://laravel.com/docs/9.x/eloquent-relationships#constraining-eager-loads    // Subquery Where Clauses: https://laravel.com/docs/9.x/queries#where-clauses
+        $categoryDetails = \App\Models\Category::select('id', 'parent_id', 'category_name', 'url', 'description')->with([ // Constraining Eager Loads: https://laravel.com/docs/9.x/eloquent-relationships#constraining-eager-loads    // Subquery Where Clauses: https://laravel.com/docs/9.x/queries#subquery-where-clauses
             'subCategories' => function($query) { // the 'subCategories' relationship method in Category.php model (this model)
                 $query->select('id', 'parent_id', 'category_name', 'url');
             }

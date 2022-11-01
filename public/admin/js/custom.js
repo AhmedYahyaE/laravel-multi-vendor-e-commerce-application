@@ -475,7 +475,7 @@ $(document).ready(function() {
             headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}, // X-CSRF-TOKEN: https://laravel.com/docs/9.x/csrf#csrf-x-csrf-token    // Check 12:37 in https://www.youtube.com/watch?v=maEXuJNzE8M&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=16 AND Check 12:06 in https://www.youtube.com/watch?v=APPKmLlWEBY&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu
             type   : 'get',
             url    : '/admin/append-categories-level',
-            data   : {section_id: section_id}, // name/value pair sent to server
+            data   : {section_id: section_id}, // name/value pairs sent to server
             success: function(resp) {
                 // alert(resp);
                 // console.log(resp);

@@ -37,9 +37,7 @@
 
 
                     {{-- Breadcrumbs --}} {{-- https://www.youtube.com/watch?v=8kf1WDELK6o&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=77 --}}
-                    <?php
-                        echo $categoryDetails['breadcrumbs'];
-                    ?>
+                    @php echo $categoryDetails['breadcrumbs']; @endphp
 
 
 

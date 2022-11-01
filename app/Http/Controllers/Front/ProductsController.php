@@ -10,6 +10,7 @@ class ProductsController extends Controller
     // https://www.youtube.com/watch?v=JzKi78lyz0g&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=76
 
 
+
     public function listing(Request $request) { // using the Dynamic Routes with the foreach loop
         // Sorting Filter WITH AJAX in listing.blade.php. Load (and check) ajax_products_listing.blade.php    // https://www.youtube.com/watch?v=APPKmLlWEBY&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu
         if ($request->ajax()) {
@@ -238,8 +239,38 @@ class ProductsController extends Controller
     }
 
     // Render Single Product Detail Page in front/products/detail.blade.php    // Check 19:09 in https://www.youtube.com/watch?v=fv9ZnNRKBBE&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=103
-    public function detail() {
-        return view('front.products.detail');
+    public function detail($id) { // Required Parameters: https://laravel.com/docs/9.x/routing#required-parameters
+        $productDetails = \App\Models\Product::with(['section', 'category', 'brand', 'attributes' => function($query) { // Constraining Eager Loads: https://laravel.com/docs/9.x/eloquent-relationships#constraining-eager-loads    // Subquery Where Clauses: https://laravel.com/docs/9.x/queries#subquery-where-clauses    // 'section', 'category', 'brand', 'attributes', 'images' are the relationship method names in Product.php model which are being Eager Loaded (Eager Loading)
+            $query->where('stock', '>', 0)->where('status', 1); // the 'attributes' relationship method in Product.php model     // Constraining Eager Loads to get the `products_attributes` of `stock` more than Zero 0 ONLY and `status` is 1 (active/enabled), check 19:10 in https://www.youtube.com/watch?v=0Bpk4JfwvpI&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=106
+        },
+        'images'])->find($id)->toArray(); // Eager Loading (with() method): https://laravel.com/docs/9.x/eloquent-relationships#eager-loading    // Eager Loading Multiple Relationships: https://laravel.com/docs/9.x/eloquent-relationships#eager-loading-multiple-relationships
+        // dd($productDetails);
+        // dd($productDetails->section);
+
+        $categoryDetails = \App\Models\Category::categoryDetails($productDetails['category']['url']); // to get the Breadcrumb links (which is HTML) to show them in front/products/detail.blade.php
+        // dd($categoryDetails);
+
+        $totalStock = \App\Models\ProductsAttribute::where('product_id', $id)->sum('stock'); // sum() the `stock` column of the `products_attributes` table    // sum(): https://laravel.com/docs/9.x/collections#method-sum
+        // dd($totalStock);
+
+
+        return view('front.products.detail')->with(compact('productDetails', 'categoryDetails', 'totalStock'));
+    }
+
+    // The AJAX call from front/js/custom.js file, to show the the correct related `price` and `stock` depending on the selected `size` (from the `products_attributes` table)) by clicking the size <select> box in front/products/detail.blade.php    // https://www.youtube.com/watch?v=T6ZyTfYLKRU&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=106
+    public function getProductPrice(Request $request) {
+        if ($request->ajax()) { // if the request is coming from an AJAX call
+            $data = $request->all(); // Getting the name/value pairs array that are sent from the AJAX request (AJAX call)
+            // dd($data); // dd() method DOESN'T WORK WITH AJAX! - SHOWS AN ERROR!! USE var_dump() and exit; INSTEAD!
+            // echo '<pre>', var_dump($data), '</pre>';
+            // exit;
+            
+            $getDiscountAttributePrice = \App\Models\Product::getDiscountAttributePrice($data['product_id'], $data['size']); // $data['product_id'] and $data['size'] come from the 'data' object inside the $.ajax() method in front/js/custom.js file
+            // echo '<pre>', var_dump($getDiscountAttributePrice), '</pre>';
+            // exit;
+
+            return $getDiscountAttributePrice;
+        }
     }
 
 }

@@ -160,4 +160,7 @@ Route::namespace('App\Http\Controllers\Front')->group(function() {
 
     // Render Single Product Detail Page in front/products/detail.blade.php    // Check 19:09 in https://www.youtube.com/watch?v=fv9ZnNRKBBE&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=103
     Route::get('/product/{id}', 'ProductsController@detail'); // Required Parameters: https://laravel.com/docs/9.x/routing#required-parameters
+
+    // The AJAX call from front/js/custom.js file, to show the the correct related `price` and `stock` depending on the selected `size` (from the `products_attributes` table)) by clicking the size <select> box in front/products/detail.blade.php    // https://www.youtube.com/watch?v=T6ZyTfYLKRU&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=106
+    Route::post('get-product-price', 'ProductsController@getProductPrice');
 });

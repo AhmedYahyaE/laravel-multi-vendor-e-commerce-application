@@ -89,3 +89,40 @@ function get_filter(class_name) { // get the filter values of a certain filter (
 
 
 /* }); */
+
+
+// jQuery
+$(document).ready(function() {
+    // the <select> box in front/products/detail.blade.php (to show the correct related `price` and `stock` depending on the selected `size` (from the `products_attributes` table))
+    $('#getPrice').change(function() {
+        // console.log(this);
+        var size       = $(this).val();
+        var product_id = $(this).attr('product-id');
+        // console.log(size, product_id);
+
+
+        $.ajax({
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}, // X-CSRF-TOKEN: https://laravel.com/docs/9.x/csrf#csrf-x-csrf-token    // Check 12:37 in https://www.youtube.com/watch?v=maEXuJNzE8M&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=16 AND Check 12:06 in https://www.youtube.com/watch?v=APPKmLlWEBY&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu
+            url    : '/get-product-price', // check this route in web.php            
+            type   : 'post',
+            data   : {size: size, product_id: product_id}, // Sending name/value pairs the server with the AJAX request (AJAX call)
+            success: function(resp) {
+                console.log(resp);
+                if (resp.discount > 0) { // if there's a discount    // this is the same as:    if (resp['discount'] > 0) {
+                    $('.getAttributePrice').html(
+                        '<div class="price"><h4>Rs.' + resp.final_price + '</h4></div><div class="original-price"><span>Original Price: </span><span>Rs.' + resp.product_price + '</span></div>'
+                    ); // Note: resp.product_price    is the same as    resp['product_price']
+                } else { // if there's no discount
+                    $('.getAttributePrice').html(
+                        '<div class="price"><h4>Rs.' + resp.final_price + '</h4></div>'
+                    ); // Note: resp.final_price    is the same as    resp['final_price']
+                }
+            },
+            error  : function() {
+                alert('Error');
+            }
+        });
+    });
+
+
+});
