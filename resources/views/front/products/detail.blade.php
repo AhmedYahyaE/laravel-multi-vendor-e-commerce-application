@@ -201,7 +201,9 @@
                         @if(isset($productDetails['vendor']))
                             <div>
                                 {{-- Sold by: {{ $productDetails['vendor']['name'] }} --}}
-                                Sold by: {{ $productDetails['vendor']['vendorbusinessdetails']['shop_name'] }}
+                                Sold by: <a href="/products/{{ $productDetails['vendor']['id'] }}"> {{-- https://www.youtube.com/watch?v=S8xbldfdLXc&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=111 --}}
+                                            {{ $productDetails['vendor']['vendorbusinessdetails']['shop_name'] }}
+                                        </a>
                             </div>
                         @endif
 

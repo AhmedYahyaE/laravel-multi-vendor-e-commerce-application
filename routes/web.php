@@ -163,4 +163,7 @@ Route::namespace('App\Http\Controllers\Front')->group(function() {
 
     // The AJAX call from front/js/custom.js file, to show the the correct related `price` and `stock` depending on the selected `size` (from the `products_attributes` table)) by clicking the size <select> box in front/products/detail.blade.php    // https://www.youtube.com/watch?v=T6ZyTfYLKRU&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=106
     Route::post('get-product-price', 'ProductsController@getProductPrice');
+
+    // Show all Vendor products in front/products/vendor_listing.blade.php    // This route is accessed from the <a> HTML element in front/products/vendor_listing.blade.php    // https://www.youtube.com/watch?v=S8xbldfdLXc&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=111
+    Route::get('/products/{vendorid}', 'ProductsController@vendorListing'); // Required Parameters: https://laravel.com/docs/9.x/routing#required-parameters
 });

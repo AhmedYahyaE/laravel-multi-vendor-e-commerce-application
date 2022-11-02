@@ -277,4 +277,23 @@ class ProductsController extends Controller
         }
     }
 
+
+
+    // Show all Vendor products in front/products/vendor_listing.blade.php    // This route is accessed from the <a> HTML element in front/products/vendor_listing.blade.php    // https://www.youtube.com/watch?v=S8xbldfdLXc&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=111
+    public function vendorListing($vendorid) { // Required Parameters: https://laravel.com/docs/9.x/routing#required-parameters
+        // Get vendor shop name
+        $getVendorShop = \App\Models\Vendor::getVendorShop($vendorid);
+        // dd($getVendorShop);
+
+        // Get all vendor products
+        $vendorProducts = \App\Models\Product::with('brand')->where('vendor_id', $vendorid)->where('status', 1); // Eager Loading (using with() method): https://laravel.com/docs/9.x/eloquent-relationships#eager-loading    // 'brand' is the relationship method name in Product.php model that is being Eager Loaded
+
+        // $vendorProducts Pagination
+        $vendorProducts = $vendorProducts->paginate(30); // Paginating Eloquent Results: https://laravel.com/docs/9.x/pagination#paginating-eloquent-results
+        // dd($vendorProducts);
+
+
+        return view('front.products.vendor_listing')->with(compact('getVendorShop', 'vendorProducts'));
+    }
+
 }
