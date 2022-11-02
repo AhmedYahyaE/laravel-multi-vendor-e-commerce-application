@@ -16,7 +16,6 @@
                             $product_image_path = 'front/images/product_images/small/' . $product['product_image'];
                         @endphp
 
-
                         @if (!empty($product['product_image']) && file_exists($product_image_path)) {{-- if the product image exists in BOTH database table AND filesystem (on server) --}}
                             <img class="img-fluid" src="{{ asset($product_image_path) }}" alt="Product">
                         @else {{-- show the dummy image --}}
@@ -40,6 +39,9 @@
                                 <a href="shop-v1-root-category.html">{{ $product['product_code'] }}</a>
                             </li>
                             <li class="has-separator">
+
+
+
                                 <a href="listing.html">{{ $product['product_color'] }}</a>
                             </li>
                             <li>
@@ -47,10 +49,13 @@
                             </li>
                         </ul>
                         <h6 class="item-title">
-                            <a href="single-product.html">{{ $product['product_name'] }}</a>
+                            <a href="{{ url('product/' . $product['id']) }}">{{ $product['product_name'] }}</a>
                         </h6>
                         <div class="item-description">
                             <p>{{ $product['description'] }}</p>
+
+
+
                         </div>
                         {{-- <div class="item-stars">
                             <div class='star' title="4.5 out of 5 - based on 23 Reviews">
@@ -71,16 +76,16 @@
                     @if ($getDiscountPrice > 0)
                         <div class="price-template">
                             <div class="item-new-price">
-                                Rs . {{ $getDiscountPrice }} {{-- 'Rs' means Rupees the Indian currency --}}
+                                Rs.{{ $getDiscountPrice }} {{-- 'Rs' means Rupees the Indian currency --}}
                             </div>
                             <div class="item-old-price">
-                                Rs . {{ $product['product_price'] }}
+                                Rs.{{ $product['product_price'] }}
                             </div>
                         </div>
                     @else
                         <div class="price-template">
                             <div class="item-new-price">
-                                Rs . {{ $product['product_price'] }}
+                                Rs.{{ $product['product_price'] }}
                             </div>
                         </div>
                     @endif

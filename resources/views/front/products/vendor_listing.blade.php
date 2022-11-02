@@ -1,4 +1,4 @@
-{{-- Show all Vendor products --}} {{-- This view is returned from vendorListing() method in Front/ProductsController.php --}} {{-- https://www.youtube.com/watch?v=S8xbldfdLXc&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=111 --}}
+{{-- Show all Vendor products page (when you click on a shop name in front/products/detail.blade.php) --}} {{-- This view is returned from vendorListing() method in Front/ProductsController.php --}} {{-- https://www.youtube.com/watch?v=S8xbldfdLXc&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=111 --}}
 
 
 @extends('front.layout.layout')

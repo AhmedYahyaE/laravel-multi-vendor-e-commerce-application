@@ -252,11 +252,16 @@ class ProductsController extends Controller
         $categoryDetails = \App\Models\Category::categoryDetails($productDetails['category']['url']); // to get the Breadcrumb links (which is HTML) to show them in front/products/detail.blade.php
         // dd($categoryDetails);
 
+        // Get similar products (or related products) (functionality) by getting other products from THE SAME CATEGORY    // https://www.youtube.com/watch?v=cC23wnRCumo&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=111
+        // $similarProducts = \App\Models\Product::with('brand')->where('category_id', $productDetails['category_id'])->get();
+        $similarProducts = \App\Models\Product::with('brand')->where('category_id', $productDetails['category']['id'])->where('id', '!=', $id)->limit(4)->inRandomOrder()->get()->toArray(); // where('id', '!=', $id)    means get all similar products (of the same category) EXCEPT (exclude) the current product (to not be repeated)    // limit(4)->inRandomOrder()    means show only 4 similar products but IN RANDOM ORDER
+        // dd($similarProducts);
+
         $totalStock = \App\Models\ProductsAttribute::where('product_id', $id)->sum('stock'); // sum() the `stock` column of the `products_attributes` table    // sum(): https://laravel.com/docs/9.x/collections#method-sum
         // dd($totalStock);
 
 
-        return view('front.products.detail')->with(compact('productDetails', 'categoryDetails', 'totalStock'));
+        return view('front.products.detail')->with(compact('productDetails', 'categoryDetails', 'totalStock', 'similarProducts'));
     }
 
 
