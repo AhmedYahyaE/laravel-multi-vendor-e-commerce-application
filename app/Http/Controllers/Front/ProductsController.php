@@ -238,12 +238,14 @@ class ProductsController extends Controller
         }
     }
 
+
+
     // Render Single Product Detail Page in front/products/detail.blade.php    // Check 19:09 in https://www.youtube.com/watch?v=fv9ZnNRKBBE&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=103
     public function detail($id) { // Required Parameters: https://laravel.com/docs/9.x/routing#required-parameters
-        $productDetails = \App\Models\Product::with(['section', 'category', 'brand', 'attributes' => function($query) { // Constraining Eager Loads: https://laravel.com/docs/9.x/eloquent-relationships#constraining-eager-loads    // Subquery Where Clauses: https://laravel.com/docs/9.x/queries#subquery-where-clauses    // 'section', 'category', 'brand', 'attributes', 'images' are the relationship method names in Product.php model which are being Eager Loaded (Eager Loading)
+        $productDetails = \App\Models\Product::with(['section', 'category', 'brand', 'attributes' => function($query) { // Constraining Eager Loads: https://laravel.com/docs/9.x/eloquent-relationships#constraining-eager-loads    // Subquery Where Clauses: https://laravel.com/docs/9.x/queries#subquery-where-clauses    // 'section', 'category', 'brand', 'attributes', 'images', 'vendor' are the relationship method names in Product.php model which are being Eager Loaded (Eager Loading)
             $query->where('stock', '>', 0)->where('status', 1); // the 'attributes' relationship method in Product.php model     // Constraining Eager Loads to get the `products_attributes` of `stock` more than Zero 0 ONLY and `status` is 1 (active/enabled), check 19:10 in https://www.youtube.com/watch?v=0Bpk4JfwvpI&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=106
         },
-        'images'])->find($id)->toArray(); // Eager Loading (with() method): https://laravel.com/docs/9.x/eloquent-relationships#eager-loading    // Eager Loading Multiple Relationships: https://laravel.com/docs/9.x/eloquent-relationships#eager-loading-multiple-relationships
+        'images', 'vendor'])->find($id)->toArray(); // Eager Loading (with() method): https://laravel.com/docs/9.x/eloquent-relationships#eager-loading    // Eager Loading Multiple Relationships: https://laravel.com/docs/9.x/eloquent-relationships#eager-loading-multiple-relationships
         // dd($productDetails);
         // dd($productDetails->section);
 
@@ -256,6 +258,8 @@ class ProductsController extends Controller
 
         return view('front.products.detail')->with(compact('productDetails', 'categoryDetails', 'totalStock'));
     }
+
+
 
     // The AJAX call from front/js/custom.js file, to show the the correct related `price` and `stock` depending on the selected `size` (from the `products_attributes` table)) by clicking the size <select> box in front/products/detail.blade.php    // https://www.youtube.com/watch?v=T6ZyTfYLKRU&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=106
     public function getProductPrice(Request $request) {

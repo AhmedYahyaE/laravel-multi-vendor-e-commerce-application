@@ -33,6 +33,12 @@ class Product extends Model
         return $this->hasMany('App\Models\ProductsImage');
     }
 
+    
+    // Relationship of a Product `products` with Vendor `vendors` (every product belongs to a vendor)    // https://www.youtube.com/watch?v=uu8CBDsWD7g&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=109
+    public function vendor() { // vendor() in the SINGULAR!    // A Product `products` belongs to a Vendor `vendors`, and the Foreign Key of the Relationship is the `vendor_id` column
+        return $this->belongsTo('App\Models\Vendor', 'vendor_id')->with('vendorbusinessdetails'); // 'vendor_id' is the Foreign Key of the Relationhip    // Nested Eager Loading (using with() method): https://laravel.com/docs/9.x/eloquent-relationships#nested-eager-loading     AND     Check https://www.youtube.com/watch?v=uu8CBDsWD7g&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=109    // Utilizing another relationship inside a relationship (Nested Eager Loading) ('vendorbusinessdetails' is the relationship method name in Vendor.php model)
+    }
+
 
 
     // A static method (to be able to be called directly without instantiating an object in index.blade.php) to determine the final price of a product because a product can have a discount from TWO things: either a `CATEGORY` discount or `PRODUCT` discout    // Check 19:09 in https://www.youtube.com/watch?v=T_CWdKW5he0&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=72

@@ -40,41 +40,33 @@
                     <!-- Product-zoom-area -->
                     {{-- <div class="zoom-area"> --}}
                     <div class="easyzoom easyzoom--overlay easyzoom--with-thumbnails"> {{-- EasyZoom plugin: https://www.youtube.com/watch?v=bWV92NrhyOk&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=108 --}}
-                        <a href="{{ asset('front/images/product_images/large/' . $productDetails['product_image']) }}">
+                        <a      href="{{ asset('front/images/product_images/large/' . $productDetails['product_image']) }}">
                             <img src="{{ asset('front/images/product_images/large/' . $productDetails['product_image']) }}" alt="" width="500" height="500" />
                         </a>
-
-            
-
                         {{-- Show the Main image (`product_image` in `products` table) --}}
                         {{-- <img id="zoom-pro" class="img-fluid" src="{{ asset('front/images/product_images/large/' . $productDetails['product_image']) }}" data-zoom-image="{{ asset('front/images/product_images/large/' . $productDetails['product_image']) }}" alt="Zoom Image"> --}}
                     </div>
 
                     {{-- <div id="gallery" class="u-s-m-t-10"> --}}
                     <div class="thumbnails" style="margin-top: 30px"> {{-- EasyZoom plugin: https://www.youtube.com/watch?v=bWV92NrhyOk&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=108 --}}
-                        <a href="{{ asset('front/images/product_images/large/' . $productDetails['product_image']) }}" data-standard="{{ asset('front/images/product_images/small/' . $productDetails['product_image']) }}">
-                            <img width="120" height="120" src="{{ asset('front/images/product_images/small/' . $productDetails['product_image']) }}" alt="" />
+                        <a      href="{{ asset('front/images/product_images/large/' . $productDetails['product_image']) }}" data-standard="{{ asset('front/images/product_images/small/' . $productDetails['product_image']) }}">
+                            <img src="{{ asset('front/images/product_images/small/' . $productDetails['product_image']) }}" width="120" height="120" alt="" />
                         </a>
-
-
                         {{-- Show the product main image (`product_image` in `products` table) as the first image --}}
                         {{-- <a class="active" data-image="{{ asset('front/images/product_images/large/' . $productDetails['product_image']) }}" data-zoom-image="{{ asset('front/images/product_images/large/' . $productDetails['product_image']) }}">
-                            <img src="{{ asset('front/images/product_images/large/' . $productDetails['product_image']) }}" alt="Product">
+                            <img src="{{ asset('front/images/product_images/large/' . $productDetails['product_image']) }}" width="120" height="120" alt="Product">
                         </a> --}}
 
 
 
                         {{-- Show the product Alternative images (`image` in `products_images` table) --}}
                         @foreach ($productDetails['images'] as $image)
-
                             {{-- EasyZoom plugin: https://www.youtube.com/watch?v=bWV92NrhyOk&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=108 --}}
-                            <a href="{{ asset('front/images/product_images/large/' . $image['image']) }}" data-standard="{{ asset('front/images/product_images/small/' . $image['image']) }}">
-                                <img width="120" height="120" src="{{ asset('front/images/product_images/small/' . $image['image']) }}" alt="" />
+                            <a      href="{{ asset('front/images/product_images/large/' . $image['image']) }}" data-standard="{{ asset('front/images/product_images/small/' . $image['image']) }}">
+                                <img src="{{ asset('front/images/product_images/small/' . $image['image']) }}" width="120" height="120" alt="" />
                             </a>
-
-
                             {{-- <a data-image="{{ asset('front/images/product_images/large/' . $image['image']) }}" data-zoom-image="{{ asset('front/images/product_images/large/' . $image['image']) }}">
-                                <img width="120" height="120" src="{{ asset('front/images/product_images/large/' . $image['image']) }}" alt="Product">
+                                <img       src="{{ asset('front/images/product_images/large/' . $image['image']) }}" width="120" height="120" alt="Product">
                             </a> --}}
                         @endforeach
 
@@ -202,6 +194,19 @@
 
 
                         </div>
+
+
+
+                        {{-- Show the vendor shop name (only in case that the product is added by a vendor, not admin or superadmin) --}} {{-- https://www.youtube.com/watch?v=uu8CBDsWD7g&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=109 --}}
+                        @if(isset($productDetails['vendor']))
+                            <div>
+                                {{-- Sold by: {{ $productDetails['vendor']['name'] }} --}}
+                                Sold by: {{ $productDetails['vendor']['vendorbusinessdetails']['shop_name'] }}
+                            </div>
+                        @endif
+
+
+
                         <div class="section-5-product-variants u-s-p-y-14">
                             {{-- <h6 class="information-heading u-s-m-b-8">Product Variants:</h6>
                             <div class="color u-s-m-b-11">
