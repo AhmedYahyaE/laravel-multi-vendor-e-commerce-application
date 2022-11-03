@@ -252,16 +252,60 @@ class ProductsController extends Controller
         $categoryDetails = \App\Models\Category::categoryDetails($productDetails['category']['url']); // to get the Breadcrumb links (which is HTML) to show them in front/products/detail.blade.php
         // dd($categoryDetails);
 
+
+
         // Get similar products (or related products) (functionality) by getting other products from THE SAME CATEGORY    // https://www.youtube.com/watch?v=cC23wnRCumo&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=111
         // $similarProducts = \App\Models\Product::with('brand')->where('category_id', $productDetails['category_id'])->get();
-        $similarProducts = \App\Models\Product::with('brand')->where('category_id', $productDetails['category']['id'])->where('id', '!=', $id)->limit(4)->inRandomOrder()->get()->toArray(); // where('id', '!=', $id)    means get all similar products (of the same category) EXCEPT (exclude) the current product (to not be repeated)    // limit(4)->inRandomOrder()    means show only 4 similar products but IN RANDOM ORDER
+        $similarProducts = \App\Models\Product::with('brand')->where('category_id', $productDetails['category']['id'])->where('id', '!=', $id)->limit(4)->inRandomOrder()->get()->toArray(); // where('id', '!=', $id)    means get all similar products (of the same category) EXCEPT (exclude) the currently viewed product (to not be repeated (to prevent repetition))    // limit(4)->inRandomOrder()    means show only 4 similar products but IN RANDOM ORDER
         // dd($similarProducts);
+
+
+
+        // Recently Viewed Products (Items) functionality (we created `recently_viewed_products` table but we won't need to create a Model for it, because we won't do much work with it)    // https://www.youtube.com/watch?v=if1nn-837wA&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=112
+        // Very Important Note: You'll need here Task Scheduling (Cron jobs) to clear the `recently_viewed_products` table from time to time because it will get very big and will make your database slow over time    // Task Scheduling (Laravel's Cron jobs): https://laravel.com/docs/9.x/scheduling
+        // Set Session for the Recently Viewed Products
+        // dd(\Session::all()); // Retrieving All Session Data: https://laravel.com/docs/9.x/session#retrieving-all-session-data
+        if (empty(\Session::get('session_id'))) { // if the session is empty (user is not logged in), create a random session id (for the 'Guest' user)    // https://laravel.com/docs/9.x/authentication#ecosystem-overview    // Determining If An Item Exists In The Session: https://laravel.com/docs/9.x/session#determining-if-an-item-exists-in-the-session
+            $session_id = md5(uniqid(rand(), true)); // Searched Google for: 'generate alphanumeric random number in Laravel'    // https://stackoverflow.com/questions/1846202/how-to-generate-a-random-unique-alphanumeric-string
+        } else { // if the session exists (user is logged in)    // https://laravel.com/docs/9.x/authentication#ecosystem-overview
+            $session_id = \Session::get('session_id');
+        }
+
+        // Store the $session_id in the Session
+        \Session::put('session_id', $session_id); // (!! this shouble be inside the last if statement case that the user is NOT logged in ONLY !!) $session_id comes from one of the two cases of the last if statement    // Storing Data: https://laravel.com/docs/9.x/session#storing-data
+
+        // If they don't already exist, INSERT the currently viewed product `product_id` and `session_id` in `recently_viewed_products` table (ONE TIME ONLY)
+        $countRecentlyViewedProducts = \DB::table('recently_viewed_products')->where([ // Note: Here we use Laravel 'DB' facade because we didn't create a Model for the `recently_viewed_products` table, because we don't need it because we won't do much work with it. So we'll just ONLY DIRECTLY interact with the `recently_viewed_products` table using Laravel 'DB' facade
+            'product_id' => $id,
+            'session_id' => $session_id // comes from the two cases of the last if statement
+        ])->count(); // get the count or the number of that currently Viewed Product through the same Product (through `product_id`) and Session (through `session_id`). This should not be more than ONE TIME ONLY!
+
+        if ($countRecentlyViewedProducts == 0) { // if that currently Viewed Product doesn't already exist in the `recently_viewed_products` table, INSERT it in
+            \DB::table('recently_viewed_products')->INSERT([ // Note: Here we use Laravel 'DB' facade because we didn't create a Model for the `recently_viewed_products` table, because we don't need it because we won't do much work with it. So we'll just ONLY DIRECTLY interact with the `recently_viewed_products` table using Laravel 'DB' facade
+                'product_id' => $id,
+                'session_id' => $session_id // $session_id comes from one of the two cases of the last if statement
+            ]);
+        }
+
+        // Get Recently Viewed Products (Items) IDs
+        $recentProductsIds = \DB::table('recently_viewed_products')->select('product_id')->where('product_id', '!=', $id)->where('session_id', $session_id)->inRandomOrder()->get()->take(4)->pluck('product_id'); // take() is identical to limit(): https://laravel.com/docs/9.x/queries#limit-and-offset    // where('product_id', '!=', $id)    means exclude (EXCEPT) the currently viewed product (to not be repeated (to prevent repetition))    // Note: Here we use Laravel 'DB' facade because we didn't create a Model for the `recently_viewed_products` table, because we don't need it because we won't do much work with it. So we'll just ONLY DIRECTLY interact with the `recently_viewed_products` table using Laravel 'DB' facade
+        // $recentProductsIds = \DB::table('recently_viewed_products')->select('product_id')->where([
+        //     ['product_id', '!=', $id],
+        //     ['session_id', $session_id]
+        // ])->inRandomOrder()->take(4)->pluck('product_id'); // take() is identical to limit(): https://laravel.com/docs/9.x/queries#limit-and-offset    // where('product_id', '!=', $id)    means exclude (EXCEPT) the currently viewed product (to not be repeated (to prevent repetition))    // Note: Here we use Laravel 'DB' facade because we didn't create a Model for the `recently_viewed_products` table, because we don't need it because we won't do much work with it. So we'll just ONLY DIRECTLY interact with the `recently_viewed_products` table using Laravel 'DB' facade
+        // dd($recentProductsIds);
+
+        // Get Recently Viewed Products (Items)
+        $recentlyViewedProducts = \App\Models\Product::with('brand')->whereIn('id', $recentProductsIds)->get()->toArray(); // https://laravel.com/docs/9.x/collections#method-wherein AND https://laravel.com/docs/9.x/queries#additional-where-clauses
+        // dd($recentlyViewedProducts);
+
+
 
         $totalStock = \App\Models\ProductsAttribute::where('product_id', $id)->sum('stock'); // sum() the `stock` column of the `products_attributes` table    // sum(): https://laravel.com/docs/9.x/collections#method-sum
         // dd($totalStock);
 
 
-        return view('front.products.detail')->with(compact('productDetails', 'categoryDetails', 'totalStock', 'similarProducts'));
+        return view('front.products.detail')->with(compact('productDetails', 'categoryDetails', 'totalStock', 'similarProducts', 'recentlyViewedProducts'));
     }
 
 
