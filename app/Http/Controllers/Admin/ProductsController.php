@@ -205,6 +205,7 @@ class ProductsController extends Controller
             $product->section_id  = $categoryDetails['section_id'];
             $product->category_id = $data['category_id'];
             $product->brand_id    = $data['brand_id'];
+            $product->group_code  = $data['group_code']; // Managing Product Colors (in front/products/detail.blade.php)    // https://www.youtube.com/watch?v=Nle1w37JW2k&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=115
 
 
 

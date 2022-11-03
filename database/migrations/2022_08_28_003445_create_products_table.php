@@ -33,6 +33,7 @@ return new class extends Migration
             $table->integer('product_weight');
             $table->string('product_image')->nullable();
             $table->string('product_video')->nullable();
+            $table->string('group_code')->nullable(); // For Managing Product Colors (in front/products/detail.blade.php)    // https://www.youtube.com/watch?v=Nle1w37JW2k&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=115
             $table->text('description')->nullable();
             $table->string('meta_title')->nullable(); // For SEO
             $table->string('meta_keywords')->nullable();  // For SEO

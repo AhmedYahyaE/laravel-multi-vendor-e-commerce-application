@@ -301,11 +301,25 @@ class ProductsController extends Controller
 
 
 
+        // Managing Product Colors (in front/products/detail.blade.php)    // https://www.youtube.com/watch?v=Nle1w37JW2k&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=115
+        // Get Group Code Products `group_code` column in `products` table (get the `group_code` of the product, if exists (if any))
+        $groupProducts = array();
+        if (!empty($productDetails['group_code'])) { // if the product has a `group_code`
+            // Get all other products who also have the same `group_code`
+            $groupProducts = \App\Models\Product::select('id', 'product_image')->where('id', '!=', $id)->where([ // where('id', '!=', $id)    means exclude (EXCEPT) the currently viewed product (to not be repeated (to prevent repetition))
+                'group_code' => $productDetails['group_code'],
+                'status'     => 1
+            ])->get()->toArray();
+        }
+        // dd($groupProducts);
+
+
+
         $totalStock = \App\Models\ProductsAttribute::where('product_id', $id)->sum('stock'); // sum() the `stock` column of the `products_attributes` table    // sum(): https://laravel.com/docs/9.x/collections#method-sum
         // dd($totalStock);
 
 
-        return view('front.products.detail')->with(compact('productDetails', 'categoryDetails', 'totalStock', 'similarProducts', 'recentlyViewedProducts'));
+        return view('front.products.detail')->with(compact('productDetails', 'categoryDetails', 'totalStock', 'similarProducts', 'recentlyViewedProducts', 'groupProducts'));
     }
 
 
