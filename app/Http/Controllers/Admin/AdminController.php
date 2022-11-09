@@ -566,10 +566,16 @@ class AdminController extends Controller
             $adminDetails = \App\Models\Admin::where('id', $data['admin_id'])->first()->toArray(); // get the admin that his `status` has been approved
 
             // !! My own code !! (change the `status` column in `vendors` table too, just like we did in the `admins` table) !!:
-            \App\Models\Vendor::where('id', $adminDetails['vendor_id'])->update(['status' => $status]);
+            // if ($adminDetails['type'] == 'vendor') {
+            //     \App\Models\Vendor::where('id', $adminDetails['vendor_id'])->update(['status' => $status]);
+            // }
             // !! My own code !!
 
             if ($adminDetails['type'] == 'vendor' && $status == 1) { // if the `type` column value (in `admins` table) is 'vendor', and their `status` became 1 (got approved), send them a THIRD confirmation mail
+                // Note!!: this is INACCURATE! Because it won't work the other way when you DEACTIVATE (`status` is 0) the vendor again!!
+                \App\Models\Vendor::where('id', $adminDetails['vendor_id'])->update(['status' => $status]); // update the `status` of the vendor in `vendors` table    // Check 7:05 in https://www.youtube.com/watch?v=yqkYp_iHsxQ&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=118
+
+
                 // Note: Vendor CONFIRMATION occurs automatically through vendor clicking on the confirmation link sent in the email, but vendor ACTIVATION (active/inactive/disabled) occurs manually where 'superadmin' or 'admin' activates the `status` from the Admin Panel in 'Admin Management' tab, then clicks Status. Also, Vendor CONFIRMATION is related to the `confirm` columns in BOTH `admins` and `vendors` tables, but vendor ACTIVATION (active/inactive/disabled) is related to the `status` columns in BOTH `admins` and `vendors` tables!
                 // Note: Vendor receives THREE emails: the first one when they register (please click on the confirmation link mail (in emails/vendor_confirmation.blade.php)), the second one when they click on the confirmation link sent in the first email (telling them that they have been confirmed and asking them to complete filling in their personal, business and bank details to get ACTIVATED/APPROVED (`status gets 1) (in emails/vendor_confirmed.blade.php)), the third email when the 'admin' or 'superadmin' manually activates (`status` becomes 1) the vendor from the Admin Panel from 'Admin Management' tab, then clicks Status (the email tells them they have been approved (activated and `status` became 1) and asks them to add their products on the website (in emails/vendor_approved.blade.php))
 

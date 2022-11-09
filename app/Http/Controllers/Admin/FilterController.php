@@ -41,8 +41,8 @@ class FilterController extends Controller
             // echo '<pre>', var_dump($data), '</pre>';
 
             return response()->json([ // JSON Responses: https://laravel.com/docs/9.x/responses#json-responses
-                'status'     => $status,
-                'filter_id'  => $data['filter_id']
+                'status'    => $status,
+                'filter_id' => $data['filter_id']
             ]);
         }
     }
@@ -65,8 +65,8 @@ class FilterController extends Controller
             // echo '<pre>', var_dump($data), '</pre>';
 
             return response()->json([ // JSON Responses: https://laravel.com/docs/9.x/responses#json-responses 
-                'status'     => $status,
-                'filter_id'  => $data['filter_id']
+                'status'    => $status,
+                'filter_id' => $data['filter_id']
             ]);
         }
     }
@@ -188,7 +188,7 @@ class FilterController extends Controller
         return view('admin.filters.add_edit_filter_value')->with(compact('title', 'filter', 'filters'));
     }
 
-    public function categoryFilters(Request $request) {// Show the related filters depending on the selected category <select> in category_filters.blade.php (which in turn is included by add_edit_product.php) using AJAX. Check admin/js/custom.js    // https://www.youtube.com/watch?v=T7dcxauNyQc&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=89
+    public function categoryFilters(Request $request) { // Show the related filters depending on the selected category <select> in category_filters.blade.php (which in turn is included by add_edit_product.php) using AJAX. Check admin/js/custom.js    // https://www.youtube.com/watch?v=T7dcxauNyQc&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=89
         if ($request->ajax()) {
             $data = $request->all();
             // dd($data); // dd() method DOESN'T WORK WITH AJAX! - SHOWS AN ERROR!! USE var_dump() and exit; INSTEAD!
@@ -200,7 +200,7 @@ class FilterController extends Controller
 
 
             return response()->json([ // JSON Responses: https://laravel.com/docs/9.x/responses#json-responses
-                'view' => (String)\Illuminate\Support\Facades\View::make('admin.filters.category_filters')->with(compact('category_id')) // Creating & Rendering Views: https://laravel.com/docs/9.x/views#creating-and-rendering-views
+                'view' => (String) \Illuminate\Support\Facades\View::make('admin.filters.category_filters')->with(compact('category_id')) // Creating & Rendering Views: https://laravel.com/docs/9.x/views#creating-and-rendering-views    // Passing Data To Views: https://laravel.com/docs/9.x/views#passing-data-to-views
             ]);
         }
     }

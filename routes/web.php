@@ -166,4 +166,16 @@ Route::namespace('App\Http\Controllers\Front')->group(function() {
 
     // Show all Vendor products in front/products/vendor_listing.blade.php    // This route is accessed from the <a> HTML element in front/products/vendor_listing.blade.php    // https://www.youtube.com/watch?v=S8xbldfdLXc&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=111
     Route::get('/products/{vendorid}', 'ProductsController@vendorListing'); // Required Parameters: https://laravel.com/docs/9.x/routing#required-parameters
+
+    // Add to Cart <form> submission in front/products/detail.blade.php    // https://www.youtube.com/watch?v=LmovzZ9zdzE&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=116
+    Route::post('cart/add', 'ProductsController@cartAdd');
+
+    // Render Cart page (front/products/cart.blade.php)    // this route is accessed from the <a> HTML tag inside the flash message inside cartAdd() method in Front/ProductsController.php (inside front/products/detail.blade.php)
+    Route::get('cart', 'ProductsController@cart')->name('cart');
+
+    // Update Cart Item Quantity AJAX call in front/products/cart_items.blade.php. Check front/js/custom.js    // https://www.youtube.com/watch?v=yqkYp_iHsxQ&list=PLLUtELdNs2ZYTlQ97V1Tl8mirS3qXHNFZ&index=118
+    Route::post('cart/update', 'ProductsController@cartUpdate');
+
+    // Delete a Cart Item AJAX call in front/products/cart_items.blade.php. Check front/js/custom.js    // https://www.youtube.com/watch?v=GCZ8a3Dw_Zg&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=127
+    Route::post('cart/delete', 'ProductsController@cartDelete');
 });

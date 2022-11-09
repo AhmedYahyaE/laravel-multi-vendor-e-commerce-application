@@ -123,7 +123,7 @@
                                             @endphp
 
 
-                                            @if ($getDiscountPrice > 0)
+                                            @if ($getDiscountPrice > 0) {{-- If there's a discount on the price, show the price before (the original price) and after (the new price) the discount --}}
                                                 <div class="price-template">
                                                     <div class="item-new-price">
                                                         Rs . {{ $getDiscountPrice }} {{-- 'Rs' means Rupees the Indian currency --}}
@@ -132,7 +132,7 @@
                                                         Rs . {{ $product['product_price'] }}
                                                     </div>
                                                 </div>
-                                            @else
+                                            @else {{-- if there's no discount on the price, show the original price --}}
                                                 <div class="price-template">
                                                     <div class="item-new-price">
                                                         Rs . {{ $product['product_price'] }}
@@ -207,7 +207,7 @@
                                             @php
                                                 $getDiscountPrice = \App\Models\Product::getDiscountPrice($product['id']);
                                             @endphp
-                                            @if ($getDiscountPrice > 0)
+                                            @if ($getDiscountPrice > 0) {{-- If there's a discount on the price, show the price before (the original price) and after (the new price) the discount --}}
                                                 <div class="price-template">
                                                     <div class="item-new-price">
                                                         Rs . {{ $getDiscountPrice }} {{-- 'Rs' means Rupees the Indian currency --}}
@@ -216,7 +216,7 @@
                                                         Rs . {{ $product['product_price'] }}
                                                     </div>
                                                 </div>
-                                            @else
+                                            @else {{-- if there's no discount on the price, show the original price --}}
                                                 <div class="price-template">
                                                     <div class="item-new-price">
                                                         Rs . {{ $product['product_price'] }}
@@ -288,7 +288,7 @@
                                             @php
                                                 $getDiscountPrice = \App\Models\Product::getDiscountPrice($product['id']);
                                             @endphp
-                                            @if ($getDiscountPrice > 0)
+                                            @if ($getDiscountPrice > 0) {{-- If there's a discount on the price, show the price before (the original price) and after (the new price) the discount --}}
                                                 <div class="price-template">
                                                     <div class="item-new-price">
                                                         Rs . {{ $getDiscountPrice }} {{-- 'Rs' means Rupees the Indian currency --}}
@@ -297,7 +297,7 @@
                                                         Rs . {{ $product['product_price'] }}
                                                     </div>
                                                 </div>
-                                            @else
+                                            @else {{-- if there's no discount on the price, show the original price --}}
                                                 <div class="price-template">
                                                     <div class="item-new-price">
                                                         Rs . {{ $product['product_price'] }}
@@ -369,7 +369,7 @@
                                             @php
                                                 $getDiscountPrice = \App\Models\Product::getDiscountPrice($product['id']);
                                             @endphp
-                                            @if ($getDiscountPrice > 0)
+                                            @if ($getDiscountPrice > 0) {{-- If there's a discount on the price, show the price before (the original price) and after (the new price) the discount --}}
                                                 <div class="price-template">
                                                     <div class="item-new-price">
                                                         Rs . {{ $getDiscountPrice }} {{-- 'Rs' means Rupees the Indian currency --}}
@@ -378,7 +378,7 @@
                                                         Rs . {{ $product['product_price'] }}
                                                     </div>
                                                 </div>
-                                            @else
+                                            @else {{-- if there's no discount on the price, show the original price --}}
                                                 <div class="price-template">
                                                     <div class="item-new-price">
                                                         Rs . {{ $product['product_price'] }}

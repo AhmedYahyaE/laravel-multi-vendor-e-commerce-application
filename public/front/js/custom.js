@@ -103,9 +103,9 @@ $(document).ready(function() {
 
         $.ajax({
             headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}, // X-CSRF-TOKEN: https://laravel.com/docs/9.x/csrf#csrf-x-csrf-token    // Check 12:37 in https://www.youtube.com/watch?v=maEXuJNzE8M&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=16 AND Check 12:06 in https://www.youtube.com/watch?v=APPKmLlWEBY&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu
-            url    : '/get-product-price', // check this route in web.php            
+            url    : '/get-product-price', // check this route in web.php
             type   : 'post',
-            data   : {size: size, product_id: product_id}, // Sending name/value pairs the server with the AJAX request (AJAX call)
+            data   : {size: size, product_id: product_id}, // Sending name/value pairs to server with the AJAX request (AJAX call)
             success: function(resp) {
                 console.log(resp);
                 if (resp.discount > 0) { // if there's a discount    // this is the same as:    if (resp['discount'] > 0) {
@@ -122,6 +122,91 @@ $(document).ready(function() {
                 alert('Error');
             }
         });
+    });
+
+
+
+    // Update Cart Item Quantity in front/products/cart_items.blade.php (which is 'include'-ed by front/products/cart.blade.php)     // https://www.youtube.com/watch?v=8OZ5iAK8m50&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=127
+    // $('.updateCartItem').click(function() {
+    //     alert('test');
+    // });
+    $(document).on('click', '.updateCartItem', function() {
+        // alert('test');
+        if ($(this).hasClass('plus-a')) { // if this clicked <a> tag has the CSS class 'plus-a', this means increase quantity by 1
+            var quantity = $(this).data('qty'); // the already existing current quantity    // using Custom HTML Attributes (data-*)
+            // alert(quantity);
+            // new_qty = quantity + 1; // Increase quantity by 1
+            new_qty = parseInt(quantity) + 1; // Increase quantity by 1    // parseInt() method is used to make sure that quantity is always a number (in case it might be a string)
+            // alert(new_qty);
+            // console.log(new_qty);
+            // console.log(typeof new_qty);
+        }
+
+        if ($(this).hasClass('minus-a')) { // if this clicked <a> tag has the CSS class 'minus-a', this means decrease quantity by 1
+            var quantity = $(this).data('qty'); // the already existing current quantity    // using Custom HTML Attributes (data-*)
+            // alert(quantity);
+            // new_qty = quantity + 1; // Decrease quantity by 1
+            if (quantity <= 1) { // Making sure that quantity can never be a negative value (can never be less than zero <0)
+                alert('Item quantity must be 1 or greater!');
+                return false; // Stop Execution here! Don't do anything anymore!
+            }
+            new_qty = parseInt(quantity) - 1; // Decrease quantity by 1    // parseInt() method is used to make sure that quantity is always a number (in case it might be a string)
+            // alert(new_qty);
+            // console.log(new_qty);
+            // console.log(typeof new_qty);
+        }
+
+        var cartid = $(this).data('cartid'); // using Custom HTML Attributes (data-*)
+        // alert(cartid);
+
+
+
+        $.ajax({
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}, // X-CSRF-TOKEN: https://laravel.com/docs/9.x/csrf#csrf-x-csrf-token    // Check 12:37 in https://www.youtube.com/watch?v=maEXuJNzE8M&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=16 AND Check 12:06 in https://www.youtube.com/watch?v=APPKmLlWEBY&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu
+            data   : {cartid: cartid, qty: new_qty}, // Sending name/value pairs to server with the AJAX request (AJAX call)
+            url    : '/cart/update', // check this route in web.php
+            type   : 'post',
+            success: function(resp) {
+                // alert(resp.status);
+                // alert(resp);
+                // console.log(resp);
+                // console.log(typeof resp.status);
+                if (resp.status == false) { // if    'status' => 'false'    is sent from as a response from the backend, show the message    // 'status' is sent as a PHP array key (in the response) from inside the cartUpdate() method in Front/ProductsController.php
+                    alert(resp.message);
+                }
+
+                $('#appendCartItems').html(resp.view); // 'view' is sent as a PHP array key (in the response) from inside the cartUpdate() method in Front/ProductsController.php
+            },
+            error  : function() {
+                alert('Error');
+            }
+        });
+    });
+
+
+
+    // Delete a Cart Item in front/products/cart_items.blade.php (which is 'include'-ed by front/products/cart.blade.php)     // https://www.youtube.com/watch?v=GCZ8a3Dw_Zg&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=127
+    $(document).on('click', '.deleteCartItem', function() {
+        var cartid = $(this).data('cartid'); // using Custom HTML Attributes (data-*)
+        // alert(cartId);
+
+
+        // Confirm Deletion
+        var result = confirm('Are you sure you want to delete this Cart Item?'); // confirm() method returns a Boolean
+        if (result) { // if user confirms deletion ('true' is return-ed from confirm() method), do the delete AJAX call, if not ('false' is return-ed from confirm() method), don't do anything
+            $.ajax({
+                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}, // X-CSRF-TOKEN: https://laravel.com/docs/9.x/csrf#csrf-x-csrf-token    // Check 12:37 in https://www.youtube.com/watch?v=maEXuJNzE8M&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=16 AND Check 12:06 in https://www.youtube.com/watch?v=APPKmLlWEBY&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu
+                data   : {cartid: cartid}, // Sending name/value pairs to server with the AJAX request (AJAX call)
+                url    : '/cart/delete', // check this route in web.php
+                type   : 'post',
+                success: function(resp) {
+                    $('#appendCartItems').html(resp.view); // 'view' is sent as a PHP array key (in the response) from inside the cartUpdate() method in Front/ProductsController.php
+                },
+                error  : function() {
+                    alert('Error');
+                }
+            });
+        }
     });
 
 

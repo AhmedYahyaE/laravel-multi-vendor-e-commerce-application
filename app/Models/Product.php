@@ -33,8 +33,8 @@ class Product extends Model
         return $this->hasMany('App\Models\ProductsImage');
     }
 
-    
-    // Relationship of a Product `products` with Vendor `vendors` (every product belongs to a vendor)    // https://www.youtube.com/watch?v=uu8CBDsWD7g&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=109
+
+    // Relationship of a Product `products` table with Vendor `vendors` table (every product belongs to a vendor)    // https://www.youtube.com/watch?v=uu8CBDsWD7g&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=109
     public function vendor() { // vendor() in the SINGULAR!    // A Product `products` belongs to a Vendor `vendors`, and the Foreign Key of the Relationship is the `vendor_id` column
         return $this->belongsTo('App\Models\Vendor', 'vendor_id')->with('vendorbusinessdetails'); // 'vendor_id' is the Foreign Key of the Relationhip    // Nested Eager Loading (using with() method): https://laravel.com/docs/9.x/eloquent-relationships#nested-eager-loading     AND     Check https://www.youtube.com/watch?v=uu8CBDsWD7g&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=109    // Utilizing another relationship inside a relationship (Nested Eager Loading) ('vendorbusinessdetails' is the relationship method name in Vendor.php model)
     }
@@ -70,7 +70,7 @@ class Product extends Model
 
 
     // Check 11:28 in https://www.youtube.com/watch?v=T6ZyTfYLKRU&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=106
-    public static function getDiscountAttributePrice($product_id, $size) { // this method is called (used) in front/products/detail.blade.php
+    public static function getDiscountAttributePrice($product_id, $size) { // this method is called (used) in front/products/detail.blade.php and cart_items.blade.php
         // Get that product attributes from `products_attributes` table which has that specific `product_id` and `size`
         $proAttrPrice = \App\Models\ProductsAttribute::where([ // from `products_attributes` table
             'product_id' => $product_id,

@@ -40,7 +40,7 @@ class BrandController extends Controller
             // echo '<pre>', var_dump($data), '</pre>';
 
             return response()->json([ // JSON Responses: https://laravel.com/docs/9.x/responses#json-responses
-                'status'     => $status,
+                'status'   => $status,
                 'brand_id' => $data['brand_id']
             ]);
         }

@@ -78,6 +78,59 @@
                 <div class="col-lg-6 col-md-6 col-sm-12">
                     <!-- Product-details -->
                     <div class="all-information-wrapper">
+
+
+                        {{-- https://www.youtube.com/watch?v=qMa1g05oX74&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=117 --}}
+
+                        {{-- Our Bootstrap error code in case of wrong current password or the new password and confirm password are not matching: --}}
+                        {{-- https://www.youtube.com/watch?v=oAZKXYrkcr4&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=17 --}}
+                        {{-- Determining If An Item Exists In The Session (using has() method): https://laravel.com/docs/9.x/session#determining-if-an-item-exists-in-the-session --}}
+                        @if (Session::has('error_message')) <!-- Check AdminController.php, updateAdminPassword() method -->
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                <strong>Error:</strong> {{ Session::get('error_message') }}
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        @endif
+
+
+                        {{-- Displaying Laravel Validation Errors: https://laravel.com/docs/9.x/validation#quick-displaying-the-validation-errors --}}    {{-- Check 17:38 in https://www.youtube.com/watch?v=ydubcZC3Hbw&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=18 --}}
+                        @if ($errors->any())
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                {{-- <strong>Error:</strong> {{ Session::get('error_message') }} --}}
+
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        @endif
+
+
+                        {{-- Displaying The Validation Errors: https://laravel.com/docs/9.x/validation#quick-displaying-the-validation-errors AND https://laravel.com/docs/9.x/blade#validation-errors --}}
+                        {{-- Determining If An Item Exists In The Session (using has() method): https://laravel.com/docs/9.x/session#determining-if-an-item-exists-in-the-session --}}
+                        {{-- Our Bootstrap success message in case of updating admin password is successful: --}}
+                        {{-- https://www.youtube.com/watch?v=oAZKXYrkcr4&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=17 --}}
+                        @if (Session::has('success_message')) <!-- Check AdminController.php, updateAdminPassword() method -->
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                {{-- <strong>Success:</strong> {{ Session::get('success_message') }} --}} {{-- Displaying Data: https://laravel.com/docs/9.x/blade#displaying-data --}}
+
+                                {{-- There are TWO ways to: Displaying Unescaped Data: https://laravel.com/docs/9.x/blade#displaying-unescaped-data --}}
+                                {{--    <strong>Success:</strong> {!! Session::get('success_message') !!}    --}} {{-- Displaying Unescaped Data: https://laravel.com/docs/9.x/blade#displaying-unescaped-data --}}
+                                <strong>Success:</strong> @php echo Session::get('success_message') @endphp       {{-- Displaying Unescaped Data: https://laravel.com/docs/9.x/blade#displaying-unescaped-data --}}
+
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        @endif
+
+
+
                         <div class="section-1-title-breadcrumb-rating">
                             <div class="product-title">
                                 <h1>
@@ -209,72 +262,82 @@
 
 
 
-                        <div class="section-5-product-variants u-s-p-y-14">
-                            {{-- <h6 class="information-heading u-s-m-b-8">Product Variants:</h6>
-                            <div class="color u-s-m-b-11">
-                                <span>Available Color:</span>
-                                <div class="color-variant select-box-wrapper">
-                                    <select class="select-box product-color">
-                                        <option value="1">Heather Grey</option>
-                                        <option value="3">Black</option>
-                                        <option value="5">White</option>
-                                    </select>
-                                </div>
-                            </div> --}}
+                        {{-- Add to Cart <form> --}} {{-- https://www.youtube.com/watch?v=LmovzZ9zdzE&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=116 --}}
+                        <form action="{{ url('cart/add') }}" method="Post" class="post-form">
+                            @csrf {{-- Preventing CSRF Requests: https://laravel.com/docs/9.x/csrf#preventing-csrf-requests --}}
+
+
+                            <input type="hidden" name="product_id" value="{{ $productDetails['id'] }}"> {{-- Add to Cart <form> --}} {{-- https://www.youtube.com/watch?v=LmovzZ9zdzE&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=116 --}}
+
+
+                            <div class="section-5-product-variants u-s-p-y-14">
+                                {{-- <h6 class="information-heading u-s-m-b-8">Product Variants:</h6>
+                                <div class="color u-s-m-b-11">
+                                    <span>Available Color:</span>
+                                    <div class="color-variant select-box-wrapper">
+                                        <select class="select-box product-color">
+                                            <option value="1">Heather Grey</option>
+                                            <option value="3">Black</option>
+                                            <option value="5">White</option>
+                                        </select>
+                                    </div>
+                                </div> --}}
 
 
 
-                            {{-- Managing Product Colors (using the `group_code` column in `products` table) --}} {{-- https://www.youtube.com/watch?v=Nle1w37JW2k&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=115 --}}
-                            @if (count($groupProducts) > 0) {{-- if there's a value for the `group_code` column (in `products` table) for the currently viewed product --}}
-                                <div>
-                                    <div><strong>Product Colors</strong></div>
-                                    <div style="margin-top: 10px">
-                                        @foreach ($groupProducts as $product)
-                                            <a href="{{ url('product/' . $product['id']) }}">
-                                                <img style="width: 80px" src="{{ asset('front/images/product_images/small/' . $product['product_image']) }}">
-                                            </a>
-                                        @endforeach
+                                {{-- Managing Product Colors (using the `group_code` column in `products` table) --}} {{-- https://www.youtube.com/watch?v=Nle1w37JW2k&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=115 --}}
+                                @if (count($groupProducts) > 0) {{-- if there's a value for the `group_code` column (in `products` table) for the currently viewed product --}}
+                                    <div>
+                                        <div><strong>Product Colors</strong></div>
+                                        <div style="margin-top: 10px">
+                                            @foreach ($groupProducts as $product)
+                                                <a href="{{ url('product/' . $product['id']) }}">
+                                                    <img style="width: 80px" src="{{ asset('front/images/product_images/small/' . $product['product_image']) }}">
+                                                </a>
+                                            @endforeach
+                                        </div>
+                                    </div>
+                                @endif
+
+
+
+                                <div class="sizes u-s-m-b-11" style="margin-top: 20px">
+                                    <span>Available Size:</span>
+                                    <div class="size-variant select-box-wrapper">
+                                        <select class="select-box product-size" id="getPrice" product-id="{{ $productDetails['id'] }}" name="size" required> {{-- Check front/js/custom.js file --}}
+
+
+
+                                            <option value="">Select Size</option>
+                                            @foreach ($productDetails['attributes'] as $attribute)
+                                                <option value="{{ $attribute['size'] }}">{{ $attribute['size'] }}</option>
+                                            @endforeach
+
+
+
+                                            {{-- <option value="">Male 3XL</option>
+                                            <option value="">Kids 4</option>
+                                            <option value="">Kids 6</option>
+                                            <option value="">Kids 8</option>
+                                            <option value="">Kids 10</option>
+                                            <option value="">Kids 12</option>
+                                            <option value="">Female Small</option>
+                                            <option value="">Male Small</option>
+                                            <option value="">Female Medium</option>
+                                            <option value="">Male Medium</option>
+                                            <option value="">Female Large</option>
+                                            <option value="">Male Large</option>
+                                            <option value="">Female XL</option>
+                                            <option value="">Male XL</option> --}}
+                                        </select>
                                     </div>
                                 </div>
-                            @endif
-
-
-
-                            <div class="sizes u-s-m-b-11" style="margin-top: 20px">
-                                <span>Available Size:</span>
-                                <div class="size-variant select-box-wrapper">
-                                    <select class="select-box product-size" id="getPrice" product-id="{{ $productDetails['id'] }}" name="size"> {{-- Check front/js/custom.js file --}}
-
-
-
-                                        <option value="">Select Size</option>
-                                        @foreach ($productDetails['attributes'] as $attribute)
-                                            <option value="{{ $attribute['size'] }}">{{ $attribute['size'] }}</option>
-                                        @endforeach
-
-
-
-                                        {{-- <option value="">Male 3XL</option>
-                                        <option value="">Kids 4</option>
-                                        <option value="">Kids 6</option>
-                                        <option value="">Kids 8</option>
-                                        <option value="">Kids 10</option>
-                                        <option value="">Kids 12</option>
-                                        <option value="">Female Small</option>
-                                        <option value="">Male Small</option>
-                                        <option value="">Female Medium</option>
-                                        <option value="">Male Medium</option>
-                                        <option value="">Female Large</option>
-                                        <option value="">Male Large</option>
-                                        <option value="">Female XL</option>
-                                        <option value="">Male XL</option> --}}
-                                    </select>
-                                </div>
                             </div>
-                        </div>
-                        <div class="section-6-social-media-quantity-actions u-s-p-y-14">
-                            <form action="#" class="post-form">
-                                <div class="quick-social-media-wrapper u-s-m-b-22">
+                            <div class="section-6-social-media-quantity-actions u-s-p-y-14">
+
+
+
+                                {{-- <div class="quick-social-media-wrapper u-s-m-b-22">
                                     <span>Share:</span>
                                     <ul class="social-media-list">
                                         <li>
@@ -303,7 +366,9 @@
                                             </a>
                                         </li>
                                     </ul>
-                                </div>
+                                </div> --}}
+
+                                
                                 <div class="quantity-wrapper u-s-m-b-22">
                                     <span>Quantity:</span>
                                     <div class="quantity">
@@ -318,8 +383,14 @@
                                     <button class="button button-outline-secondary far fa-heart u-s-m-l-6"></button>
                                     <button class="button button-outline-secondary far fa-envelope u-s-m-l-6"></button>
                                 </div>
-                            </form>
-                        </div>
+
+
+
+                            </div>
+                        </form>
+
+
+
                     </div>
                     <!-- Product-details /- -->
                 </div>
@@ -744,7 +815,7 @@
                                                 $getDiscountPrice = \App\Models\Product::getDiscountPrice($product['id']);
                                             @endphp
 
-                                            @if ($getDiscountPrice > 0)
+                                            @if ($getDiscountPrice > 0) {{-- If there's a discount on the price, show the price before (the original price) and after (the new price) the discount --}}
                                                 <div class="price-template">
                                                     <div class="item-new-price">
                                                         Rs.{{ $getDiscountPrice }} {{-- 'Rs' means Rupees the Indian currency --}}
@@ -753,7 +824,7 @@
                                                         Rs.{{ $product['product_price'] }}
                                                     </div>
                                                 </div>
-                                            @else
+                                            @else {{-- if there's no discount on the price, show the original price --}}
                                                 <div class="price-template">
                                                     <div class="item-new-price">
                                                         Rs.{{ $product['product_price'] }}
@@ -854,7 +925,7 @@
                                                 $getDiscountPrice = \App\Models\Product::getDiscountPrice($product['id']);
                                             @endphp
 
-                                            @if ($getDiscountPrice > 0)
+                                            @if ($getDiscountPrice > 0) {{-- If there's a discount on the price, show the price before (the original price) and after (the new price) the discount --}}
                                                 <div class="price-template">
                                                     <div class="item-new-price">
                                                         Rs.{{ $getDiscountPrice }} {{-- 'Rs' means Rupees the Indian currency --}}
@@ -863,7 +934,7 @@
                                                         Rs.{{ $product['product_price'] }}
                                                     </div>
                                                 </div>
-                                            @else
+                                            @else {{-- if there's no discount on the price, show the original price --}}
                                                 <div class="price-template">
                                                     <div class="item-new-price">
                                                         Rs.{{ $product['product_price'] }}
