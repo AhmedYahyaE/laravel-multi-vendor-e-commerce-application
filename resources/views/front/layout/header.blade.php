@@ -5,6 +5,7 @@ $sections = \App\Models\Section::sections();
 ?>
 
 
+
 <!-- Header -->
 <header>
     <!-- Top-Header -->
@@ -48,12 +49,12 @@ $sections = \App\Models\Section::sections();
                                 Checkout</a>
                             </li>
                             <li>
-                                <a href="account.html">
+                                <a href="{{ url('user/login-register') }}"> {{-- https://www.youtube.com/watch?v=xYzsUn8_NT0&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=127 --}}
                                 <i class="fas fa-sign-in-alt u-s-m-r-9"></i>
                                 Customer Login</a>
                             </li>
                             <li>
-                                <a href="account.html">
+                                <a href="{{ url('vendor/login-register') }}">
                                 <i class="fas fa-sign-in-alt u-s-m-r-9"></i>
                                 Vendor Login</a>
                             </li>

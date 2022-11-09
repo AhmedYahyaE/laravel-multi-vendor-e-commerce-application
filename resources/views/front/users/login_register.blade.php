@@ -1,7 +1,8 @@
-{{-- This page is accessed from Vendor Login tab in the dropdown menu in the header (in front/layout/header.blade.php) --}} {{-- https://www.youtube.com/watch?v=ODwOtaa2GxU&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=98 --}}
+{{-- This page is accessed from Customer Login tab in the dropdown menu in the header (in front/layout/header.blade.php) --}} {{-- https://www.youtube.com/watch?v=xYzsUn8_NT0&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=127 --}}
 
 
 @extends('front.layout.layout')
+
 
 
 @section('content')
@@ -34,7 +35,7 @@
             {{-- Our Bootstrap success message in case of updating admin password is successful: --}}
             {{-- https://www.youtube.com/watch?v=oAZKXYrkcr4&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=17 --}}
             {{-- Displaying Success Message --}}
-            @if (Session::has('success_message')) <!-- Check vendorRegister() method in Front/VendorController.php -->
+            @if (Session::has('success_message')) <!-- Check userRegister() method in Front/UserController.php -->
                 <div class="alert alert-success alert-dismissible fade show" role="alert">
                     <strong>Success:</strong> {{ Session::get('success_message') }}
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -43,7 +44,7 @@
                 </div>
             @endif
             {{-- Displaying Error Messages --}}
-            @if (Session::has('error_message')) <!-- Check vendorRegister() method in Front/VendorController.php -->
+            @if (Session::has('error_message')) <!-- Check userRegister() method in Front/UserController.php -->
                 <div class="alert alert-danger alert-dismissible fade show" role="alert">
                     <strong>Error:</strong> {{ Session::get('error_message') }}
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -52,7 +53,7 @@
                 </div>
             @endif
             {{-- Displaying Error Messages --}}
-            @if ($errors->any()) <!-- Check vendorRegister() method in Front/VendorController.php -->
+            @if ($errors->any()) <!-- Check userRegister() method in Front/UserController.php -->
                 <div class="alert alert-danger alert-dismissible fade show" role="alert">
                     <strong>Error:</strong> @php echo implode('', $errors->all('<div>:message</div>')); @endphp
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -77,16 +78,16 @@
 
 
                             <div class="u-s-m-b-30">
-                                <label for="vendor-email">Email
+                                <label for="user-email">Email
                                     <span class="astk">*</span>
                                 </label>
-                                <input type="email" name="email" id="vendor-email" class="text-field" placeholder="Email">
+                                <input type="email" name="email" id="user-email" class="text-field" placeholder="Email">
                             </div>
                             <div class="u-s-m-b-30">
-                                <label for="vendor-password">Password
+                                <label for="user-password">Password
                                     <span class="astk">*</span>
                                 </label>
-                                <input type="password" name="password" id="vendor-password" class="text-field" placeholder="Password">
+                                <input type="password" name="password" id="user-password" class="text-field" placeholder="Password">
                             </div>
                             {{-- <div class="group-inline u-s-m-b-30">
                                 <div class="group-1">
@@ -116,33 +117,33 @@
 
 
                         {{-- https://www.youtube.com/watch?v=QbEFPGnTdBc&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=98 --}}
-                        <form id="vendorForm" action="{{ url('/vendor/register') }}" method="post">
+                        <form id="userForm" action="{{ url('/user/register') }}" method="post">
                             @csrf
 
 
                             <div class="u-s-m-b-30">
-                                <label for="vendorname">Name
+                                <label for="username">Name
                                     <span class="astk">*</span>
                                 </label>
-                                <input type="text" id="vendorname" class="text-field" placeholder="Vendor Name" name="name">
+                                <input type="text" id="username" class="text-field" placeholder="User Name" name="name">
                             </div>
                             <div class="u-s-m-b-30">
-                                <label for="vendormobile">Mobile
+                                <label for="usermobile">Mobile
                                     <span class="astk">*</span>
                                 </label>
-                                <input type="text" id="vendormobile" class="text-field" placeholder="Vendor Mobile" name="mobile">
+                                <input type="text" id="usermobile" class="text-field" placeholder="User Mobile" name="mobile">
                             </div>
                             <div class="u-s-m-b-30">
-                                <label for="vendoremail">Email
+                                <label for="useremail">Email
                                     <span class="astk">*</span>
                                 </label>
-                                <input type="email" id="vendoremail" class="text-field" placeholder="Vendor Email" name="email">
+                                <input type="email" id="useremail" class="text-field" placeholder="User Email" name="email">
                             </div>
                             <div class="u-s-m-b-30">
-                                <label for="vendorpassword">Password
+                                <label for="userpassword">Password
                                     <span class="astk">*</span>
                                 </label>
-                                <input type="password" id="vendorpassword" class="text-field" placeholder="Vendor Password" name="password">
+                                <input type="password" id="userpassword" class="text-field" placeholder="User Password" name="password">
                             </div>
 
                             <div class="u-s-m-b-30"> {{-- "I've read and accept the terms & conditions" Checkbox --}}

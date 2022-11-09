@@ -178,4 +178,10 @@ Route::namespace('App\Http\Controllers\Front')->group(function() {
 
     // Delete a Cart Item AJAX call in front/products/cart_items.blade.php. Check front/js/custom.js    // https://www.youtube.com/watch?v=GCZ8a3Dw_Zg&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=127
     Route::post('cart/delete', 'ProductsController@cartDelete');
+
+
+
+    // Render User Login/Register (front/users/login_register.blade.php)    // https://www.youtube.com/watch?v=xYzsUn8_NT0&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=127
+    Route::get('user/login-register', 'UserController@loginRegister');
+
 });
