@@ -171,11 +171,11 @@ $(document).ready(function() {
                 // alert(resp);
                 // console.log(resp);
                 // console.log(typeof resp.status);
-                if (resp.status == false) { // if    'status' => 'false'    is sent from as a response from the backend, show the message    // 'status' is sent as a PHP array key (in the response) from inside the cartUpdate() method in Front/ProductsController.php
+                if (resp.status == false) { // if    'status' => 'false'    is sent from as a response from the backend, show the message    // 'status' is sent as a PHP array key (in the HTTP response from the server (backend)) from inside the cartUpdate() method in Front/ProductsController.php
                     alert(resp.message);
                 }
 
-                $('#appendCartItems').html(resp.view); // 'view' is sent as a PHP array key (in the response) from inside the cartUpdate() method in Front/ProductsController.php
+                $('#appendCartItems').html(resp.view); // 'view' is sent as a PHP array key (in the HTTP response from the server (backend)) from inside the cartUpdate() method in Front/ProductsController.php
             },
             error  : function() {
                 alert('Error');
@@ -200,13 +200,49 @@ $(document).ready(function() {
                 url    : '/cart/delete', // check this route in web.php
                 type   : 'post',
                 success: function(resp) {
-                    $('#appendCartItems').html(resp.view); // 'view' is sent as a PHP array key (in the response) from inside the cartUpdate() method in Front/ProductsController.php
+                    $('#appendCartItems').html(resp.view); // 'view' is sent as a PHP array key (in the HTTP response from the server (backend)) from inside the cartUpdate() method in Front/ProductsController.php
                 },
                 error  : function() {
                     alert('Error');
                 }
             });
         }
+    });
+
+
+
+    // User Registration <form> submission (in front/users/login_register.blade.php)
+    $('#registerForm').submit(function() { // When the registration <form> is submitted
+        var formdata = $(this).serialize(); // serialize() method comes in handy when submitting an HTML Form using an AJAX request, as it collects all the name/value pairs from the <input>, <textarea>, <select><option>, ... HTML elements of the <form> (instead of the heavy work of assigning an identifier/handle for every <input> and <textarea>, ... using an HTML 'id' or CSS 'class', and then getting the value for every one of them like this:    $('#username).val();    )    // serialize() jQuery method: https://www.w3schools.com/jquery/ajax_serialize.asp
+        // // console.log(typeof formdata); // 'string' data type
+        // console.log(formdata);
+        // alert(formdata);
+
+
+        // return false; // DON'T SUBMIT THE FORM!!
+
+
+
+        $.ajax({
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}, // X-CSRF-TOKEN: https://laravel.com/docs/9.x/csrf#csrf-x-csrf-token    // Check 12:37 in https://www.youtube.com/watch?v=maEXuJNzE8M&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=16 AND Check 12:06 in https://www.youtube.com/watch?v=APPKmLlWEBY&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu
+            url    : '/user/register', // check this route in web.php
+            type   : 'POST',
+            data   : formdata, // Sending name/value pairs to server with the AJAX request (AJAX call)
+            success: function(resp) {
+                // alert(resp);
+                // alert(resp.url);
+                // console.log(resp);
+                // console.log(resp.url);
+                // console.log(typeof resp);
+
+                // console.log(window.location.href);
+                // return;
+                window.location.href = resp.url; // redirect to another page if authentication/login is successful    // 'url' is sent as a PHP array key (in the HTTP response from the server (backend)) from inside the userRegister() method in Front/UserController.php
+            },
+            error  : function() {
+                alert('Error');
+            }
+        });
     });
 
 

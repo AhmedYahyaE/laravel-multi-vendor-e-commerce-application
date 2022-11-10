@@ -15,12 +15,12 @@ return new class extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             // Here, we add some additional columns to the default Laravel's `users` table. Check 11:20 in https://www.youtube.com/watch?v=xYzsUn8_NT0&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=127
-            $table->string('address')->after('name');
-            $table->string('city')->after('address');
-            $table->string('state')->after('city');
-            $table->string('country')->after('state');
-            $table->string('pincode')->after('country');
-            $table->string('mobile')->after('pincode');
+            $table->string('address')->after('name')->nullable();
+            $table->string('city')->after('address')->nullable();
+            $table->string('state')->after('city')->nullable();
+            $table->string('country')->after('state')->nullable();
+            $table->string('pincode')->after('country')->nullable();
+            $table->string('mobile')->after('pincode')->nullable();
             $table->tinyInteger('status')->after('password'); // 0 is inactive/disabled/deactivated, 1 is active/enabled/activated
         });
     }

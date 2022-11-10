@@ -184,4 +184,6 @@ Route::namespace('App\Http\Controllers\Front')->group(function() {
     // Render User Login/Register (front/users/login_register.blade.php)    // https://www.youtube.com/watch?v=xYzsUn8_NT0&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=127
     Route::get('user/login-register', 'UserController@loginRegister');
 
+    // User Login/Register (in front/users/login_register.blade.php) <form> submission using an AJAX request. Check front/js/custom.js    // https://www.youtube.com/watch?v=rOlDDq03veE&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=127
+    Route::post('user/register', 'UserController@userRegister');
 });

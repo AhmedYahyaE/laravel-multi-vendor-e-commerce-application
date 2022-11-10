@@ -108,6 +108,9 @@
                     </div>
                 </div>
                 <!-- Login /- -->
+
+
+
                 <!-- Register -->
                 <div class="col-lg-6">
                     <div class="reg-wrapper">
@@ -116,8 +119,8 @@
 
 
 
-                        {{-- https://www.youtube.com/watch?v=QbEFPGnTdBc&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=98 --}}
-                        <form id="userForm" action="{{ url('/user/register') }}" method="post">
+                        {{-- https://www.youtube.com/watch?v=rOlDDq03veE&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=127 --}}
+                        <form id="registerForm" action="javascript:;" method="post"> {{-- We need to deactivate the 'action' HTML attribute (using    'javascript:;'    ) as we'r going to submit using an AJAX call. Check front/js/custom.js --}}
                             @csrf
 
 
@@ -125,25 +128,25 @@
                                 <label for="username">Name
                                     <span class="astk">*</span>
                                 </label>
-                                <input type="text" id="username" class="text-field" placeholder="User Name" name="name">
+                                <input type="text" id="user-name" class="text-field" placeholder="User Name" name="name">
                             </div>
                             <div class="u-s-m-b-30">
                                 <label for="usermobile">Mobile
                                     <span class="astk">*</span>
                                 </label>
-                                <input type="text" id="usermobile" class="text-field" placeholder="User Mobile" name="mobile">
+                                <input type="text" id="user-mobile" class="text-field" placeholder="User Mobile" name="mobile">
                             </div>
                             <div class="u-s-m-b-30">
                                 <label for="useremail">Email
                                     <span class="astk">*</span>
                                 </label>
-                                <input type="email" id="useremail" class="text-field" placeholder="User Email" name="email">
+                                <input type="email" id="user-email" class="text-field" placeholder="User Email" name="email">
                             </div>
                             <div class="u-s-m-b-30">
                                 <label for="userpassword">Password
                                     <span class="astk">*</span>
                                 </label>
-                                <input type="password" id="userpassword" class="text-field" placeholder="User Password" name="password">
+                                <input type="password" id="user-password" class="text-field" placeholder="User Password" name="password">
                             </div>
 
                             <div class="u-s-m-b-30"> {{-- "I've read and accept the terms & conditions" Checkbox --}}

@@ -18,7 +18,9 @@ class VendorController extends Controller
     public function vendorRegister(Request $request) { // the register HTML form submission in vendor login_register.blade.php page    // https://www.youtube.com/watch?v=QbEFPGnTdBc&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=98
         if ($request->isMethod('post')) { // if the register form is submitted
             $data = $request->all();
-            // dd($data);
+            // dd($data); // dd() method DOESN'T WORK WITH AJAX! - SHOWS AN ERROR!! USE var_dump() and exit; INSTEAD!
+            // echo '<pre>', var_dump($data), '</pre>';
+            // exit;
             
 
             // Validation (Validation of vendor registration form)    // Manually Creating Validators: https://laravel.com/docs/9.x/validation#manually-creating-validators    // Check 7:57 in https://www.youtube.com/watch?v=QbEFPGnTdBc&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=98
