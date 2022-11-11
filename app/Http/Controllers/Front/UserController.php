@@ -25,32 +25,70 @@ class UserController extends Controller
             // exit;
 
 
-            // Register the new user
-            $user = new \App\Models\User;
 
-            $user->name     = $data['name'];   // $data['name']   comes from the 'data' object sent from inside the $.ajax() method in front/js/custom.js file
-            $user->mobile   = $data['mobile']; // $data['mobile'] comes from the 'data' object sent from inside the $.ajax() method in front/js/custom.js file
-            $user->email    = $data['email'];  // $data['email']  comes from the 'data' object sent from inside the $.ajax() method in front/js/custom.js file
-            $user->password = bcrypt($data['password']); // storing the HASH-ed password (not the original password) in the database    // bcrypt(): https://laravel.com/docs/9.x/helpers#method-bcrypt    // $data['password'] comes from the 'data' object sent from inside the $.ajax() method in front/js/custom.js file
-            $user->status   = 1; // 0 means supposing that user is active/enabled/activated
+            // Validation    // Manually Creating Validators: https://laravel.com/docs/9.x/validation#manually-creating-validators    // https://www.youtube.com/watch?v=u_qC3I3BYAM&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=129
+            $validator = \Illuminate\Support\Facades\Validator::make($request->all(), [
+                // the 'name' HTML attribute of the request (the array key of the $request array) (ATTRIBUTE) => Validation Rules
+                'name'     => 'required|string|max:100',
+                'mobile'   => 'required|numeric|digits:11',
+                'email'    => 'required|email|max:150|unique:users', // 'unique:users'    means it's unique in the `users` table
+                'password' => 'required|min:6',
+                'accept'   => 'required'
 
-            $user->save();
+            ], [ // Customizing The Error Messages: https://laravel.com/docs/9.x/validation#manual-customizing-the-error-messages
+                // the 'name' HTML attribute of the request (the array key of the $request array) (ATTRIBUTE) => Custom Messages
+                'accept.required' => 'Please accept our Terms & Conditions'
+            ]);
 
 
+            // Working With Error Messages: https://laravel.com/docs/9.x/validation#working-with-error-messages    // https://www.youtube.com/watch?v=u_qC3I3BYAM&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=129
+            // echo '<pre>', var_dump($validator->messages()), '</pre>';
+            // exit;
 
-            // Login the user in IMMEDIATELY and AUTOMATICALLY and DIRECTLY after registration
-            if (\Auth::attempt([ // Manually Authenticating Users: https://laravel.com/docs/9.x/authentication#other-authentication-methods
-                'email'    => $data['email'],   // $data['email']    comes from the 'data' object sent from inside the $.ajax() method in front/js/custom.js file
-                'password' => $data['password'] // $data['password'] comes from the 'data' object sent from inside the $.ajax() method in front/js/custom.js file
-            ])) {
-                $redirectTo = url('cart');
 
-                // Here, we return a JSON response because the request is ORIGINALLY submitting an HTML <form> data using an AJAX request
-                return response()->json([ // JSON Responses: https://laravel.com/docs/9.x/responses#json-responses
-                    'url' => $redirectTo
-                ]);
+            if ($validator->passes()) { // if validation passes (is successful), register (INSERT) the new user into the database `users` table, and log the user in IMMEDIATELY and AUTOMATICALLY and DIRECTLY, and redirect them to the Cart cart.blade.php page
+                // Register the new user
+                $user = new \App\Models\User;
+
+                $user->name     = $data['name'];   // $data['name']   comes from the 'data' object sent from inside the $.ajax() method in front/js/custom.js file
+                $user->mobile   = $data['mobile']; // $data['mobile'] comes from the 'data' object sent from inside the $.ajax() method in front/js/custom.js file
+                $user->email    = $data['email'];  // $data['email']  comes from the 'data' object sent from inside the $.ajax() method in front/js/custom.js file
+                $user->password = bcrypt($data['password']); // storing the HASH-ed password (not the original password) in the database    // bcrypt(): https://laravel.com/docs/9.x/helpers#method-bcrypt    // $data['password'] comes from the 'data' object sent from inside the $.ajax() method in front/js/custom.js file
+                $user->status   = 1; // 0 means supposing that user is active/enabled/activated
+
+                $user->save();
+
+
+                // Log the user in IMMEDIATELY and AUTOMATICALLY and DIRECTLY after registration
+                if (\Auth::attempt([ // Manually Authenticating Users: https://laravel.com/docs/9.x/authentication#other-authentication-methods
+                    'email'    => $data['email'],   // $data['email']    comes from the 'data' object sent from inside the $.ajax() method in front/js/custom.js file
+                    'password' => $data['password'] // $data['password'] comes from the 'data' object sent from inside the $.ajax() method in front/js/custom.js file
+                ])) {
+                    $redirectTo = url('cart'); // redirect user to the Cart cart.blade.php page
+
+                    // Here, we return a JSON response because the request is ORIGINALLY submitting an HTML <form> data using an AJAX request
+                    return response()->json([ // JSON Responses: https://laravel.com/docs/9.x/responses#json-responses
+                        'type' => 'success',
+                        'url'  => $redirectTo // redirect user to the Cart cart.blade.php page
+                    ]);
+                }
+
+            } else { // if validation fails (is unsuccessful), send the 
+                    // Here, we return a JSON response because the request is ORIGINALLY submitting an HTML <form> data using an AJAX request
+                    return response()->json([ // JSON Responses: https://laravel.com/docs/9.x/responses#json-responses
+                        'type'   => 'error',
+                        'errors' => $validator->messages() // we'll loop over the Validation Errors Messages array using jQuery    // Working With Error Messages: https://laravel.com/docs/9.x/validation#working-with-error-messages    // https://www.youtube.com/watch?v=u_qC3I3BYAM&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=129
+                    ]);
             }
         }
+    }
+
+    // User logout (This route is accessed from Logout tab in the drop-down menu in the header (in front/layout/header.blade.php))    // https://www.youtube.com/watch?v=u_qC3I3BYAM&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=128
+    public function userLogout() {
+        \Auth::logout(); // Logging Out: https://laravel.com/docs/9.x/authentication#logging-out
+
+
+        return redirect('/');
     }
 
 

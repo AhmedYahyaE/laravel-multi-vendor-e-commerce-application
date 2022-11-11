@@ -1,4 +1,4 @@
-{{-- This page is accessed from Vendor Login tab in the dropdown menu in the header (in front/layout/header.blade.php) --}} {{-- https://www.youtube.com/watch?v=ODwOtaa2GxU&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=98 --}}
+{{-- This page is accessed from Vendor Login tab in the drop-down menu in the header (in front/layout/header.blade.php) --}} {{-- https://www.youtube.com/watch?v=ODwOtaa2GxU&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=98 --}}
 
 
 @extends('front.layout.layout')

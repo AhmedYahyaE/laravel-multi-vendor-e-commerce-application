@@ -29,8 +29,18 @@ $sections = \App\Models\Section::sections();
             <nav>
                 <ul class="secondary-nav g-nav">
                     <li>
-                        <a>My Account
-                        <i class="fas fa-chevron-down u-s-m-l-9"></i>
+
+
+
+                        <a>
+                            {{-- If the user is authenticated/logged in, show 'My Account', if not, show 'Login/Register' --}} {{-- https://www.youtube.com/watch?v=u_qC3I3BYAM&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=128 --}}
+                            @if (\Auth::check()) {{-- Determining If The Current User Is Authenticated: https://laravel.com/docs/9.x/authentication#determining-if-the-current-user-is-authenticated --}}
+                                My Account
+                            @else
+                                Login/Register
+                            @endif
+
+                            <i class="fas fa-chevron-down u-s-m-l-9"></i>
                         </a>
                         <ul class="g-dropdown" style="width:200px">
                             <li>
@@ -43,21 +53,45 @@ $sections = \App\Models\Section::sections();
                                 <i class="far fa-heart u-s-m-r-9"></i>
                                 My Wishlist</a>
                             </li>
-                            <li>
+                            {{-- <li>
                                 <a href="checkout.html">
                                 <i class="far fa-check-circle u-s-m-r-9"></i>
                                 Checkout</a>
-                            </li>
-                            <li>
-                                <a href="{{ url('user/login-register') }}"> {{-- https://www.youtube.com/watch?v=xYzsUn8_NT0&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=127 --}}
-                                <i class="fas fa-sign-in-alt u-s-m-r-9"></i>
-                                Customer Login</a>
-                            </li>
-                            <li>
-                                <a href="{{ url('vendor/login-register') }}">
-                                <i class="fas fa-sign-in-alt u-s-m-r-9"></i>
-                                Vendor Login</a>
-                            </li>
+                            </li> --}}
+
+
+
+                            {{-- If the user is authenticated/logged in, show 'My Account' and 'Logout', if not, show 'Customer Login' and 'Vendor Login' --}} {{-- https://www.youtube.com/watch?v=u_qC3I3BYAM&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=128 --}}
+                            @if (\Auth::check()) {{-- Determining If The Current User Is Authenticated: https://laravel.com/docs/9.x/authentication#determining-if-the-current-user-is-authenticated --}}
+                                <li>
+                                    <a href="{{ url('user/account') }}"> {{-- https://www.youtube.com/watch?v=xYzsUn8_NT0&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=127 --}}
+                                        <i class="fas fa-sign-in-alt u-s-m-r-9"></i>
+                                        My Account
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ url('user/logout') }}"> {{-- https://www.youtube.com/watch?v=xYzsUn8_NT0&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=127 --}}
+                                        <i class="fas fa-sign-in-alt u-s-m-r-9"></i>
+                                        Logout
+                                    </a>
+                                </li>
+                            @else
+                                <li>
+                                    <a href="{{ url('user/login-register') }}"> {{-- https://www.youtube.com/watch?v=xYzsUn8_NT0&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=127 --}}
+                                        <i class="fas fa-sign-in-alt u-s-m-r-9"></i>
+                                        Customer Login
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ url('vendor/login-register') }}">
+                                        <i class="fas fa-sign-in-alt u-s-m-r-9"></i>
+                                        Vendor Login
+                                    </a>
+                                </li>
+                            @endif
+
+
+
                         </ul>
                     </li>
                     <li>
@@ -114,7 +148,7 @@ $sections = \App\Models\Section::sections();
                                     </option>
 
                                     @foreach ($sections as $section)
-                                        <option value="">{{ $section['name'] }}</option> {{-- the search bar dropdown menu at the top --}}
+                                        <option value="">{{ $section['name'] }}</option> {{-- the search bar drop-down menu at the top --}}
                                     @endforeach
 
                         

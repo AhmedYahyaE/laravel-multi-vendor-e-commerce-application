@@ -17,7 +17,7 @@ $(document).ready(function() {
 
 
 
-    // Check if the Admin Password is correct using AJAX in update_admin_password.blade.php page
+    // Check if the Admin Password is correct using AJAX in update_admin_password.blade.php page    // https://www.youtube.com/watch?v=maEXuJNzE8M&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=16
     $('#current_password').keyup(function() {
         // console.log(this);
         var current_password = $(this).val();

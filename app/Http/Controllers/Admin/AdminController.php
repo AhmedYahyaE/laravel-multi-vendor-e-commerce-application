@@ -146,7 +146,7 @@ class AdminController extends Controller
         return view('admin/settings/update_admin_password')->with(compact('adminDetails')); // Passing Data To Views: https://laravel.com/docs/9.x/views#sharing-data-with-all-views
     }
 
-    public function checkAdminPassword(Request $request) { // This method is called from the AJAX call in admin/js/custom.js page
+    public function checkAdminPassword(Request $request) { // This method is called from the AJAX call in admin/js/custom.js page    // https://www.youtube.com/watch?v=maEXuJNzE8M&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=16
         $data = $request->all();
         // dd($data); // dd() method DOESN'T WORK WITH AJAX! - SHOWS AN ERROR!! USE var_dump() and exit; INSTEAD!
         // echo '<pre>', var_dump($data), '</pre>';
