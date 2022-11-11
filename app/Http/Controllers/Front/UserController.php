@@ -61,16 +61,23 @@ class UserController extends Controller
 
 
                 // Send a Welcome Email to user after registration    // HELO / Mailtrap / MailHog: https://laravel.com/docs/9.x/mail#mailtrap    // https://www.youtube.com/watch?v=OtH7CCwnwAo&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=129
-                $email = $data['email']; // the user's email that they entered while filling in the registration form
+                $email = $data['email']; // the user's email that they entered while submitting the registration form
                 $messageData = [
-                    'name'   => $data['name'],
-                    'mobile' => $data['mobile'],
-                    'email'  => $data['email']
+                    'name'   => $data['name'], // the user's name that they entered while submitting the registration form
+                    'mobile' => $data['mobile'], // the user's mobile that they entered while submitting the registration form
+                    'email'  => $data['email'] // the user's email that they entered while submitting the registration form
                     // 'code'   => base64_encode($data['email']) // We base64 code the user's $email and send it as a Route Parameter from user_confirmation.blade.php to the 'user/confirm/{code}' route in web.php, then it gets base64 decoded again in confirmUser() method in Front/UserController.php    // we will use the opposite: base64_decode() in the confirmUser() method (encode X decode)
                 ];
                 \Illuminate\Support\Facades\Mail::send('emails.register', $messageData, function ($message) use ($email) { // Sending Mail: https://laravel.com/docs/9.x/mail#sending-mail    // 'emails.register' is the register.blade.php file inside the 'resources/views/emails' folder that will be sent as an email    // We pass all the variables that register.blade.php will use    // https://www.php.net/manual/en/functions.anonymous.php
                     $message->to($email)->subject('Welcome to Stack Developers');
                 });
+
+
+
+                // Send an SMS using an SMS API    // https://www.youtube.com/watch?v=QA86hHuD4_w&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=130
+                $message = 'Dear customer, you have successfully registered with Stack Developers. Login to your account to access orders, addresses and available offers';
+                $mobile = $data['mobile']; // the user's mobile that they entered while submitting the registration form
+                \App\Models\Sms::sendSms($message, $mobile); // Send the SMS
 
 
 
