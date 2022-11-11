@@ -59,6 +59,21 @@ class UserController extends Controller
                 $user->save();
 
 
+
+                // Send a Welcome Email to user after registration    // HELO / Mailtrap / MailHog: https://laravel.com/docs/9.x/mail#mailtrap    // https://www.youtube.com/watch?v=OtH7CCwnwAo&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=129
+                $email = $data['email']; // the user's email that they entered while filling in the registration form
+                $messageData = [
+                    'name'   => $data['name'],
+                    'mobile' => $data['mobile'],
+                    'email'  => $data['email']
+                    // 'code'   => base64_encode($data['email']) // We base64 code the user's $email and send it as a Route Parameter from user_confirmation.blade.php to the 'user/confirm/{code}' route in web.php, then it gets base64 decoded again in confirmUser() method in Front/UserController.php    // we will use the opposite: base64_decode() in the confirmUser() method (encode X decode)
+                ];
+                \Illuminate\Support\Facades\Mail::send('emails.register', $messageData, function ($message) use ($email) { // Sending Mail: https://laravel.com/docs/9.x/mail#sending-mail    // 'emails.register' is the register.blade.php file inside the 'resources/views/emails' folder that will be sent as an email    // We pass all the variables that register.blade.php will use    // https://www.php.net/manual/en/functions.anonymous.php
+                    $message->to($email)->subject('Welcome to Stack Developers');
+                });
+
+
+
                 // Log the user in IMMEDIATELY and AUTOMATICALLY and DIRECTLY after registration
                 if (\Auth::attempt([ // Manually Authenticating Users: https://laravel.com/docs/9.x/authentication#other-authentication-methods
                     'email'    => $data['email'],   // $data['email']    comes from the 'data' object sent from inside the $.ajax() method in front/js/custom.js file

@@ -1,5 +1,5 @@
 {{-- Check 26:12 in https://www.youtube.com/watch?v=UXUDxtN68XE&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=103 --}}
-{{-- This is the vendor Approval Success Mail file using Mailtrap --}} {{-- All the variables (like $name, $mobile, $email, ...) used here are passed from the updateAdminStatus() method in Admin/AdminController.php --}}
+{{-- This is the vendor Approval Success Mail file using Mailtrap --}} {{-- All the variables (like $name, $mobile, $email, ...) used here are passed in from the updateAdminStatus() method in Admin/AdminController.php --}}
 
 
 <!DOCTYPE html>
