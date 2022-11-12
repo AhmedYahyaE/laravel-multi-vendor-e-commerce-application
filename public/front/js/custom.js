@@ -211,7 +211,7 @@ $(document).ready(function() {
 
 
 
-    // User Registration <form> submission (in front/users/login_register.blade.php)
+    // User Registration <form> submission (in front/users/login_register.blade.php)    // https://www.youtube.com/watch?v=u_qC3I3BYAM&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=129
     $('#registerForm').submit(function() { // When the registration <form> is submitted
         var formdata = $(this).serialize(); // serialize() method comes in handy when submitting an HTML Form using an AJAX request, as it collects all the name/value pairs from the <input>, <textarea>, <select><option>, ... HTML elements of the <form> (instead of the heavy work of assigning an identifier/handle for every <input> and <textarea>, ... using an HTML 'id' or CSS 'class', and then getting the value for every one of them like this:    $('#username).val();    )    // serialize() jQuery method: https://www.w3schools.com/jquery/ajax_serialize.asp
         // // console.log(typeof formdata); // 'string' data type
@@ -237,7 +237,7 @@ $(document).ready(function() {
                 // console.log(resp.type);
 
                 // https://www.youtube.com/watch?v=u_qC3I3BYAM&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=129
-                if (resp.type == 'error') { // if there're validation errors (login fails)    // 'type' is sent as a PHP array key (in the HTTP response from the server (backend)) from inside the userRegister() method in Front/UserController.php
+                if (resp.type == 'error') { // if there're Validation Errors (login fails), show the Validation Error Messages (each of them under its respective <input> field)    // 'type' is sent as a PHP array key (in the HTTP response from the server (backend)) from inside the userRegister() method in Front/UserController.php
                     // Note: in HTML in front/users/login_register.blade.php, to conveniently display the errors by jQuery loop, the pattern must be like: register-x (e.g. register-mobile, regitster-email, ... in order for the jQuery loop to work. And x must be identical to the 'name' HTML attributes (e.g. the <input> with the    name='mobile'    HTML attribute must have a <p> with an id HTML attribute    id="register-mobile"    ) so that when the vaildation errors array are sent as a response to the AJAX request, they could conveniently/easily handled by the jQuery $.each() loop)
                     $.each(resp.errors, function(i, error) { // 'i' is the attribute (the 'name' HTML attribute), and 'error' is the validation error    // $.each(): https://api.jquery.com/jquery.each/    // 'errors' is sent as a PHP array key (in the HTTP response from the server (backend)) from inside the userRegister() method in Front/UserController.php
 
@@ -262,6 +262,77 @@ $(document).ready(function() {
                     // console.log(window.location.href);
                     // return;
                     window.location.href = resp.url; // redirect user to another page (Cart page) if authentication/login is successful    // 'url' is sent as a PHP array key (in the HTTP response from the server (backend)) from inside the userRegister() method in Front/UserController.php
+                }
+            },
+            error  : function() { // if the AJAX request is unsuccessful
+                alert('Error');
+            }
+        });
+    });
+
+
+
+    // User Login <form> submission (in front/users/login_register.blade.php)    // https://www.youtube.com/watch?v=Vbfhv2lMt9M&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=131
+    $('#loginForm').submit(function() { // When the registration <form> is submitted
+        var formdata = $(this).serialize(); // serialize() method comes in handy when submitting an HTML Form using an AJAX request, as it collects all the name/value pairs from the <input>, <textarea>, <select><option>, ... HTML elements of the <form> (instead of the heavy work of assigning an identifier/handle for every <input> and <textarea>, ... using an HTML 'id' or CSS 'class', and then getting the value for every one of them like this:    $('#username).val();    )    // serialize() jQuery method: https://www.w3schools.com/jquery/ajax_serialize.asp
+        // // console.log(typeof formdata); // 'string' data type
+        // console.log(formdata);
+        // alert(formdata);
+
+
+        // return false; // DON'T SUBMIT THE FORM!!
+
+
+
+        $.ajax({
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}, // X-CSRF-TOKEN: https://laravel.com/docs/9.x/csrf#csrf-x-csrf-token    // Check 12:37 in https://www.youtube.com/watch?v=maEXuJNzE8M&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=16 AND Check 12:06 in https://www.youtube.com/watch?v=APPKmLlWEBY&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu
+            url    : '/user/login', // check this route in web.php
+            type   : 'POST',
+            data   : formdata, // Sending name/value pairs to server with the AJAX request (AJAX call)
+            success: function(resp) { // if the AJAX request is successful
+                // alert(resp);
+                // alert(resp.url);
+                // console.log(resp);
+                // console.log(resp.url);
+                // console.log(typeof resp);
+                // console.log(resp.type);
+
+                // https://www.youtube.com/watch?v=u_qC3I3BYAM&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=129
+                if (resp.type == 'error') { // if there're Validation Errors (login fails), show the Validation Error Messages (each of them under its respective <input> field)    // 'type' is sent as a PHP array key (in the HTTP response from the server (backend)) from inside the userRegister() method in Front/UserController.php
+                    // Note: in HTML in front/users/login_register.blade.php, to conveniently display the errors by jQuery loop, the pattern must be like: register-x (e.g. register-mobile, regitster-email, ... in order for the jQuery loop to work. And x must be identical to the 'name' HTML attributes (e.g. the <input> with the    name='mobile'    HTML attribute must have a <p> with an id HTML attribute    id="register-mobile"    ) so that when the vaildation errors array are sent as a response to the AJAX request, they could conveniently/easily handled by the jQuery $.each() loop)
+                    $.each(resp.errors, function(i, error) { // 'i' is the attribute (the 'name' HTML attribute), and 'error' is the validation error    // $.each(): https://api.jquery.com/jquery.each/    // 'errors' is sent as a PHP array key (in the HTTP response from the server (backend)) from inside the userRegister() method in Front/UserController.php
+
+                        $('#login-' + i).attr('style', 'color: red'); // I already did this in the HTML page in the <p> tags in the HTML in front/users/login_register.blade.php (    <p id="login-name"></p>    )    // This is the same as:    $('#login-' + i).css('color', 'red');    // change the CSS color of the <p> tags
+                        $('#login-' + i).html(error); // replace the <p> tags that we created inside the user registration <form> in front/users/login_register.blade.php depending on x in their 'id' HTML attributes 'login-x' (e.g. login-mobile, login-email, ...)
+
+
+                        // Make the Validation Error Messages disappear after a certain amount of time (don't stick)
+                        setTimeout(function() {
+                            // NOTE !!: THOSE NEXT LINES ARE ALL THE SAME!!!
+                            // $('#login-' + i).attr('style', 'display: none');
+                            // $('#login-' + i).css('display', 'none');
+                            $('#login-' + i).css({
+                                // display: 'none'
+                                'display': 'none'
+                            });
+                        }, 3000);
+
+                    });
+
+                } else if (resp.type == 'incorrect') { // if the Validation passes / is okay but the login credentials provided by user are incorrect, login fails, and show a generic 'Wrong Credentials!' messsage    // 'type' is sent as a PHP array key (in the HTTP response from the server (backend)) from inside the userLogin() method in Front/UserController.php
+                    // alert(resp.message);
+                    $('#login-error').attr('style', 'color: red'); // I already did this in the HTML page in the <p> tags in the HTML in front/users/login_register.blade.php (    <p id="login-name"></p>    )    // This is the same as:    $('#login-' + i).css('color', 'red');    // change the CSS color of the <p> tags
+                    $('#login-error').html(resp.message); // replace the <p> tags that we created inside the user registration <form> in front/users/login_register.blade.php depending on x in their 'id' HTML attributes 'login-x' (e.g. login-mobile, login-email, ...)
+
+                } else if (resp.type == 'inactive') { // if the user being authenticated/logged in is inactive/disabled/deactivated by an admin (`status` is zero 0 in `users` table), logout the user, then return them back with a message    // 'type' is sent as a PHP array key (in the HTTP response from the server (backend)) from inside the userLogin() method in Front/UserController.php
+                    // alert(resp.message);
+                    $('#login-error').attr('style', 'color: red'); // I already did this in the HTML page in the <p> tags in the HTML in front/users/login_register.blade.php (    <p id="login-name"></p>    )    // This is the same as:    $('#login-' + i).css('color', 'red');    // change the CSS color of the <p> tags
+                    $('#login-error').html(resp.message); // replace the <p> tags that we created inside the user registration <form> in front/users/login_register.blade.php depending on x in their 'id' HTML attributes 'login-x' (e.g. login-mobile, login-email, ...)
+
+                } else if (resp.type == 'success') { // if there're no validation errors (login is successful), redirect to the Cart page    // 'type' is sent as a PHP array key (in the HTTP response from the server (backend)) from inside the userLogin() method in Front/UserController.php
+                    // console.log(window.location.href);
+                    // return;
+                    window.location.href = resp.url; // redirect user to another page (Cart page) if authentication/login is successful    // 'url' is sent as a PHP array key (in the HTTP response from the server (backend)) from inside the userLogin() method in Front/UserController.php
                 }
             },
             error  : function() { // if the AJAX request is unsuccessful
