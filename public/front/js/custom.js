@@ -259,6 +259,7 @@ $(document).ready(function() {
                     });
 
                 } else if (resp.type == 'success') { // if there're no validation errors (login is successful), redirect to the Cart page    // 'type' is sent as a PHP array key (in the HTTP response from the server (backend)) from inside the userRegister() method in Front/UserController.php
+                    alert(resp.message);
                     // console.log(window.location.href);
                     // return;
                     window.location.href = resp.url; // redirect user to another page (Cart page) if authentication/login is successful    // 'url' is sent as a PHP array key (in the HTTP response from the server (backend)) from inside the userRegister() method in Front/UserController.php
