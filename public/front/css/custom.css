@@ -1,0 +1,20 @@
+/* Add loader css */ /* https://www.youtube.com/watch?v=yPg_eAiaWLw&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=134 */
+
+.loader
+{
+  background: rgba( 255, 255, 255, 0.8 );
+  display: none;
+  height: 100%;
+  position: fixed;
+  width: 100%;
+  z-index: 9999;
+}
+
+.loader img
+{
+  left: 50%;
+  margin-left: -32px;
+  margin-top: -32px;
+  position: absolute;
+  top: 50%;
+}

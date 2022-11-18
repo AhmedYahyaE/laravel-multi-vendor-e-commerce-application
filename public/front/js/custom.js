@@ -91,8 +91,13 @@ function get_filter(class_name) { // get the filter values of a certain filter (
 /* }); */
 
 
+
 // jQuery
 $(document).ready(function() {
+    // Show our Preloader/Loader/Loading page/Preloading screen ALL THE TIME FOR TESTING!    // https://www.youtube.com/watch?v=yPg_eAiaWLw&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=134
+    // $('.loader').show();
+
+
     // the <select> box in front/products/detail.blade.php (to show the correct related `price` and `stock` depending on the selected `size` (from the `products_attributes` table))
     $('#getPrice').change(function() {
         // console.log(this);
@@ -213,6 +218,11 @@ $(document).ready(function() {
 
     // User Registration <form> submission (in front/users/login_register.blade.php)    // https://www.youtube.com/watch?v=u_qC3I3BYAM&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=129
     $('#registerForm').submit(function() { // When the registration <form> is submitted
+
+        // Show our Preloader/Loader/Loading page/Preloading screen when the <form> is submitted    // https://www.youtube.com/watch?v=yPg_eAiaWLw&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=134
+        $('.loader').show();
+
+
         var formdata = $(this).serialize(); // serialize() method comes in handy when submitting an HTML Form using an AJAX request, as it collects all the name/value pairs from the <input>, <textarea>, <select><option>, ... HTML elements of the <form> (instead of the heavy work of assigning an identifier/handle for every <input> and <textarea>, ... using an HTML 'id' or CSS 'class', and then getting the value for every one of them like this:    $('#username).val();    )    // serialize() jQuery method: https://www.w3schools.com/jquery/ajax_serialize.asp
         // // console.log(typeof formdata); // 'string' data type
         // console.log(formdata);
@@ -238,6 +248,10 @@ $(document).ready(function() {
 
                 // https://www.youtube.com/watch?v=u_qC3I3BYAM&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=129
                 if (resp.type == 'error') { // if there're Validation Errors (login fails), show the Validation Error Messages (each of them under its respective <input> field)    // 'type' is sent as a PHP array key (in the HTTP response from the server (backend)) from inside the userRegister() method in Front/UserController.php
+                    // Hide our Preloader/Loader/Loading page/Preloading screen when there's an error    // https://www.youtube.com/watch?v=yPg_eAiaWLw&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=134
+                    $('.loader').hide();
+
+
                     // Note: in HTML in front/users/login_register.blade.php, to conveniently display the errors by jQuery loop, the pattern must be like: register-x (e.g. register-mobile, regitster-email, ... in order for the jQuery loop to work. And x must be identical to the 'name' HTML attributes (e.g. the <input> with the    name='mobile'    HTML attribute must have a <p> with an id HTML attribute    id="register-mobile"    ) so that when the vaildation errors array are sent as a response to the AJAX request, they could conveniently/easily handled by the jQuery $.each() loop)
                     $.each(resp.errors, function(i, error) { // 'i' is the attribute (the 'name' HTML attribute), and 'error' is the validation error    // $.each(): https://api.jquery.com/jquery.each/    // 'errors' is sent as a PHP array key (in the HTTP response from the server (backend)) from inside the userRegister() method in Front/UserController.php
 
@@ -259,10 +273,19 @@ $(document).ready(function() {
                     });
 
                 } else if (resp.type == 'success') { // if there're no validation errors (login is successful), redirect to the Cart page    // 'type' is sent as a PHP array key (in the HTTP response from the server (backend)) from inside the userRegister() method in Front/UserController.php
-                    alert(resp.message);
+                    // alert(resp.message);
+
+
+                    // Hide our Preloader/Loader/Loading page/Preloading screen when the response is 'success'    // https://www.youtube.com/watch?v=yPg_eAiaWLw&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=134
+                    $('.loader').hide();
+
+
+                    $('#register-success').attr('style', 'color: green'); // I already did this in the HTML page in the <p> tags in the HTML in front/users/login_register.blade.php (    <p id="login-name"></p>    )    // This is the same as:    $('#login-' + i).css('color', 'green');    // change the CSS color of the <p> tags
+                    $('#register-success').html(resp.message); // replace the <p> tags that we created inside the user registration <form> in front/users/login_register.blade.php depending on x in their 'id' HTML attributes 'login-x' (e.g. login-mobile, login-email, ...)
+
                     // console.log(window.location.href);
                     // return;
-                    window.location.href = resp.url; // redirect user to another page (Cart page) if authentication/login is successful    // 'url' is sent as a PHP array key (in the HTTP response from the server (backend)) from inside the userRegister() method in Front/UserController.php
+                    // window.location.href = resp.url; // redirect user to another page (Cart page) if authentication/login is successful    // 'url' is sent as a PHP array key (in the HTTP response from the server (backend)) from inside the userRegister() method in Front/UserController.php
                 }
             },
             error  : function() { // if the AJAX request is unsuccessful

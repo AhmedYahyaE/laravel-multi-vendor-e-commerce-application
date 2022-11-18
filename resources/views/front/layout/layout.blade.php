@@ -48,8 +48,22 @@
 
 
 
+        {{-- Our Preloader/Loader/Loading page/Preloading screen --}} {{-- https://www.youtube.com/watch?v=yPg_eAiaWLw&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=134 --}}
+        <link rel="stylesheet" href="{{ url('front/css/custom.css') }}">
+
+
+
     </head>
     <body>
+
+
+        {{-- Our Preloader/Loader/Loading page/Preloading screen --}} {{-- https://www.youtube.com/watch?v=yPg_eAiaWLw&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=134 --}}
+        <div class="loader">
+            <img src="{{ asset('front/images/loaders/loader.gif') }}" alt="loading..." />
+         </div>
+
+
+
         <!-- app -->
         <div id="app">
 

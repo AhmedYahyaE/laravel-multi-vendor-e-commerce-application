@@ -126,6 +126,12 @@
 
 
 
+                        {{-- Registration Success Message using jQuery. Check front/js/custom.js --}} {{-- https://www.youtube.com/watch?v=yPg_eAiaWLw&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=134 --}}
+                        {{-- <p id="register-success" style="color: green"></p> --}}
+                        <p id="register-success"></p>
+
+
+
                         {{-- https://www.youtube.com/watch?v=rOlDDq03veE&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=127 --}}
                         <form id="registerForm" action="javascript:;" method="post"> {{-- We need to deactivate the 'action' HTML attribute (using    'javascript:;'    ) as we'r going to submit using an AJAX call. Check front/js/custom.js --}}
                             @csrf {{-- Preventing CSRF Requests: https://laravel.com/docs/9.x/csrf#preventing-csrf-requests --}}
