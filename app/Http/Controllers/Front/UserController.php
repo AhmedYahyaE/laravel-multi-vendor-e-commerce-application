@@ -269,4 +269,82 @@ class UserController extends Controller
             abort(404);
         }
     }
+
+
+
+    // User Forgot Password Functionality (this route is accessed from the <a> tag in front/users/login_register.blade.php through a 'GET' request, and through a 'POST' request when the HTML Form is submitted in front/users/forgot_password.blade.php))    // https://www.youtube.com/watch?v=ADJ80Zejs4M&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=135
+    public function forgotPassword(Request $request) { // We used match() method to use get() to render the front/users/forgot_password.blade.php page, and post() when the HTML Form in the same page is submitted    // The POST request is from an AJAX request. Check front/js/custom.js
+        if ($request->ajax()) { // if the 'POST' request is coming from an AJAX call (if the Forgot Password HTML Form is submitted (in front/users/forgot_password.blade.php))
+            $data = $request->all(); // Getting the name/value pairs array that are sent from the AJAX request (AJAX call)
+            // dd($data); // dd() method DOESN'T WORK WITH AJAX! - SHOWS AN ERROR!! USE var_dump() and exit; INSTEAD!
+            // echo '<pre>', var_dump($data), '</pre>';
+            // exit;
+
+
+            // Validation    // Manually Creating Validators: https://laravel.com/docs/9.x/validation#manually-creating-validators    // https://www.youtube.com/watch?v=u_qC3I3BYAM&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=129
+            $validator = \Illuminate\Support\Facades\Validator::make($request->all(), [
+                // the 'name' HTML attribute of the request (the array key of the $request array) (ATTRIBUTE) => Validation Rules
+                // 'name'     => 'required|string|max:100',
+                // 'mobile'   => 'required|numeric|digits:11',
+                // 'email'    => 'required|email|max:150|unique:users', // 'unique:users'    means it's unique in the `users` table
+                'email'    => 'required|email|max:150|exists:users', // 'exists:users'    means it must already exist in the `users` table    // exists:table,column: https://laravel.com/docs/9.x/validation#rule-exists
+                // 'password' => 'required|min:6',
+                // 'accept'   => 'required'
+
+            ], [ // Customizing The Error Messages: https://laravel.com/docs/9.x/validation#manual-customizing-the-error-messages
+                // the 'name' HTML attribute of the request (the array key of the $request array) (ATTRIBUTE) => Custom Messages
+                // 'accept.required' => 'Please accept our Terms & Conditions'
+                'email.exists' => 'Email does not exist'
+            ]);
+
+
+
+            if ($validator->passes()) { // if validation passes (is successful), generate a new password for the user
+                $new_password = \Illuminate\Support\Str::random(16);
+                // echo $new_password . '<br>';
+                // exit;
+
+                // Generate a new password
+                // Change the current password immediately as the user forgot it, update it to a new random password, untill the user updates it by themselves
+                \App\Models\User::where('email', $data['email'])->update([
+                    'password' => bcrypt($new_password) // storing the HASH-ed password (not the original password) in the database    // bcrypt(): https://laravel.com/docs/9.x/helpers#method-bcrypt
+                ]);
+
+                // Get user details
+                $userDetails = \App\Models\User::where('email', $data['email'])->first()->toArray();
+
+                // Send an email to the user to get the new password (reset their password)    // HELO / Mailtrap / MailHog: https://laravel.com/docs/9.x/mail#mailtrap    // https://www.youtube.com/watch?v=OtH7CCwnwAo&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=129
+                $email = $data['email']; // the user's email that they entered while submitting the registration form
+                $messageData = [
+                    'name'     => $userDetails['name'], // the user's name that they entered while submitting the registration form
+                    'email'    => $email, // the user's email that they entered while submitting the registration form
+                    'password' => $new_password // the user's email that they entered while submitting the registration form
+                    // 'code'  => base64_encode($data['email']) // We base64 code the user's $email and send it as a Route Parameter from user_confirmation.blade.php to the 'user/confirm/{code}' route in web.php, then it gets base64 decoded again in confirmUser() method in Front/UserController.php    // we will use the opposite: base64_decode() in the confirmUser() method (encode X decode)
+                ];
+                \Illuminate\Support\Facades\Mail::send('emails.user_forgot_password', $messageData, function ($message) use ($email) { // Sending Mail: https://laravel.com/docs/9.x/mail#sending-mail    // 'emails.user_forgot_password' is the resources/views/emails/user_forgot_password.blade.php file inside the 'resources/views/emails' folder that will be sent as an email    // We pass all the variables that the user_forgot_password.blade.php file will use    // https://www.php.net/manual/en/functions.anonymous.php
+                    $message->to($email)->subject('New Password - Stack Developers');
+                });
+
+                // Redirect user with a success message
+                // Here, we return a JSON response because the request is ORIGINALLY submitting an HTML <form> data using an AJAX request. Check    $('#forgotForm').submit();    in front/js/custom.js
+                return response()->json([ // JSON Responses: https://laravel.com/docs/9.x/responses#json-responses
+                    'type'    => 'success',
+                    'message' => 'New Password sent to your registered email.'
+                ]);
+
+            } else { // if validation fails (is unsuccessful), send the Validation Error Messages
+                // Here, we return a JSON response because the request is ORIGINALLY submitting an HTML <form> data using an AJAX request
+                return response()->json([ // JSON Responses: https://laravel.com/docs/9.x/responses#json-responses
+                    'type'   => 'error',
+                    'errors' => $validator->messages() // we'll loop over the Validation Errors Messages array using jQuery    // Working With Error Messages: https://laravel.com/docs/9.x/validation#working-with-error-messages    // https://www.youtube.com/watch?v=u_qC3I3BYAM&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=129
+                ]);
+            }
+
+
+        } else { // if the 'GET' request is coming from the <a> tag in front/users/login_register.blade.php, render the front/users/forgot_password.blade.php page
+            return view('front.users.forgot_password');
+        }
+
+    }
+
 }
