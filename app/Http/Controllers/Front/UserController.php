@@ -73,7 +73,7 @@ class UserController extends Controller
                 });
 
                 // Redirect user back with a success message
-                $redirectTo = url('user/login-register'); // redirect user to the front/users/login-register.blade.php    // Check that route in web.php
+                $redirectTo = url('user/login-register'); // redirect user to the front/users/login_register.blade.php    // Check that route in web.php
 
                 // Here, we return a JSON response because the request is ORIGINALLY submitting an HTML <form> data using an AJAX request
                 return response()->json([ // JSON Responses: https://laravel.com/docs/9.x/responses#json-responses
@@ -138,7 +138,7 @@ class UserController extends Controller
                 // Here, we return a JSON response because the request is ORIGINALLY submitting an HTML <form> data using an AJAX request
                 return response()->json([ // JSON Responses: https://laravel.com/docs/9.x/responses#json-responses
                     'type'   => 'error',
-                    'errors' => $validator->messages() // we'll loop over the Validation Errors Messages array using jQuery    // Working With Error Messages: https://laravel.com/docs/9.x/validation#working-with-error-messages    // https://www.youtube.com/watch?v=u_qC3I3BYAM&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=129
+                    'errors' => $validator->messages() // we'll loop over the Validation Errors Messages array using jQuery to show them in the frontend (check front/js/custom.js)    // Working With Error Messages: https://laravel.com/docs/9.x/validation#working-with-error-messages    // https://www.youtube.com/watch?v=u_qC3I3BYAM&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=129
                 ]);
             }
         }
@@ -214,7 +214,7 @@ class UserController extends Controller
                 // Here, we return a JSON response because the request is ORIGINALLY submitting an HTML <form> data using an AJAX request
                 return response()->json([ // JSON Responses: https://laravel.com/docs/9.x/responses#json-responses
                     'type'   => 'error',
-                    'errors' => $validator->messages() // we'll loop over the Validation Errors Messages array using jQuery    // Working With Error Messages: https://laravel.com/docs/9.x/validation#working-with-error-messages    // https://www.youtube.com/watch?v=u_qC3I3BYAM&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=129
+                    'errors' => $validator->messages() // we'll loop over the Validation Errors Messages array using jQuery to show them in the frontend (check front/js/custom.js)    // Working With Error Messages: https://laravel.com/docs/9.x/validation#working-with-error-messages    // https://www.youtube.com/watch?v=u_qC3I3BYAM&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=129
                 ]);
             }
         }
@@ -336,7 +336,7 @@ class UserController extends Controller
                 // Here, we return a JSON response because the request is ORIGINALLY submitting an HTML <form> data using an AJAX request
                 return response()->json([ // JSON Responses: https://laravel.com/docs/9.x/responses#json-responses
                     'type'   => 'error',
-                    'errors' => $validator->messages() // we'll loop over the Validation Errors Messages array using jQuery    // Working With Error Messages: https://laravel.com/docs/9.x/validation#working-with-error-messages    // https://www.youtube.com/watch?v=u_qC3I3BYAM&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=129
+                    'errors' => $validator->messages() // we'll loop over the Validation Errors Messages array using jQuery to show them in the frontend (check front/js/custom.js)    // Working With Error Messages: https://laravel.com/docs/9.x/validation#working-with-error-messages    // https://www.youtube.com/watch?v=u_qC3I3BYAM&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=129
                 ]);
             }
 
@@ -345,6 +345,79 @@ class UserController extends Controller
             return view('front.users.forgot_password');
         }
 
+    }
+
+
+
+    // Render User User Account page with 'GET' request (front/users/user_account.blade.php), or the HTML Form submission in the same page with 'POST' request using AJAX (to update user details). Check front/js/custom.js    // https://www.youtube.com/watch?v=wWITxuhwLtc&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=136
+    public function userAccount(Request $request) {
+        if ($request->ajax()) { // if the 'POST' request is coming from an AJAX call (update user details)
+            $data = $request->all(); // Getting the name/value pairs array that are sent from the AJAX request (AJAX call)
+            // dd($data); // dd() method DOESN'T WORK WITH AJAX! - SHOWS AN ERROR!! USE var_dump() and exit; INSTEAD!
+            // echo '<pre>', var_dump($data), '</pre>';
+            // exit;
+
+
+            // Validation    // Manually Creating Validators: https://laravel.com/docs/9.x/validation#manually-creating-validators    // https://www.youtube.com/watch?v=u_qC3I3BYAM&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=129
+            $validator = \Illuminate\Support\Facades\Validator::make($request->all(), [
+                // the 'name' HTML attribute of the request (the array key of the $request array) (ATTRIBUTE) => Validation Rules
+                'name'    => 'required|string|max:100',
+                'city'    => 'required|string|max:100',
+                'state'   => 'required|string|max:100',
+                'address' => 'required|string|max:100',
+                'country' => 'required|string|max:100',
+                'mobile'  => 'required|numeric|digits:11',
+                'pincode' => 'required|digits:6',
+                // 'email'    => 'required|email|max:150|unique:users', // 'unique:users'    means it's unique in the `users` table
+                // 'password' => 'required|min:6',
+                // 'accept'   => 'required'
+
+            ] /*, [ // Customizing The Error Messages: https://laravel.com/docs/9.x/validation#manual-customizing-the-error-messages
+                // the 'name' HTML attribute of the request (the array key of the $request array) (ATTRIBUTE) => Custom Messages
+                'accept.required' => 'Please accept our Terms & Conditions'
+            ]*/ );
+
+
+            // Working With Error Messages: https://laravel.com/docs/9.x/validation#working-with-error-messages    // https://www.youtube.com/watch?v=u_qC3I3BYAM&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=129
+            // echo '<pre>', var_dump($validator->messages()), '</pre>';
+            // exit;
+
+            if ($validator->passes()) { // if validation passes (is successful), register (INSERT) the new user into the database `users` table, and log the user in IMMEDIATELY and AUTOMATICALLY and DIRECTLY, and redirect them to the Cart cart.blade.php page
+                // Update user details in `users` table
+                \App\Models\User::where('id', \Auth::user()->id)->update([ // Retrieving The Authenticated User: https://laravel.com/docs/9.x/authentication#retrieving-the-authenticated-user
+                    'name'    => $data['name'], // $data['name']    comes from the 'data' object sent from inside the $.ajax() method in front/js/custom.js file
+                    'mobile'  => $data['mobile'], // $data['mobile']    comes from the 'data' object sent from inside the $.ajax() method in front/js/custom.js file
+                    'city'    => $data['city'], // $data['city']    comes from the 'data' object sent from inside the $.ajax() method in front/js/custom.js file
+                    'state'   => $data['state'], // $data['state']    comes from the 'data' object sent from inside the $.ajax() method in front/js/custom.js file
+                    'country' => $data['country'], // $data['country']    comes from the 'data' object sent from inside the $.ajax() method in front/js/custom.js file
+                    'pincode' => $data['pincode'], // $data['pincode']    comes from the 'data' object sent from inside the $.ajax() method in front/js/custom.js file
+                    'address' => $data['address'], // $data['address']    comes from the 'data' object sent from inside the $.ajax() method in front/js/custom.js file
+                ]);
+
+                // Redirect user back with a success message
+                // Here, we return a JSON response because the request is ORIGINALLY submitting an HTML <form> data using an AJAX request
+                return response()->json([ // JSON Responses: https://laravel.com/docs/9.x/responses#json-responses
+                    'type'    => 'success',
+                    // 'url'     => $redirectTo, // redirect user to the Cart cart.blade.php page
+                    'message' => 'Your contact/billing details successfully updated!'
+                ]);
+
+            } else { // if validation fails (is unsuccessful), send the Validation Error Messages
+                // Here, we return a JSON response because the request is ORIGINALLY submitting an HTML <form> data using an AJAX request
+                return response()->json([ // JSON Responses: https://laravel.com/docs/9.x/responses#json-responses
+                    'type'   => 'error',
+                    'errors' => $validator->messages() // we'll loop over the Validation Errors Messages array using jQuery to show them in the frontend (Check    $('#accountForm').submit();    in front/js/custom.js)    // Working With Error Messages: https://laravel.com/docs/9.x/validation#working-with-error-messages    // https://www.youtube.com/watch?v=u_qC3I3BYAM&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=129
+                ]);
+            }
+
+        } else { // if it's a 'GET' request, render front/users/user_account.blade.php
+            // Fetch all of the world countries from the database table `countries`: https://www.youtube.com/watch?v=zENahhmAM0w&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=30
+            $countries = \App\Models\Country::where('status', 1)->get()->toArray(); // get the countries which have stats = 1 (to ignore the blacklisted countries, in case)
+            // dd($countries);
+
+
+            return view('front.users.user_account')->with(compact('countries'));
+        }
     }
 
 }

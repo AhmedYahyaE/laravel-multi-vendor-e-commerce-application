@@ -484,7 +484,7 @@ class AdminController extends Controller
 
 
 
-        // Fetch all of the world countries from the database table `country`: https://www.youtube.com/watch?v=zENahhmAM0w&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=30
+        // Fetch all of the world countries from the database table `countries`: https://www.youtube.com/watch?v=zENahhmAM0w&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=30
         $countries = \App\Models\Country::where('status', 1)->get()->toArray(); // get the countries which have stats = 1 (to ignore the blacklisted countries, in case)
         // dd($countries);
 
