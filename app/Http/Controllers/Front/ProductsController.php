@@ -443,8 +443,16 @@ class ProductsController extends Controller
                 $item->save();
             }
 
+
+
             /*
             // ORIGINAL CODE:
+            // Instructor corrected issue (adding an already existing product to Cart) later this way in: 1:44 in https://www.youtube.com/watch?v=vGux2yXHOI8    // I developed an even better solution with respect to User Experience above there!
+            if ($countProducts > 0) {
+                return redirect()->back()->with('error_message', 'Product already exists in Cart!');
+            }
+
+
             // INSERT the ordered product `product_id`, the user's session ID `session_id`, `size` and `quantity` in the `carts` table
             $item = new \App\Models\Cart; // the `carts` table
 

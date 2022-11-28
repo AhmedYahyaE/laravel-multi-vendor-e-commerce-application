@@ -385,10 +385,10 @@ class UserController extends Controller
             if ($validator->passes()) { // if validation passes (is successful), register (INSERT) the new user into the database `users` table, and log the user in IMMEDIATELY and AUTOMATICALLY and DIRECTLY, and redirect them to the Cart cart.blade.php page
                 // Update user details in `users` table
                 \App\Models\User::where('id', \Auth::user()->id)->update([ // Retrieving The Authenticated User: https://laravel.com/docs/9.x/authentication#retrieving-the-authenticated-user
-                    'name'    => $data['name'], // $data['name']    comes from the 'data' object sent from inside the $.ajax() method in front/js/custom.js file
-                    'mobile'  => $data['mobile'], // $data['mobile']    comes from the 'data' object sent from inside the $.ajax() method in front/js/custom.js file
-                    'city'    => $data['city'], // $data['city']    comes from the 'data' object sent from inside the $.ajax() method in front/js/custom.js file
-                    'state'   => $data['state'], // $data['state']    comes from the 'data' object sent from inside the $.ajax() method in front/js/custom.js file
+                    'name'    => $data['name'],    // $data['name']       comes from the 'data' object sent from inside the $.ajax() method in front/js/custom.js file
+                    'mobile'  => $data['mobile'],  // $data['mobile']     comes from the 'data' object sent from inside the $.ajax() method in front/js/custom.js file
+                    'city'    => $data['city'],    // $data['city']       comes from the 'data' object sent from inside the $.ajax() method in front/js/custom.js file
+                    'state'   => $data['state'],   // $data['state']      comes from the 'data' object sent from inside the $.ajax() method in front/js/custom.js file
                     'country' => $data['country'], // $data['country']    comes from the 'data' object sent from inside the $.ajax() method in front/js/custom.js file
                     'pincode' => $data['pincode'], // $data['pincode']    comes from the 'data' object sent from inside the $.ajax() method in front/js/custom.js file
                     'address' => $data['address'], // $data['address']    comes from the 'data' object sent from inside the $.ajax() method in front/js/custom.js file
@@ -417,6 +417,83 @@ class UserController extends Controller
 
 
             return view('front.users.user_account')->with(compact('countries'));
+        }
+    }
+
+
+
+    // User Account Update Password HTML Form submission via AJAX. Check front/js/custom.js    // https://www.youtube.com/watch?v=vGux2yXHOI8
+    public function userUpdatePassword(Request $request) {
+        if ($request->ajax()) { // if the 'POST' request is coming from an AJAX call (update user details)
+            $data = $request->all(); // Getting the name/value pairs array that are sent from the AJAX request (AJAX call)
+            // dd($data); // dd() method DOESN'T WORK WITH AJAX! - SHOWS AN ERROR!! USE var_dump() and exit; INSTEAD!
+            // echo '<pre>', var_dump($data), '</pre>';
+            // exit;
+
+
+            // Validation    // Manually Creating Validators: https://laravel.com/docs/9.x/validation#manually-creating-validators    // https://www.youtube.com/watch?v=u_qC3I3BYAM&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=129
+            $validator = \Illuminate\Support\Facades\Validator::make($request->all(), [
+                // the 'name' HTML attribute of the request (the array key of the $request array) (ATTRIBUTE) => Validation Rules
+                'current_password'  => 'required',
+                'new_password'     => 'required|min:6',
+                'confirm_password' => 'required|min:6|same:new_password' // same:field: https://laravel.com/docs/9.x/validation#rule-same
+                // 'name'    => 'required|string|max:100',
+                // 'city'    => 'required|string|max:100',
+                // 'state'   => 'required|string|max:100',
+                // 'address' => 'required|string|max:100',
+                // 'country' => 'required|string|max:100',
+                // 'mobile'  => 'required|numeric|digits:11',
+                // 'pincode' => 'required|digits:6',
+                // 'email'    => 'required|email|max:150|unique:users', // 'unique:users'    means it's unique in the `users` table
+                // 'password' => 'required|min:6',
+                // 'accept'   => 'required'
+
+            ] /*, [ // Customizing The Error Messages: https://laravel.com/docs/9.x/validation#manual-customizing-the-error-messages
+                // the 'name' HTML attribute of the request (the array key of the $request array) (ATTRIBUTE) => Custom Messages
+                'accept.required' => 'Please accept our Terms & Conditions'
+            ]*/ );
+
+
+            // Working With Error Messages: https://laravel.com/docs/9.x/validation#working-with-error-messages    // https://www.youtube.com/watch?v=u_qC3I3BYAM&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=129
+            // echo '<pre>', var_dump($validator->messages()), '</pre>';
+            // exit;
+
+            if ($validator->passes()) { // if validation passes (is successful), update the user's current password
+                $current_password = $data['current_password']; // $data['current_password']    comes from the 'data' object sent from inside the $.ajax() method in front/js/custom.js file
+                $checkPassword    = \App\Models\User::where('id', \Auth::user()->id)->first();
+
+                if (\Hash::check($current_password, $checkPassword->password)) { // if the entered current password is correct, update the current password    // Confirming The Password: https://laravel.com/docs/9.x/authentication#confirming-the-password
+                    // Update the user's current password to the new password
+                    $user = \App\Models\User::find(\Auth::user()->id);
+                    $user->password = bcrypt($data['new_password']); // $data['new_password']    comes from the 'data' object sent from inside the $.ajax() method in front/js/custom.js file
+                    $user->save();
+
+                    // Redirect user back with a success message
+                    // Here, we return a JSON response because the request is ORIGINALLY submitting an HTML <form> data using an AJAX request
+                    return response()->json([ // JSON Responses: https://laravel.com/docs/9.x/responses#json-responses
+                        'type'    => 'success',
+                        // 'url'     => $redirectTo, // redirect user to the Cart cart.blade.php page
+                        'message' => 'Account password successfully updated!'
+                    ]);
+
+                } else { // if the entered current password is incorrect/wrong, redirect with an error message
+                    // Redirect user back with an error message
+                    // Here, we return a JSON response because the request is ORIGINALLY submitting an HTML <form> data using an AJAX request
+                    return response()->json([ // JSON Responses: https://laravel.com/docs/9.x/responses#json-responses
+                        'type'    => 'incorrect',
+                        // 'url'     => $redirectTo, // redirect user to the Cart cart.blade.php page
+                        'message' => 'Your current password is incorrect!'
+                    ]);
+                }
+
+            } else { // if validation fails (is unsuccessful), send the Validation Error Messages
+                // Here, we return a JSON response because the request is ORIGINALLY submitting an HTML <form> data using an AJAX request
+                return response()->json([ // JSON Responses: https://laravel.com/docs/9.x/responses#json-responses
+                    'type'   => 'error',
+                    'errors' => $validator->messages() // we'll loop over the Validation Errors Messages array using jQuery to show them in the frontend (Check    $('#accountForm').submit();    in front/js/custom.js)    // Working With Error Messages: https://laravel.com/docs/9.x/validation#working-with-error-messages    // https://www.youtube.com/watch?v=u_qC3I3BYAM&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=129
+                ]);
+            }
+
         }
     }
 
