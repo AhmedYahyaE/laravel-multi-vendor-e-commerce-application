@@ -19,7 +19,7 @@ Route::get('/', function () {
 
 Route::get('/dashboard', function () {
     return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
+})->middleware(['auth'])->name('dashboard'); // Protecting Routes: https://laravel.com/docs/9.x/authentication#protecting-routes
 
 require __DIR__.'/auth.php';
 
@@ -182,7 +182,7 @@ Route::namespace('App\Http\Controllers\Front')->group(function() {
 
 
     // Render User Login/Register page (front/users/login_register.blade.php)    // https://www.youtube.com/watch?v=xYzsUn8_NT0&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=127
-    Route::get('user/login-register', 'UserController@loginRegister');
+    Route::get('user/login-register', ['as' => 'login', 'uses' => 'UserController@loginRegister']); // 'as' => 'login'    is Giving this route a name 'login' route in order for the 'auth' middleware ('auth' middleware is the Authenticate.php) to redirect to the right page, check https://www.youtube.com/watch?v=VK2RX6zJ220&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=137    // Named Routes: https://laravel.com/docs/9.x/routing#named-routes
 
     // User Registration (in front/users/login_register.blade.php) <form> submission using an AJAX request. Check front/js/custom.js    // https://www.youtube.com/watch?v=rOlDDq03veE&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=127
     Route::post('user/register', 'UserController@userRegister');
@@ -199,9 +199,16 @@ Route::namespace('App\Http\Controllers\Front')->group(function() {
     // User account Confirmation E-mail which contains the 'Activation Link' to activate the user account (in resources/views/emails/confirmation.blade.php, using Mailtrap)    // https://www.youtube.com/watch?v=hpG0UD_DuR4&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=133
     Route::get('user/confirm/{code}', 'UserController@confirmAccount'); // {code} is the base64 encoded user's 'Activation Code' sent to the user in the Confirmation E-mail with which they have registered, which is received as a Route Parameters/URL Paramters in the 'Activation Link': https://laravel.com/docs/9.x/routing#required-parameters    // this route is requested (accessed/opened) from inside the mail sent to user (in resources/views/emails/confirmation.blade.php)
 
-    // Render User Account page with 'GET' request (front/users/user_account.blade.php), or the HTML Form submission in the same page with 'POST' request using AJAX (to update user details). Check front/js/custom.js    // https://www.youtube.com/watch?v=wWITxuhwLtc&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=136
-    Route::match(['GET', 'POST'], 'user/account', 'UserController@userAccount');
 
-    // User Account Update Password HTML Form submission via AJAX. Check front/js/custom.js    // https://www.youtube.com/watch?v=vGux2yXHOI8
-    Route::post('user/update-password', 'UserController@userUpdatePassword');
+
+    // Protecting the routes of user (to prevent access to these links while being unauthenticated/not being logged in (logged out))    // Protecting Routes: https://laravel.com/docs/9.x/authentication#protecting-routes    // https://www.youtube.com/watch?v=VK2RX6zJ220&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=137
+    Route::group(['middleware' => ['auth']], function() {
+            // Render User Account page with 'GET' request (front/users/user_account.blade.php), or the HTML Form submission in the same page with 'POST' request using AJAX (to update user details). Check front/js/custom.js    // https://www.youtube.com/watch?v=wWITxuhwLtc&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=136
+        Route::match(['GET', 'POST'], 'user/account', 'UserController@userAccount');
+
+        // User Account Update Password HTML Form submission via AJAX. Check front/js/custom.js    // https://www.youtube.com/watch?v=vGux2yXHOI8
+        Route::post('user/update-password', 'UserController@userUpdatePassword');
+    });
+
+
 });
