@@ -174,7 +174,7 @@ $sections = \App\Models\Section::sections();
                             <li>
                                 <a id="mini-cart-trigger">
                                 <i class="ion ion-md-basket"></i>
-                                <span class="item-counter totalCartItems">{{ totalCartItems() }}</span> {{-- totalCartItems() function is in our custom Helpers/Helper.php file that we have registered in 'composer.json' file --}} {{-- We created the CSS class 'totalCartItems' to use it in front/js/custom.js to update the total cart items via AJAX, because in pages that we originally use AJAX to update the cart items (such as when we delete a cart item in http://127.0.0.1:8000/cart using AJAX), the number doesnt' change in the header automatically because AJAX is already used and no page reload/refresh has occurred. Check 12:08 in https://www.youtube.com/watch?v=J8ynmQSbZYY&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=139 --}}
+                                <span class="item-counter totalCartItems">{{ totalCartItems() }}</span> {{-- totalCartItems() function is in our custom Helpers/Helper.php file that we have registered in 'composer.json' file --}} {{-- We created the CSS class 'totalCartItems' to use it in front/js/custom.js to update the total cart items via AJAX, because in pages that we originally use AJAX to update the cart items (such as when we delete a cart item in http://127.0.0.1:8000/cart using AJAX), the number doesn't change in the header automatically because AJAX is already used and no page reload/refresh has occurred. Check 12:08 in https://www.youtube.com/watch?v=J8ynmQSbZYY&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=139 --}}
                                 <span class="item-price">$220.00</span>
                                 </a>
                             </li>
@@ -198,58 +198,17 @@ $sections = \App\Models\Section::sections();
         </div>
     </div>
     <!-- Responsive-Buttons /- -->
-    <!-- Mini Cart -->
-    <div class="mini-cart-wrapper">
-        <div class="mini-cart">
-            <div class="mini-cart-header">
-                YOUR CART
-                <button type="button" class="button ion ion-md-close" id="mini-cart-close"></button>
-            </div>
-            <ul class="mini-cart-list">
-                <li class="clearfix">
-                    <a href="single-product.html">
-                    <img src="{{ asset('front/images/product/product@1x.jpg') }}" alt="Product">
-                    <span class="mini-item-name">Product name</span>
-                    <span class="mini-item-price">$100.00</span>
-                    <span class="mini-item-quantity"> x 1 </span>
-                    </a>
-                </li>
-                <li class="clearfix">
-                    <a href="single-product.html">
-                    <img src="{{ asset('front/images/product/product@1x.jpg') }}" alt="Product">
-                    <span class="mini-item-name">Product name</span>
-                    <span class="mini-item-price">$100.00</span>
-                    <span class="mini-item-quantity"> x 1 </span>
-                    </a>
-                </li>
-                <li class="clearfix">
-                    <a href="single-product.html">
-                    <img src="{{ asset('front/images/product/product@1x.jpg') }}" alt="Product">
-                    <span class="mini-item-name">Product name</span>
-                    <span class="mini-item-price">$100.00</span>
-                    <span class="mini-item-quantity"> x 1 </span>
-                    </a>
-                </li>
-                <li class="clearfix">
-                    <a href="single-product.html">
-                    <img src="{{ asset('front/images/product/product@1x.jpg') }}" alt="Product">
-                    <span class="mini-item-name">Product name</span>
-                    <span class="mini-item-price">$100.00</span>
-                    <span class="mini-item-quantity"> x 1 </span>
-                    </a>
-                </li>
-            </ul>
-            <div class="mini-shop-total clearfix">
-                <span class="mini-total-heading float-left">Total:</span>
-                <span class="mini-total-price float-right">$400.00</span>
-            </div>
-            <div class="mini-action-anchors">
-                <a href="cart.html" class="cart-anchor">View Cart</a>
-                <a href="checkout.html" class="checkout-anchor">Checkout</a>
-            </div>
-        </div>
+
+
+
+    <!-- Mini Cart Widget -->
+    <div id="appendHeaderCartItems"> {{-- We created the CSS class 'appendHeaderCartItems' to use it in front/js/custom.js to update the total cart items via AJAX in the Mini Cart Wedget, because in pages that we originally use AJAX to update the cart items (such as when we delete a cart item in http://127.0.0.1:8000/cart using AJAX), the number doesn't change in the header automatically because AJAX is already used and no page reload/refresh has occurred. Check https://www.youtube.com/watch?v=dH4eyzRUO-c&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=141 --}}
+        @include('front.layout.header_cart_items')
     </div>
-    <!-- Mini Cart /- -->
+    <!-- Mini Cart Widget /- -->
+
+
+
     <!-- Bottom-Header -->
     <div class="full-layer-bottom-header">
         <div class="container">

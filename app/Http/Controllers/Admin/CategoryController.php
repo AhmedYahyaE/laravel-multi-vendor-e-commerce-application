@@ -212,7 +212,7 @@ class CategoryController extends Controller
                 ])->get();
             // }
             
-            return view('admin.categories.append_categories_level')->with(compact('getCategories')); // returning the WHOLE append_categories_level.blade.php page
+            return view('admin.categories.append_categories_level')->with(compact('getCategories')); // return-ing the WHOLE append_categories_level.blade.php page
         }
     }
 
