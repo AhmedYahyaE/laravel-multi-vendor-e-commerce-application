@@ -42,5 +42,6 @@ class DatabaseSeeder extends Seeder
         $this->call(BannersTableSeeder::class);
         $this->call(FiltersTableSeeder::class);
         $this->call(FiltersValuesTableSeeder::class);
+        $this->call(CouponsTableSeeder::class); // https://www.youtube.com/watch?v=egx7-Hmb63Q&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=142
     }
 }
