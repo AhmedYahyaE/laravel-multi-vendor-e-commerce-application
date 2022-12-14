@@ -108,11 +108,12 @@ class ProductsController extends Controller
                 // https://www.youtube.com/watch?v=0opzfLVfwqg&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=93 AND the beginning of https://www.youtube.com/watch?v=Q9-5g1qgsn4&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=94
                 // Size, price, color, brand, … are also Dynamic Filters, but won't be managed like the other Dynamic Filters, but we will manage every filter of them from the suitable respective database table, like the 'size' Filter from the `products_attributes` database table, 'color' Filter and `price` Filter from `products` table, 'brand' Filter from `brands` table
                 // Third: the 'price' filter (from `products` database table)
+                /*
                 if (isset($data['price']) && !empty($data['price'])) { // coming from the AJAX call in front/js/custom.js    // example:    $data['price'] = 'Large'
                     // echo dd($data['price']); // dd() method DOESN'T WORK WITH AJAX! - SHOWS AN ERROR!! USE var_dump() and exit; INSTEAD!
                     // echo '<pre>', var_dump($data['price']), '</pre>';
                     // exit;
-
+                */
 
                     /*
                     $implodePrices = implode('-', $data['price']); // convert the price ranges array to a one string
@@ -132,7 +133,7 @@ class ProductsController extends Controller
                     */
 
 
-
+                /*
                     // ENHANCING THE 'price' FILTER (TO AVOID WRONG RESULTS WHEN CHECKING TWO NON-ADJOINING PRICE RANGE CHECBOXES (NOT NEXT TO EACH OTHER) in filters.blade.php)
                     // https://www.youtube.com/watch?v=Q9-5g1qgsn4&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=94
                     foreach ($data['price'] as $key => $price) {
@@ -160,7 +161,25 @@ class ProductsController extends Controller
                     // exit;
 
                     $categoryProducts->whereIn('products.id', $productIds); // `products.id` means that `products` is the table name (means grab the `id` column of the `products` table)
-                }
+                */
+
+
+
+                    // Correction by the instructor (in the Youtube comments) of the AJAX issue that occurs when using the price filter along with any other filter: https://www.youtube.com/watch?v=egx7-Hmb63Q&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=142
+                    // checking for Price
+                    $productIds = array();
+                    if(!empty($data['price'])){
+                        foreach($data['price'] as $key => $price){
+                            $priceArr = explode('-',$price);
+                            if(isset($priceArr[0]) && isset($priceArr[1])){
+                                $getPricepids = \App\Models\Product::select('id')->whereBetween('product_price', [$priceArr[0], $priceArr[1]])->get()->toArray();
+                                $productIds[] = array_column($getPricepids, 'id');
+                            }
+                        }
+                        $productIds = array_unique(\Illuminate\Support\Arr::flatten($productIds)); // Arr::flatten(): https://laravel.com/docs/9.x/helpers#method-array-flatten
+                        $categoryProducts->whereIn('products.id',$productIds);
+                    }
+
 
                 // https://www.youtube.com/watch?v=Q9-5g1qgsn4&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=96
                 // Size, price, color, brand, … are also Dynamic Filters, but won't be managed like the other Dynamic Filters, but we will manage every filter of them from the suitable respective database table, like the 'size' Filter from the `products_attributes` database table, 'color' Filter and `price` Filter from `products` table, 'brand' Filter from `brands` table
