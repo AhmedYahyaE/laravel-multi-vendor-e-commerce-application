@@ -24,7 +24,7 @@ class CouponsTableSeeder extends Seeder
                 'coupon_code'   => 'test10',
                 'categories'    => 1,
                 'users'         => '', // empty string means coupon is for ALL users
-                'coupon_type'   => 'Single',
+                'coupon_type'   => 'Single Time',
                 'amount_type'   => 'Percentage',
                 'amount'        => 10,
                 'expiry_date'   => '2022-12-31', // MySQL date format Y-M-D
@@ -37,7 +37,7 @@ class CouponsTableSeeder extends Seeder
                 'coupon_code'   => 'test20',
                 'categories'    => 1,
                 'users'         => '', // empty string means coupon is for ALL users
-                'coupon_type'   => 'Single',
+                'coupon_type'   => 'Single Time',
                 'amount_type'   => 'Percentage',
                 'amount'        => 20,
                 'expiry_date'   => '2022-12-31', // MySQL date format Y-M-D

@@ -122,7 +122,7 @@
                             {{-- Products attributes add//remove input fields dynamically using jQuery --}}
                             <div class="form-group">
                                 <div class="field_wrapper">
-                                    <input type="file" name="images[]" multiple id="images"> {{-- Upload multiple images for the product --}} {{-- "multiple" attribute: https://www.w3schools.com/tags/att_multiple.asp --}}
+                                    <input type="file" name="images[]" multiple id="images"> {{-- Upload multiple images for the product --}} {{-- "multiple" HTML attribute: https://www.w3schools.com/tags/att_multiple.asp --}}
                                 </div>
                             </div>
                             <button type="submit" class="btn btn-primary mr-2">Submit</button>

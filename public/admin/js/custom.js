@@ -571,4 +571,14 @@ $(document).ready(function() {
     });
 
 
+
+    // Show/Hide Coupon fields for Coupon Options (Manual/Automatic) in admin/coupons/add_edit_coupon.blade.php    // https://www.youtube.com/watch?v=SJ4rhQ71fj4&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=144
+    $('#ManualCoupon').click(function() {
+        $('#couponField').show();
+    });
+    $('#AutomaticCoupon').click(function() {
+        $('#couponField').hide();
+    });
+
+
 }); // End of $(document).ready()

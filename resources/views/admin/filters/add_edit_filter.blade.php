@@ -98,7 +98,7 @@
                                 {{-- Note: Dynamic Filters are applied to `categories` (parent categories and subcategories (child categories)), and not `sections`! --}}
                                 <label for="cat_ids">Select Category</label>
                                 {{-- <input type="text" class="form-control" id="cat_ids" placeholder="Enter Category Name" name="cat_ids" @if (!empty($filter['name'])) value="{{ $filter['cat_ids'] }}" @else value="{{ old('cat_ids') }}" @endif> <!-- Check 10:10 in https://www.youtube.com/watch?v=YqBzJmwrh8I&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=37 --> --}} {{-- Repopulating Forms (using old() method): https://laravel.com/docs/9.x/validation#repopulating-forms --}}
-                                <select name="cat_ids[]" id="cat_ids" class="form-control text-dark" multiple style="height: 200px"> {{-- name="cat_ids[]" is an array because we used the "multiple" attribute to be able to choose multiple categories at the same time --}}
+                                <select name="cat_ids[]" id="cat_ids" class="form-control text-dark" multiple style="height: 200px"> {{-- We used the Square Brackets [] in name="cat_ids[]" is an array because we used the "multiple" HTML attribute to be able to choose multiple categories at the same time --}}
                                     <option value="">Select Category</option>
                                     @foreach ($categories as $section) {{-- $categories are ALL the `sections` with their related 'parent' categories (if any (if exist)) and subcategories or `child` categories (if any (if exist)) --}} {{-- Check FilterController.php --}}
                                         <optgroup label="{{ $section['name'] }}"> {{-- sections --}}

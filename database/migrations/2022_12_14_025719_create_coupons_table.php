@@ -22,11 +22,12 @@ return new class extends Migration
             $table->string('coupon_option');
             $table->string('coupon_code');
             $table->text('categories');
+            $table->text('brands');
             $table->text('users'); // empty string means coupon is for ALL users
-            $table->string('coupon_type');
-            $table->string('amount_type');
+            $table->string('coupon_type'); // 'Multiple' or 'Single': 'Multiple' means that coupon can be availed/redeemed by users 'multiple' times, and 'Single' means coupon can be availed/redeemed by users only 'one' 'single' time
+            $table->string('amount_type'); // 'Percentage' or 'Fixed': The discount is either a 'percentage' (i.e. 20%), or a 'fixed' amount (i.e. 20 USD)
             $table->float('amount');
-            $table->date('expiry_date'); // MySQL date format Y-M-D
+            $table->date('expiry_date'); // MySQL date format Y-M-D    // Coupon expiry date
             $table->tinyInteger('status');
 
             $table->timestamps();
