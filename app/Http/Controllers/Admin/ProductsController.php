@@ -37,7 +37,7 @@ class ProductsController extends Controller
         if ($adminType == 'vendor') { // if the authenticated user (the logged in user) is 'vendor', check his `status`
             $vendorStatus = \Auth::guard('admin')->user()->status; // `status` is the column in `admins` table    // Retrieving The Authenticated User and getting their `status` column in `admins` table    // https://laravel.com/docs/9.x/authentication#retrieving-the-authenticated-user
             if ($vendorStatus == 0) { // if the 'vendor' is inactive/disabled
-                return redirect('admin/update-vendor-details/personal')->with('error_message', 'Your Vendor Account is not approved yet. Please make sure to fill your valid personal, business and bank details'); // the error_message will appear to the vendor in the route: 'admin/update-vendor-details/personal' which is the update_vendor_details.blade.php page
+                return redirect('admin/update-vendor-details/personal')->with('error_message', 'Your Vendor Account is not approved yet. Please make sure to fill your valid personal, business and bank details.'); // the error_message will appear to the vendor in the route: 'admin/update-vendor-details/personal' which is the update_vendor_details.blade.php page
             }
         }
 
@@ -64,7 +64,7 @@ class ProductsController extends Controller
     }
     
     public function updateProductStatus(Request $request) { // Update Product Status using AJAX in products.blade.php
-        if ($request->ajax()) { // if the request is coming from an AJAX call
+        if ($request->ajax()) { // if the request is coming via an AJAX call
             $data = $request->all(); // Getting the name/value pairs array that are sent from the AJAX request (AJAX call)
             // dd($data); // dd() method DOESN'T WORK WITH AJAX! - SHOWS AN ERROR!! USE var_dump() and exit; INSTEAD!
             // echo '<pre>', var_dump($data), '</pre>';
@@ -431,7 +431,7 @@ class ProductsController extends Controller
     }
 
     public function updateAttributeStatus(Request $request) { // Update Attribute Status using AJAX in add_edit_attributes.blade.php
-        if ($request->ajax()) { // if the request is coming from an AJAX call
+        if ($request->ajax()) { // if the request is coming via an AJAX call
             $data = $request->all(); // Getting the name/value pairs array that are sent from the AJAX request (AJAX call)
             // dd($data); // dd() method DOESN'T WORK WITH AJAX! - SHOWS AN ERROR!! USE var_dump() and exit; INSTEAD!
             // echo '<pre>', var_dump($data), '</pre>';
@@ -540,7 +540,7 @@ class ProductsController extends Controller
     }
 
     public function updateImageStatus(Request $request) { // Update Image Status using AJAX in add_images.blade.php
-        if ($request->ajax()) { // if the request is coming from an AJAX call
+        if ($request->ajax()) { // if the request is coming via an AJAX call
             $data = $request->all(); // Getting the name/value pairs array that are sent from the AJAX request (AJAX call)
             // dd($data); // dd() method DOESN'T WORK WITH AJAX! - SHOWS AN ERROR!! USE var_dump() and exit; INSTEAD!
             // echo '<pre>', var_dump($data), '</pre>';

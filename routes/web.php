@@ -141,6 +141,7 @@ Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function
 
 
 
+
 // The website 'FRONT' Section routes: (Route Groups: https://laravel.com/docs/9.x/routing#route-groups)
 Route::namespace('App\Http\Controllers\Front')->group(function() {
     Route::get('/', 'IndexController@index');
@@ -215,6 +216,9 @@ Route::namespace('App\Http\Controllers\Front')->group(function() {
 
         // User Account Update Password HTML Form submission via AJAX. Check front/js/custom.js    // https://www.youtube.com/watch?v=vGux2yXHOI8
         Route::post('user/update-password', 'UserController@userUpdatePassword');
+
+        // Coupon Code redemption (Apply coupon) / Coupon Code HTML Form submission via AJAX in front/products/cart_items.blade.php, check front/js/custom.js    // https://www.youtube.com/watch?v=uZrZKqZnYdA&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=147
+        Route::post('/apply-coupon', 'ProductsController@applyCoupon'); // Important Note: We added this route here as a protected route inside the 'auth' middleware group because ONLY logged in/authenticated users are allowed to redeem Coupons!
     });
 
 

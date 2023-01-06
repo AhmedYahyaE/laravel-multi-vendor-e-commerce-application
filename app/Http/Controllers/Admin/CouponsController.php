@@ -16,8 +16,25 @@ class CouponsController extends Controller
         // Correcting issues in the Skydash Admin Panel Sidebar using Session:  Check 6:33 in https://www.youtube.com/watch?v=i_SUdNILIrc&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=29
         \Session::put('page', 'coupons');
 
-        $coupons = \App\Models\Coupon::get()->toArray();
-        // dd($coupons);
+
+        // Check 30:55 in https://www.youtube.com/watch?v=LIxst1rLvlY&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=149
+        // Get ONLY the coupons that BELONG TO the 'vendor' to show them up in (not ALL coupons show up) in coupons.blade.php, and also make sure that the 'vendor' account is active/enabled/approved (`status` is 1) before they can access the products page    // Check 11:44 in https://www.youtube.com/watch?v=UXUDxtN68XE&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=103
+        $adminType = \Auth::guard('admin')->user()->type;      // `type`      is the column in `admins` table    // Retrieving The Authenticated User and getting their `type`      column in `admins` table    // https://laravel.com/docs/9.x/authentication#retrieving-the-authenticated-user
+        $vendor_id = \Auth::guard('admin')->user()->vendor_id; // `vendor_id` is the column in `admins` table    // Retrieving The Authenticated User and getting their `vendor_id` column in `admins` table    // https://laravel.com/docs/9.x/authentication#retrieving-the-authenticated-user
+
+        if ($adminType == 'vendor') { // if the authenticated user (the logged in user) is 'vendor', check his `status`
+            $vendorStatus = \Auth::guard('admin')->user()->status; // `status` is the column in `admins` table    // Retrieving The Authenticated User and getting their `status` column in `admins` table    // https://laravel.com/docs/9.x/authentication#retrieving-the-authenticated-user
+            // dd($vendorStatus);
+            if ($vendorStatus == 0) { // if the 'vendor' is inactive/disabled
+                return redirect('admin/update-vendor-details/personal')->with('error_message', 'Your Vendor Account is not approved yet. Please make sure to fill your valid personal, business and bank details'); // the error_message will appear to the vendor in the route: 'admin/update-vendor-details/personal' which is the update_vendor_details.blade.php page
+            }
+
+            $coupons = \App\Models\Coupon::where('vendor_id', $vendor_id)->get()->toArray(); // Get ONLY the coupons that BELONG TO the vendor
+
+        } else { // if the $adminType is 'admin'
+            $coupons = \App\Models\Coupon::get()->toArray();
+            // dd($coupons);
+        }
 
 
         return view('admin.coupons.coupons')->with(compact('coupons'));
@@ -25,7 +42,7 @@ class CouponsController extends Controller
 
     // Update Coupon Status (active/inactive) via AJAX in admin/coupons/coupons.blade.php, check admin/js/custom.js    // https://www.youtube.com/watch?v=VYUjkgA9W0k&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=143
     public function updateCouponStatus(Request $request) {
-        if ($request->ajax()) { // if the request is coming from an AJAX call
+        if ($request->ajax()) { // if the request is coming via an AJAX call
             $data = $request->all(); // Getting the name/value pairs array that are sent from the AJAX request (AJAX call)
             // dd($data); // dd() method DOESN'T WORK WITH AJAX! - SHOWS AN ERROR!! USE var_dump() and exit; INSTEAD!
             // echo '<pre>', var_dump($data), '</pre>';

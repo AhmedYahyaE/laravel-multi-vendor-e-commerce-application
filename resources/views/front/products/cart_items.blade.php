@@ -102,22 +102,15 @@
     </table>
 </div>
 <!-- Products-List-Wrapper /- -->
-<!-- Coupon -->
-<div class="coupon-continue-checkout u-s-m-b-60">
-    <div class="coupon-area">
-        <h6>Enter your coupon code if you have one.</h6>
-        <div class="coupon-field">
-            <label class="sr-only" for="coupon-code">Apply Coupon</label>
-            <input id="coupon-code" type="text" class="text-field" placeholder="Coupon Code">
-            <button type="submit" class="button">Apply Coupon</button>
-        </div>
-    </div>
-    <div class="button-area">
-        <a href="shop-v1-root-category.html" class="continue">Continue Shopping</a>
-        <a href="checkout.html" class="checkout">Proceed to Checkout</a>
-    </div>
-</div>
-<!-- Coupon /- -->
+
+
+
+
+
+{{-- To solve the problem of Submiting the Coupon Code works only once, we moved the Coupon part from cart_items.blade.php to here in cart.blade.php. Check 21:39 in https://www.youtube.com/watch?v=qRarBk49t7Q&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=149 --}} {{-- Explanation of the problem: http://publicvoidlife.blogspot.com/2014/03/on-on-or-event-delegation-explained.html --}}
+
+
+
 
 
 <!-- Billing -->
@@ -143,7 +136,14 @@
                         <h3 class="calc-h3 u-s-m-b-0">Coupon Discount</h3>
                     </td>
                     <td>
-                        <span class="calc-text">Rs.0</span>
+                        <span class="calc-text couponAmount"> {{-- We create the 'couponAmount' CSS class to use it as a handle for AJAX inside    $('#applyCoupon').submit();    function in front/js/custom.js: https://www.youtube.com/watch?v=qRarBk49t7Q&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=149 --}}
+                            {{-- https://www.youtube.com/watch?v=qRarBk49t7Q&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=149 --}}
+                            @if (\Session::has('couponAmount')) {{-- We stored the 'couponAmount' in a Session Variable inside the applyCoupon() method in Front/ProductsController.php --}}
+                                Rs.{{ \Session::get('couponAmount') }}
+                            @else
+                                Rs.0
+                            @endif
+                        </span>
                     </td>
                 </tr>
                 {{-- <tr>
@@ -212,7 +212,7 @@
                         <h3 class="calc-h3 u-s-m-b-0">Grand Total</h3> {{-- Total Price after Coupon discounts (if any) --}}
                     </td>
                     <td>
-                        <span class="calc-text">Rs.{{ $total_price }}</span>
+                        <span class="calc-text grand_total">Rs.{{ $total_price - \Session::get('couponAmount') }}</span> {{-- We create the 'grand_total' CSS class to use it as a handle for AJAX inside    $('#applyCoupon').submit();    function in front/js/custom.js: https://www.youtube.com/watch?v=qRarBk49t7Q&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=149 --}} {{-- We stored it the 'couponAmount' a Session Variable inside the applyCoupon() method in Front/ProductsController.php --}}
                     </td>
                 </tr>
             </tbody>

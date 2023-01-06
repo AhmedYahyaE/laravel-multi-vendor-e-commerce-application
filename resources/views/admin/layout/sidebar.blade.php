@@ -33,7 +33,7 @@
 
             {{-- Check 10:39 in https://www.youtube.com/watch?v=UXUDxtN68XE&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=103 --}}
             <li class="nav-item">
-                <a @if (Session::get('page') == 'sections' || Session::get('page') == 'categories' || Session::get('page') == 'products' || Session::get('page') == 'brands' || Session::get('page') == 'filters') style="background: #4B49AC !important; color: #FFF !important" @endif class="nav-link" data-toggle="collapse" href="#ui-catalogue" aria-expanded="false" aria-controls="ui-catalogue">
+                <a @if (Session::get('page') == 'sections' || Session::get('page') == 'categories' || Session::get('page') == 'products' || Session::get('page') == 'brands' || Session::get('page') == 'filters' || Session::get('page') == 'coupons') style="background: #4B49AC !important; color: #FFF !important" @endif class="nav-link" data-toggle="collapse" href="#ui-catalogue" aria-expanded="false" aria-controls="ui-catalogue">
                     <i class="icon-layout menu-icon"></i>
                     <span class="menu-title">Catalogue Management</span>
                     <i class="menu-arrow"></i>
@@ -41,6 +41,7 @@
                 <div class="collapse" id="ui-catalogue">
                     <ul class="nav flex-column sub-menu" style="background: #fff !important; color: #4B49AC !important">
                         <li class="nav-item"> <a @if (Session::get('page') == 'products')   style="background: #4B49AC !important; color: #FFF !important" @else style="background: #fff !important; color: #4B49AC !important" @endif class="nav-link" href="{{ url('admin/products') }}">Products</a></li>
+                        <li class="nav-item"> <a @if (Session::get('page') == 'coupons')    style="background: #4B49AC !important; color: #FFF !important" @else style="background: #fff !important; color: #4B49AC !important" @endif class="nav-link" href="{{ url('admin/coupons') }}">Coupons</a></li> {{-- https://www.youtube.com/watch?v=LIxst1rLvlY&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=149 --}}
                     </ul>
                 </div>
             </li>

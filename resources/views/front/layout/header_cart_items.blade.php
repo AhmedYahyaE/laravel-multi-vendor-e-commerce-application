@@ -56,9 +56,10 @@
 
 
 
-{{-- Solution of the problem where the X icon of the Mini Cart Widget doesn't work (doesn't close the widget) after Updating the Cart or Deleting items from it (meaning, AFTER MAKING AJAX CALLS). This happens after using AJAX while updating or deleting cart items because the Mini Cart Widget gets loaded again and return-ed via AJAX but return-ed without its JavaScript! --}} {{-- Check 17:20 in https://www.youtube.com/watch?v=dH4eyzRUO-c&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=142 --}}
-<script>
+{{-- Instructor disabled it (commented it out) in 9:00 in https://www.youtube.com/watch?v=uZrZKqZnYdA&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=147 --}}
+{{-- Solution of the problem where the X icon of the Mini Cart Widget doesn't work (doesn't close the widget) after Updating the Cart or Deleting items from it (meaning, AFTER MAKING AJAX CALLS). This happens after using AJAX while updating or deleting cart items because the Mini Cart Widget page gets loaded again and return-ed via AJAX but return-ed without its JavaScript! --}} {{-- Check 17:20 in https://www.youtube.com/watch?v=dH4eyzRUO-c&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=142 --}}
+{{-- <script>
     $('#mini-cart-close').on('click', function () {
         $('.mini-cart-wrapper').removeClass('mini-cart-open');
     });
-</script>
+</script> --}}

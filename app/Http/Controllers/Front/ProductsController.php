@@ -352,7 +352,7 @@ class ProductsController extends Controller
 
     // The AJAX call from front/js/custom.js file, to show the the correct related `price` and `stock` depending on the selected `size` (from the `products_attributes` table)) by clicking the size <select> box in front/products/detail.blade.php    // https://www.youtube.com/watch?v=T6ZyTfYLKRU&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=106
     public function getProductPrice(Request $request) {
-        if ($request->ajax()) { // if the request is coming from an AJAX call
+        if ($request->ajax()) { // if the request is coming via an AJAX call
             $data = $request->all(); // Getting the name/value pairs array that are sent from the AJAX request (AJAX call)
             // dd($data); // dd() method DOESN'T WORK WITH AJAX! - SHOWS AN ERROR!! USE var_dump() and exit; INSTEAD!
             // echo '<pre>', var_dump($data), '</pre>';
@@ -501,7 +501,7 @@ class ProductsController extends Controller
 
     // Update Cart Item Quantity AJAX call in front/products/cart_items.blade.php. Check front/js/custom.js
     public function cartUpdate(Request $request) {
-        if ($request->ajax()) { // if the request is coming from an AJAX call
+        if ($request->ajax()) { // if the request is coming via an AJAX call
             $data = $request->all(); // Getting the name/value pairs array that are sent from the AJAX request (AJAX call)
             // dd($data); // dd() method DOESN'T WORK WITH AJAX! - SHOWS AN ERROR!! USE var_dump() and exit; INSTEAD!
             // echo '<pre>', var_dump($data), '</pre>';
@@ -582,6 +582,13 @@ class ProductsController extends Controller
             $totalCartItems = totalCartItems(); // totalCartItems() function is in our custom Helpers/Helper.php file that we have registered in 'composer.json' file    // We created the CSS class 'totalCartItems' in front/layout/header.blade.php to use it in front/js/custom.js to update the total cart items via AJAX, because in pages that we originally use AJAX to update the cart items (such as when we delete a cart item in http://127.0.0.1:8000/cart using AJAX), the number doesn't change in the header automatically because AJAX is already used and no page reload/refresh has occurred. Check 12:08 in https://www.youtube.com/watch?v=J8ynmQSbZYY&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=139
 
 
+
+            // We need to remove/empty (forget) the 'couponAmount' Session Variable (reset the whole process of Applying the Coupon) whenever a user applies a new coupon, or updates Cart items (changes items quantity for example) or deletes items from the Cart or even adds new items in the Cart    // Check 27:25 in https://www.youtube.com/watch?v=qRarBk49t7Q&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=149
+            \Session::forget('couponAmount'); // Deleting Data: https://laravel.com/docs/9.x/session#deleting-data
+            \Session::forget('couponCode');   // Deleting Data: https://laravel.com/docs/9.x/session#deleting-data
+
+
+
             return response()->json([ // JSON Responses: https://laravel.com/docs/9.x/responses#json-responses
                 'status'         => true,
                 'totalCartItems' => $totalCartItems, // totalCartItems() function is in our custom Helpers/Helper.php file that we have registered in 'composer.json' file    // We created the CSS class 'totalCartItems' in front/layout/header.blade.php to use it in front/js/custom.js to update the total cart items via AJAX, because in pages that we originally use AJAX to update the cart items (such as when we delete a cart item in http://127.0.0.1:8000/cart using AJAX), the number doesn't change in the header automatically because AJAX is already used and no page reload/refresh has occurred. Check 12:08 in https://www.youtube.com/watch?v=J8ynmQSbZYY&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=139
@@ -596,7 +603,13 @@ class ProductsController extends Controller
 
     // Delete a Cart Item AJAX call in front/products/cart_items.blade.php. Check front/js/custom.js    // https://www.youtube.com/watch?v=GCZ8a3Dw_Zg&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=127
     public function cartDelete(Request $request) {
-        if ($request->ajax()) { // if the request is coming from an AJAX call
+        if ($request->ajax()) { // if the request is coming via an AJAX call
+            // We need to remove/empty (forget) the 'couponAmount' Session Variable (reset the whole process of Applying the Coupon) whenever a user applies a new coupon, or updates Cart items (changes items quantity for example) or deletes items from the Cart or even adds new items in the Cart    // Check 27:25 in https://www.youtube.com/watch?v=qRarBk49t7Q&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=149
+            \Session::forget('couponAmount'); // Deleting Data: https://laravel.com/docs/9.x/session#deleting-data
+            \Session::forget('couponCode');   // Deleting Data: https://laravel.com/docs/9.x/session#deleting-data
+
+
+
             $data = $request->all(); // Getting the name/value pairs array that are sent from the AJAX request (AJAX call)
             // dd($data); // dd() method DOESN'T WORK WITH AJAX! - SHOWS AN ERROR!! USE var_dump() and exit; INSTEAD!
             // echo '<pre>', var_dump($data), '</pre>';
@@ -622,6 +635,192 @@ class ProductsController extends Controller
                 // We added this view later (Mini Cart Widget) (separate file) in https://www.youtube.com/watch?v=dH4eyzRUO-c&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=141
                 'headerview' => (String) \Illuminate\Support\Facades\View::make('front.layout.header_cart_items')->with(compact('getCartItems')) // Creating & Rendering Views: https://laravel.com/docs/9.x/views#creating-and-rendering-views    // Passing Data To Views: https://laravel.com/docs/9.x/views#passing-data-to-views
             ]);
+        }
+    }
+
+
+
+    // Note: For Coupons module, user must be logged in (authenticated) to be able to redeem them. Both 'admins' and 'vendors' can add Coupons. Coupons added by 'vendor' will be available for their products ONLY, but ones added by 'admins' will be available for ALL products.
+    // Coupon Code redemption (Apply coupon) / Coupon Code HTML Form submission via AJAX in front/products/cart_items.blade.php, check front/js/custom.js    // https://www.youtube.com/watch?v=uZrZKqZnYdA&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=147
+    public function applyCoupon(Request $request) {
+        if ($request->ajax()) { // if the request is coming via an AJAX call
+            $data = $request->all(); // Getting the name/value pairs array that are sent from the AJAX request (AJAX call) (through the 'data' object)
+            // dd($data); // dd() method DOESN'T WORK WITH AJAX! - SHOWS AN ERROR!! USE var_dump() and exit; INSTEAD!
+            // echo '<pre>', var_dump($data), '</pre>';
+            // exit;
+
+
+
+            // We need to remove/empty (forget) the 'couponAmount' Session Variable (reset the whole process of Applying the Coupon) whenever a user applies a new coupon, or updates Cart items (changes items quantity for example) or deletes items from the Cart or even adds new items in the Cart    // Check 27:25 in https://www.youtube.com/watch?v=qRarBk49t7Q&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=149
+            \Session::forget('couponAmount'); // Deleting Data: https://laravel.com/docs/9.x/session#deleting-data
+            \Session::forget('couponCode');   // Deleting Data: https://laravel.com/docs/9.x/session#deleting-data
+
+
+
+            $getCartItems = \App\Models\Cart::getCartItems();
+            $totalCartItems = totalCartItems(); // totalCartItems() function is in our custom Helpers/Helper.php file that we have registered in 'composer.json' file    // We created the CSS class 'totalCartItems' in front/layout/header.blade.php to use it in front/js/custom.js to update the total cart items via AJAX, because in pages that we originally use AJAX to update the cart items (such as when we delete a cart item in http://127.0.0.1:8000/cart using AJAX), the number doesn't change in the header automatically because AJAX is already used and no page reload/refresh has occurred. Check 12:08 in https://www.youtube.com/watch?v=J8ynmQSbZYY&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=139
+
+
+
+            // Check the validity of the Coupon Code
+            $couponCount = \App\Models\Coupon::where('coupon_code', $data['code'])->count(); // $data['code'] comes from the 'data' object sent from inside the $.ajax() method in front/js/custom.js file
+
+            if ($couponCount == 0) { // if the submitted coupon is wrong, send error message
+                return response()->json([ // JSON Responses: https://laravel.com/docs/9.x/responses#json-responses
+                    'status'         => false,
+                    'totalCartItems' => $totalCartItems, // totalCartItems() function is in our custom Helpers/Helper.php file that we have registered in 'composer.json' file    // We created the CSS class 'totalCartItems' in front/layout/header.blade.php to use it in front/js/custom.js to update the total cart items via AJAX, because in pages that we originally use AJAX to update the cart items (such as when we delete a cart item in http://127.0.0.1:8000/cart using AJAX), the number doesn't change in the header automatically because AJAX is already used and no page reload/refresh has occurred. Check 12:08 in https://www.youtube.com/watch?v=J8ynmQSbZYY&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=139
+                    'message'        => 'The coupon is invalid!',
+                    // We'll use that array key 'view' as a JavaScript 'response' property to render the view (    $('#appendCartItems').html(resp.view);    ). Check front/js/custom.js
+                    'view'           => (String) \Illuminate\Support\Facades\View::make('front.products.cart_items')->with(compact('getCartItems')), // Creating & Rendering Views: https://laravel.com/docs/9.x/views#creating-and-rendering-views    // Passing Data To Views: https://laravel.com/docs/9.x/views#passing-data-to-views
+                    // We added this view later (Mini Cart Widget) (separate file) in https://www.youtube.com/watch?v=dH4eyzRUO-c&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=141
+                    'headerview'     => (String) \Illuminate\Support\Facades\View::make('front.layout.header_cart_items')->with(compact('getCartItems')) // Creating & Rendering Views: https://laravel.com/docs/9.x/views#creating-and-rendering-views    // Passing Data To Views: https://laravel.com/docs/9.x/views#passing-data-to-views
+                ]);
+
+            } else { // if the submitted coupon is valid, check some conditions (do some validation)
+                // https://www.youtube.com/watch?v=LIxst1rLvlY&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=149
+
+                // echo 'Entered Coupon is valid!'; // For the sake of debugging
+                // exit;
+
+                // SUBMITTED COUPON CODE VALIDATION:
+
+                // Get the coupon submitted (via AJAX) details
+                $couponDetails = \App\Models\Coupon::where('coupon_code', $data['code'])->first(); // $data['code'] comes from the 'data' object sent from inside the $.ajax() method in front/js/custom.js file
+
+
+                // Check if the submitted coupon code is active/inactive (enabled/disabled/activated/deactivated)
+                if ($couponDetails->status == 0) {
+                    $message = 'The coupon is inactive!';
+                }
+
+
+                // Check if the submitted coupon code is expired
+                $expiry_date  = $couponDetails->expiry_date;
+                $current_date = date('Y-m-d'); // this date format is understandable by MySQL
+                
+                if ($expiry_date < $current_date) {
+                    $message = 'The coupon is expired!';
+                }
+
+
+                // Check if the submitted coupon code belongs to the correct relevant selected categories and subcategories of the coupon in the Admin Panel (for example, if the coupon is for Smartphones Category, user can't use it while buying T-shirts)
+                // Get the coupon's categories and subcategories (if any)
+                $catArr = explode(',', $couponDetails->categories);
+
+                // Check 2:58 in https://www.youtube.com/watch?v=qRarBk49t7Q&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=149
+                $total_amount = 0;
+
+                foreach ($getCartItems as $key => $item) {
+                    if (!in_array($item['product']['category_id'], $catArr)) { // if the category of one of the products in the Cart doesn't belong to the Coupon's categories (the categories of the coupon selected by 'vendor' or 'admin' in the Admin Panel for the coupon)
+                        $message = 'This coupon code selected categories is not for one of the selected products category!';
+                    }
+
+                    // Check 2:58 in https://www.youtube.com/watch?v=qRarBk49t7Q&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=149
+                    $attrPrice = \App\Models\Product::getDiscountAttributePrice($item['product_id'], $item['size']);
+                    // dd($attrPrice); // dd() method DOESN'T WORK WITH AJAX! - SHOWS AN ERROR!! USE var_dump() and exit; INSTEAD!
+                    // echo '<pre>', var_dump($attrPrice), '</pre>';
+                    // exit;
+                    $total_amount = $total_amount + ($attrPrice['final_price'] * $item['quantity']);
+                }
+
+
+                // Check if the coupon code submitted by user is not available for that user (in case the coupon is already selected for certain specific users selected by 'admin' or 'vendor' in the Coupons tab in Admin Panel, and it's not available for all users)
+                // Get the coupon's selected users
+                // echo $couponDetails->users . '<br>';
+                if (isset($couponDetails->users) && !empty($couponDetails->users)) {
+                    $usersArr = explode(',', $couponDetails->users);
+                    // dd($usersArr); // dd() method DOESN'T WORK WITH AJAX! - SHOWS AN ERROR!! USE var_dump() and exit; INSTEAD!
+                    // echo '<pre>', var_dump($usersArr), '</pre>';
+                    // exit;
+    
+                    // Check if the submitted coupon code is available ONLY for some specific users (from the Coupons tab in Admin Panel in 'Select User (by email):') and check if the coupon is available or not for the user submitting the coupon code
+                    if (count($usersArr)) { // if there's at least a one specific selected user for the coupon
+                        // dd($usersArr); // dd() method DOESN'T WORK WITH AJAX! - SHOWS AN ERROR!! USE var_dump() and exit; INSTEAD!
+                        // echo '<pre>', var_dump($usersArr), '</pre>';
+                        // exit;
+    
+                        // Get user ids of all the selected users that the coupon code are available for them
+                        foreach ($usersArr as $key => $user) {
+                            $getUserId = \App\Models\User::select('id')->where('email', $user)->first()->toArray();
+                            // echo '<pre>', var_dump($getUserId), '</pre>';
+                            // exit;
+                            $usersId[] = $getUserId['id'];
+                        }
+    
+                        foreach ($getCartItems as $item) {
+                            if (!in_array($item['user_id'], $usersId)) { // if the user id of one of the products in the Cart doesn't belong to the Coupon's specifically selected users (to check if the submitted coupon code is available to the user submitting it or not)
+                                $message = 'This coupon code is not available for you! Try again with a valid coupon code! (The coupon code is available only for certain selected users!)';
+                            }
+                        }
+                    }
+                }
+
+
+                // Check if the submitted Coupon code belongs to the Vendor of that product (in case that a vendor (not an 'admin') added that coupon code, because vendor coupon codes are available ONLY for the products of that vendor, and not available for all other products. In contrast, 'Admin' coupon codes are available for ALL products)
+                // Vendor's Coupons are eligible only for that vendor's products
+                if ($couponDetails->vendor_id > 0) { // Check if submitted coupon code belongs to a 'vendor' (becasue a vendor' coupon is available ONLY for that vendor's products (not all products), whereas admin's coupons are available for all products)
+                    // Get all the products ids of that very vendor
+                    // echo $couponDetails->vendor_id . '<br>';
+
+                    $productIds = \App\Models\Product::select('id')->where('vendor_id', $couponDetails->vendor_id)->pluck('id')->toArray();
+                    // dd($productIds); // dd() method DOESN'T WORK WITH AJAX! - SHOWS AN ERROR!! USE var_dump() and exit; INSTEAD!
+                    // echo '<pre>', var_dump($productIds), '</pre>';
+                    // exit;
+
+                    foreach ($getCartItems as $item) {
+                        if (!in_array($item['product']['id'], $productIds)) { // if the user id of one of the products in the Cart doesn't belong to the products ids of that vendor (to check if the submitted coupon code pertains to that specific/very vendor or not)
+                            $message = 'This coupon code is not available for you! Try again with a valid coupon code! (vendor validation)!. The coupon code exists but one of the products in the Cart doesn\'t belong to that specific vendor who created that Coupon';
+                        }
+                    }
+                }
+
+
+                // If there's an error message with the submitted coupon code, send this response to the AJAX call
+                if (isset($message)) {
+                    return response()->json([ // JSON Responses: https://laravel.com/docs/9.x/responses#json-responses
+                        'status'         => false,
+                        'totalCartItems' => $totalCartItems, // totalCartItems() function is in our custom Helpers/Helper.php file that we have registered in 'composer.json' file    // We created the CSS class 'totalCartItems' in front/layout/header.blade.php to use it in front/js/custom.js to update the total cart items via AJAX, because in pages that we originally use AJAX to update the cart items (such as when we delete a cart item in http://127.0.0.1:8000/cart using AJAX), the number doesn't change in the header automatically because AJAX is already used and no page reload/refresh has occurred. Check 12:08 in https://www.youtube.com/watch?v=J8ynmQSbZYY&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=139
+                        'message'        => $message,
+                        // We'll use that array key 'view' as a JavaScript 'response' property to render the view (    $('#appendCartItems').html(resp.view);    ). Check front/js/custom.js
+                        'view'           => (String) \Illuminate\Support\Facades\View::make('front.products.cart_items')->with(compact('getCartItems')), // Creating & Rendering Views: https://laravel.com/docs/9.x/views#creating-and-rendering-views    // Passing Data To Views: https://laravel.com/docs/9.x/views#passing-data-to-views
+                        // We added this view later (Mini Cart Widget) (separate file) in https://www.youtube.com/watch?v=dH4eyzRUO-c&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=141
+                        'headerview'     => (String) \Illuminate\Support\Facades\View::make('front.layout.header_cart_items')->with(compact('getCartItems')) // Creating & Rendering Views: https://laravel.com/docs/9.x/views#creating-and-rendering-views    // Passing Data To Views: https://laravel.com/docs/9.x/views#passing-data-to-views
+                    ]);
+
+                } else { // if the sumbitted coupon code is correct and passes the previous coupon code validation and passes all the previous if conditions (free of errors)
+                    // https://www.youtube.com/watch?v=qRarBk49t7Q&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=149
+
+                    // Check if the submitted Coupon code Amount Type is 'Fixed' or 'Percentage'
+                    if ($couponDetails->amount_type == 'Fixed') { // if the submitted coupon code Amount Type is 'Fixed'
+                        $couponAmount = $couponDetails->amount; // As is
+                    } else { // if the submitted coupon code Amount Type is 'Percentage'
+                        $couponAmount = $total_amount * ($couponDetails->amount / 100);
+                    }
+
+
+                    $grand_total = $total_amount - $couponAmount;
+
+
+                    // Assign the Coupon Code and $couponAmount to Session Variables
+                    \Session::put('couponAmount', $couponAmount);
+                    \Session::put('couponCode'  , $data['code']); // $data['code'] comes from the 'data' object sent from inside the $.ajax() method in front/js/custom.js file
+
+                    $message = 'Coupon Code successfully applied. You are availing discount!';
+
+
+                    return response()->json([ // JSON Responses: https://laravel.com/docs/9.x/responses#json-responses
+                        'status'         => true,
+                        'totalCartItems' => $totalCartItems, // totalCartItems() function is in our custom Helpers/Helper.php file that we have registered in 'composer.json' file    // We created the CSS class 'totalCartItems' in front/layout/header.blade.php to use it in front/js/custom.js to update the total cart items via AJAX, because in pages that we originally use AJAX to update the cart items (such as when we delete a cart item in http://127.0.0.1:8000/cart using AJAX), the number doesn't change in the header automatically because AJAX is already used and no page reload/refresh has occurred. Check 12:08 in https://www.youtube.com/watch?v=J8ynmQSbZYY&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=139
+                        'couponAmount'   => $couponAmount,
+                        'grand_total'    => $grand_total,
+                        'message'        => $message,
+                        // We'll use that array key 'view' as a JavaScript 'response' property to render the view (    $('#appendCartItems').html(resp.view);    ). Check front/js/custom.js
+                        'view'           => (String) \Illuminate\Support\Facades\View::make('front.products.cart_items')->with(compact('getCartItems')), // Creating & Rendering Views: https://laravel.com/docs/9.x/views#creating-and-rendering-views    // Passing Data To Views: https://laravel.com/docs/9.x/views#passing-data-to-views
+                        // We added this view later (Mini Cart Widget) (separate file) in https://www.youtube.com/watch?v=dH4eyzRUO-c&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=141
+                        'headerview'     => (String) \Illuminate\Support\Facades\View::make('front.layout.header_cart_items')->with(compact('getCartItems')) // Creating & Rendering Views: https://laravel.com/docs/9.x/views#creating-and-rendering-views    // Passing Data To Views: https://laravel.com/docs/9.x/views#passing-data-to-views
+                    ]);
+                }
+            }
         }
     }
 
