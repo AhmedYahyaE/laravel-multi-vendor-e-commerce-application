@@ -167,18 +167,43 @@ class ProductsController extends Controller
 
                     // Correction by the instructor (in the Youtube comments) of the AJAX issue that occurs when using the price filter along with any other filter: https://www.youtube.com/watch?v=egx7-Hmb63Q&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=142
                     // checking for Price
+                    // $productIds = array();
+                    // if(!empty($data['price'])){
+                    //     foreach($data['price'] as $key => $price){
+                    //         $priceArr = explode('-',$price);
+                    //         if(isset($priceArr[0]) && isset($priceArr[1])){
+                    //             $getPricepids = \App\Models\Product::select('id')->whereBetween('product_price', [$priceArr[0], $priceArr[1]])->get()->toArray();
+                    //             $productIds[] = array_column($getPricepids, 'id');
+                    //         }
+                    //     }
+                    //     $productIds = array_unique(\Illuminate\Support\Arr::flatten($productIds)); // Arr::flatten(): https://laravel.com/docs/9.x/helpers#method-array-flatten
+                    //     $categoryProducts->whereIn('products.id',$productIds);
+                    // }
+
+
+                    // He corrected it himself a long time later in a video, Check 1:57 in https://www.youtube.com/watch?v=xY9OYug0uaQ&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=150     and     https://packagist.org/packages/laravel/helpers#:~:text=This%20package%20provides%20a%20backwards%20compatibility%20layer%20for%20Laravel%205.8%20helpers%20in%20the%20latest%20Laravel%20release.
+                    // checking for Price
                     $productIds = array();
-                    if(!empty($data['price'])){
+
+                    if (isset($data['price']) && !empty($data['price'])) {
                         foreach($data['price'] as $key => $price){
-                            $priceArr = explode('-',$price);
-                            if(isset($priceArr[0]) && isset($priceArr[1])){
-                                $getPricepids = \App\Models\Product::select('id')->whereBetween('product_price', [$priceArr[0], $priceArr[1]])->get()->toArray();
-                                $productIds[] = array_column($getPricepids, 'id');
+                            $priceArr = explode('-', $price); // Example: First loop iteration: 0, 1000    then Second loop iteration: 1000, 2000, ...etc
+                            // echo '<pre>', var_dump($priceArr), '</pre>';
+                            // exit;
+
+                            if (isset($priceArr[0]) && isset($priceArr[1])) { // Example: First loop iteration: 0, 1000    then Second loop iteration: 1000, 2000, ...etc
+                                $productIds[] = \App\Models\Product::select('id')->whereBetween('product_price', [$priceArr[0], $priceArr[1]])->pluck('id')->toArray(); // fetch the products ids of the range $priceArr[0] and $priceArr[1] (whereBetween() method) from the `products` table    // whereBetween(): https://laravel.com/docs/9.x/queries#additional-where-clauses    // e.g.    [    [2], [4, 5], [6]    ]
                             }
                         }
-                        $productIds = array_unique(\Illuminate\Support\Arr::flatten($productIds)); // Arr::flatten(): https://laravel.com/docs/9.x/helpers#method-array-flatten
-                        $categoryProducts->whereIn('products.id',$productIds);
-                    }
+
+                        // echo '<pre>', var_dump($priceArr), '</pre>';
+                        // echo '<pre>', var_dump($productIds), '</pre>';
+                        // exit;
+
+                        $productIds = array_unique(\Illuminate\Support\Arr::flatten($productIds)); // Arr::flatten(): https://laravel.com/docs/9.x/helpers#method-array-flatten    // We use array_unique() function to eliminate any repeated product ids
+                        $categoryProducts->whereIn('products.id', $productIds);
+                    }                    
+
 
 
                 // https://www.youtube.com/watch?v=Q9-5g1qgsn4&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=96
@@ -194,13 +219,23 @@ class ProductsController extends Controller
                 }
 
 
+
+                // dd($categoryProducts);
+                // echo '<pre>', var_dump($categoryProducts), '</pre>';
+                // exit;    
+
+
     
                 // Pagination (after the Sorting Filter)
                 $categoryProducts = $categoryProducts->paginate(30); // Moved the pagination after checking for the sorting filter <form>
                 // dd($categoryProducts);
+                // echo '<pre>', var_dump($categoryProducts), '</pre>';
+                // exit;
+
     
     
                 return view('front.products.ajax_products_listing')->with(compact('categoryDetails', 'categoryProducts', 'url'));
+
             } else {
                 abort(404); // we will create the 404 page later on    // https://laravel.com/docs/9.x/helpers#method-abort
             }
