@@ -63,8 +63,8 @@
                             </div>
                         </div>
                         <div class="button-area">
-                            <a href="shop-v1-root-category.html" class="continue">Continue Shopping</a>
-                            <a href="checkout.html" class="checkout">Proceed to Checkout</a>
+                            <a href="{{ url('/') }}" class="continue">Continue Shopping</a>
+                            <a href="{{ url('/checkout') }}" class="checkout">Proceed to Checkout</a>
                         </div>
                     </div>
                     <!-- Coupon /- -->

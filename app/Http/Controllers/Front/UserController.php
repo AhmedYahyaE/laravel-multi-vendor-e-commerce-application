@@ -42,6 +42,7 @@ class UserController extends Controller
 
 
             // Working With Error Messages: https://laravel.com/docs/9.x/validation#working-with-error-messages    // https://www.youtube.com/watch?v=u_qC3I3BYAM&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=129
+            // dd($validator->messages());
             // echo '<pre>', var_dump($validator->messages()), '</pre>';
             // exit;
 
@@ -162,6 +163,7 @@ class UserController extends Controller
 
 
             // Working With Error Messages: https://laravel.com/docs/9.x/validation#working-with-error-messages    // https://www.youtube.com/watch?v=u_qC3I3BYAM&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=129
+            // dd($validator->messages());
             // echo '<pre>', var_dump($validator->messages()), '</pre>';
             // exit;
 
@@ -379,6 +381,7 @@ class UserController extends Controller
 
 
             // Working With Error Messages: https://laravel.com/docs/9.x/validation#working-with-error-messages    // https://www.youtube.com/watch?v=u_qC3I3BYAM&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=129
+            // dd($validator->messages());
             // echo '<pre>', var_dump($validator->messages()), '</pre>';
             // exit;
 
@@ -412,7 +415,7 @@ class UserController extends Controller
 
         } else { // if it's a 'GET' request, render front/users/user_account.blade.php
             // Fetch all of the world countries from the database table `countries`: https://www.youtube.com/watch?v=zENahhmAM0w&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=30
-            $countries = \App\Models\Country::where('status', 1)->get()->toArray(); // get the countries which have stats = 1 (to ignore the blacklisted countries, in case)
+            $countries = \App\Models\Country::where('status', 1)->get()->toArray(); // get the countries which have status = 1 (to ignore the blacklisted countries, in case)
             // dd($countries);
 
 
@@ -455,6 +458,7 @@ class UserController extends Controller
 
 
             // Working With Error Messages: https://laravel.com/docs/9.x/validation#working-with-error-messages    // https://www.youtube.com/watch?v=u_qC3I3BYAM&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=129
+            // dd($validator->messages());
             // echo '<pre>', var_dump($validator->messages()), '</pre>';
             // exit;
 

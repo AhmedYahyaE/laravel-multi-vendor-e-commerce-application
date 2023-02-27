@@ -25,7 +25,7 @@ return new class extends Migration
             $table->string('country');
             $table->string('pincode');
             $table->string('mobile');
-            $table->tinyInteger('status');
+            $table->tinyInteger('status')->default(1);
 
             $table->timestamps();
         });
