@@ -861,21 +861,58 @@ class ProductsController extends Controller
 
 
 
-    // Checkout page (using match() method for the 'GET' request for rendering the front/products/checkout.blade.php page or the 'POST' request for the HTML Form submission in the same page)    // https://www.youtube.com/watch?v=qzLinru4vkU&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=152
-    public function checkout() {
+    // Checkout page (using match() method for the 'GET' request for rendering the front/products/checkout.blade.php page or the 'POST' request for the HTML Form submission in the same page) (for submitting the user's Delivery Address and Payment Method))    // https://www.youtube.com/watch?v=qzLinru4vkU&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=152
+    public function checkout(Request $request) {
+        // Check 15:09 in https://www.youtube.com/watch?v=3SuuAAyUgNw&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=159
+        if ($request->isMethod('post')) { // if the <form> in front/products/checkout.blade.php is submitted (the HTML Form that the user submits to submit their Delivery Address and Payment Method)
+            $data = $request->all();
+            // dd($data);
+
+            // Validation:
+            // Delivery Address Validation
+            if (empty($data['address_id'])) { // if the user doesn't select a Delivery Address
+                $message = 'Please select Delivery Address!';
+
+                return redirect()->back()->with('error_message', $message);
+            }
+
+            // Payment Method Validation
+            if (empty($data['payment_gateway'])) { // if the user doesn't select a Delivery Address
+                $message = 'Please select Payment Method!';
+
+                return redirect()->back()->with('error_message', $message);
+            }
+
+            // Accept Terms and Conditions Validation
+            if (empty($data['accept'])) { // if the user doesn't select a Delivery Address
+                $message = 'Please agree to T&C!';
+
+                return redirect()->back()->with('error_message', $message);
+            }
+
+
+
+            // If user passes Validation
+            echo 'Ready to place order';
+            exit;
+        }
+
+
+
         $deliveryAddresses = \App\Models\DeliveryAddress::deliveryAddresses(); // the delivery addresses of the currently authenticated/logged in user
         // dd($deliveryAddresses);
-
 
         // Fetch all of the world countries from the database table `countries`: https://www.youtube.com/watch?v=zENahhmAM0w&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=30
         $countries = \App\Models\Country::where('status', 1)->get()->toArray(); // get the countries which have status = 1 (to ignore the blacklisted countries, in case)
         // dd($countries);
 
+        // https://www.youtube.com/watch?v=3SuuAAyUgNw&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=158
+        // Get the Cart Items of a cerain user (using their `user_id` if they're authenticated/logged in or their `session_id` if they're not authenticated/not logged in (guest))    // https://www.youtube.com/watch?v=I98dEyyrZLU&list=PLLUtELdNs2ZYTlQ97V1Tl8mirS3qXHNFZ&index=120
+        $getCartItems = \App\Models\Cart::getCartItems();
+        // dd($getCartItems);
 
-        
 
-
-        return view('front.products.checkout')->with(compact('deliveryAddresses', 'countries'));
+        return view('front.products.checkout')->with(compact('deliveryAddresses', 'countries', 'getCartItems'));
     }
 
 }

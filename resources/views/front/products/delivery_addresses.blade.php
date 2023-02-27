@@ -14,7 +14,7 @@
             <input type="radio" id="address{{ $address['id'] }}" name="address_id" value="{{ $address['id'] }}"> {{-- We created the Custom HTML Attribute id="address{{ $address['id'] }}" to get the UNIQUE ids of the addresses in order for the <label> HTML element to be able to point for that <input> --}}
         </div>
         <div>
-            <label class="control-label" for="{{ $address['id'] }}">
+            <label class="control-label" for="address{{ $address['id'] }}">
                 {{ $address['name'] }}, {{ $address['address'] }}, {{ $address['city'] }}, {{ $address['state'] }}, {{ $address['country'] }} ({{ $address['mobile'] }})
             </label>
             <a href="javascript:;" data-addressid="{{ $address['id'] }}" class="removeAddress" style="float: right; margin-left: 10px">Remove</a> {{-- We used href="javascript:;" to prevent the <a> link from being clickable (to make the <a> unclickable) (stop the <a> function or action) because we'll use jQuery AJAX to click this link, check front/js/custom.js. Check https://www.youtube.com/watch?v=-cVee5eL0Ew&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=153 --}} {{-- We use the class="removeAddress" as a handle for the AJAX request in front/js/custom.js --}}
