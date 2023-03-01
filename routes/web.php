@@ -235,6 +235,9 @@ Route::namespace('App\Http\Controllers\Front')->group(function() {
 
         // Remove Delivery Addresse via AJAX (Page refresh and fill in the <input> fields with the authenticated/logged-in user Delivery Addresses details from the `delivery_addresses` database table when clicking on the Remove button) in front/products/delivery_addresses.blade.php (which is 'include'-ed in front/products/checkout.blade.php) via AJAX, check front/js/custom.js    // https://www.youtube.com/watch?v=2vgBjI0i23M&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=157
         Route::post('remove-delivery-address', 'AddressController@removeDeliveryAddress');
+
+        // Rendering Thanks page (after placing an order)    // https://www.youtube.com/watch?v=fQPYHPDR9wI&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=162
+        Route::get('thanks', 'ProductsController@thanks');
     });
 
 

@@ -863,6 +863,27 @@ class ProductsController extends Controller
 
     // Checkout page (using match() method for the 'GET' request for rendering the front/products/checkout.blade.php page or the 'POST' request for the HTML Form submission in the same page) (for submitting the user's Delivery Address and Payment Method))    // https://www.youtube.com/watch?v=qzLinru4vkU&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=152
     public function checkout(Request $request) {
+        $deliveryAddresses = \App\Models\DeliveryAddress::deliveryAddresses(); // the delivery addresses of the currently authenticated/logged in user
+        // dd($deliveryAddresses);
+
+        // Fetch all of the world countries from the database table `countries`: https://www.youtube.com/watch?v=zENahhmAM0w&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=30
+        $countries = \App\Models\Country::where('status', 1)->get()->toArray(); // get the countries which have status = 1 (to ignore the blacklisted countries, in case)
+        // dd($countries);
+
+        // https://www.youtube.com/watch?v=3SuuAAyUgNw&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=158
+        // Get the Cart Items of a cerain user (using their `user_id` if they're authenticated/logged in or their `session_id` if they're not authenticated/not logged in (guest))    // https://www.youtube.com/watch?v=I98dEyyrZLU&list=PLLUtELdNs2ZYTlQ97V1Tl8mirS3qXHNFZ&index=120
+        $getCartItems = \App\Models\Cart::getCartItems();
+        // dd($getCartItems);
+
+
+        // If the Cart is empty (If there're no Cart Items), don't allow opening/accessing the Checkout page (checkout.blade.php)    // https://www.youtube.com/watch?v=nGNkJBGqjlY&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=161
+        if (count($getCartItems) == 0) {
+            $message = 'Shopping Cart is empty! Please add products to your Cart to checkout';
+
+            return redirect('cart')->with('error_message', $message); // redirect user to the cart.blade.php page, and show an error message in cart.blade.php
+        }
+
+
         // Check 15:09 in https://www.youtube.com/watch?v=3SuuAAyUgNw&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=159
         if ($request->isMethod('post')) { // if the <form> in front/products/checkout.blade.php is submitted (the HTML Form that the user submits to submit their Delivery Address and Payment Method)
             $data = $request->all();
@@ -883,7 +904,7 @@ class ProductsController extends Controller
                 return redirect()->back()->with('error_message', $message);
             }
 
-            // Accept Terms and Conditions Validation
+            // Agree to T&C (Accept Terms and Conditions) Validation
             if (empty($data['accept'])) { // if the user doesn't select a Delivery Address
                 $message = 'Please agree to T&C!';
 
@@ -892,27 +913,147 @@ class ProductsController extends Controller
 
 
 
-            // If user passes Validation
-            echo 'Ready to place order';
-            exit;
+            // If user passes Validation, we start Placing Order:
+            // echo 'Ready to place order';
+            // exit;
+            // dd($data);
+
+
+            // Note: For the Orders module, we created two database tables: orders and orders_products tables. The first one holds/stores the main information about the orders of a user (e.g. delivery address, coupon code, shipping, payment method, ...etc), and the second one holds/stores the detailed information about the order (the items/products that are bought by the order and product name, code, color, size, price, ...etc). There is a one-to-many relationship between the two tables where one order can have many order products.
+
+
+            // Now, we'll collect the necessary data to fill in the `orders` and `orders_products` database tables    // https://www.youtube.com/watch?v=nGNkJBGqjlY&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=161
+
+            // Get the Delivery Address from    $data['address_id']
+            $deliveryAddress = \App\Models\DeliveryAddress::where('id', $data['address_id'])->first()->toArray();
+            // dd($deliveryAddress);
+
+            // https://www.youtube.com/watch?v=nGNkJBGqjlY&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=161
+            // If the selected `payment_gateway` is 'COD', set the `payment_method` as 'COD' too (and `order_status` is 'new'), otherwise it's always 'prepaid'
+            if ($data['payment_gateway'] == 'COD') {
+                $payment_method = 'COD';
+                $order_status   = 'New';
+            } else { // if the user selects any `payment_gateway` other than 'COD', this means that the `payment_method` is 'prepaid'  (and `order_status` is 'pending')
+                $payment_method = 'Prepaid';
+                $order_status   = 'Pending'; // And after payment confirmation, `order_status` becomes 'Payment Captured'. (We'll create the API that will convert this to either 'Payment Captured' or 'Canceled')
+            }
+
+
+            // Note: !!DATABASE TRANSACTION!! Firstly, we'll save the order in the `orders` table, then take the newly generated order `id` to use it to fill in the `order_id` column in the `orders_products` table, and fill in the `orders_products` table    // Check 6:58 in https://www.youtube.com/watch?v=EvFgN74IFlc&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=99
+            // Database Transactions: https://laravel.com/docs/9.x/database#database-transactions
+            \DB::beginTransaction();
+
+            // Calculate Subtotal, Grand Total `grand_total` and Coupon Discount `coupon_amount` (to fill in the `orders` table)
+            // Calculate Grand Total `grand_total
+            // Get the Total Price (the 'Subtotal')
+            $total_price = 0;
+            foreach ($getCartItems as $item) {
+                $getDiscountAttributePrice = \App\Models\Product::getDiscountAttributePrice($item['product_id'], $item['size']); // from the `products_attributes` table, not the `products` table
+                $total_price = $total_price + ($getDiscountAttributePrice['final_price'] * $item['quantity']);
+            }
+
+            // Calculate Shipping Charges `shipping_charges`
+            $shipping_charges = 0;
+
+            // Grand Total (`grand_total`)
+            $grand_total = $total_price + $shipping_charges - \Session::get('couponAmount');
+
+            // Store the $grand_total in Session to be able to use it wherever we need it later on
+            \Session::put('grand_total', $grand_total); // Storing Data: https://laravel.com/docs/10.x/session#storing-data
+
+            // echo $total_price . '<br>'; // 'Subtotal'
+            // exit;
+
+
+            // INSERT the data we collected INTO the `orders` database table
+            $order = new \App\Models\Order; // Create a new Order.php model object (represents the `orders` table)
+
+            // Assign the $order data to be INSERT-ed INTO the `orders` table
+            $order->user_id          = \Auth::user()->id; // Retrieving The Authenticated User: https://laravel.com/docs/9.x/authentication#retrieving-the-authenticated-user
+            $order->name             = $deliveryAddress['name'];
+            $order->address          = $deliveryAddress['address'];
+            $order->city             = $deliveryAddress['city'];
+            $order->state            = $deliveryAddress['state'];
+            $order->country          = $deliveryAddress['country'];
+            $order->pincode          = $deliveryAddress['pincode'];
+            $order->mobile           = $deliveryAddress['mobile'];
+            $order->email            = \Auth::user()->email; // Retrieving The Authenticated User: https://laravel.com/docs/9.x/authentication#retrieving-the-authenticated-user
+            $order->shipping_charges = $shipping_charges;
+            $order->coupon_code      = \Session::get('couponCode');
+            $order->coupon_amount    = \Session::get('couponAmount');
+            $order->order_status     = $order_status;
+            $order->payment_method   = $payment_method;
+            $order->payment_gateway  = $data['payment_gateway'];
+            $order->grand_total      = $grand_total;
+
+            $order->save(); // INSERT data INTO the `orders` table
+
+            // Get the last generated `id` of the the last inserted order in the `orders` table (to be able to store it in the `order_id` column in the `orders_products` table)
+            $order_id = \DB::getPdo()->lastInsertId();
+            // dd(\DB::getPdo());
+
+
+
+            // INSERT/Fill in the data in the `orders_products` table
+            foreach ($getCartItems as $item) {
+                $cartItem = new \App\Models\OrdersProduct; // Create a new OrdersProduct.php model object (represents the `orders_products` table)
+
+                // Assign the order product/item data to be INSERT-ed INTO the `orders_products` table
+                $cartItem->order_id = $order_id;
+                $cartItem->user_id  = \Auth::user()->id; // Retrieving The Authenticated User: https://laravel.com/docs/9.x/authentication#retrieving-the-authenticated-user
+
+                // Get some product details of the Cart Items from the `products` table (to be able to fill in data in the `orders_products` table)
+                $getProductDetails = \App\Models\Product::select('product_code', 'product_name', 'product_color', 'admin_id', 'vendor_id')->where('id', $item['product_id'])->first()->toArray();
+                // dd($getProductDetails);
+
+                // Continue filling in data into the `orders_products` table
+                $cartItem->admin_id         = $getProductDetails['admin_id'];
+                $cartItem->vendor_id        = $getProductDetails['vendor_id'];
+                $cartItem->product_id       = $item['product_id'];
+                $cartItem->product_code     = $getProductDetails['product_code'];
+                $cartItem->product_name     = $getProductDetails['product_name'];
+                $cartItem->product_color    = $getProductDetails['product_color'];
+                $cartItem->product_size     = $item['size'];
+
+                $getDiscountAttributePrice = \App\Models\Product::getDiscountAttributePrice($item['product_id'], $item['size']); // from the `products_attributes` table, not the `products` table
+                $cartItem->product_price    = $getDiscountAttributePrice['final_price'];
+            
+                $cartItem->product_qty      = $item['quantity'];
+
+                $cartItem->save(); // INSERT data INTO the `orders_products` table
+            }
+
+            // Store the `order_id` in Session
+            \Session::put('order_id', $order_id); // Storing Data: https://laravel.com/docs/9.x/session#storing-data
+
+
+            \DB::commit(); // commit the Database Transaction
+
+
+            // echo 'Order placed successfully!';
+            // exit;
+
+
+            return redirect('thanks');
         }
 
 
-
-        $deliveryAddresses = \App\Models\DeliveryAddress::deliveryAddresses(); // the delivery addresses of the currently authenticated/logged in user
-        // dd($deliveryAddresses);
-
-        // Fetch all of the world countries from the database table `countries`: https://www.youtube.com/watch?v=zENahhmAM0w&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=30
-        $countries = \App\Models\Country::where('status', 1)->get()->toArray(); // get the countries which have status = 1 (to ignore the blacklisted countries, in case)
-        // dd($countries);
-
-        // https://www.youtube.com/watch?v=3SuuAAyUgNw&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=158
-        // Get the Cart Items of a cerain user (using their `user_id` if they're authenticated/logged in or their `session_id` if they're not authenticated/not logged in (guest))    // https://www.youtube.com/watch?v=I98dEyyrZLU&list=PLLUtELdNs2ZYTlQ97V1Tl8mirS3qXHNFZ&index=120
-        $getCartItems = \App\Models\Cart::getCartItems();
-        // dd($getCartItems);
-
-
         return view('front.products.checkout')->with(compact('deliveryAddresses', 'countries', 'getCartItems'));
+    }
+
+
+
+    // Rendering Thanks page (after placing an order)    // https://www.youtube.com/watch?v=fQPYHPDR9wI&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=162
+    public function thanks() {
+        if (\Session::has('order_id')) { // if there's an order has been placed, empty the Cart
+            // We empty the Cart after placing the order
+            \App\Models\Cart::where('user_id', \Auth::user()->id)->delete(); // Retrieving The Authenticated User: https://laravel.com/docs/9.x/authentication#retrieving-the-authenticated-user
+
+
+            return view('front.products.thanks');
+        } else { // if there's no order has been placed
+            return redirect('cart'); // redirect user to Cart.blade.php page
+        }
     }
 
 }

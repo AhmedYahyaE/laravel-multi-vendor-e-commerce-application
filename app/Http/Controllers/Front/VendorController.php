@@ -50,7 +50,7 @@ class VendorController extends Controller
 
             // Create Vendor Account (Save the submitted data in BOTH `vendors` and `admins` tables)
 
-            // Note: !!DATABASE TRANSACTION!! FIRSTLY, we'll save the vendor in the `vendors` table, then take the newly generated vendor `id` to use it as a `vendor_id` column value to save the vendor in `admins` table, then we send the Confirmation Mail to the vendor using Mailtrap    // Check 6:58 in https://www.youtube.com/watch?v=EvFgN74IFlc&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=99
+            // Note: !!DATABASE TRANSACTION!! Firstly, we'll save the vendor in the `vendors` table, then take the newly generated vendor `id` to use it as a `vendor_id` column value to save the vendor in `admins` table, then we send the Confirmation Mail to the vendor using Mailtrap    // Check 6:58 in https://www.youtube.com/watch?v=EvFgN74IFlc&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=99
             // Database Transactions: https://laravel.com/docs/9.x/database#database-transactions
             \DB::beginTransaction();
 

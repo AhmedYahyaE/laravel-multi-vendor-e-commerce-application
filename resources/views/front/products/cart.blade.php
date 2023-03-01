@@ -27,6 +27,43 @@
     <!-- Cart-Page -->
     <div class="page-cart u-s-p-t-80">
         <div class="container">
+
+
+
+                {{-- Displaying The Validation Errors: https://laravel.com/docs/9.x/validation#quick-displaying-the-validation-errors AND https://laravel.com/docs/9.x/blade#validation-errors --}} {{-- https://www.youtube.com/watch?v=QbEFPGnTdBc&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=99 --}}
+                {{-- Determining If An Item Exists In The Session (using has() method): https://laravel.com/docs/9.x/session#determining-if-an-item-exists-in-the-session --}}
+                {{-- Our Bootstrap success message in case of updating admin password is successful: --}}
+                {{-- https://www.youtube.com/watch?v=oAZKXYrkcr4&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=17 --}}
+                {{-- Displaying Success Message --}}
+                @if (Session::has('success_message')) <!-- Check vendorRegister() method in Front/VendorController.php -->
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        <strong>Success:</strong> {{ Session::get('success_message') }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                @endif
+                {{-- Displaying Error Messages --}}
+                @if (Session::has('error_message')) <!-- Check vendorRegister() method in Front/VendorController.php -->
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <strong>Error:</strong> {{ Session::get('error_message') }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                @endif
+                {{-- Displaying Error Messages --}}
+                @if ($errors->any()) <!-- Check vendorRegister() method in Front/VendorController.php -->
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <strong>Error:</strong> @php echo implode('', $errors->all('<div>:message</div>')); @endphp
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                @endif
+
+
+
             <div class="row">
                 <div class="col-lg-12">
 
