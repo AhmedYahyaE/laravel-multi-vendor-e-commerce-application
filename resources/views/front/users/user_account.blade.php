@@ -10,7 +10,7 @@
     <div class="page-style-a">
         <div class="container">
             <div class="page-intro">
-                <h2>Account</h2>
+                <h2>My Account</h2>
                 <ul class="bread-crumb">
                     <li class="has-separator">
                         <i class="ion ion-md-home"></i>

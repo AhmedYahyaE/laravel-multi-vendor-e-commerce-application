@@ -69,6 +69,15 @@ $sections = \App\Models\Section::sections();
                                         My Account
                                     </a>
                                 </li>
+
+                                {{-- https://www.youtube.com/watch?v=4d_Hq33jihY&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=164 --}}
+                                <li>
+                                    <a href="{{ url('user/orders') }}"> {{-- https://www.youtube.com/watch?v=xYzsUn8_NT0&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=127 --}}
+                                        <i class="fas fa-sign-in-alt u-s-m-r-9"></i>
+                                        My Orders
+                                    </a>
+                                </li>
+
                                 <li>
                                     <a href="{{ url('user/logout') }}"> {{-- https://www.youtube.com/watch?v=xYzsUn8_NT0&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=127 --}}
                                         <i class="fas fa-sign-in-alt u-s-m-r-9"></i>
