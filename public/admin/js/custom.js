@@ -2,14 +2,15 @@
 $(document).ready(function() {
 
     // Calling the DataTable class for all pages: Check 18:55 in https://www.youtube.com/watch?v=1XJ7908SJcM&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=34
-    $('#sections').DataTable(); // in sections.blade.php
+    $('#sections').DataTable();   // in sections.blade.php
     $('#categories').DataTable(); // in categories.blade.php
-    $('#brands').DataTable(); // in brands.blade.php
-    $('#products').DataTable(); // in products.blade.php
-    $('#banners').DataTable(); // in banners.blade.php
-    $('#filters').DataTable(); // in filters.blade.php
-    $('#coupons').DataTable(); // in admin/coupons/coupons.blade.php    // https://www.youtube.com/watch?v=VYUjkgA9W0k&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=143
-    $('#users').DataTable(); // in admin/users/users.blade.php    // https://www.youtube.com/watch?v=xY9OYug0uaQ&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=151
+    $('#brands').DataTable();     // in brands.blade.php
+    $('#products').DataTable();   // in products.blade.php
+    $('#banners').DataTable();    // in banners.blade.php
+    $('#filters').DataTable();    // in filters.blade.php
+    $('#coupons').DataTable();    // in admin/coupons/coupons.blade.php    // https://www.youtube.com/watch?v=VYUjkgA9W0k&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=143
+    $('#users').DataTable();      // in admin/users/users.blade.php        // https://www.youtube.com/watch?v=xY9OYug0uaQ&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=151
+    $('#orders').DataTable();     // in admin/orders/orders.blade.php      // https://www.youtube.com/watch?v=WqPCkJaTgFI&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=166
 
 
 

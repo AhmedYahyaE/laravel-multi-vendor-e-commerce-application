@@ -61,9 +61,9 @@ class AdminController extends Controller
             // Authentication (login/logging in/loggin user in): https://laravel.com/docs/9.x/authentication
             // Logging in using our 'admin' guard we created in auth.php    // Check 5:44 in https://www.youtube.com/watch?v=_vBCl-77GYc&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=11
             // Manually Authenticating Users (using attempt() method()): https://laravel.com/docs/9.x/authentication#authenticating-users
-            // if (\Illuminate\Support\Facades\Auth::guard('admin')->attempt(['email' => $data['email'], 'password' => $data['password'], 'status' => 1])) { // Check the Admin.php model and 12:47 in https://www.youtube.com/watch?v=_vBCl-77GYc&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=11
+            // if (\Illuminate\Support\Facades\Auth::guard('admin')->attempt(['email' => $data['email'], 'password' => $data['password'], 'status' => 1])) { // Check the Admin.php model and 12:47 in https://www.youtube.com/watch?v=_vBCl-77GYc&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=11    // Accessing Specific Guard Instances: https://laravel.com/docs/9.x/authentication#accessing-specific-guard-instances
             /*
-            if (\Auth::guard('admin')->attempt([
+            if (\Auth::guard('admin')->attempt([ // Accessing Specific Guard Instances: https://laravel.com/docs/9.x/authentication#accessing-specific-guard-instances
                 'email'    => $data['email'],
                 'password' => $data['password'],
                 'status'   => 1
@@ -80,11 +80,13 @@ class AdminController extends Controller
 
             // Authentication (login/logging in/loggin user in): https://laravel.com/docs/9.x/authentication
             // Enhancing the login and authentication process (add checking if the account is confirmed)    // Check 32:06 in https://www.youtube.com/watch?v=UcN-IMTUWOA&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=102
-            if (\Auth::guard('admin')->attempt(['email' => $data['email'], 'password' => $data['password']])) { // Check the Admin.php model and 12:47 in https://www.youtube.com/watch?v=_vBCl-77GYc&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=11
-                if (\Auth::guard('admin')->user()->type == 'vendor' && \Auth::guard('admin')->user()->confirm == 'No') { // if the entity trying to login is 'vendor' and not 'admin' (i.e. `type` column is `vendor`, and `vendor_id` is not zero 0 in `admins` table)    // check the `type` column in the `admins` table for if the logging in user is 'venodr', and check the `confirm` column if the vendor is not yet confirmed (`confirm` = 'No'), then don't allow logging in
+            if (\Auth::guard('admin')->attempt(['email' => $data['email'], 'password' => $data['password']])) { // Check the Admin.php model and 12:47 in https://www.youtube.com/watch?v=_vBCl-77GYc&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=11    // Accessing Specific Guard Instances: https://laravel.com/docs/9.x/authentication#accessing-specific-guard-instances
+                if (\Auth::guard('admin')->user()->type == 'vendor' && \Auth::guard('admin')->user()->confirm == 'No') { // if the entity trying to login is 'vendor' and not 'admin' (i.e. `type` column is `vendor`, and `vendor_id` is not zero 0 in `admins` table)    // check the `type` column in the `admins` table for if the logging in user is 'venodr', and check the `confirm` column if the vendor is not yet confirmed (`confirm` = 'No'), then don't allow logging in    // Accessing Specific Guard Instances: https://laravel.com/docs/9.x/authentication#accessing-specific-guard-instances
                     return redirect()->back()->with('error_message', 'Please confirm your email to activate your Vendor Account');
-                } else if (\Auth::guard('admin')->user()->type != 'vendor' && \Auth::guard('admin')->user()->status == '0') { // if the entity trying to login is 'admin' and not 'vendor' (i.e. `type` column is `superadmin` or `admin`, and `vendor_id` is zero 0 in `admins` table)    // check the `type` column in the `admins` table for if the logging in user is 'admin' or 'superadmin' (not 'vendor'), and check the `status` column if the 'admin' or 'superadmin' is inactive/disabled (`status` = 0), then don't allow logging in
+
+                } else if (\Auth::guard('admin')->user()->type != 'vendor' && \Auth::guard('admin')->user()->status == '0') { // if the entity trying to login is 'admin' and not 'vendor' (i.e. `type` column is `superadmin` or `admin`, and `vendor_id` is zero 0 in `admins` table)    // check the `type` column in the `admins` table for if the logging in user is 'admin' or 'superadmin' (not 'vendor'), and check the `status` column if the 'admin' or 'superadmin' is inactive/disabled (`status` = 0), then don't allow logging in    // Accessing Specific Guard Instances: https://laravel.com/docs/9.x/authentication#accessing-specific-guard-instances
                     return redirect()->back()->with('error_message', 'Your admin account is not active');
+
                 } else { // otherwise, login successfully!
                     return redirect('/admin/dashboard'); // Let them LOGIN!!
                 }
@@ -99,7 +101,7 @@ class AdminController extends Controller
     }
 
     public function logout() {
-        \Auth::guard('admin')->logout(); // Logging out using our 'admin' guard that we created in auth.php
+        \Auth::guard('admin')->logout(); // Logging out using our 'admin' guard that we created in auth.php    // Accessing Specific Guard Instances: https://laravel.com/docs/9.x/authentication#accessing-specific-guard-instances
         return redirect('admin/login');
     }
 
@@ -115,12 +117,12 @@ class AdminController extends Controller
             // dd($data);
 
             // Check first if the entered admin current password is corret
-            if (\Illuminate\Support\Facades\Hash::check($data['current_password'], \Auth::guard('admin')->user()->password)) { // ['current_password'] comes from the AJAX call in admin/js/custom.js page from the 'data' object inside $.ajax() method
+            if (\Illuminate\Support\Facades\Hash::check($data['current_password'], \Auth::guard('admin')->user()->password)) { // ['current_password'] comes from the AJAX call in admin/js/custom.js page from the 'data' object inside $.ajax() method    // Accessing Specific Guard Instances: https://laravel.com/docs/9.x/authentication#accessing-specific-guard-instances
                 // Check if the new password is matching with confirm password
                 if ($data['confirm_password'] == $data['new_password']) {
-                    // dd(\App\Models\Admin::where('id', \Auth::guard('admin')->user()->id));
-                    // echo '<pre>', var_dump(\App\Models\Admin::where('id', \Auth::guard('admin')->user()->id)), '</pre>';
-                    \App\Models\Admin::where('id', \Auth::guard('admin')->user()->id)->update([
+                    // dd(\App\Models\Admin::where('id', \Auth::guard('admin')->user()->id)); // Accessing Specific Guard Instances: https://laravel.com/docs/9.x/authentication#accessing-specific-guard-instances
+                    // echo '<pre>', var_dump(\App\Models\Admin::where('id', \Auth::guard('admin')->user()->id)), '</pre>'; // Accessing Specific Guard Instances: https://laravel.com/docs/9.x/authentication#accessing-specific-guard-instances
+                    \App\Models\Admin::where('id', \Auth::guard('admin')->user()->id)->update([ // Accessing Specific Guard Instances: https://laravel.com/docs/9.x/authentication#accessing-specific-guard-instances
                         'password' => bcrypt($data['new_password'])
                     ]); // we persist (update) the hashed password (not the password itself)
                     return redirect()->back()->with('success_message', 'Admin Password has been updated successfully!');
@@ -134,15 +136,15 @@ class AdminController extends Controller
 
 
         // Get data from 'admin' Authentication Guard to be able to show them in the <form> of update_admin_password.blade.php page: Check 19:10 in https://www.youtube.com/watch?v=b4ISE_polCo&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=15
-        // dd(\Auth::guard('admin'));
-        // dd(\Auth::guard('admin')->user());
-        // echo '<pre>', var_dump(\App\Models\Admin::where('email', \Auth::guard('admin')->user()->email)), '</pre>';
-        // echo '<pre>', var_dump(\App\Models\Admin::where('email', \Auth::guard('admin')->user()->email)->first()), '</pre>';
-        // echo '<pre>', var_dump(\App\Models\Admin::where('email', \Auth::guard('admin')->user()->email)->first()->toArray()), '</pre>';
+        // dd(\Auth::guard('admin')); // Accessing Specific Guard Instances: https://laravel.com/docs/9.x/authentication#accessing-specific-guard-instances
+        // dd(\Auth::guard('admin')->user()); // Accessing Specific Guard Instances: https://laravel.com/docs/9.x/authentication#accessing-specific-guard-instances
+        // echo '<pre>', var_dump(\App\Models\Admin::where('email', \Auth::guard('admin')->user()->email)), '</pre>'; // Accessing Specific Guard Instances: https://laravel.com/docs/9.x/authentication#accessing-specific-guard-instances
+        // echo '<pre>', var_dump(\App\Models\Admin::where('email', \Auth::guard('admin')->user()->email)->first()), '</pre>'; // Accessing Specific Guard Instances: https://laravel.com/docs/9.x/authentication#accessing-specific-guard-instances
+        // echo '<pre>', var_dump(\App\Models\Admin::where('email', \Auth::guard('admin')->user()->email)->first()->toArray()), '</pre>'; // Accessing Specific Guard Instances: https://laravel.com/docs/9.x/authentication#accessing-specific-guard-instances
         // exit;
-        // dd(Auth::guard('admin')->user()->email); // https://laravel.com/docs/9.x/eloquent#examining-attribute-changes
-        // dd(Auth::guard('admin')->user()->email)->first(); // https://laravel.com/docs/9.x/eloquent#examining-attribute-changes
-        $adminDetails = \App\Models\Admin::where('email', \Auth::guard('admin')->user()->email)->first()->toArray(); // 'Admin' is the Admin.php model    // \Auth::guard('admin') is the authenticated user using the 'admin' guard we created in auth.php    // https://laravel.com/docs/9.x/eloquent#retrieving-models
+        // dd(Auth::guard('admin')->user()->email); // https://laravel.com/docs/9.x/eloquent#examining-attribute-changes    // Accessing Specific Guard Instances: https://laravel.com/docs/9.x/authentication#accessing-specific-guard-instances
+        // dd(Auth::guard('admin')->user()->email)->first(); // https://laravel.com/docs/9.x/eloquent#examining-attribute-changes    // Accessing Specific Guard Instances: https://laravel.com/docs/9.x/authentication#accessing-specific-guard-instances
+        $adminDetails = \App\Models\Admin::where('email', \Auth::guard('admin')->user()->email)->first()->toArray(); // 'Admin' is the Admin.php model    // \Auth::guard('admin') is the authenticated user using the 'admin' guard we created in auth.php    // https://laravel.com/docs/9.x/eloquent#retrieving-models    // Accessing Specific Guard Instances: https://laravel.com/docs/9.x/authentication#accessing-specific-guard-instances
         return view('admin/settings/update_admin_password')->with(compact('adminDetails')); // Passing Data To Views: https://laravel.com/docs/9.x/views#sharing-data-with-all-views
     }
 
@@ -154,7 +156,7 @@ class AdminController extends Controller
 
         // Check 15:06 in https://www.youtube.com/watch?v=maEXuJNzE8M&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=17
         // Hashing Passwords: https://laravel.com/docs/9.x/hashing#hashing-passwords
-        if (\Illuminate\Support\Facades\Hash::check($data['current_password'], \Auth::guard('admin')->user()->password)) { // ['current_password'] comes from the AJAX call in admin/js/custom.js page from the 'data' object inside $.ajax() method
+        if (\Illuminate\Support\Facades\Hash::check($data['current_password'], \Auth::guard('admin')->user()->password)) { // ['current_password'] comes from the AJAX call in admin/js/custom.js page from the 'data' object inside $.ajax() method    // Accessing Specific Guard Instances: https://laravel.com/docs/9.x/authentication#accessing-specific-guard-instances
             return 'true';
         } else {
             return 'false';
@@ -167,8 +169,8 @@ class AdminController extends Controller
 
 
 
-        // dd(\Illuminate\Support\Facades\Auth::guard('admin')->user()); // Retrieving the authenticated user using a certain guard ('admin' Authentication Guard which we created in auth.php)
-        // dd(\Illuminate\Support\Facades\Auth::guard('admin')->user()->email); // Retrieving the authenticated user using a certain guard ('admin' Authentication Guard which we created in auth.php)
+        // dd(\Illuminate\Support\Facades\Auth::guard('admin')->user()); // Retrieving the authenticated user using a certain guard ('admin' Authentication Guard which we created in auth.php)    // Accessing Specific Guard Instances: https://laravel.com/docs/9.x/authentication#accessing-specific-guard-instances
+        // dd(\Illuminate\Support\Facades\Auth::guard('admin')->user()->email); // Retrieving the authenticated user using a certain guard ('admin' Authentication Guard which we created in auth.php)    // Accessing Specific Guard Instances: https://laravel.com/docs/9.x/authentication#accessing-specific-guard-instances
         if ($request->isMethod('post')) { // if the update <form> is submitted
             $data = $request->all();
             // dd($data);
@@ -215,7 +217,7 @@ class AdminController extends Controller
 
 
             // Update Admin Details
-            \App\Models\Admin::where('id', \Auth::guard('admin')->user()->id)->update([
+            \App\Models\Admin::where('id', \Auth::guard('admin')->user()->id)->update([ // Accessing Specific Guard Instances: https://laravel.com/docs/9.x/authentication#accessing-specific-guard-instances
                 'name'   => $data['admin_name'],
                 'mobile' => $data['admin_mobile'],
                 'image'  => $imageName
@@ -284,14 +286,14 @@ class AdminController extends Controller
                 // Vendor details need to be updated in BOTH `admins` and `vendors` tables:
 
                 // Update Vendor Details in 'admins' table
-                \App\Models\Admin::where('id', \Auth::guard('admin')->user()->id)->update([
+                \App\Models\Admin::where('id', \Auth::guard('admin')->user()->id)->update([ // Accessing Specific Guard Instances: https://laravel.com/docs/9.x/authentication#accessing-specific-guard-instances
                     'name'   => $data['vendor_name'],
                     'mobile' => $data['vendor_mobile'],
                     'image'  => $imageName
                 ]); // Note that the image name is the random image name that we generated
 
                 // Update Vendor Details in 'vendors' table
-                \App\Models\Vendor::where('id', \Auth::guard('admin')->user()->vendor_id)->update([
+                \App\Models\Vendor::where('id', \Auth::guard('admin')->user()->vendor_id)->update([ // Accessing Specific Guard Instances: https://laravel.com/docs/9.x/authentication#accessing-specific-guard-instances
                     'name'    => $data['vendor_name'],
                     'mobile'  => $data['vendor_mobile'],
                     'address' => $data['vendor_address'],
@@ -306,7 +308,7 @@ class AdminController extends Controller
             }
 
 
-            $vendorDetails = \App\Models\Vendor::where('id', \Auth::guard('admin')->user()->vendor_id)->first()->toArray();
+            $vendorDetails = \App\Models\Vendor::where('id', \Auth::guard('admin')->user()->vendor_id)->first()->toArray(); // Accessing Specific Guard Instances: https://laravel.com/docs/9.x/authentication#accessing-specific-guard-instances
 
         } else if ($slug == 'business') {
             // Correcting issues in the Skydash Admin Panel Sidebar using Session:  Check 6:33 in https://www.youtube.com/watch?v=i_SUdNILIrc&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=29
@@ -363,10 +365,10 @@ class AdminController extends Controller
 
 
                 // Correcting the error that appeared in 41:13 in https://www.youtube.com/watch?v=UXUDxtN68XE&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=103
-                $vendorCount = \App\Models\VendorsBusinessDetail::where('vendor_id', \Auth::guard('admin')->user()->vendor_id)->count();
+                $vendorCount = \App\Models\VendorsBusinessDetail::where('vendor_id', \Auth::guard('admin')->user()->vendor_id)->count(); // Accessing Specific Guard Instances: https://laravel.com/docs/9.x/authentication#accessing-specific-guard-instances
                 if ($vendorCount > 0) { // if there's a vendor already existing, them UPDATE
                     // UPDATE `vendors_business_details` table
-                    \App\Models\VendorsBusinessDetail::where('vendor_id', \Auth::guard('admin')->user()->vendor_id)->update([
+                    \App\Models\VendorsBusinessDetail::where('vendor_id', \Auth::guard('admin')->user()->vendor_id)->update([ // Accessing Specific Guard Instances: https://laravel.com/docs/9.x/authentication#accessing-specific-guard-instances
                         'shop_name'               => $data['shop_name'],
                         'shop_mobile'             => $data['shop_mobile'],
                         'shop_website'            => $data['shop_website'],
@@ -384,7 +386,7 @@ class AdminController extends Controller
                 } else { // if there's no vendor already existing, then INSERT
                     // INSERT INTO `vendors_business_details` table
                     \App\Models\VendorsBusinessDetail::insert([
-                        'vendor_id'               => \Auth::guard('admin')->user()->vendor_id,
+                        'vendor_id'               => \Auth::guard('admin')->user()->vendor_id, // Accessing Specific Guard Instances: https://laravel.com/docs/9.x/authentication#accessing-specific-guard-instances
                         'shop_name'               => $data['shop_name'],
                         'shop_mobile'             => $data['shop_mobile'],
                         'shop_website'            => $data['shop_website'],
@@ -407,14 +409,14 @@ class AdminController extends Controller
 
 
             // Correcting the error appeared in 33:01 in https://www.youtube.com/watch?v=UXUDxtN68XE&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=103
-            $vendorCount = \App\Models\VendorsBusinessDetail::where('vendor_id', \Auth::guard('admin')->user()->vendor_id)->count();
+            $vendorCount = \App\Models\VendorsBusinessDetail::where('vendor_id', \Auth::guard('admin')->user()->vendor_id)->count(); // Accessing Specific Guard Instances: https://laravel.com/docs/9.x/authentication#accessing-specific-guard-instances
             if ($vendorCount > 0) {
-                $vendorDetails = \App\Models\VendorsBusinessDetail::where('vendor_id', \Auth::guard('admin')->user()->vendor_id)->first()->toArray();
+                $vendorDetails = \App\Models\VendorsBusinessDetail::where('vendor_id', \Auth::guard('admin')->user()->vendor_id)->first()->toArray(); // Accessing Specific Guard Instances: https://laravel.com/docs/9.x/authentication#accessing-specific-guard-instances
             } else {
                 $vendorDetails = array();
             }
 
-            // $vendorDetails = \App\Models\VendorsBusinessDetail::where('vendor_id', \Auth::guard('admin')->user()->vendor_id)->first()->toArray();
+            // $vendorDetails = \App\Models\VendorsBusinessDetail::where('vendor_id', \Auth::guard('admin')->user()->vendor_id)->first()->toArray(); // Accessing Specific Guard Instances: https://laravel.com/docs/9.x/authentication#accessing-specific-guard-instances
 
         } else if ($slug == 'bank') {
             // Correcting issues in the Skydash Admin Panel Sidebar using Session:  Check 6:33 in https://www.youtube.com/watch?v=i_SUdNILIrc&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=29
@@ -446,10 +448,10 @@ class AdminController extends Controller
 
 
                 // Correcting the error that appeared in 46:13 in https://www.youtube.com/watch?v=UXUDxtN68XE&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=103
-                $vendorCount = \App\Models\VendorsBankDetail::where('vendor_id', \Auth::guard('admin')->user()->vendor_id)->count();
+                $vendorCount = \App\Models\VendorsBankDetail::where('vendor_id', \Auth::guard('admin')->user()->vendor_id)->count(); // Accessing Specific Guard Instances: https://laravel.com/docs/9.x/authentication#accessing-specific-guard-instances
                 if ($vendorCount > 0) { // if there's a vendor already existing, them UPDATE
                     // UPDATE `vendors_bank_details` table
-                    \App\Models\VendorsBankDetail::where('vendor_id', \Auth::guard('admin')->user()->vendor_id)->update([
+                    \App\Models\VendorsBankDetail::where('vendor_id', \Auth::guard('admin')->user()->vendor_id)->update([ // Accessing Specific Guard Instances: https://laravel.com/docs/9.x/authentication#accessing-specific-guard-instances
                         'account_holder_name' => $data['account_holder_name'],
                         'bank_name'           => $data['bank_name'],
                         'account_number'      => $data['account_number'],
@@ -458,7 +460,7 @@ class AdminController extends Controller
                 } else { // if there's no vendor already existing, then INSERT
                     // INSERT INTO `vendors_bank_details` table
                     \App\Models\VendorsBankDetail::insert([
-                        'vendor_id'           => \Auth::guard('admin')->user()->vendor_id,
+                        'vendor_id'           => \Auth::guard('admin')->user()->vendor_id, // Accessing Specific Guard Instances: https://laravel.com/docs/9.x/authentication#accessing-specific-guard-instances
                         'account_holder_name' => $data['account_holder_name'],
                         'bank_name'           => $data['bank_name'],
                         'account_number'      => $data['account_number'],
@@ -472,14 +474,14 @@ class AdminController extends Controller
 
 
             // Correcting the error appeared in 39:16 in https://www.youtube.com/watch?v=UXUDxtN68XE&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=103
-            $vendorCount = \App\Models\VendorsBankDetail::where('vendor_id', \Auth::guard('admin')->user()->vendor_id)->count();
+            $vendorCount = \App\Models\VendorsBankDetail::where('vendor_id', \Auth::guard('admin')->user()->vendor_id)->count(); // Accessing Specific Guard Instances: https://laravel.com/docs/9.x/authentication#accessing-specific-guard-instances
             if ($vendorCount > 0) {
-                $vendorDetails = \App\Models\VendorsBankDetail::where('vendor_id', \Auth::guard('admin')->user()->vendor_id)->first()->toArray();
+                $vendorDetails = \App\Models\VendorsBankDetail::where('vendor_id', \Auth::guard('admin')->user()->vendor_id)->first()->toArray(); // Accessing Specific Guard Instances: https://laravel.com/docs/9.x/authentication#accessing-specific-guard-instances
             } else {
                 $vendorDetails = array();
             }
 
-            // $vendorDetails = \App\Models\VendorsBankDetail::where('vendor_id', \Auth::guard('admin')->user()->vendor_id)->first()->toArray();
+            // $vendorDetails = \App\Models\VendorsBankDetail::where('vendor_id', \Auth::guard('admin')->user()->vendor_id)->first()->toArray(); // Accessing Specific Guard Instances: https://laravel.com/docs/9.x/authentication#accessing-specific-guard-instances
         }
 
 
@@ -581,16 +583,18 @@ class AdminController extends Controller
 
                 // Send the Approval Success Email to the new vendor    // https://www.youtube.com/watch?v=UcN-IMTUWOA&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=100
                 $email = $adminDetails['email']; // the vendor's email
+
+                // The email message data/variables that will be passed in to the email view
                 $messageData = [
                     'email'  => $adminDetails['email'],
                     'name'   => $adminDetails['name'],
                     'mobile' => $adminDetails['mobile'],
                 ];
-                \Illuminate\Support\Facades\Mail::send('emails.vendor_approved', $messageData, function ($message) use ($email) { // Sending Mail: https://laravel.com/docs/9.x/mail#sending-mail    // 'emails.vendor_approved' is the vendor_approved.blade.php file inside the 'resources/views/emails' folder that will be sent as an email    // We pass all the variables that vendor_approved.blade.php will use    // https://www.php.net/manual/en/functions.anonymous.php
+                \Illuminate\Support\Facades\Mail::send('emails.vendor_approved', $messageData, function ($message) use ($email) { // Sending Mail: https://laravel.com/docs/9.x/mail#sending-mail    // 'emails.vendor_approved' is the vendor_approved.blade.php file inside the 'resources/views/emails' folder that will be sent as an email    // We pass in all the variables that vendor_approved.blade.php will use    // https://www.php.net/manual/en/functions.anonymous.php
                     $message->to($email)->subject('Vendor Account is Approved');
                 });
             }
-            $adminType = \Auth::guard('admin')->user()->type; // `type` is the column in `admins` table    // Retrieving The Authenticated User and getting their `type`      column in `admins` table    // https://laravel.com/docs/9.x/authentication#retrieving-the-authenticated-user
+            $adminType = \Auth::guard('admin')->user()->type; // `type` is the column in `admins` table    // Retrieving The Authenticated User and getting their `type`      column in `admins` table    // https://laravel.com/docs/9.x/authentication#retrieving-the-authenticated-user    // Accessing Specific Guard Instances: https://laravel.com/docs/9.x/authentication#accessing-specific-guard-instances
 
 
             return response()->json([ // JSON Responses: https://laravel.com/docs/9.x/responses#json-responses

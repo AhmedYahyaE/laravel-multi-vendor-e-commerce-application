@@ -230,7 +230,7 @@
                                     </div> --}}
                                     <div class="u-s-m-b-13">
                                         <input type="radio" class="radio-box" name="payment_gateway" id="paypal" value="Paypal">
-                                        <label class="label-text" for="paypal">Paypal</label>
+                                        <label class="label-text" for="paypal">PayPal</label>
                                     </div>
                                     <div class="u-s-m-b-13">
                                         <input type="checkbox" class="check-box" id="accept" name="accept" value="Yes" title="Please agree to T&C">

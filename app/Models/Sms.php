@@ -9,7 +9,7 @@ class Sms extends Model
 {
     use HasFactory;
 
-    // Sending an offline SMS using an SMS API    // https://www.youtube.com/watch?v=QA86hHuD4_w&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=130
+    // Sending an offline SMS using an SMS API    // https://www.youtube.com/watch?v=QA86hHuD4_w&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=130    AND check 32:48 in    https://www.youtube.com/watch?v=dF7OhPttepE&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=169
     public static function sendSms($message, $mobile) {
         /*Code for SMS Script Starts*/
         $request ="";
@@ -19,6 +19,8 @@ class Sms extends Model
         $param['message']= $message;
         // $param['numbers']= '9800000000';
         $param['numbers']= $mobile;
+        $param['username']= 'amit';
+        $param['password']= '3212415445fsfgs5';
         $param['language']="english";
         $param['route']="p";
 

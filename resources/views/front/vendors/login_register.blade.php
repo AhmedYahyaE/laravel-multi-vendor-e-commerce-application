@@ -72,7 +72,7 @@
 
 
                         {{-- https://www.youtube.com/watch?v=UXUDxtN68XE&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=101 --}}
-                        <form action="{{ url('admin/login') }}" method="post"> {{-- the same form as the one in admin/login.blade.php --}}
+                        <form action="{{ url('admin/login') }}" method="post"> {{-- the same HTML Form as the one in the Admin Panel in admin/login.blade.php --}}
                             @csrf {{-- https://laravel.com/docs/9.x/csrf#preventing-csrf-requests --}}
 
 

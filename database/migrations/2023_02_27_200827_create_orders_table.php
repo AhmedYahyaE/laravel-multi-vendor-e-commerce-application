@@ -27,8 +27,8 @@ return new class extends Migration
             $table->string('mobile');
             $table->string('email');
             $table->float('shipping_charges');
-            $table->string('coupon_code');
-            $table->float('coupon_amount');
+            $table->string('coupon_code')->nullable();
+            $table->float('coupon_amount')->nullable();
             $table->string('order_status');
             $table->string('payment_method');
             $table->string('payment_gateway');

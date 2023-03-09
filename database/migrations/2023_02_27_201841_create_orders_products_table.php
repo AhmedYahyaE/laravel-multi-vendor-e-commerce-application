@@ -28,6 +28,7 @@ return new class extends Migration
             $table->string('product_size');
             $table->float('product_price');
             $table->integer('product_qty');
+            $table->string('item_status'); // Determined by 'vendor'-s ONLY, not 'admin'-s, in contrast to the `order_status` column in `orders` table which is determined by 'admin'-s ONLY, not 'vendor'-s    // Check 6:35 in https://www.youtube.com/watch?v=QEdO_maniDY&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=168
 
             $table->timestamps();
         });

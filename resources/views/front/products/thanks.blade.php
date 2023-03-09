@@ -32,7 +32,7 @@
             <div class="row">
                 <div class="col-lg-12" align="center">
                     <h3>YOUR ORDER HAS BEEN PLACED SUCCESSFULLY</h3>
-                    <p>Your order number is {{ Session::get('order_id') }} and Grand Total is INR {{ Session::get('grand_total') }}</p> {{-- The Order Number is the order `id` in the `orders` database table --}} {{-- Retrieving Data: https://laravel.com/docs/10.x/session#retrieving-data --}}
+                    <p>Your order number is {{ Session::get('order_id') }} and Grand Total is INR {{ Session::get('grand_total') }}</p> {{-- The Order Number is the order `id` in the `orders` database table. We stored the order id in Session in checkout() method in Front/ProductsController.php --}} {{-- Retrieving Data: https://laravel.com/docs/10.x/session#retrieving-data --}}
                 </div>
             </div>
         </div>

@@ -14,8 +14,8 @@
 
 
 
-        {{-- In case the authenticated user (the logged in user) (using the 'admin' Authentication Guard in auth.php) type is 'vendor': https://www.youtube.com/watch?v=9l8YuyPjAUg&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=22 --}}
-        @if (Auth::guard('admin')->user()->type == 'vendor')
+        {{-- In case the authenticated user (the logged-in user) (using the 'admin' Authentication Guard in auth.php) type is 'vendor': https://www.youtube.com/watch?v=9l8YuyPjAUg&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=22 --}}
+        @if (Auth::guard('admin')->user()->type == 'vendor') {{-- Accessing Specific Guard Instances: https://laravel.com/docs/9.x/authentication#accessing-specific-guard-instances --}}
             <li class="nav-item">
                 <a @if (Session::get('page') == 'update_personal_details' || Session::get('page') == 'update_business_details' || Session::get('page') == 'update_bank_details') style="background: #4B49AC !important; color: #FFF !important" @endif class="nav-link" data-toggle="collapse" href="#ui-vendors" aria-expanded="false" aria-controls="ui-vendors">
                     <i class="icon-layout menu-icon"></i>
@@ -46,7 +46,21 @@
                 </div>
             </li>
 
-        @else {{-- In case the authenticated user (the logged in user) (using the 'admin' Authentication Guard in auth.php) type is 'superadmin', or 'admin', or 'subadmin' --}}
+            {{-- If the authenticated/logged-in user is 'vendor', show ONLY the orders of the products added by that specific 'vendor' (In constrast to the case where the authenticated/logged-in user is 'admin', we show ALL orders) --}} {{-- https://www.youtube.com/watch?v=WqPCkJaTgFI&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=166 --}}
+            <li class="nav-item">
+                <a @if (Session::get('page') == 'orders') style="background: #4B49AC !important; color: #FFF !important" @endif class="nav-link" data-toggle="collapse" href="#ui-orders" aria-expanded="false" aria-controls="ui-orders">
+                    <i class="icon-layout menu-icon"></i>
+                    <span class="menu-title">Orders Management</span>
+                    <i class="menu-arrow"></i>
+                </a>
+                <div class="collapse" id="ui-orders">
+                    <ul class="nav flex-column sub-menu" style="background: #fff !important; color: #4B49AC !important">
+                        <li class="nav-item"> <a @if (Session::get('page') == 'orders')   style="background: #4B49AC !important; color: #FFF !important" @else style="background: #fff !important; color: #4B49AC !important" @endif class="nav-link" href="{{ url('admin/orders') }}">Orders</a></li>
+                    </ul>
+                </div>
+            </li>
+
+        @else {{-- In case the authenticated user (the logged-in user) (using the 'admin' Authentication Guard in auth.php) type is 'superadmin', or 'admin', or 'subadmin' --}}
             <li class="nav-item">
                 <a @if (Session::get('page') == 'update_admin_password' || Session::get('page') == 'update_admin_details') style="background: #4B49AC !important; color: #FFF !important" @endif class="nav-link" data-toggle="collapse" href="#ui-settings" aria-expanded="false" aria-controls="ui-settings">
                     <i class="icon-layout menu-icon"></i>
@@ -99,6 +113,19 @@
                 </div>
             </li>
 
+            {{-- https://www.youtube.com/watch?v=WqPCkJaTgFI&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=166 --}}
+            <li class="nav-item">
+                <a @if (Session::get('page') == 'orders') style="background: #4B49AC !important; color: #FFF !important" @endif class="nav-link" data-toggle="collapse" href="#ui-orders" aria-expanded="false" aria-controls="ui-orders">
+                    <i class="icon-layout menu-icon"></i>
+                    <span class="menu-title">Orders Management</span>
+                    <i class="menu-arrow"></i>
+                </a>
+                <div class="collapse" id="ui-orders">
+                    <ul class="nav flex-column sub-menu" style="background: #fff !important; color: #4B49AC !important">
+                        <li class="nav-item"> <a @if (Session::get('page') == 'orders')   style="background: #4B49AC !important; color: #FFF !important" @else style="background: #fff !important; color: #4B49AC !important" @endif class="nav-link" href="{{ url('admin/orders') }}">Orders</a></li>
+                    </ul>
+                </div>
+            </li>
 
             {{-- https://www.youtube.com/watch?v=-ZVzg8vwUjk&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=26 --}}
             <li class="nav-item">

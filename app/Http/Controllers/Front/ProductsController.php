@@ -929,7 +929,7 @@ class ProductsController extends Controller
             // dd($deliveryAddress);
 
             // https://www.youtube.com/watch?v=nGNkJBGqjlY&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=161
-            // If the selected `payment_gateway` is 'COD', set the `payment_method` as 'COD' too (and `order_status` is 'new'), otherwise it's always 'prepaid'
+            // If the selected `payment_gateway` is 'COD', set the `payment_method` as 'COD' too (and `order_status` is 'New'), otherwise it's always 'prepaid' (and `order_status` is 'Pending')
             if ($data['payment_gateway'] == 'COD') {
                 $payment_method = 'COD';
                 $order_status   = 'New';
@@ -1007,23 +1007,23 @@ class ProductsController extends Controller
                 // dd($getProductDetails);
 
                 // Continue filling in data into the `orders_products` table
-                $cartItem->admin_id         = $getProductDetails['admin_id'];
-                $cartItem->vendor_id        = $getProductDetails['vendor_id'];
-                $cartItem->product_id       = $item['product_id'];
-                $cartItem->product_code     = $getProductDetails['product_code'];
-                $cartItem->product_name     = $getProductDetails['product_name'];
-                $cartItem->product_color    = $getProductDetails['product_color'];
-                $cartItem->product_size     = $item['size'];
+                $cartItem->admin_id        = $getProductDetails['admin_id'];
+                $cartItem->vendor_id       = $getProductDetails['vendor_id'];
+                $cartItem->product_id      = $item['product_id'];
+                $cartItem->product_code    = $getProductDetails['product_code'];
+                $cartItem->product_name    = $getProductDetails['product_name'];
+                $cartItem->product_color   = $getProductDetails['product_color'];
+                $cartItem->product_size    = $item['size'];
 
                 $getDiscountAttributePrice = \App\Models\Product::getDiscountAttributePrice($item['product_id'], $item['size']); // from the `products_attributes` table, not the `products` table
-                $cartItem->product_price    = $getDiscountAttributePrice['final_price'];
-            
-                $cartItem->product_qty      = $item['quantity'];
+                $cartItem->product_price   = $getDiscountAttributePrice['final_price'];
+
+                $cartItem->product_qty     = $item['quantity'];
 
                 $cartItem->save(); // INSERT data INTO the `orders_products` table
             }
 
-            // Store the `order_id` in Session
+            // Store the `order_id` in Session so that we can use it in front/products/thanks.blade.php
             \Session::put('order_id', $order_id); // Storing Data: https://laravel.com/docs/9.x/session#storing-data
 
 
@@ -1032,6 +1032,41 @@ class ProductsController extends Controller
 
             // echo 'Order placed successfully!';
             // exit;
+
+
+            // Send placing an order confirmation email to the user    // https://www.youtube.com/watch?v=dF7OhPttepE&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=169
+            // Note: We send placing an order confirmation email and SMS to the user right away (immediately) if the order is "COD", but if the order payment method is like PayPal or any other payment gateway, we send the order confirmation email and SMS after the user makes the payment. Check     https://www.youtube.com/watch?v=dF7OhPttepE&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=169
+            $orderDetails = \App\Models\Order::with('orders_products')->where('id', $order_id)->first()->toArray();// Eager Loading: https://laravel.com/docs/9.x/eloquent-relationships#eager-loading    // 'orders_products' is the relationship method name in Order.php model
+            // dd($orderDetails);
+
+            if ($data['payment_gateway'] == 'COD') { // if the `payment_gateway` selected by the user is 'COD' (in front/products/checkout.blade.php), we send the placing the order confirmation email and SMS immediately
+                // Sending the Order confirmation email
+                $email = \Auth::user()->email; // Retrieving The Authenticated User: https://laravel.com/docs/9.x/authentication#retrieving-the-authenticated-user
+
+                // The email message data/variables that will be passed in to the email view
+                $messageData = [
+                    'email'        => $email,
+                    'name'         => \Auth::user()->name, // Retrieving The Authenticated User: https://laravel.com/docs/9.x/authentication#retrieving-the-authenticated-user
+                    'order_id'     => $order_id,
+                    'orderDetails' => $orderDetails
+                ];
+
+                \Illuminate\Support\Facades\Mail::send('emails.order', $messageData, function ($message) use ($email) { // Sending Mail: https://laravel.com/docs/9.x/mail#sending-mail    // 'emails.order' is the order.blade.php file inside the 'resources/views/emails' folder that will be sent as an email    // We pass in all the variables that order.blade.php will use    // https://www.php.net/manual/en/functions.anonymous.php
+                    $message->to($email)->subject('Order Placed - StackDevelopers.in');
+                });
+
+                /*
+                // Sending the Order confirmation SMS
+                // Send an SMS using an SMS API and cURL    // https://www.youtube.com/watch?v=dF7OhPttepE&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=170
+                $message = 'Dear Customer, your order ' . $order_id . ' has been placed successfully with StackDevelopers.in. We will inform you once your order is shipped';
+                // $mobile = $data['mobile']; // the user's mobile that they entered while submitting the registration form
+                $mobile = \Auth::user()->moblie; // Retrieving The Authenticated User: https://laravel.com/docs/9.x/authentication#retrieving-the-authenticated-user
+                \App\Models\Sms::sendSms($message, $mobile); // Send the SMS
+                */
+
+            } else { // if the `payment_gateway` selected by the user is not 'COD', meaning it's like PayPal, Prepaid, ... (in front/products/checkout.blade.php), we send the placing the order confirmation email and SMS after the user makes the payment
+                echo 'Prepaid payment methods coming soon';
+            }
 
 
             return redirect('thanks');

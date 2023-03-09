@@ -76,8 +76,8 @@
 
                     {{-- Check 9:01 in https://www.youtube.com/watch?v=3YIBKtx0n4M&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=61 --}}
                     {{-- Show the admin image if exists: Check 14:34 in https://www.youtube.com/watch?v=dvVbp4poGfQ&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=19 --}}
-                    @if (!empty(Auth::guard('admin')->user()->image))
-                        <img src="{{ url('admin/images/photos/' . Auth::guard('admin')->user()->image) }}" alt="profile">
+                    @if (!empty(Auth::guard('admin')->user()->image)) {{-- Accessing Specific Guard Instances: https://laravel.com/docs/9.x/authentication#accessing-specific-guard-instances --}}
+                        <img src="{{ url('admin/images/photos/' . Auth::guard('admin')->user()->image) }}" alt="profile"> {{-- Accessing Specific Guard Instances: https://laravel.com/docs/9.x/authentication#accessing-specific-guard-instances --}}
                     @else
                         <img src="{{ url('admin/images/photos/no-image.gif') }}" alt="profile">
                     @endif

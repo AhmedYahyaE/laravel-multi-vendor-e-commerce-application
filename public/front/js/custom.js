@@ -318,7 +318,7 @@ $(document).ready(function() {
 
 
     // User Login <form> submission (in front/users/login_register.blade.php)    // https://www.youtube.com/watch?v=Vbfhv2lMt9M&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=131
-    $('#loginForm').submit(function() { // When the registration <form> is submitted
+    $('#loginForm').submit(function() { // When the login <form> is submitted
         var formdata = $(this).serialize(); // serialize() method comes in handy when submitting an HTML Form using an AJAX request / Ajax call, as it collects all the name/value pairs from the HTML Form input fields like: <input>, <textarea>, <select><option>, ... HTML elements of the <form> (instead of the heavy work of assigning an identifier/handle for every <input> and <textarea>, ... using an HTML 'id' or CSS 'class', and then getting the value for every one of them like this:    $('#username).val();    )    // serialize() jQuery method: https://www.w3schools.com/jquery/ajax_serialize.asp
         // console.log(typeof formdata); // 'string' data type
         // console.log(formdata);
