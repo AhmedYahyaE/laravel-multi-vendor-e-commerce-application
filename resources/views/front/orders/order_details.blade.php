@@ -54,7 +54,7 @@
                         <td>{{ $orderDetails['shipping_charges'] }}</td>
                     </tr>
 
-                    @if ($orderDetails['order_status'] != '')
+                    @if ($orderDetails['coupon_code'] != '')
                         <tr>
                             <td>Coupon Code</td>
                             <td>{{ $orderDetails['coupon_code'] }}</td>
@@ -62,6 +62,18 @@
                         <tr>
                             <td>Coupon Amount</td>
                             <td>{{ $orderDetails['coupon_amount'] }}</td>
+                        </tr>
+                    @endif
+
+                    {{-- https://www.youtube.com/watch?v=WNCFYaSv-N4&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=173 --}}
+                    @if ($orderDetails['courier_name'] != '')
+                        <tr>
+                            <td>Courier Name</td>
+                            <td>{{ $orderDetails['courier_name'] }}</td>
+                        </tr>
+                        <tr>
+                            <td>Tracking Number</td>
+                            <td>{{ $orderDetails['tracking_number'] }}</td>
                         </tr>
                     @endif
 
@@ -81,6 +93,7 @@
                         <th>Product Color</th>
                         <th>Product Qty</th>
                     </tr>
+
                     @foreach ($orderDetails['orders_products'] as $product)
                         <tr>
                             <td>
@@ -96,7 +109,15 @@
                             <td>{{ $product['product_size'] }}</td>
                             <td>{{ $product['product_color'] }}</td>
                             <td>{{ $product['product_qty'] }}</td>
-                        </tr>         
+                        </tr>
+
+                        {{-- https://www.youtube.com/watch?v=WNCFYaSv-N4&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=173 --}}
+                        @if ($product['courier_name'] != '')
+                            <tr>
+                                <td colspan="6">Courier Name: {{ $product['courier_name'] }}, Tracking Number: {{ $product['tracking_number'] }}</td>
+                            </tr>
+                        @endif
+
                     @endforeach
                 </table>
 

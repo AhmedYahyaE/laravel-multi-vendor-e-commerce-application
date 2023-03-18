@@ -621,4 +621,21 @@ $(document).ready(function() {
     });
 
 
+
+    // Hide Courier Name and Tracking Number HTML input fields in admin/orders/order_details.blade.php in "Update Order Status" Section, and show them ONLY if the "Update Order Status" <select><option> (dropdown menu) is updated/changed (to 'Shipped' only) by an 'admin'    // https://www.youtube.com/watch?v=ZjeCjuzU9wM&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=172
+    $('#courier_name').hide();
+    $('#tracking_number').hide();
+    $('#order_status').on('change', function() {
+        if (this.value == 'Shipped') { // is the same as:    if ($(this).val() == 'Shipped') {
+            $('#courier_name').show();
+            $('#tracking_number').show();
+        } else {
+            $('#courier_name').hide();
+            $('#tracking_number').hide();
+        }
+    });
+
+
+
+
 }); // End of $(document).ready()

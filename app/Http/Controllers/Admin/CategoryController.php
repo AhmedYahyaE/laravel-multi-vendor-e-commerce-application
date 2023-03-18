@@ -179,7 +179,7 @@ class CategoryController extends Controller
             return redirect('admin/categories')->with('success_message', $message);
 
             
-            // // Saving inserted/updated data    // Inserting & Updating Models: https://laravel.com/docs/9.x/eloquent#inserts AND https://laravel.com/docs/9.x/eloquent#updates
+            // Saving inserted/updated data    // Inserting & Updating Models: https://laravel.com/docs/9.x/eloquent#inserts AND https://laravel.com/docs/9.x/eloquent#updates
             // $category->name   = $data['category_name']; // WHETHER ADDING or UPDATING
             // $category->status = 1;  // WHETHER ADDING or UPDATING
             // $category->save(); // Save all data in the database

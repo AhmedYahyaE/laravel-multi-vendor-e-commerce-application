@@ -1,5 +1,5 @@
-{{-- https://www.youtube.com/watch?v=nUM9e83WzIo&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=170 --}}
-{{-- This is the order "Update Order Status" by 'admin' email file using Mailtrap --}} {{-- All the variables (like $name, $mobile, $email, ...) used here are passed in from the updateOrderStatus() method in Admin/OrderController.php --}}
+{{-- https://www.youtube.com/watch?v=lyG3Ut317M8&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=175 --}}
+{{-- This is the order "Update ITEM Status" by a 'vendor' or 'admin' email file using Mailtrap --}} {{-- All the variables (like $name, $mobile, $email, ...) used here are passed in from the updateOrderItemStatus() method in Admin/OrderController.php --}}
 
 
 
@@ -16,7 +16,7 @@
             <tr><td>&nbsp;</td></tr>
             <tr><td>Hello {{ $name }}</td></tr>
             <tr><td>&nbsp;<br></td></tr>
-            <tr><td>Your Order #{{ $order_id }} status has been updated to {{ $order_status }}</td></tr>
+            <tr><td>Your Order #{{ $order_id }} Item status has been updated to {{ $order_status }}</td></tr>
             <tr><td>&nbsp;</td></tr>
 
             {{-- Check 35:55 in https://www.youtube.com/watch?v=WNCFYaSv-N4&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=173 --}}
@@ -27,7 +27,7 @@
                 <tr><td>&nbsp;</td></tr>
             @endif
 
-            <tr><td>Your Order details are as below:</td></tr>
+            <tr><td>Your Order Item details are as below:</td></tr>
             <tr><td>&nbsp;</td></tr>
             <tr><td>
                 <table style="width: 95%" cellpadding="5" cellspacing="5" bgcolor="#f7f4f4">
@@ -49,26 +49,7 @@
                             <td>{{ $order['product_price'] }}</td>
                         </tr>
                     @endforeach
-                    <tr>
-                        <td colspan="5" align="right">Shipping Charges</td>
-                        <td>INR {{ $orderDetails['shipping_charges'] }}</td>
-                    </tr>
-                    <tr>
-                        <td colspan="5" align="right">Coupon Discount</td>
-                        <td>
-                            INR
-                            @if ($orderDetails['coupon_amount'] > 0)
-                                {{ $orderDetails['coupon_amount'] }}
-                            @else
-                                0
-                            @endif
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="5" align="right">Grand Total</td>
-                        <td>INR {{ $orderDetails['grand_total'] }}</td>
-                    </tr>
-                </table>
+                </table>    
             </td></tr>
             <tr><td>&nbsp;</td></tr>
             <tr><td>

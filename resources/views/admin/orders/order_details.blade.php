@@ -222,18 +222,54 @@
                                     @csrf {{-- Preventing CSRF Requests: https://laravel.com/docs/9.x/csrf#preventing-csrf-requests --}}
 
                                     <input type="hidden" name="order_id" value="{{ $orderDetails['id'] }}">
-                                    <select name="order_status" required>
-                                        <option value="">Select</option>
+
+                                    <select name="order_status" id="order_status" required>
+                                        <option value="" selected>Select</option>
                                         @foreach ($orderStatuses as $status)
                                             <option value="{{ $status['name'] }}"  @if (!empty($orderDetails['order_status']) && $orderDetails['order_status'] == $status['name']) selected @endif>{{ $status['name'] }}</option>
                                         @endforeach
                                     </select>
+
+                                    {{-- // Note: There are two types of Shipping Process: "manual" and "automatic". "Manual" is in the case like small businesses, where the courier arrives at the owner warehouse to to pick up the order for shipping, and the small business owner takes the shipment details (like courier name, tracking number, ...) from the courier, and inserts those details themselves in the Admin Panel when they "Update Order Status" Section (by an 'admin') or "Update Item Status" Section (by a 'vendor' or 'admin') (in admin/orders/order_details.blade.php). With "automatic" shipping process, we're integrating third-party APIs and orders go directly to the shipping partner, and the updates comes from the courier's end, and orders are automatically delivered to customers. Check https://www.youtube.com/watch?v=ZjeCjuzU9wM&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=172 --}}
+                                    <input type="text" name="courier_name"    id="courier_name"    placeholder="Courier Name">    {{-- This input field will only show up when 'Shipped' <option> is selected. Check admin/js/custom.js --}}
+                                    <input type="text" name="tracking_number" id="tracking_number" placeholder="Tracking Number"> {{-- This input field will only show up when 'Shipped' <option> is selected. Check admin/js/custom.js --}}
+
                                     <button type="submit">Update</button>
                                 </form>
                                 <br>
+
                                 {{-- Show the "Update Order Status" History/Log in admin/orders/order_details.blade.php    // Check 7:47 in https://www.youtube.com/watch?v=7nb4feE7FBY&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=171 --}}
-                                @foreach ($orderLog as $log)
+                                @foreach ($orderLog as $key => $log)
+                                    @php
+                                        // echo '<pre>', var_dump($log), '</pre>';
+                                        // echo '<pre>', var_dump($log['orders_products']), '</pre>';
+                                        // echo '<pre>', var_dump($key), '</pre>';
+                                        // echo '<pre>', var_dump($log['orders_products'][$key]), '</pre>';
+                                        // echo '<pre>', var_dump($log['orders_products'][$key]['product_code']), '</pre>';
+                                    @endphp
                                     <strong>{{ $log['order_status'] }}</strong>
+
+                                    {{-- Note: There are two types of Shipping Process: "manual" and "automatic". "Manual" is in the case like small businesses, where the courier arrives at the owner warehouse to to pick up the order for shipping, and the small business owner takes the shipment details (like courier name, tracking number, ...) from the courier, and inserts those details themselves in the Admin Panel when they "Update Order Status" Section (by an 'admin') or "Update Item Status" Section (by a 'vendor' or 'admin') (in admin/orders/order_details.blade.php). With "automatic" shipping process, we're integrating third-party APIs and orders go directly to the shipping partner, and the updates comes from the courier's end, and orders are automatically delivered to customers. Check https://www.youtube.com/watch?v=ZjeCjuzU9wM&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=172 --}}
+
+                                    {{-- Show if the order status previewed in "Update Order Status" Section in admin/orders/order_details.blade.php is whether updated from "Update Item Status" Section (which can updated by either `vendor`-s or `admin`-s) (in case the `order_item_id` column is NOT zero 0 (it is 0 zero in case of updated by `admin`-s only in the "Update Order Status" Section)) or from "Update Order Status" Section (can be updated by `admin`-s ONLY). Check updateOrderItemStatus() method in Admin/OrderController.php    // Check 15:22 in https://www.youtube.com/watch?v=WNCFYaSv-N4&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=173 --}}
+                                    @if (isset($log['order_item_id']) && $log['order_item_id'] > 0) {{-- In case the "Item Status" Section is updated by a 'vendor' or 'admin', the `order_item_id` column in `orders_logs` table references (is a foreign key to) the `id` column in `orders_products` table, otherwise, it takes 0 zero as a value (in case of 'admin'). Check updateOrderItemStatus() method in Admin/OrderController.php --}}
+                                        @php
+                                            $getItemDetails = \App\Models\OrdersLog::getItemDetails($log['order_item_id']);
+                                        @endphp
+                                        - for item {{ $getItemDetails['product_code'] }}
+
+                                        @if (!empty($getItemDetails['courier_name']))
+                                            <br>
+                                            <span>Courier Name: {{ $getItemDetails['courier_name'] }}</span>
+                                        @endif
+
+                                        @if (!empty($getItemDetails['tracking_number']))
+                                            <br>
+                                            <span>Tracking Number: {{ $getItemDetails['tracking_number'] }}</span>
+                                        @endif
+
+                                    @endif
+
                                     <br>
                                     {{ date('Y-m-d h:i:s', strtotime($log['created_at'])) }}
                                     <br>
@@ -283,20 +319,26 @@
                                         {{-- https://www.youtube.com/watch?v=QEdO_maniDY&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=168 --}}
                                         <td>
 
-                                        {{-- https://www.youtube.com/watch?v=QEdO_maniDY&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=168 --}}
-                                        {{-- Note: The `order_statuses` table contains all kinds of order statuses (that can be updated by 'admin'-s ONLY in `orders` table) like: pending, in progress, shipped, canceled, ...etc. In `order_statuses` table, the `name` column can be: 'New', 'Pending', 'Canceled', 'In Progress', 'Shipped', 'Partially Shipped', 'Delivered', 'Partially Delivered' and 'Paid'. 'Partially Shipped': If one order has products from different vendors, and one vendor has shipped their product to the customer while other vendor (or vendors) didn't!. 'Partially Delivered': if one order has products from different vendors, and one vendor has shipped and DELIVERED their product to the customer while other vendor (or vendors) didn't!    // The `order_item_statuses` table contains all kinds of order statuses (that can be updated by both 'vendor'-s and 'admin'-s in `orders_products` table) like: pending, in progress, shipped, canceled, ...etc. --}}
-                                        <form action="{{ url('admin/update-order-item-status') }}" method="post">  {{-- can be updated by both 'vendor'-s and 'admin'-s. This is in contrast to 'Update Order Status' which can be updated by 'admin'-s ONLY --}}
-                                            @csrf {{-- Preventing CSRF Requests: https://laravel.com/docs/9.x/csrf#preventing-csrf-requests --}}
+                                            {{-- https://www.youtube.com/watch?v=QEdO_maniDY&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=168 --}}
+                                            {{-- Note: The `order_statuses` table contains all kinds of order statuses (that can be updated by 'admin'-s ONLY in `orders` table) like: pending, in progress, shipped, canceled, ...etc. In `order_statuses` table, the `name` column can be: 'New', 'Pending', 'Canceled', 'In Progress', 'Shipped', 'Partially Shipped', 'Delivered', 'Partially Delivered' and 'Paid'. 'Partially Shipped': If one order has products from different vendors, and one vendor has shipped their product to the customer while other vendor (or vendors) didn't!. 'Partially Delivered': if one order has products from different vendors, and one vendor has shipped and DELIVERED their product to the customer while other vendor (or vendors) didn't!    // The `order_item_statuses` table contains all kinds of order statuses (that can be updated by both 'vendor'-s and 'admin'-s in `orders_products` table) like: pending, in progress, shipped, canceled, ...etc. --}}
+                                            <form action="{{ url('admin/update-order-item-status') }}" method="post">  {{-- can be updated by both 'vendor'-s and 'admin'-s. This is in contrast to 'Update Order Status' which can be updated by 'admin'-s ONLY --}}
+                                                @csrf {{-- Preventing CSRF Requests: https://laravel.com/docs/9.x/csrf#preventing-csrf-requests --}}
 
-                                            <input type="hidden" name="order_item_id" value="{{ $product['id'] }}">
-                                            <select name="order_item_status" required>
-                                                <option value="">Select</option>
-                                                @foreach ($orderItemStatuses as $status)
-                                                    <option value="{{ $status['name'] }}"  @if (!empty($product['item_status']) && $product['item_status'] == $status['name']) selected @endif>{{ $status['name'] }}</option>
-                                                @endforeach
-                                            </select>
-                                            <button type="submit">Update</button>
-                                        </form>
+                                                <input type="hidden" name="order_item_id" value="{{ $product['id'] }}">
+
+                                                <select name="order_item_status" id="order_item_status" required>
+                                                    <option value="">Select</option>
+                                                    @foreach ($orderItemStatuses as $status)
+                                                        <option value="{{ $status['name'] }}"  @if (!empty($product['item_status']) && $product['item_status'] == $status['name']) selected @endif>{{ $status['name'] }}</option>
+                                                    @endforeach
+                                                </select>
+
+                                                {{-- // Note: There are two types of Shipping Process: "manual" and "automatic". "Manual" is in the case like small businesses, where the courier arrives at the owner warehouse to to pick up the order for shipping, and the small business owner takes the shipment details (like courier name, tracking number, ...) from the courier, and inserts those details themselves in the Admin Panel when they "Update Order Status" Section (by an 'admin') or "Update Item Status" Section (by a 'vendor' or 'admin') (in admin/orders/order_details.blade.php). With "automatic" shipping process, we're integrating third-party APIs and orders go directly to the shipping partner, and the updates comes from the courier's end, and orders are automatically delivered to customers. Check https://www.youtube.com/watch?v=WNCFYaSv-N4&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=173 --}}
+                                                <input style="width: 25%" type="text" name="item_courier_name"    id="item_courier_name"    placeholder="Item Courier Name"    @if (!empty($product['courier_name']))    value="{{ $product['courier_name'] }}"    @endif> {{-- This input field will only show up when 'Shipped' <option> is selected. Check admin/js/custom.js --}}
+                                                <input style="width: 25%" type="text" name="item_tracking_number" id="item_tracking_number" placeholder="Item Tracking Number" @if (!empty($product['tracking_number'])) value="{{ $product['tracking_number'] }}" @endif> {{-- This input field will only show up when 'Shipped' <option> is selected. Check admin/js/custom.js --}}
+        
+                                                <button type="submit">Update</button>
+                                            </form>
 
                                         </td>
                                     </tr>         
@@ -308,6 +350,8 @@
             </div>
         </div>
         <!-- content-wrapper ends -->
+
+        {{-- Footer --}}
         @include('admin.layout.footer')
         <!-- partial -->
     </div>

@@ -527,7 +527,7 @@ class AdminController extends Controller
         return view('admin/admins/admins')->with(compact('admins', 'title'));
     }
 
-    public function viewVendorDetails($id) { // // View further 'vendor' details inside Admin Management table (if the authenticated user is superadmin, admin or subadmin)
+    public function viewVendorDetails($id) { // View further 'vendor' details inside Admin Management table (if the authenticated user is superadmin, admin or subadmin)
         // $vendorDetails = \App\Models\Admin::where('vendor_id', $id);
         // $vendorDetails = \App\Models\Admin::where('id', $id)->first();
 
