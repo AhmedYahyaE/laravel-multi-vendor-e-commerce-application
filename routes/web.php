@@ -148,8 +148,24 @@ Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function
         // Update Item Status (which can be determined by both 'vendor'-s and 'admin'-s, in contrast to "Update Order Status" which is updated by 'admin'-s ONLY, not 'vendor'-s) (Pending, In Progress, Shipped, Delivered, ...) in admin/orders/order_details.blade.php in Admin Panel    // https://www.youtube.com/watch?v=QEdO_maniDY&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=168
         // Note: The `order_statuses` table contains all kinds of order statuses (that can be updated by 'admin'-s ONLY in `orders` table) like: pending, in progress, shipped, canceled, ...etc. In `order_statuses` table, the `name` column can be: 'New', 'Pending', 'Canceled', 'In Progress', 'Shipped', 'Partially Shipped', 'Delivered', 'Partially Delivered' and 'Paid'. 'Partially Shipped': If one order has products from different vendors, and one vendor has shipped their product to the customer while other vendor (or vendors) didn't!. 'Partially Delivered': if one order has products from different vendors, and one vendor has shipped and DELIVERED their product to the customer while other vendor (or vendors) didn't!    // The `order_item_statuses` table contains all kinds of order statuses (that can be updated by both 'vendor'-s and 'admin'-s in `orders_products` table) like: pending, in progress, shipped, canceled, ...etc.
         Route::post('update-order-item-status', 'OrderController@updateOrderItemStatus');
+
+        // Orders Invoices
+        // Render order invoice page (HTML) in order_invoice.blade.php    // https://www.youtube.com/watch?v=T87FAMHeIsU&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=176
+        Route::get('orders/invoice/{id}', 'OrderController@viewOrderInvoice'); // Route Parameters: Required Parameters: https://laravel.com/docs/9.x/routing#required-parameters
+
+        // Render order PDF invoice in order_invoice.blade.php using Dompdf Package    // https://www.youtube.com/watch?v=h1vWl1SUe6w&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=178
+        Route::get('orders/invoice/pdf/{id}', 'OrderController@viewPDFInvoice'); // Route Parameters: Required Parameters: https://laravel.com/docs/9.x/routing#required-parameters
     });
 });
+
+
+
+
+// User download order PDF invoice (We'll use the same viewPDFInvoice() function (but with different routes/URLs!) to render the PDF invoice for 'admin'-s in the Admin Panel and for the user to download it!) (we created this route outside outside the Admin Panel routes so that the user could use it!)    // https://www.youtube.com/watch?v=C_Y1URpGMVE&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=179
+Route::get('orders/invoice/download/{id}', 'App\Http\Controllers\Admin\OrderController@viewPDFInvoice'); // Route Parameters: Required Parameters: https://laravel.com/docs/9.x/routing#required-parameters
+
+
+
 
 // Admin Login page Route WTIHOUT Admin Group
 // Route::get('admin/login', ['App\Http\Controllers\Admin\AdminController', 'login']); // is the same as:    Route::get('admin/dashboard', 'App\Http\Controllers\Admin\AdminController@login');

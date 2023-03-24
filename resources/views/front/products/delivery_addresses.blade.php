@@ -3,32 +3,21 @@
 
 
 
-{{-- https://www.youtube.com/watch?v=-cVee5eL0Ew&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=153 --}}
-{{-- https://www.youtube.com/watch?v=qzLinru4vkU&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=152 --}}
-@if (count($deliveryAddresses) > 0) {{-- Checking if there are any $deliveryAddreses for the currently authenticated/logged-in user --}} {{-- $deliveryAddresses variable is passed in from checkout() method in Front/ProductsController.php --}}
-
-    <h4 class="section-h4">Delivery Addresses</h4>
-
-    @foreach ($deliveryAddresses as $address)
-        <div class="control-group" style="float: left; margin-right: 5px">
-            <input type="radio" id="address{{ $address['id'] }}" name="address_id" value="{{ $address['id'] }}"> {{-- We created the Custom HTML Attribute id="address{{ $address['id'] }}" to get the UNIQUE ids of the addresses in order for the <label> HTML element to be able to point for that <input> --}}
-        </div>
-        <div>
-            <label class="control-label" for="address{{ $address['id'] }}">
-                {{ $address['name'] }}, {{ $address['address'] }}, {{ $address['city'] }}, {{ $address['state'] }}, {{ $address['country'] }} ({{ $address['mobile'] }})
-            </label>
-            <a href="javascript:;" data-addressid="{{ $address['id'] }}" class="removeAddress" style="float: right; margin-left: 10px">Remove</a> {{-- We used href="javascript:;" to prevent the <a> link from being clickable (to make the <a> unclickable) (stop the <a> function or action) because we'll use jQuery AJAX to click this link, check front/js/custom.js. Check https://www.youtube.com/watch?v=-cVee5eL0Ew&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=153 --}} {{-- We use the class="removeAddress" as a handle for the AJAX request in front/js/custom.js --}}
-            <a href="javascript:;" data-addressid="{{ $address['id'] }}" class="editAddress"   style="float: right"                   >Edit</a>   {{-- We used href="javascript:;" to prevent the <a> link from being clickable (to make the <a> unclickable) (stop the <a> function or action) because we'll use jQuery AJAX to click this link, check front/js/custom.js. Check https://www.youtube.com/watch?v=-cVee5eL0Ew&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=153 --}} {{-- We use the class="editAddress" as a handle for the AJAX request in front/js/custom.js --}}
-        </div>
-    @endforeach
-    <br>
-@endif {{-- https://www.youtube.com/watch?v=2vgBjI0i23M&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=156 --}}
-
     <!-- Form-Fields /- -->
     <h4 class="section-h4 deliveryText">Add New Delivery Address</h4> {{-- We created that deliveryText CSS class to use the HTML element as a handle for jQuery to change the <h4> content when clicking the Edit button --}}
     <div class="u-s-m-b-24">
         <input type="checkbox" class="check-box" id="ship-to-different-address" data-toggle="collapse" data-target="#showdifferent">
-        <label class="label-text newAddress" for="ship-to-different-address">Ship to a different address?</label>
+
+
+        {{-- Laravel 9 Tutorial #156 | Resolve Checkout Page Issue | Fix Add/Edit Delivery Address Issue: Check https://www.youtube.com/watch?v=8h1fIWO8gyo&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=181 --}}
+        {{-- https://www.youtube.com/watch?v=-cVee5eL0Ew&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=153 --}}
+        {{-- https://www.youtube.com/watch?v=qzLinru4vkU&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=152 --}}
+        @if (count($deliveryAddresses) > 0) {{-- Checking if there are any $deliveryAddreses for the currently authenticated/logged-in user --}} {{-- $deliveryAddresses variable is passed in from checkout() method in Front/ProductsController.php --}}
+            <label class="label-text newAddress" for="ship-to-different-address">Ship to a different address?</label>
+        @else {{-- if there're no already existing delivery addresses --}}
+            <label class="label-text newAddress" for="ship-to-different-address">Check to add Delivery Address</label>
+        @endif
+
     </div>
     <div class="collapse" id="showdifferent">
         <!-- Form-Fields -->

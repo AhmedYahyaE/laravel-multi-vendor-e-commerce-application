@@ -227,10 +227,18 @@ $(document).ready(function() {
 
 
 
+    // Show our Preloader/Loader/Loading page/Preloading screen while the placing order <form> is submitted using the    id="placeOrder"    HTML attribute in front/products/checkout.blade.php. Check https://www.youtube.com/watch?v=CzePzLpAvlI&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=181
+    $(document).on('click', '#placeOrder', function() {
+        // Show our Preloader/Loader/Loading page/Preloading screen while the <form> is submitted    // https://www.youtube.com/watch?v=yPg_eAiaWLw&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=134
+        $('.loader').show();
+    });
+
+
+
     // User Registration <form> submission (in front/users/login_register.blade.php)    // https://www.youtube.com/watch?v=u_qC3I3BYAM&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=129
     $('#registerForm').submit(function() { // When the registration <form> is submitted
 
-        // Show our Preloader/Loader/Loading page/Preloading screen when the <form> is submitted    // https://www.youtube.com/watch?v=yPg_eAiaWLw&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=134
+        // Show our Preloader/Loader/Loading page/Preloading screen while the <form> is submitted    // https://www.youtube.com/watch?v=yPg_eAiaWLw&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=134
         $('.loader').show();
 
 
@@ -401,7 +409,7 @@ $(document).ready(function() {
     // User Forgot Password Functionality (this route is accessed from the <a> tag in front/users/login_register.blade.php through a 'GET' request, and through a 'POST' request when the HTML Form is submitted in front/users/forgot_password.blade.php))    // https://www.youtube.com/watch?v=ADJ80Zejs4M&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=135
     $('#forgotForm').submit(function() { // When the forgot password <form> (in front/users/forgot_password.blade.php) is submitted
 
-        // Show our Preloader/Loader/Loading page/Preloading screen when the <form> is submitted    // https://www.youtube.com/watch?v=yPg_eAiaWLw&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=134
+        // Show our Preloader/Loader/Loading page/Preloading screen while the <form> is submitted    // https://www.youtube.com/watch?v=yPg_eAiaWLw&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=134
         $('.loader').show();
 
 
@@ -491,7 +499,7 @@ $(document).ready(function() {
     // User Update Details HTML Form submission (in front/users/user_account.blade.php)    // https://www.youtube.com/watch?v=wWITxuhwLtc&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=136
     $('#accountForm').submit(function() { // When the registration <form> is submitted
 
-        // Show our Preloader/Loader/Loading page/Preloading screen when the <form> is submitted    // https://www.youtube.com/watch?v=yPg_eAiaWLw&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=134
+        // Show our Preloader/Loader/Loading page/Preloading screen while the <form> is submitted    // https://www.youtube.com/watch?v=yPg_eAiaWLw&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=134
         $('.loader').show();
 
 
@@ -594,7 +602,7 @@ $(document).ready(function() {
     // User Update Password HTML Form submission (in front/users/user_account.blade.php)    // https://www.youtube.com/watch?v=vGux2yXHOI8
     $('#passwordForm').submit(function() { // When the registration <form> is submitted
 
-        // Show our Preloader/Loader/Loading page/Preloading screen when the <form> is submitted    // https://www.youtube.com/watch?v=yPg_eAiaWLw&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=134
+        // Show our Preloader/Loader/Loading page/Preloading screen while the <form> is submitted    // https://www.youtube.com/watch?v=yPg_eAiaWLw&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=134
         $('.loader').show();
 
 
@@ -725,9 +733,9 @@ $(document).ready(function() {
 
         if (user == 1) { // if the user is logged in (authenticated), they can apply coupon (redeem coupons)
             // DO NOTHING!!!!!!!! (WEIRD!)
-        } else { // if the user is unauthenticated/logged out
+        } else { // if the user is unauthenticated/logged-out
             alert('Please login to apply Coupon!');
-            return false; // Get out of the WHOLE function
+            return false; // Get out of the WHOLE function!
         }
 
 
@@ -835,8 +843,11 @@ $(document).ready(function() {
                 data   : {addressid: addressid}, // Sending name/value pairs to server with the AJAX request (AJAX call)
                 success: function(resp) { // if the AJAX request / AJAX call is successful
                     // alert(resp);
-    
+
                     $('#deliveryAddresses').html(resp.view); // refresh the whole delivery_addresses.blade.php view    // 'view' is sent as a PHP array key (in the HTTP response from the server (backend)) from inside the saveDeliveryAddress() method in Front/AddressController.php
+
+                    // Laravel 9 Tutorial #156 | Resolve Checkout Page Issue | Fix Add/Edit Delivery Address Issue: Check https://www.youtube.com/watch?v=8h1fIWO8gyo&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=181
+                    window.location.href = 'checkout';
                 },
                 error  : function() { // if the AJAX request is unsuccessful
                     alert('Error');
@@ -902,6 +913,9 @@ $(document).ready(function() {
                     });
                 } else { // if there're no Validation Errors
                     $('#deliveryAddresses').html(resp.view); // refresh the whole delivery_addresses.blade.php view    // 'view' is sent as a PHP array key (in the HTTP response from the server (backend)) from inside the saveDeliveryAddress() method in Front/AddressController.php
+
+                    // Laravel 9 Tutorial #156 | Resolve Checkout Page Issue | Fix Add/Edit Delivery Address Issue: Check https://www.youtube.com/watch?v=8h1fIWO8gyo&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=181
+                    window.location.href = 'checkout';
                 }
 
             },

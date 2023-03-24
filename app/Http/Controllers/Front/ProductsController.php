@@ -738,6 +738,22 @@ class ProductsController extends Controller
                 }
 
 
+
+                // Managing coupon types in `coupons` table: 'Single Time' or 'Multiple Times': https://www.youtube.com/watch?v=CzePzLpAvlI&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=181
+                if ($couponDetails->coupon_type == 'Single Time') { // if the `coupon_type` in `coupons` table is 'Single Time'
+                    // Check in the `orders` table if the currently authenticated/logged-in user really used this Coupon Code with their order
+                    $couponCount = \App\Models\Order::where([
+                        'coupon_code' => $data['code'],
+                        'user_id'     => \Auth::user()->id // Retrieving The Authenticated User: https://laravel.com/docs/9.x/authentication#retrieving-the-authenticated-user
+                    ])->count();
+
+                    if ($couponCount >= 1) { // if this 'Single Time' coupon code has been used/redeemed more than one single time by this user (this authenticated/logged-in user) (i.e. meaning that if that coupon code is already existing in the `orders` table and has been used/redeemed by this authenticated/logged-in user)
+                        $message = 'This coupon code is already availed by you!';
+                    }
+                }
+
+
+
                 // Check if the submitted coupon code belongs to the correct relevant selected categories and subcategories of the coupon in the Admin Panel (for example, if the coupon is for Smartphones Category, user can't use it while buying T-shirts)
                 // Get the coupon's categories and subcategories (if any)
                 $catArr = explode(',', $couponDetails->categories);

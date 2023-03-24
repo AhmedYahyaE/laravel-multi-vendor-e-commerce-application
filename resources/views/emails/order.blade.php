@@ -91,6 +91,17 @@
                 </table>    
             </td></tr>
             <tr><td>&nbsp;</td></tr>
+
+            {{-- PDF Invoice download link. Check https://www.youtube.com/watch?v=C_Y1URpGMVE&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=179 --}}
+            <tr>
+                <td>
+                    <a href="{{ url('orders/invoice/download/' . $orderDetails['id']) }}">Click here to Download Order Invoice</a>
+                    <br>
+                    (Copy & Paste link to open if it doesn't work!)
+                </td>
+            </tr>
+
+            <tr><td>&nbsp;</td></tr>
             <tr><td>For any queries, you can contact us at <a href="mailto:info@stackdevelopers.in">info@stackdevelopers.in</a></td></tr>
             <tr><td>&nbsp;</td></tr>
             <tr><td>Regards,<br>Team Stack Developers</td></tr>
