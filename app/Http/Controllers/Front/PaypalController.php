@@ -1,0 +1,168 @@
+<?php
+
+
+// Using Omnipay PayPal package    "composer require league/omnipay omnipay/paypal"    :https://github.com/thephpleague/omnipay-paypal.    // https://github.com/thephpleague/omnipay    // https://www.youtube.com/watch?v=EPU6wqcQeto&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=183
+namespace App\Http\Controllers\Front;
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+
+
+
+use Omnipay\Omnipay;
+
+
+
+class PaypalController extends Controller
+{
+    // https://www.youtube.com/watch?v=eps18cJxUoQ&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=182
+
+
+
+
+    // Using Omnipay PayPal package    "composer require league/omnipay omnipay/paypal"    :https://github.com/thephpleague/omnipay-paypal.    // https://omnipay.thephpleague.com/simple-example    // https://github.com/thephpleague/omnipay    // https://www.youtube.com/watch?v=EPU6wqcQeto&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=183
+    private $gateway; // $gateway is an object of    Omnipay\Common\GatewayFactory interface (check the first line of code in the __construct() method)
+
+
+    public function __construct() {
+        // Setup payment gateway
+        $this->gateway = Omnipay::create('PayPal_Rest'); // https://github.com/thephpleague/omnipay-paypal#:~:text=PayPal_Rest%20(Paypal%20Rest%20API)
+        // dd($this->gateway);
+
+        $this->gateway->setClientId(env('PAYPAL_CLIENT_ID'));   // We get the "PayPal Client ID" from our project's .env file using the env() method    // env(): https://laravel.com/docs/9.x/helpers#method-env
+        $this->gateway->setSecret(env('PAYPAL_CLIENT_SECRET')); // We get the "PayPal Secret"    from our project's .env file using the env() method    // env(): https://laravel.com/docs/9.x/helpers#method-env
+        $this->gateway->setTestMode(true); // Meaning that we're using this whole thing only for "testing" purposes
+    }
+
+    // Pay using PayPal    // https://omnipay.thephpleague.com/simple-example    // https://github.com/thephpleague/omnipay    // https://www.youtube.com/watch?v=EPU6wqcQeto&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=183
+    public function pay(Request $request) {
+        try {
+            $paypal_amount = round(\Session::get('grand_total') / 80, 2); // 'grand_total' was stored in Session in checkout() method in Front/ProductsController.php    // Interacting With The Session: Retrieving Data: https://laravel.com/docs/9.x/session#retrieving-data    // Note: PayPal accepts world major currencies ONLY, so we divided INR by 80 to convert INR to USD. Check 13:14 in https://www.youtube.com/watch?v=eps18cJxUoQ&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=182
+
+            // Send purchase request
+            $response = $this->gateway->purchase(array( // $gateway is an object of    Omnipay\Common\GatewayFactory interface (check the first line of code in the __construct() method)    // $response comes from PayPal website (i.e. API / backend)
+                // Example form data
+                'amount'    => $paypal_amount,
+                'currency'  => env('PAYPAL_CURRENCY'), // We get our chosen "PayPal Currency" from our project's .env file using the env() method    // env(): https://laravel.com/docs/9.x/helpers#method-env
+                'returnUrl' => url('success'), // url(): https://laravel.com/docs/10.x/helpers#method-url    // https://github.com/thephpleague/omnipay#:~:text=clientIp-,returnUrl,-cancelUrl
+                'cancelUrl' => url('error')    // url(): https://laravel.com/docs/10.x/helpers#method-url    // https://github.com/thephpleague/omnipay#:~:text=returnUrl-,cancelUrl
+            ))->send();
+            // dd($response);
+
+            // Process response
+            if ($response->isRedirect()) { // $response comes from PayPal website (i.e. API / backend)
+                // Redirect to offsite payment gateway
+                $response->redirect(); // $response comes from PayPal website (i.e. API / backend)
+            } else {
+                // payment failed: display message to customer
+                return $response->getMessage(); // $response comes from PayPal website (i.e. API / backend)    // the message comes from PayPal website (i.e. API / backend)
+            }
+
+        } catch (\Throwable $th) {    // $th object stands for the Throwable interface    // Throwable interface: https://www.php.net/manual/en/class.throwable.php
+            return $th->getMessage(); // $th object stands for the Throwable interface    // Throwable::getMessage(): https://www.php.net/manual/en/throwable.getmessage.php
+        }
+    }
+
+    // Check 9:07 in https://www.youtube.com/watch?v=EPU6wqcQeto&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=183
+    public function success(Request $request) {
+        if (!\Session::has('order_id')) { // if there's no 'order_id' in the Session    // 'user_id' was stored in the Session inside checkout() method in Front/ProductsController.php
+            return view('cart');
+        }
+
+
+        if ($request->input('paymentId') && $request->input('PayerID')) { // Retrieving An Input Value: https://laravel.com/docs/9.x/requests#retrieving-an-input-value
+            $transaction = $this->gateway->completePurchase(array(
+                'payer_id'             => $request->input('PayerID'), // Retrieving An Input Value: https://laravel.com/docs/9.x/requests#retrieving-an-input-value
+                'transactionReference' => $request->input('paymentId'), // Retrieving An Input Value: https://laravel.com/docs/9.x/requests#retrieving-an-input-value
+            ));
+
+            $response = $transaction->send(); // $response comes from PayPal website (i.e. API / backend)
+
+            if ($response->isSuccessful()) { // If the payment is successful, insert the payment details into our `payments` database table    // $response comes from PayPal website (i.e. API / backend)
+                $arr = $response->getData(); // $response comes from PayPal website (i.e. API / backend)
+
+                // Insert the payment details into our `payments` table
+                $payment = new \App\Models\Payment;
+
+                $payment->order_id       = \Session::get('order_id'); // 'user_id' was stored in Session inside checkout() method in Front/ProductsController.php    // Interacting With The Session: Retrieving Data: https://laravel.com/docs/9.x/session#retrieving-data    // Comes from our website
+                $payment->user_id        = \Auth::user()->id; // Retrieving The Authenticated User: https://laravel.com/docs/9.x/authentication#retrieving-the-authenticated-user    // Comes from our website
+                $payment->payment_id     = $arr['id']; // Comes from PayPal website (i.e. API / backend)    // Comes from PayPal website (i.e. API / backend)
+                $payment->payer_id       = $arr['payer']['payer_info']['payer_id'];    // Comes from PayPal website (i.e. API / backend)
+                $payment->payer_email    = $arr['payer']['payer_info']['email'];       // Comes from PayPal website (i.e. API / backend)
+                $payment->amount         = $arr['transactions'][0]['amount']['total']; // Comes from PayPal website (i.e. API / backend)
+                $payment->currency       = env('PAYPAL_CURRENCY'); // We get our chosen "PayPal Currency" from our project's .env file using the env() method    // env(): https://laravel.com/docs/9.x/helpers#method-env    // Comes from our website
+                $payment->payment_status = $arr['state']; // Comes from PayPal website (i.e. API / backend)
+
+                $payment->save();
+
+
+                // return 'Payment is Successful. Your transaction is ' . $arr['id']; // $arr['id'] comes from PayPal website (i.e. API / backend)
+
+
+                // Update the `order_status` column in `orders` table with 'Paid'    // https://www.youtube.com/watch?v=fkl3-HmTSWI&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=185
+                $order_id = \Session::get('order_id'); // Interacting With The Session: Retrieving Data: https://laravel.com/docs/9.x/session#retrieving-data
+                \App\Models\Order::where('id', $order_id)->update(['order_status' => 'Paid']);
+
+
+                /*
+                // Send making the order PayPal payment confirmation SMS
+                // Send an SMS using an SMS API and cURL    // https://www.youtube.com/watch?v=dF7OhPttepE&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=170
+                $message = 'Dear Customer, your order ' . $order_id . ' has been placed successfully with StackDevelopers.in. We will inform you once your order is shipped';
+                // $mobile = $data['mobile']; // the user's mobile that they entered while submitting the registration form
+                $mobile = \Auth::user()->moblie; // Retrieving The Authenticated User: https://laravel.com/docs/9.x/authentication#retrieving-the-authenticated-user
+                \App\Models\Sms::sendSms($message, $mobile); // Send the SMS
+                */
+
+
+                // Send making the order PayPal payment confirmation email to the user    // https://www.youtube.com/watch?v=dF7OhPttepE&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=169
+                $orderDetails = \App\Models\Order::with('orders_products')->where('id', $order_id)->first()->toArray();// Eager Loading: https://laravel.com/docs/9.x/eloquent-relationships#eager-loading    // 'orders_products' is the relationship method name in Order.php model
+                $email = \Auth::user()->email; // Retrieving The Authenticated User: https://laravel.com/docs/9.x/authentication#retrieving-the-authenticated-user
+
+                // The email message data/variables that will be passed in to the email view
+                $messageData = [
+                    'email'        => $email,
+                    'name'         => \Auth::user()->name, // Retrieving The Authenticated User: https://laravel.com/docs/9.x/authentication#retrieving-the-authenticated-user
+                    'order_id'     => $order_id,
+                    'orderDetails' => $orderDetails
+                ];
+
+                \Illuminate\Support\Facades\Mail::send('emails.order', $messageData, function ($message) use ($email) { // Sending Mail: https://laravel.com/docs/9.x/mail#sending-mail    // 'emails.order' is the order.blade.php file inside the 'resources/views/emails' folder that will be sent as an email    // We pass in all the variables that order.blade.php will use    // https://www.php.net/manual/en/functions.anonymous.php
+                    $message->to($email)->subject('Order Paid through PayPal - StackDevelopers.in');
+                });
+
+
+                // We empty the Cart after making the PayPal payment
+                \App\Models\Cart::where('user_id', \Auth::user()->id)->delete(); // Retrieving The Authenticated User: https://laravel.com/docs/9.x/authentication#retrieving-the-authenticated-user
+
+
+                // Redirect the user to the front/products/success.blade.php page
+                return view('front.paypal.success');
+
+            } else { // If the payment fails
+                // payment failed: display message to customer
+                return $response->getMessage(); // $response comes from PayPal website (i.e. API / backend)    // the message comes from PayPal website (i.e. API / backend)
+            }
+
+        } else {
+            return 'Payment Declined!';
+        }
+    }
+
+    // Check 22:19 in https://www.youtube.com/watch?v=EPU6wqcQeto&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=183
+    public function error() {
+        // return 'User declined the payment';
+
+        // https://www.youtube.com/watch?v=fkl3-HmTSWI&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=185
+        return view('front.paypal.fail');
+    }
+
+
+
+    // PayPal payment gateway integration in Laravel (this route is accessed from checkout() method in Front/ProductsController.php). Rendering front/paypal/paypal.blade.php page. Check https://www.youtube.com/watch?v=eps18cJxUoQ&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=182
+    public function paypal() {
+        if (\Session::has('order_id')) { // if there's an order has been placed (and got redirected from inside the checkout() method inside Front/ProductsController.php)    // 'user_id' was stored in Session inside checkout() method in Front/ProductsController.php
+            return view('front.paypal.paypal');
+        } else { // if there's no order has been placed
+            return redirect('cart'); // redirect user to cart.blade.php page
+        }
+    }
+}

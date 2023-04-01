@@ -269,7 +269,7 @@ class OrderController extends Controller
     
                 \Illuminate\Support\Facades\Mail::send('emails.order_item_status', $messageData, function ($message) use ($email) { // Sending Mail: https://laravel.com/docs/9.x/mail#sending-mail    // 'emails.order_item_status' is the order_item_status.blade.php file inside the 'resources/views/emails' folder that will be sent as an email    // We pass in all the variables that order_item_status.blade.php will use    // https://www.php.net/manual/en/functions.anonymous.php
                     $message->to($email)->subject('Order Item Status Updated - StackDevelopers.in');
-                });              
+                });
             }
 
             /*

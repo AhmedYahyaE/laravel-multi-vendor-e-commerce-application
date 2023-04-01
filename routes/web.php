@@ -274,6 +274,21 @@ Route::namespace('App\Http\Controllers\Front')->group(function() {
 
         // Render User 'My Orders' page    // https://www.youtube.com/watch?v=4d_Hq33jihY&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=164
         Route::get('user/orders/{id?}', 'OrderController@orders'); // If the slug {id?} (Optional Parameters) is passed in, this means go to the front/orders/order_details.blade.php page, and if not, this means go to the front/orders/orders.blade.php page    // Optional Parameters: https://laravel.com/docs/9.x/routing#parameters-optional-parameters    // https://www.youtube.com/watch?v=uWGmIVaLCnA&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=164
+
+
+
+        // PayPal routes:
+        // PayPal payment gateway integration in Laravel (this route is accessed from checkout() method in Front/ProductsController.php). Rendering front/paypal/paypal.blade.php page. Check https://www.youtube.com/watch?v=eps18cJxUoQ&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=182
+        Route::get('paypal', 'PaypalController@paypal');
+
+        // Make a PayPal payment    // Check 22:49 https://www.youtube.com/watch?v=EPU6wqcQeto&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=183
+        Route::post('pay', 'PaypalController@pay')->name('payment'); // Named Routes: https://laravel.com/docs/9.x/routing#named-routes
+
+        // PayPal successful payment    // Check 22:49 https://www.youtube.com/watch?v=EPU6wqcQeto&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=183
+        Route::get('success', 'PaypalController@success');
+
+        // PayPal failed payment    // Check 22:49 https://www.youtube.com/watch?v=EPU6wqcQeto&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=183
+        Route::get('error', 'PaypalController@error');
     });
 
 

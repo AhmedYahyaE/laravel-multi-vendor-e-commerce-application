@@ -974,7 +974,7 @@ class ProductsController extends Controller
             // Grand Total (`grand_total`)
             $grand_total = $total_price + $shipping_charges - \Session::get('couponAmount');
 
-            // Store the $grand_total in Session to be able to use it wherever we need it later on
+            // Store the $grand_total in Session to be able to use it wherever we need it later on (for example, it'll be used in front/paypal/paypal.blade.php)
             \Session::put('grand_total', $grand_total); // Storing Data: https://laravel.com/docs/10.x/session#storing-data
 
             // echo $total_price . '<br>'; // 'Subtotal'
@@ -1010,7 +1010,7 @@ class ProductsController extends Controller
 
 
 
-            // INSERT/Fill in the data in the `orders_products` table
+            // INSERT/Fill in the data of the order in the `orders_products` table (after filling in the `orders` table)
             foreach ($getCartItems as $item) {
                 $cartItem = new \App\Models\OrdersProduct; // Create a new OrdersProduct.php model object (represents the `orders_products` table)
 
@@ -1039,7 +1039,7 @@ class ProductsController extends Controller
                 $cartItem->save(); // INSERT data INTO the `orders_products` table
             }
 
-            // Store the `order_id` in Session so that we can use it in front/products/thanks.blade.php
+            // Store the `order_id` in Session so that we can use it in front/products/thanks.blade.php, thanks() method and paypal() method in Front/PayPalController.php
             \Session::put('order_id', $order_id); // Storing Data: https://laravel.com/docs/9.x/session#storing-data
 
 
@@ -1048,6 +1048,9 @@ class ProductsController extends Controller
 
             // echo 'Order placed successfully!';
             // exit;
+
+
+            // dd($data['payment_gateway']);
 
 
             // Send placing an order confirmation email to the user    // https://www.youtube.com/watch?v=dF7OhPttepE&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=169
@@ -1080,8 +1083,14 @@ class ProductsController extends Controller
                 \App\Models\Sms::sendSms($message, $mobile); // Send the SMS
                 */
 
+
+            // PayPal payment gateway integration in Laravel: https://www.youtube.com/watch?v=eps18cJxUoQ&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=182
+            } elseif ($data['payment_gateway'] == 'Paypal') {
+                // redirect to the PayPalController.php (after saving the order details in `orders` and `orders_products` tables)
+                return redirect('/paypal');
+
             } else { // if the `payment_gateway` selected by the user is not 'COD', meaning it's like PayPal, Prepaid, ... (in front/products/checkout.blade.php), we send the placing the order confirmation email and SMS after the user makes the payment
-                echo 'Prepaid payment methods coming soon';
+                echo 'Other Prepaid payment methods coming soon';
             }
 
 
@@ -1096,14 +1105,14 @@ class ProductsController extends Controller
 
     // Rendering Thanks page (after placing an order)    // https://www.youtube.com/watch?v=fQPYHPDR9wI&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=162
     public function thanks() {
-        if (\Session::has('order_id')) { // if there's an order has been placed, empty the Cart
+        if (\Session::has('order_id')) { // if there's an order has been placed, empty the Cart (remove the order (the cart items/products) from `carts`table)    // 'user_id' was stored in Session inside checkout() method in Front/ProductsController.php
             // We empty the Cart after placing the order
             \App\Models\Cart::where('user_id', \Auth::user()->id)->delete(); // Retrieving The Authenticated User: https://laravel.com/docs/9.x/authentication#retrieving-the-authenticated-user
 
 
             return view('front.products.thanks');
         } else { // if there's no order has been placed
-            return redirect('cart'); // redirect user to Cart.blade.php page
+            return redirect('cart'); // redirect user to cart.blade.php page
         }
     }
 

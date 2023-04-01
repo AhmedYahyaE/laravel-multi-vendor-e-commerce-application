@@ -12,7 +12,9 @@
         "laravel/framework": "^9.19",
         "laravel/sanctum": "^3.0",
         "laravel/tinker": "^2.7",
-        "milon/barcode": "^10.0"
+        "league/omnipay": "3.2.1",
+        "milon/barcode": "^10.0",
+        "omnipay/paypal": "3.0.2"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",
@@ -62,7 +64,8 @@
         "preferred-install": "dist",
         "sort-packages": true,
         "allow-plugins": {
-            "pestphp/pest-plugin": true
+            "pestphp/pest-plugin": true,
+            "php-http/discovery": true
         }
     },
     "minimum-stability": "dev",
