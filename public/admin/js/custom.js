@@ -8,9 +8,10 @@ $(document).ready(function() {
     $('#products').DataTable();   // in products.blade.php
     $('#banners').DataTable();    // in banners.blade.php
     $('#filters').DataTable();    // in filters.blade.php
-    $('#coupons').DataTable();    // in admin/coupons/coupons.blade.php    // https://www.youtube.com/watch?v=VYUjkgA9W0k&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=143
-    $('#users').DataTable();      // in admin/users/users.blade.php        // https://www.youtube.com/watch?v=xY9OYug0uaQ&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=151
-    $('#orders').DataTable();     // in admin/orders/orders.blade.php      // https://www.youtube.com/watch?v=WqPCkJaTgFI&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=166
+    $('#coupons').DataTable();    // in admin/coupons/coupons.blade.php              // https://www.youtube.com/watch?v=VYUjkgA9W0k&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=143
+    $('#users').DataTable();      // in admin/users/users.blade.php                  // https://www.youtube.com/watch?v=xY9OYug0uaQ&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=151
+    $('#orders').DataTable();     // in admin/orders/orders.blade.php                // https://www.youtube.com/watch?v=WqPCkJaTgFI&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=166
+    $('#shipping').DataTable();   // in admin/shipping/shipping_charges.blade.php    // https://www.youtube.com/watch?v=igoiH9VVxzs&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=187
 
 
 
@@ -484,6 +485,43 @@ $(document).ready(function() {
                     $('#user-' + user_id).html('<i style="font-size: 25px" class="mdi mdi-bookmark-outline" status="Inactive"></i>');
                 } else if (resp.status == 1) {
                     $('#user-' + user_id).html('<i style="font-size: 25px" class="mdi mdi-bookmark-check" status="Active"></i>');
+                }
+            },
+            error  : function() {
+                alert('Error');
+            }
+        });
+    });
+
+    // Update Shipping Status (active/inactive) via AJAX in admin/shipping/shipping_charages.blade.php, check admin/js/custom.js    // https://www.youtube.com/watch?v=igoiH9VVxzs&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=187
+    $(document).on('click', '.updateShippingStatus', function() { // '.updateUserStatus' is the anchor link <a> CSS class    // This is the same as    $('.updateUserStatus').on('click', function() {
+        // alert('test');
+
+        // var status = $(this).children();
+        // var status = $(this).children('i');
+        var status  = $(this).children('i').attr('status'); // Using HTML Custom Attributes
+        var shipping_id = $(this).attr('shipping_id'); // Using HTML Custom Attributes
+        // console.log(status);
+        // console.log(shipping_id);
+        // var status = $(this).children(); // the child of the <a> anchor link
+
+        
+        $.ajax({
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}, // X-CSRF-TOKEN: https://laravel.com/docs/9.x/csrf#csrf-x-csrf-token    // Check 12:37 in https://www.youtube.com/watch?v=maEXuJNzE8M&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=16 AND Check 12:06 in https://www.youtube.com/watch?v=APPKmLlWEBY&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu
+            type   : 'post',
+            url    : '/admin/update-shipping-status', // check the web.php for this route and check the ShippingController for the updateShippingStatus() method
+            data   : {status: status, shipping_id: shipping_id}, // we pass in the status and shipping_id
+            success: function(resp) {
+                // alert(resp);
+                // console.log(resp);
+                // console.log(resp.status);
+                // console.log(resp.user_id);
+                // console.log('#user-' + user_id);
+                // console.log($('#user-' + user_id));
+                if (resp.status == 0) { // in case of success, reverse the status (active/inactive) and show the right icon in the frontend    // Or the same    if (resp['status'] == 0) {
+                    $('#shipping-' + shipping_id).html('<i style="font-size: 25px" class="mdi mdi-bookmark-outline" status="Inactive"></i>');
+                } else if (resp.status == 1) {
+                    $('#shipping-' + shipping_id).html('<i style="font-size: 25px" class="mdi mdi-bookmark-check" status="Active"></i>');
                 }
             },
             error  : function() {

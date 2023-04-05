@@ -1,4 +1,5 @@
-{{-- This page (view) is rendered from users() method in Admin/UserController.php, check https://www.youtube.com/watch?v=xY9OYug0uaQ&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=150 --}}
+{{-- https://www.youtube.com/watch?v=igoiH9VVxzs&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=187 --}}
+{{-- This file is rendered by shippingCharges() method in Admin/ShippingController.php --}}
 
 
 @extends('admin.layout.layout')
@@ -12,7 +13,7 @@
                 <div class="col-lg-12 grid-margin stretch-card">
                     <div class="card">
                         <div class="card-body">
-                            <h4 class="card-title">Users</h4>
+                            <h4 class="card-title">Shipping Charges</h4>
                             {{-- <p class="card-description">
                                 Add class <code>.table-bordered</code>
                             </p> --}}
@@ -35,49 +36,57 @@
 
                             <div class="table-responsive pt-3">
                                 {{-- DataTable: Check 18:55 in https://www.youtube.com/watch?v=1XJ7908SJcM&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=34 --}}
-                                <table id="users" class="table table-bordered"> {{-- using the id here for the DataTable --}}
+                                <table id="shipping" class="table table-bordered"> {{-- using the id here for the DataTable --}}
                                     <thead>
                                         <tr>
                                             <th>ID</th>
-                                            <th>Name</th>
-                                            <th>Address</th>
-                                            <th>City</th>
-                                            <th>State</th>
                                             <th>Country</th>
-                                            <th>Pincode</th>
-                                            <th>Mobile</th>
-                                            <th>Email</th>
+                                            <th>Rate (0g to 500g)</th>
+                                            <th>Rate (501g to 1000g)</th>
+                                            <th>Rate (1001g to 2000g)</th>
+                                            <th>Rate (2001g to 5000g)</th>
+                                            <th>Rate (Above 5000g)</th>
                                             <th>Status</th>
+                                            <th>Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody>
 
-
-                                        @foreach ($users as $user)
+                                        @foreach ($shippingCharges as $shipping)
                                             <tr>
-                                                <td>{{ $user['id'] }}</td>
-                                                <td>{{ $user['name'] }}</td>
-                                                <td>{{ $user['address'] }}</td>
-                                                <td>{{ $user['city'] }}</td>
-                                                <td>{{ $user['state'] }}</td>
-                                                <td>{{ $user['country'] }}</td>
-                                                <td>{{ $user['pincode'] }}</td>
-                                                <td>{{ $user['mobile'] }}</td>
-                                                <td>{{ $user['email'] }}</td>
+                                                <td>{{ $shipping['id'] }}</td>
+                                                <td>{{ $shipping['country'] }}</td>
+                                                <td>{{ $shipping['0_500g'] }}</td>
+                                                <td>{{ $shipping['501g_1000g'] }}</td>
+                                                <td>{{ $shipping['1001_2000g'] }}</td>
+                                                <td>{{ $shipping['2001g_5000g'] }}</td>
+                                                <td>{{ $shipping['above_5000g'] }}</td>
                                                 <td>
-                                                    @if ($user['status'] == 1)
-                                                        <a class="updateUserStatus" id="user-{{ $user['id'] }}" user_id="{{ $user['id'] }}" href="javascript:void(0)"> {{-- Using HTML Custom Attributes. Check admin/js/custom.js --}}
+                                                    @if ($shipping['status'] == 1)
+                                                        <a class="updateShippingStatus" id="shipping-{{ $shipping['id'] }}" shipping_id="{{ $shipping['id'] }}" href="javascript:void(0)"> {{-- Using HTML Custom Attributes. Check admin/js/custom.js --}}
                                                             <i style="font-size: 25px" class="mdi mdi-bookmark-check" status="Active"></i> {{-- Icons from Skydash Admin Panel Template --}}
                                                         </a>
                                                     @else {{-- if the admin status is inactive --}}
-                                                        <a class="updateUserStatus" id="user-{{ $user['id'] }}" user_id="{{ $user['id'] }}" href="javascript:void(0)"> {{-- Using HTML Custom Attributes. Check admin/js/custom.js --}}
+                                                        <a class="updateShippingStatus" id="shipping-{{ $shipping['id'] }}" shipping_id="{{ $shipping['id'] }}" href="javascript:void(0)"> {{-- Using HTML Custom Attributes. Check admin/js/custom.js --}}
                                                             <i style="font-size: 25px" class="mdi mdi-bookmark-outline" status="Inactive"></i> {{-- Icons from Skydash Admin Panel Template --}}
                                                         </a>
                                                     @endif
                                                 </td>
+                                                <td>
+                                                    <a href="{{ url('admin/edit-shipping-charges/' . $shipping['id']) }}">
+                                                        <i style="font-size: 25px" class="mdi mdi-pencil-box"></i> {{-- Icons from Skydash Admin Panel Template --}}
+                                                    </a>
+
+                                                    {{-- Confirm Deletion JS alert and Sweet Alert: Check 5:02 in https://www.youtube.com/watch?v=6TfdD5w-kls&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=33 --}}
+                                                    {{-- <a title="Shipping" class="confirmDelete" href="{{ url('admin/delete-shipping/' . $shipping['id']) }}"> --}}
+                                                        {{-- <i style="font-size: 25px" class="mdi mdi-file-excel-box"></i> --}} {{-- Icons from Skydash Admin Panel Template --}}
+                                                    {{-- </a> --}}
+                                                    {{-- <a href="JavaScript:void(0)" class="confirmDelete" module="shipping" moduleid="{{ $shipping['id'] }}"> --}}
+                                                        {{--  <i style="font-size: 25px" class="mdi mdi-file-excel-box"></i> --}} {{-- Icons from Skydash Admin Panel Template --}}
+                                                    {{-- </a> --}}
+                                                </td>
                                             </tr>
                                         @endforeach
-
 
                                     </tbody>
                                 </table>

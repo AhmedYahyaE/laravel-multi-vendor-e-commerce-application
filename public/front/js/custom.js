@@ -925,5 +925,34 @@ $(document).ready(function() {
         });
     });
 
+    // Calculate the Grand Total, Shipping Charges and Coupon Amount and displaying them depending on the chosen Delivery Address in front/products/checkout.blade.php
+    $('input[name=address_id]').bind('change', function() { // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/bind
+        // console.log(this);
+        // alert('test');
+
+        var shipping_charges = $(this).attr('shipping_charges'); // using Custom HTML data attributes (data-*)
+        var total_price      = $(this).attr('total_price');      // using Custom HTML data attributes (data-*)
+        var coupon_amount    = $(this).attr('coupon_amount');    // using Custom HTML data attributes (data-*)
+        // alert(shipping_charges);
+
+        // Display the Shipping Charges
+        $('.shipping_charges').html('Rs.' + shipping_charges);
+
+        if (coupon_amount == '') {
+            coupon_amount = 0;
+        }
+
+        // Display the Coupon Amount
+        $('.couponAmount').html('Rs.' + coupon_amount);
+
+        // Calculate the Grand Total
+        var grand_total = parseInt(total_price) + parseInt(shipping_charges) - parseInt(coupon_amount);
+        // alert(grand_total);
+
+        // Display the Grand Total
+        $('.grand_total').html('Rs.' + grand_total);
+
+        
+    });
 
 });

@@ -139,7 +139,8 @@
 
                                         @foreach ($deliveryAddresses as $address)
                                             <div class="control-group" style="float: left; margin-right: 5px">
-                                                <input type="radio" id="address{{ $address['id'] }}" name="address_id" value="{{ $address['id'] }}"> {{-- We created the Custom HTML Attribute id="address{{ $address['id'] }}" to get the UNIQUE ids of the addresses in order for the <label> HTML element to be able to point for that <input> --}}
+                                                {{-- We'll use the Custom HTML data attributes:    shipping_charges    ,    total_price    and    coupon_amount    to use them as handles for jQuery to change the calculations in "Your Order" section using jQuery. Check front/js/custom.js file --}} {{-- https://www.youtube.com/watch?v=krS-KXdMQ64&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=190 --}}
+                                                <input type="radio" id="address{{ $address['id'] }}" name="address_id" value="{{ $address['id'] }}" shipping_charges="{{ $address['shipping_charges'] }}" total_price="{{ $total_price }}" coupon_amount="{{ \Session::get('couponAmount') }}"> {{-- $total_price variable is passed in from checkout() method in Front/ProductsController.php --}} {{-- We created the Custom HTML Attribute id="address{{ $address['id'] }}" to get the UNIQUE ids of the addresses in order for the <label> HTML element to be able to point for that <input> --}}
                                             </div>
                                             <div>
                                                 <label class="control-label" for="address{{ $address['id'] }}">
@@ -211,7 +212,9 @@
                                                         <h6 class="order-h6">Shipping Charges</h6>
                                                     </td>
                                                     <td>
-                                                        <h6 class="order-h6">Rs.0</h6>
+                                                        <h6 class="order-h6">
+                                                            <span class="shipping_charges">Rs.0</span>
+                                                        </h6>
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -222,7 +225,7 @@
                                                         <h6 class="order-h6">
                                                             {{-- https://www.youtube.com/watch?v=qRarBk49t7Q&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=149 --}}
                                                             @if (\Session::has('couponAmount')) {{-- We stored the 'couponAmount' in a Session Variable inside the applyCoupon() method in Front/ProductsController.php --}}
-                                                                Rs.{{ \Session::get('couponAmount') }}
+                                                                <span class="couponAmount">Rs.{{ \Session::get('couponAmount') }}</span>
                                                             @else
                                                                 Rs.0
                                                             @endif
@@ -242,7 +245,9 @@
                                                         <h3 class="order-h3">Grand Total</h3>
                                                     </td>
                                                     <td>
-                                                        <h3 class="order-h3">Rs.{{ $total_price - \Session::get('couponAmount') }}</h3> {{-- We create the 'grand_total' CSS class to use it as a handle for AJAX inside    $('#applyCoupon').submit();    function in front/js/custom.js: https://www.youtube.com/watch?v=qRarBk49t7Q&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=149 --}} {{-- We stored the 'couponAmount' a Session Variable inside the applyCoupon() method in Front/ProductsController.php --}}
+                                                        <h3 class="order-h3">
+                                                            <strong class="grand_total">Rs.{{ $total_price - \Session::get('couponAmount') }}</strong> {{-- We create the 'grand_total' CSS class to use it as a handle for AJAX inside    $('#applyCoupon').submit();    function in front/js/custom.js: https://www.youtube.com/watch?v=qRarBk49t7Q&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=149 --}} {{-- We stored the 'couponAmount' a Session Variable inside the applyCoupon() method in Front/ProductsController.php --}}
+                                                        </h3>
                                                     </td>
                                                 </tr>
 
@@ -267,7 +272,7 @@
                                                 <a href="terms-and-conditions.html" class="u-c-brand">terms & conditions</a>
                                             </label>
                                         </div>
-                                        <button type="submit" id="placeOrder" class="button button-outline-secondary">Place Order</button> {{-- Show our Preloader/Loader/Loading page/Preloading screen while the <form> is submitted using the    id="placeOrder"    HTML attribute. Check front. Check https://www.youtube.com/watch?v=CzePzLpAvlI&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=181 --}}
+                                        <button type="submit" id="placeOrder" class="button button-outline-secondary">Place Order</button> {{-- Show our Preloader/Loader/Loading page/Preloading screen while the <form> is submitted using the    id="placeOrder"    HTML attribute. Check front/js/custom.js. Check https://www.youtube.com/watch?v=CzePzLpAvlI&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=181 --}}
                                     </div>
                                 </form>
 

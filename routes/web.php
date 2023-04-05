@@ -155,6 +155,16 @@ Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function
 
         // Render order PDF invoice in order_invoice.blade.php using Dompdf Package    // https://www.youtube.com/watch?v=h1vWl1SUe6w&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=178
         Route::get('orders/invoice/pdf/{id}', 'OrderController@viewPDFInvoice'); // Route Parameters: Required Parameters: https://laravel.com/docs/9.x/routing#required-parameters
+
+        // Shipping Charges module
+        // Render the Shipping Charges page (admin/shipping/shipping_charges.blade.php) in the Admin Panel for 'admin'-s only, not for vendors    // https://www.youtube.com/watch?v=igoiH9VVxzs&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=187
+        Route::get('shipping-charges', 'ShippingController@shippingCharges');
+
+        // Update Shipping Status (active/inactive) via AJAX in admin/shipping/shipping_charages.blade.php, check admin/js/custom.js    // https://www.youtube.com/watch?v=igoiH9VVxzs&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=187
+        Route::post('update-shipping-status', 'ShippingController@updateShippingStatus');
+
+        // Render admin/shipping/edit_shipping_charges.blade.php page in case of HTTP 'GET' request ('Edit/Update Shipping Charges'), or hadle the HTML Form submission in the same page in case of HTTP 'POST' request    // https://www.youtube.com/watch?v=pE_WG9HaocQ&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=188
+        Route::match(['get', 'post'], 'edit-shipping-charges/{id}', 'ShippingController@editShippingCharges'); // Route Parameters: Required Parameters: https://laravel.com/docs/9.x/routing#required-parameters
     });
 });
 

@@ -296,10 +296,11 @@ class ProductsController extends Controller
 
     // Render Single Product Detail Page in front/products/detail.blade.php    // Check 19:09 in https://www.youtube.com/watch?v=fv9ZnNRKBBE&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=103
     public function detail($id) { // Required Parameters: https://laravel.com/docs/9.x/routing#required-parameters
-        $productDetails = \App\Models\Product::with(['section', 'category', 'brand', 'attributes' => function($query) { // Constraining Eager Loads: https://laravel.com/docs/9.x/eloquent-relationships#constraining-eager-loads    // Subquery Where Clauses: https://laravel.com/docs/9.x/queries#subquery-where-clauses    // Advanced Subqueries: https://laravel.com/docs/9.x/eloquent#advanced-subqueries    // 'section', 'category', 'brand', 'attributes', 'images', 'vendor' are the relationship method names in Product.php model which are being Eager Loaded (Eager Loading)
-            $query->where('stock', '>', 0)->where('status', 1); // the 'attributes' relationship method in Product.php model     // Constraining Eager Loads to get the `products_attributes` of `stock` more than Zero 0 ONLY and `status` is 1 (active/enabled), check 19:10 in https://www.youtube.com/watch?v=0Bpk4JfwvpI&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=106
-        },
-        'images', 'vendor'])->find($id)->toArray(); // Eager Loading (using with() method): https://laravel.com/docs/9.x/eloquent-relationships#eager-loading    // Eager Loading Multiple Relationships: https://laravel.com/docs/9.x/eloquent-relationships#eager-loading-multiple-relationships
+        $productDetails = \App\Models\Product::with([
+            'section', 'category', 'brand', 'attributes' => function($query) { // Constraining Eager Loads: https://laravel.com/docs/9.x/eloquent-relationships#constraining-eager-loads    // Subquery Where Clauses: https://laravel.com/docs/9.x/queries#subquery-where-clauses    // Advanced Subqueries: https://laravel.com/docs/9.x/eloquent#advanced-subqueries    // 'section', 'category', 'brand', 'attributes', 'images', 'vendor' are the relationship method names in Product.php model which are being Eager Loaded (Eager Loading)
+                $query->where('stock', '>', 0)->where('status', 1); // the 'attributes' relationship method in Product.php model     // Constraining Eager Loads to get the `products_attributes` of `stock` more than Zero 0 ONLY and `status` is 1 (active/enabled), check 19:10 in https://www.youtube.com/watch?v=0Bpk4JfwvpI&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=106
+            }, 'images', 'vendor'
+        ])->find($id)->toArray(); // Eager Loading (using with() method): https://laravel.com/docs/9.x/eloquent-relationships#eager-loading    // Eager Loading Multiple Relationships: https://laravel.com/docs/9.x/eloquent-relationships#eager-loading-multiple-relationships
         // dd($productDetails);
         // dd($productDetails->section);
 
@@ -879,9 +880,7 @@ class ProductsController extends Controller
 
     // Checkout page (using match() method for the 'GET' request for rendering the front/products/checkout.blade.php page or the 'POST' request for the HTML Form submission in the same page) (for submitting the user's Delivery Address and Payment Method))    // https://www.youtube.com/watch?v=qzLinru4vkU&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=152
     public function checkout(Request $request) {
-        $deliveryAddresses = \App\Models\DeliveryAddress::deliveryAddresses(); // the delivery addresses of the currently authenticated/logged in user
-        // dd($deliveryAddresses);
-
+        // https://www.youtube.com/watch?v=FUQyTb1vOI4&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=192
         // Fetch all of the world countries from the database table `countries`: https://www.youtube.com/watch?v=zENahhmAM0w&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=30
         $countries = \App\Models\Country::where('status', 1)->get()->toArray(); // get the countries which have status = 1 (to ignore the blacklisted countries, in case)
         // dd($countries);
@@ -898,6 +897,47 @@ class ProductsController extends Controller
 
             return redirect('cart')->with('error_message', $message); // redirect user to the cart.blade.php page, and show an error message in cart.blade.php
         }
+
+
+        // Calculate the total price    // https://www.youtube.com/watch?v=krS-KXdMQ64&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=190
+        $total_price  = 0;
+        $total_weight = 0;
+
+        foreach ($getCartItems as $item) {
+            // dd($item);
+            // echo '<pre>', var_dump($item), '</pre>';
+            
+            $attrPrice = \App\Models\Product::getDiscountAttributePrice($item['product_id'], $item['size']);
+            $total_price = $total_price + ($attrPrice['final_price'] * $item['quantity']);
+
+            // https://www.youtube.com/watch?v=FUQyTb1vOI4&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=192
+            $product_weight = $item['product']['product_weight'];
+            $total_weight = $total_weight + $product_weight;
+        }
+        // dd($total_price);
+        // dd($total_weight);
+
+
+        $deliveryAddresses = \App\Models\DeliveryAddress::deliveryAddresses(); // the delivery addresses of the currently authenticated/logged in user
+        // dd($deliveryAddresses);
+        // echo '<pre>', var_dump($deliveryAddresses), '</pre>';
+
+
+        // Calculating the Shipping Charges of every one of the user's Delivery Addresses (depending on the 'country' of the Delivery Address)    // https://www.youtube.com/watch?v=krS-KXdMQ64&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=190
+        foreach ($deliveryAddresses as $key => $value) {
+            // echo '<pre>', var_dump($key), '</pre>';
+            // echo '<pre>', var_dump($value), '</pre>';
+
+            $shippingCharges = \App\Models\ShippingCharge::getShippingCharges($total_weight, $value['country']);
+            // dd($shippingCharges);
+            // echo '<pre>', var_dump($shippingCharges), '</pre>';
+            
+
+            // Append/Add the Shipping Charge of every Delivery Address (depending on the 'country' of the Delivery Addresss) to the $deliveryAddresses array
+            $deliveryAddresses[$key]['shipping_charges'] = $shippingCharges;
+        }
+        // dd($deliveryAddresses);
+        // dd($shippingCharges);
 
 
         // Check 15:09 in https://www.youtube.com/watch?v=3SuuAAyUgNw&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=159
@@ -949,6 +989,7 @@ class ProductsController extends Controller
             if ($data['payment_gateway'] == 'COD') {
                 $payment_method = 'COD';
                 $order_status   = 'New';
+
             } else { // if the user selects any `payment_gateway` other than 'COD', this means that the `payment_method` is 'prepaid'  (and `order_status` is 'pending')
                 $payment_method = 'Prepaid';
                 $order_status   = 'Pending'; // And after payment confirmation, `order_status` becomes 'Payment Captured'. (We'll create the API that will convert this to either 'Payment Captured' or 'Canceled')
@@ -970,6 +1011,10 @@ class ProductsController extends Controller
 
             // Calculate Shipping Charges `shipping_charges`
             $shipping_charges = 0;
+
+            // Get the Shipping Charge based on the chosen Delivery Address    // https://www.youtube.com/watch?v=krS-KXdMQ64&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=190
+            $shipping_charges = \App\Models\ShippingCharge::getShippingCharges($total_weight, $deliveryAddress['country']);
+            // dd($shipping_charges);
 
             // Grand Total (`grand_total`)
             $grand_total = $total_price + $shipping_charges - \Session::get('couponAmount');
@@ -1094,11 +1139,11 @@ class ProductsController extends Controller
             }
 
 
-            return redirect('thanks');
+            return redirect('thanks'); // redirect to front/products/thanks.blade.php page
         }
 
 
-        return view('front.products.checkout')->with(compact('deliveryAddresses', 'countries', 'getCartItems'));
+        return view('front.products.checkout')->with(compact('deliveryAddresses', 'countries', 'getCartItems', 'total_price'));
     }
 
 

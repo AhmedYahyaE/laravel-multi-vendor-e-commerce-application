@@ -47,11 +47,11 @@
                     </tr>
                     <tr>
                         <td>Order Total</td>
-                        <td>{{ $orderDetails['grand_total'] }}</td>
+                        <td>Rs.{{ $orderDetails['grand_total'] }}</td>
                     </tr>
                     <tr>
                         <td>Shipping Charges</td>
-                        <td>{{ $orderDetails['shipping_charges'] }}</td>
+                        <td>Rs.{{ $orderDetails['shipping_charges'] }}</td>
                     </tr>
 
                     @if ($orderDetails['coupon_code'] != '')
@@ -61,7 +61,7 @@
                         </tr>
                         <tr>
                             <td>Coupon Amount</td>
-                            <td>{{ $orderDetails['coupon_amount'] }}</td>
+                            <td>Rs.{{ $orderDetails['coupon_amount'] }}</td>
                         </tr>
                     @endif
 
