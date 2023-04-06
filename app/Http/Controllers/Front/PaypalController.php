@@ -130,6 +130,18 @@ class PaypalController extends Controller
                 });
 
 
+                // Inventory Management - Reduce inventory/stock when an order gets placed: https://www.youtube.com/watch?v=9lo1j-jyEBE&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=193
+                // We wrote the Inventory/Stock Management script in TWO places: in the checkout() method in Front/ProductsController.php and in the success() method in Front/PaypalController.php. Check https://www.youtube.com/watch?v=9lo1j-jyEBE&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=193
+                foreach ($orderDetails['orders_products'] as $key => $order) {
+                    $getProductStock = \App\Models\ProductsAttribute::getProductStock($order['product_id'], $order['product_size']); // Get the `stock` of that product `product_id` with that specific `size` from `products_attributes` table
+                    $newStock = $getProductStock - $order['product_qty']; // The new product `stock` is the original stock reduced by the order `quantity`
+                    \App\Models\ProductsAttribute::where([ // Update the new `quantity` in the `products_attributes` table
+                        'product_id' => $order['product_id'],
+                        'size'       => $order['product_size']
+                    ])->update(['stock' => $newStock]);
+                }
+
+
                 // We empty the Cart after making the PayPal payment
                 \App\Models\Cart::where('user_id', \Auth::user()->id)->delete(); // Retrieving The Authenticated User: https://laravel.com/docs/9.x/authentication#retrieving-the-authenticated-user
 

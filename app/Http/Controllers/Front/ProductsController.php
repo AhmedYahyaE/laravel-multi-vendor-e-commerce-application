@@ -1082,7 +1082,18 @@ class ProductsController extends Controller
                 $cartItem->product_qty     = $item['quantity'];
 
                 $cartItem->save(); // INSERT data INTO the `orders_products` table
+
+
+                // Inventory Management - Reduce inventory/stock when an order gets placed: https://www.youtube.com/watch?v=9lo1j-jyEBE&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=193
+                // We wrote the Inventory/Stock Management script in TWO places: in the checkout() method in Front/ProductsController.php and in the success() method in Front/PaypalController.php. Check https://www.youtube.com/watch?v=9lo1j-jyEBE&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=193
+                $getProductStock = \App\Models\ProductsAttribute::getProductStock($item['product_id'], $item['size']); // Get the `stock` of that product `product_id` with that specific `size` from `products_attributes` table
+                $newStock = $getProductStock - $item['quantity']; // The new product `stock` is the original stock reduced by the order `quantity`
+                \App\Models\ProductsAttribute::where([ // Update the new `quantity` in the `products_attributes` table
+                    'product_id' => $item['product_id'],
+                    'size'       => $item['size']
+                ])->update(['stock' => $newStock]);
             }
+
 
             // Store the `order_id` in Session so that we can use it in front/products/thanks.blade.php, thanks() method and paypal() method in Front/PayPalController.php
             \Session::put('order_id', $order_id); // Storing Data: https://laravel.com/docs/9.x/session#storing-data
