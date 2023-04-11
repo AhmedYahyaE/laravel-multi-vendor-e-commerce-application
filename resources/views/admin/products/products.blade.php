@@ -43,9 +43,9 @@
                                         <th>Product Color</th>
                                         <th>Product Image</th>
                                         <th>Category</th> {{-- Through the relationship --}}
-                                        <th>Section</th> {{-- Through the relationship --}}
+                                        <th>Section</th>  {{-- Through the relationship --}}
                                         <th>Added by</th> {{-- Through the relationship --}}
-                                        <th>URL</th>
+                                        <th>Status</th>
                                         <th>Actions</th>
                                     </tr>
                                 </thead>

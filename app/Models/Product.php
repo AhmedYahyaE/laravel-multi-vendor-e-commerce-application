@@ -141,4 +141,18 @@ class Product extends Model
         return $getProductImage['product_image'];
     }
 
+    // https://www.youtube.com/watch?v=TpprgD6ZaZM&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=194
+    // Note: We need to prevent orders (upon checkout and payment) of the 'disabled' products (`status` = 0), where the product ITSELF can be disabled in admin/products/products.blade.php (by checking the `products` database table) or a product's attribute (`stock`) can be disabled in 'admin/attributes/add_edit_attributes.blade.php' (by checking the `products_attributes` database table). We also prevent orders of the out of stock / sold-out products (by checking the `products_attributes` database table). Check https://www.youtube.com/watch?v=TpprgD6ZaZM&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=194
+    public static function getProductStatus($product_id) {
+        $getProductStatus = Product::select('status')->where('id', $product_id)->first();
+
+
+        return $getProductStatus->status;
+    }
+
+    // Delete a product from Cart if it's 'disabled' (`status` = 0) or it's out of stock (sold out)    // https://www.youtube.com/watch?v=TpprgD6ZaZM&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=194
+    public static function deleteCartProduct($product_id) {
+        Cart::where('product_id', $product_id)->delete();
+    }
+
 }

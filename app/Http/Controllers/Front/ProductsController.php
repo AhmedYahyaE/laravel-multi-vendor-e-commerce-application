@@ -11,6 +11,8 @@ class ProductsController extends Controller
 
 
 
+    // match() method is used for the HTTP 'GET' requests to render listing.blade.php page and the HTTP 'POST' method for the AJAX request of the Sorting Filter or the HTML Form submission and jQuery for the Sorting Filter WITHOUT AJAX, AND ALSO for submitting the Search Form in listing.blade.php    // e.g.    /men    or    /computers    // https://www.youtube.com/watch?v=JzKi78lyz0g&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=76
+    // Search Form: https://www.youtube.com/watch?v=X5A8_TXcnRI&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=197
     public function listing(Request $request) { // using the Dynamic Routes with the foreach loop
         // Sorting Filter WITH AJAX in listing.blade.php. Load (and check) ajax_products_listing.blade.php    // https://www.youtube.com/watch?v=APPKmLlWEBY&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu
         if ($request->ajax()) {
@@ -68,13 +70,13 @@ class ProductsController extends Controller
                 if (isset($_GET['sort']) && !empty($_GET['sort'])) {// if the URL query string parameters contain '&sort=someValue'    // 'sort' is the 'name' HTML attribute of the <select> box
                     if ($_GET['sort'] == 'product_latest') {
                         $categoryProducts->orderBy('products.id', 'Desc');
-                    } else if ($_GET['sort'] == 'price_lowest') {
+                    } elseif ($_GET['sort'] == 'price_lowest') {
                         $categoryProducts->orderBy('products.product_price', 'Asc');
-                    } else if ($_GET['sort'] == 'price_highest') {
+                    } elseif ($_GET['sort'] == 'price_highest') {
                         $categoryProducts->orderBy('products.product_price', 'Desc');
-                    } else if ($_GET['sort'] == 'name_z_a') {
+                    } elseif ($_GET['sort'] == 'name_z_a') {
                         $categoryProducts->orderBy('products.product_name', 'Desc');
-                    } else if ($_GET['sort'] == 'name_a_z') {
+                    } elseif ($_GET['sort'] == 'name_a_z') {
                         $categoryProducts->orderBy('products.product_name', 'Asc');
                     }
                 }
@@ -240,55 +242,98 @@ class ProductsController extends Controller
                 abort(404); // we will create the 404 page later on    // https://laravel.com/docs/9.x/helpers#method-abort
             }
         
-        } else { // Sorting Filter WITHOUT AJAX (using HTML <form> and jQuery) in front/products/listing.blade.php
-            $url = \Illuminate\Support\Facades\Route::getFacadeRoot()->current()->uri(); // Accessing The Current Route: https://laravel.com/docs/9.x/routing#accessing-the-current-route    // Accessing The Current URL: https://laravel.com/docs/9.x/urls#accessing-the-current-url    // Check 18:15 in https://www.youtube.com/watch?v=JzKi78lyz0g&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=76   
-            // dd($url);
-            $categoryCount = \App\Models\Category::where([
-                'url'    => $url,
-                'status' => 1
-            ])->count();
-            // dd($categoryCount);
-    
-            if ($categoryCount > 0) { // if the category entered as a URL in the browser address bar exists
-                // Get the entered URL in the browser address bar category details
-                $categoryDetails = \App\Models\Category::categoryDetails($url);
-                // dd($categoryDetails);
-                // dd($categoryDetails['sub_categories']);
-                // dd('category exists');
-    
-                // Get the categories related products    // Note: if the entered URL in the browser address bar is a 'category', we need to fetch its related products as well as its subcategories related products, but if the URL is a subcategory, we need to fetch the subcategory related products only
-                // $categoryProducts = \App\Models\Product::with('brand')->whereIn('category_id', $categoryDetails['catIds'])->where('status', 1)->get()->toArray(); // https://laravel.com/docs/9.x/queries#additional-where-clauses    // using the brand() relationship method in Product.php
-                // $categoryProducts = \App\Models\Product::with('brand')->whereIn('category_id', $categoryDetails['catIds'])->where('status', 1)->simplePaginate(3); // Simple Pagination: https://laravel.com/docs/9.x/pagination#simple-pagination    // https://www.youtube.com/watch?v=tQNmKdQ-f-s&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=79    // https://laravel.com/docs/9.x/queries#additional-where-clauses    // using the brand() relationship method in Product.php
-                // $categoryProducts = \App\Models\Product::with('brand')->whereIn('category_id', $categoryDetails['catIds'])->where('status', 1)->paginate(3); // Paginating Eloquent Results: https://laravel.com/docs/9.x/pagination#paginating-eloquent-results    // Displaying Pagination Results Using Bootstrap: https://laravel.com/docs/9.x/pagination#using-bootstrap    // https://www.youtube.com/watch?v=tQNmKdQ-f-s&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=79    // https://laravel.com/docs/9.x/queries#additional-where-clauses    // using the brand() relationship method in Product.php
-                $categoryProducts = \App\Models\Product::with('brand')->whereIn('category_id', $categoryDetails['catIds'])->where('status', 1); // moving the paginate() method after checking for the sorting filter <form>    // Paginating Eloquent Results: https://laravel.com/docs/9.x/pagination#paginating-eloquent-results    // Displaying Pagination Results Using Bootstrap: https://laravel.com/docs/9.x/pagination#using-bootstrap    // https://www.youtube.com/watch?v=tQNmKdQ-f-s&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=79    // https://laravel.com/docs/9.x/queries#additional-where-clauses    // using the brand() relationship method in Product.php
-                // $categoryProducts = \App\Models\Product::with('brand')->whereIn('category_id', $categoryDetails['catIds'])->where('status', 1)->cursorPaginate(3); // Cursor Pagination: https://laravel.com/docs/9.x/pagination#cursor-pagination    // Displaying Pagination Results Using Bootstrap: https://laravel.com/docs/9.x/pagination#using-bootstrap    // https://www.youtube.com/watch?v=tQNmKdQ-f-s&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=79    // https://laravel.com/docs/9.x/queries#additional-where-clauses    // using the brand() relationship method in Product.php
+        } else { // Sorting Filter WITHOUT AJAX (using the HTML <form> and jQuery) Or handling the website Search Form (in front/layout/header.blade.php) BOTH in front/products/listing.blade.php
+
+            // Website Search Form (to search for all website products). Check the HTML Form in front/layout/header.blade.php    // https://www.youtube.com/watch?v=X5A8_TXcnRI&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=197
+            if (isset($_REQUEST['search']) && !empty($_REQUEST['search'])) { // If the Search Form is used, handle the Search Form submission
+                $search_product = $_REQUEST['search'];
+
+                // We fill in the $categoryDetails array MANUALLY with the same indexes/keys that come from the categoryDetails() method in Category.php model (because in either cases of the if-else statement, we pass in $categoryDetails variable to the view down below)
+                $categoryDetails['breadcrumbs']                      = $search_product;
+                $categoryDetails['categoryDetails']['category_name'] = $search_product;
+                $categoryDetails['categoryDetails']['description']   = 'Search Products for ' . $search_product;
+
+                // We join `products` table (at the `category_id` column) with `categoreis` table (becausee we're going to search `category_name` column in `categories` table)
+                // Note: It's best practice to name table columns with more verbose descriptive names (e.g. if the table name is `products`, then you should have a column called `product_id`, NOT `id`), and also, don't have repeated column names THROUGHOUT/ACROSS the tables of a certain (one) database (i.e. make all your database tables column names (throughout your database) UNIQUE (even columns in different tables!)). That's because of that problem that emerges when you join (JOIN clause) two tables which have the same column names, when you join them, the column names of the second table overrides the column names of the first table (similar column names override each other), leading to many problems. There are TWO ways/workarounds to tackle this problem, check 24:04 in https://www.youtube.com/watch?v=X5A8_TXcnRI&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=208
+                $categoryProducts = \App\Models\Product::select(
+                    'products.id', 'products.section_id', 'products.category_id', 'products.brand_id', 'products.vendor_id', 'products.product_name', 'products.product_code', 'products.product_color', 'products.product_price',  'products.product_discount', 'products.product_image', 'products.description'
+                )->with('brand')->join( // Joins: Inner Join Clause: https://laravel.com/docs/9.x/queries#inner-join-clause    // moving the paginate() method after checking for the sorting filter <form>    // Paginating Eloquent Results: https://laravel.com/docs/9.x/pagination#paginating-eloquent-results    // Displaying Pagination Results Using Bootstrap: https://laravel.com/docs/9.x/pagination#using-bootstrap    // https://www.youtube.com/watch?v=tQNmKdQ-f-s&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=79    // https://laravel.com/docs/9.x/queries#additional-where-clauses    // using the brand() relationship method in Product.php model    // Eager Loading (using with() method): https://laravel.com/docs/9.x/eloquent-relationships#eager-loading    // 'brand' is the relationship method name in Product.php model
+                    'categories', // `categories` table
+                    'categories.id', '=', 'products.category_id' // JOIN both `products` and `categories` table at    `categories`.`id` = `products`.`category_id`
+                )->where(function($query) use ($search_product) { // Constraining Eager Loads: https://laravel.com/docs/9.x/eloquent-relationships#constraining-eager-loads    // Subquery Where Clauses: https://laravel.com/docs/9.x/queries#subquery-where-clauses    // Advanced Subqueries: https://laravel.com/docs/9.x/eloquent#advanced-subqueries    // Eager Loading (using with() method): https://laravel.com/docs/9.x/eloquent-relationships#eager-loading    // 'brand' is the relationship method name in Product.php model    // function () use ()     syntax: https://www.php.net/manual/en/functions.anonymous.php#:~:text=the%20use%20language%20construct
+                    // We'll search for the searched term by the user in the `product_name`, `product_code`, `product_color` and `description` columns in the `products` table and in the `category_name` column in the `categories` table
+                    $query->where('products.product_name',    'like', '%' . $search_product . '%')  // 'like' SQL operator    // '%' SQL Wildcard Character    // Basic Where Clauses: Where Clauses: https://laravel.com/docs/9.x/queries#where-clauses
+                        ->orWhere('products.product_code',    'like', '%' . $search_product . '%')  // 'like' SQL operator    // '%' SQL Wildcard Character    // Basic Where Clauses: Where Clauses: https://laravel.com/docs/9.x/queries#where-clauses
+                        ->orWhere('products.product_color',   'like', '%' . $search_product . '%')  // 'like' SQL operator    // '%' SQL Wildcard Character    // Basic Where Clauses: Where Clauses: https://laravel.com/docs/9.x/queries#where-clauses
+                        ->orWhere('products.description',     'like', '%' . $search_product . '%')  // 'like' SQL operator    // '%' SQL Wildcard Character    // Basic Where Clauses: Where Clauses: https://laravel.com/docs/9.x/queries#where-clauses
+                        ->orWhere('categories.category_name', 'like', '%' . $search_product . '%'); // 'like' SQL operator    // '%' SQL Wildcard Character    // Basic Where Clauses: Where Clauses: https://laravel.com/docs/9.x/queries#where-clauses
+                })->where('products.status', 1);
                 // dd($categoryProducts);
-    
-    
-                // Sorting Filter WITHOUT AJAX (using HTML <form> and jQuery) in front/products/listing.blade.php
-                if (isset($_GET['sort']) && !empty($_GET['sort'])) {// if the URL query string parameters contain '&sort=someValue'    // 'sort' is the 'name' HTML attribute of the <select> box
-                    if ($_GET['sort'] == 'product_latest') {
-                        $categoryProducts->orderBy('products.id', 'Desc');
-                    } else if ($_GET['sort'] == 'price_lowest') {
-                        $categoryProducts->orderBy('products.product_price', 'Asc');
-                    } else if ($_GET['sort'] == 'price_highest') {
-                        $categoryProducts->orderBy('products.product_price', 'Desc');
-                    } else if ($_GET['sort'] == 'name_z_a') {
-                        $categoryProducts->orderBy('products.product_name', 'Desc');
-                    } else if ($_GET['sort'] == 'name_a_z') {
-                        $categoryProducts->orderBy('products.product_name', 'Asc');
-                    }
+
+                // If the user selects a certain Section from the Search Form drop-down menu (the <select><option> HTML tags), do the search using the `section_id` too
+                if (isset($_REQUEST['section_id']) && !empty($_REQUEST['section_id'])) { // if the user selects a Section using <select><option> in the Search Form drop-down menu
+                    $categoryProducts = $categoryProducts->where('products.section_id', $_REQUEST['section_id']);
                 }
-    
-                // Pagination (after the Sorting Filter)
-                $categoryProducts = $categoryProducts->paginate(30); // Moved the pagination after checking for the sorting filter <form>
+
+                $categoryProducts = $categoryProducts->get();
                 // dd($categoryProducts);
-    
-    
-                return view('front.products.listing')->with(compact('categoryDetails', 'categoryProducts', 'url'));
-            } else {
-                abort(404); // we will create the 404 page later on    // https://laravel.com/docs/9.x/helpers#method-abort
+
+
+                return view('front.products.listing')->with(compact('categoryDetails', 'categoryProducts'));
+
+            } else { // If the Search Form is NOT used, render the listing.blade.php page with the Sorting Filter WITHOUT AJAX (using the HTML <form> and jQuery)
+                $url = \Illuminate\Support\Facades\Route::getFacadeRoot()->current()->uri(); // Accessing The Current Route: https://laravel.com/docs/9.x/routing#accessing-the-current-route    // Accessing The Current URL: https://laravel.com/docs/9.x/urls#accessing-the-current-url    // Check 18:15 in https://www.youtube.com/watch?v=JzKi78lyz0g&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=76   
+                // dd($url);
+                $categoryCount = \App\Models\Category::where([
+                    'url'    => $url,
+                    'status' => 1
+                ])->count();
+                // dd($categoryCount);
+        
+                if ($categoryCount > 0) { // if the category entered as a URL in the browser address bar exists
+                    // Get the entered URL in the browser address bar category details
+                    $categoryDetails = \App\Models\Category::categoryDetails($url);
+                    // dd($categoryDetails);
+                    // dd($categoryDetails['sub_categories']);
+                    // dd('category exists');
+        
+                    // Get the categories related products    // Note: if the entered URL in the browser address bar is a 'category', we need to fetch its related products as well as its subcategories related products, but if the URL is a subcategory, we need to fetch the subcategory related products only
+                    // $categoryProducts = \App\Models\Product::with('brand')->whereIn('category_id', $categoryDetails['catIds'])->where('status', 1)->get()->toArray(); // https://laravel.com/docs/9.x/queries#additional-where-clauses    // using the brand() relationship method in Product.php
+                    // $categoryProducts = \App\Models\Product::with('brand')->whereIn('category_id', $categoryDetails['catIds'])->where('status', 1)->simplePaginate(3); // Simple Pagination: https://laravel.com/docs/9.x/pagination#simple-pagination    // https://www.youtube.com/watch?v=tQNmKdQ-f-s&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=79    // https://laravel.com/docs/9.x/queries#additional-where-clauses    // using the brand() relationship method in Product.php
+                    // $categoryProducts = \App\Models\Product::with('brand')->whereIn('category_id', $categoryDetails['catIds'])->where('status', 1)->paginate(3); // Paginating Eloquent Results: https://laravel.com/docs/9.x/pagination#paginating-eloquent-results    // Displaying Pagination Results Using Bootstrap: https://laravel.com/docs/9.x/pagination#using-bootstrap    // https://www.youtube.com/watch?v=tQNmKdQ-f-s&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=79    // https://laravel.com/docs/9.x/queries#additional-where-clauses    // using the brand() relationship method in Product.php
+                    $categoryProducts = \App\Models\Product::with('brand')->whereIn('category_id', $categoryDetails['catIds'])->where('status', 1); // moving the paginate() method after checking for the sorting filter <form>    // Paginating Eloquent Results: https://laravel.com/docs/9.x/pagination#paginating-eloquent-results    // Displaying Pagination Results Using Bootstrap: https://laravel.com/docs/9.x/pagination#using-bootstrap    // https://www.youtube.com/watch?v=tQNmKdQ-f-s&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=79    // https://laravel.com/docs/9.x/queries#additional-where-clauses    // using the brand() relationship method in Product.php
+                    // $categoryProducts = \App\Models\Product::with('brand')->whereIn('category_id', $categoryDetails['catIds'])->where('status', 1)->cursorPaginate(3); // Cursor Pagination: https://laravel.com/docs/9.x/pagination#cursor-pagination    // Displaying Pagination Results Using Bootstrap: https://laravel.com/docs/9.x/pagination#using-bootstrap    // https://www.youtube.com/watch?v=tQNmKdQ-f-s&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=79    // https://laravel.com/docs/9.x/queries#additional-where-clauses    // using the brand() relationship method in Product.php
+                    // dd($categoryProducts);
+        
+        
+                    // Sorting Filter WITHOUT AJAX (using HTML <form> and jQuery) in front/products/listing.blade.php
+                    if (isset($_GET['sort']) && !empty($_GET['sort'])) {// if the URL query string parameters contain '&sort=someValue'    // 'sort' is the 'name' HTML attribute of the <select> box
+                        if ($_GET['sort'] == 'product_latest') {
+                            $categoryProducts->orderBy('products.id', 'Desc');
+                        } elseif ($_GET['sort'] == 'price_lowest') {
+                            $categoryProducts->orderBy('products.product_price', 'Asc');
+                        } elseif ($_GET['sort'] == 'price_highest') {
+                            $categoryProducts->orderBy('products.product_price', 'Desc');
+                        } elseif ($_GET['sort'] == 'name_z_a') {
+                            $categoryProducts->orderBy('products.product_name', 'Desc');
+                        } elseif ($_GET['sort'] == 'name_a_z') {
+                            $categoryProducts->orderBy('products.product_name', 'Asc');
+                        }
+                    }
+        
+                    // Pagination (after the Sorting Filter)
+                    $categoryProducts = $categoryProducts->paginate(30); // Moved the pagination after checking for the sorting filter <form>
+                    // dd($categoryProducts);
+        
+        
+                    return view('front.products.listing')->with(compact('categoryDetails', 'categoryProducts', 'url'));
+
+                } else {
+                    abort(404); // we will create the 404 page later on    // https://laravel.com/docs/9.x/helpers#method-abort
+                }
+
             }
+
         }
     }
 
@@ -428,6 +473,13 @@ class ProductsController extends Controller
         if ($request->isMethod('post')) { // if the Add to Cart <form> is submitted
             $data = $request->all();
             // dd($data);
+
+
+            // Prevent the ability to add an item to the Cart with 0 zero quantity. Check 16:30 in https://www.youtube.com/watch?v=tfkA9ATahiA&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=197
+            if ($data['quantity'] <= 0) { // if the ordered quantity is 0, convert it to at least 1
+                $data['quantity'] = 1;
+            }
+
 
             // Check if the selected product `product_id` with that selected `size` have available `stock` in `products_attributes` table
             $getProductStock = \App\Models\ProductsAttribute::getProductStock($data['product_id'], $data['size']);
@@ -945,6 +997,52 @@ class ProductsController extends Controller
             $data = $request->all();
             // dd($data);
 
+
+            // Website Security
+            // Note: We need to prevent orders (upon checkout and payment) of the 'disabled' products (`status` = 0), where the product ITSELF can be disabled in admin/products/products.blade.php (by checking the `products` database table) or a product's attribute (`stock`) can be disabled in 'admin/attributes/add_edit_attributes.blade.php' (by checking the `products_attributes` database table). We also prevent orders of the out of stock / sold-out products (by checking the `products_attributes` database table). Check https://www.youtube.com/watch?v=TpprgD6ZaZM&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=194
+            foreach ($getCartItems as $item) {
+                // Prevent 'disabled' (`status` = 0) products from being ordered (if it's disabled in admin/products/products.blade.php) by checking the `products` database table
+                $product_status = \App\Models\Product::getProductStatus($item['product_id']);
+                if ($product_status == 0) { // if the product is disabled (`status` = 0)
+                    /* \App\Models\Product::deleteCartProduct($item['product_id']); // Delete the item from the Cart
+
+                    $message = 'One of the products is disabled! Please try again.'; */
+                    $message = $item['product']['product_name'] . ' with ' . $item['size'] . ' size is not available. Please remove it from the Cart and choose another product.';
+                    return redirect('/cart')->with('error_message', $message); // Redirect to the Cart page with an error message
+                }
+            }
+
+            // Preventing out of stock / sold out products from being ordered (by checking the `products_attributes` database table)
+            $getProductStock = \App\Models\ProductsAttribute::getProductStock($item['product_id'], $item['size']); // A product (`product_id`) with a certain `size`
+            if ($getProductStock == 0) { // if the product's `stock` is 0 zero
+                /* \App\Models\Product::deleteCartProduct($item['product_id']); // Delete the item from the Cart
+
+                $message = 'One of the products is sold out! Please try again.'; */
+                $message = $item['product']['product_name'] . ' with ' . $item['size'] . ' size is not available. Please remove it from the Cart and choose another product.';
+                return redirect('/cart')->with('error_message', $message); // Redirect to the Cart page with an error message
+            }
+
+            // Preventing the products with 'disabled' Product Attributes (in admin/attributes/add_edit_attributes.blade.php) from being ordered (by checking the `products_attributes` database table)
+            $getAttributeStatus = \App\Models\ProductsAttribute::getAttributeStatus($item['product_id'], $item['size']); // A product (`product_id`) with a certain `size`
+            if ($getAttributeStatus == 0) { // if the product's `stock` is 0 zero
+                /* \App\Models\Product::deleteCartProduct($item['product_id']); // Delete the item from the Cart
+
+                $message = 'One of the products\' attributes is disabled! Please try again.'; */
+                $message = $item['product']['product_name'] . ' with ' . $item['size'] . ' size is not available. Please remove it from the Cart and choose another product.';
+                return redirect('/cart')->with('error_message', $message); // Redirect to the Cart page with an error message
+            }
+
+            // Note: We also prevent making orders of the products of the Categories that are disabled (`status` = 0) (whether the Category is a Child Category or a Parent Category (Root Category) is disabled) in admin/categories/categories.blade.php. Check https://www.youtube.com/watch?v=tfkA9ATahiA&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=195
+            $getCategoryStatus = \App\Models\Category::getCategoryStatus($item['product']['category_id']);
+            if ($getCategoryStatus == 0) { // if the Category is disabled (`status` = 0)
+                /* \App\Models\Product::deleteCartProduct($item['product_id']); // Delete the item from the Cart
+
+                $message = 'One of the products\' Category is disabled! Please try again.'; */
+                $message = $item['product']['product_name'] . ' with ' . $item['size'] . ' size is not available. Please remove it from the Cart and choose another product.';
+                return redirect('/cart')->with('error_message', $message); // Redirect to the Cart page with an error message
+            }
+
+
             // Validation:
             // Delivery Address Validation
             if (empty($data['address_id'])) { // if the user doesn't select a Delivery Address
@@ -1110,7 +1208,7 @@ class ProductsController extends Controller
 
 
             // Send placing an order confirmation email to the user    // https://www.youtube.com/watch?v=dF7OhPttepE&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=169
-            // Note: We send placing an order confirmation email and SMS to the user right away (immediately) if the order is "COD", but if the order payment method is like PayPal or any other payment gateway, we send the order confirmation email and SMS after the user makes the payment. Check     https://www.youtube.com/watch?v=dF7OhPttepE&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=169
+            // Note: We send placing an order confirmation email and SMS to the user right away (immediately) if the order is "COD", but if the order payment method is like PayPal or any other payment gateway, we send the order confirmation email and SMS after the user makes the payment. Check https://www.youtube.com/watch?v=dF7OhPttepE&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=169
             $orderDetails = \App\Models\Order::with('orders_products')->where('id', $order_id)->first()->toArray();// Eager Loading: https://laravel.com/docs/9.x/eloquent-relationships#eager-loading    // 'orders_products' is the relationship method name in Order.php model
             // dd($orderDetails);
 

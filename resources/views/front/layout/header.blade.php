@@ -139,33 +139,46 @@ $sections = \App\Models\Section::sections();
             <div class="row clearfix align-items-center">
                 <div class="col-lg-3 col-md-9 col-sm-6">
                     <div class="brand-logo text-lg-center">
-                        <a href="index.html">
-                        <img src="{{ asset('front/images/main-logo/stack-developers-logo.png') }}" alt="Stack Developers" class="app-brand-logo">
+
+
+                        {{-- <a href="{{ url('/') }}"> --}} {{-- This is exactly THE SAME AS:    <a href="/">    --}}
+                        <a href="/">                        {{-- This is exactly THE SAME AS:    <a href="{{ url('/') }}">    --}}
+
+
+                            <img src="{{ asset('front/images/main-logo/stack-developers-logo.png') }}" alt="Stack Developers" class="app-brand-logo">
                         </a>
                     </div>
                 </div>
                 <div class="col-lg-6 u-d-none-lg">
-                    <form class="form-searchbox">
+
+
+
+                    {{-- Website Search Form (to search for all website products) --}} {{-- https://www.youtube.com/watch?v=X5A8_TXcnRI&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=197 --}}
+                    <form class="form-searchbox" action="{{ url('/search-products') }}" method="get">
                         <label class="sr-only" for="search-landscape">Search</label>
-                        <input id="search-landscape" type="text" class="text-field" placeholder="Search everything">
+                        <input id="search-landscape" type="text" class="text-field" placeholder="Search everything" name="search" @if (isset($_REQUEST['search']) && !empty($_REQUEST['search'])) value="{{ $_REQUEST['search'] }}" @endif> {{-- We use the "name" HTML attribute as a key/name for the "value" HTML attribute for submitting the Search Form. Check the "value" HTML attribute too inside the <option> HTML tag down below! --}} {{-- if the user uses the Search Form --}}
                         <div class="select-box-position">
                             <div class="select-box-wrapper select-hide">
                                 <label class="sr-only" for="select-category">Choose category for search</label>
-                                <select class="select-box" id="select-category">
-                                    <option selected="selected" value="">
-                                        All
-                                    </option>
+                                <select class="select-box" id="select-category" name="section_id">
 
+                                    <option selected="selected" value="">All</option>
                                     @foreach ($sections as $section)
-                                        <option value="">{{ $section['name'] }}</option> {{-- the search bar drop-down menu at the top --}}
+                                        <option value="{{ $section['id'] }}"  @if (isset($_REQUEST['section_id']) && !empty($_REQUEST['section_id']) && $_REQUEST['section_id'] == $section['id']) selected @endif>{{ $section['name'] }}</option> {{-- the search bar drop-down menu at the top --}} {{-- We use the "value" HTML attribute as a value for the "name" HTML attribute for submitting the Search Form. Check the "name" HTML attribute too inside the <input> HTML tag above there! --}}
                                     @endforeach
 
-                        
                                 </select>
                             </div>
                         </div>
                         <button id="btn-search" type="submit" class="button button-primary fas fa-search"></button>
                     </form>
+
+                    @php
+                        // dd($_GET);
+                    @endphp
+
+
+
                 </div>
                 <div class="col-lg-3 col-md-3 col-sm-6">
                     <nav>

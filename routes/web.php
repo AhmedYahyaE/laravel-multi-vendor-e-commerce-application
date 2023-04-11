@@ -200,7 +200,7 @@ Route::namespace('App\Http\Controllers\Front')->group(function() {
     $catUrls = \App\Models\Category::select('url')->where('status', 1)->get()->pluck('url')->toArray(); // Routes like: /men, /women, /shirts, ...    // https://laravel.com/docs/9.x/collections#method-pluck
     // dd($catUrls);
     foreach ($catUrls as $key => $url) {
-        Route::match(['get', 'post'], '/' . $url, 'ProductsController@listing'); // used match() for the 'POST' method of the AJAX request of the Sorting Filter in listing.blade.php    // e.g.    /men    or    /computers
+        Route::match(['get', 'post'], '/' . $url, 'ProductsController@listing'); // used match() for the HTTP 'GET' requests to render listing.blade.php page and the HTTP 'POST' method for the AJAX request of the Sorting Filter or the HTML Form submission and jQuery for the Sorting Filter WITHOUT AJAX, AND ALSO for submitting the Search Form in listing.blade.php    // e.g.    /men    or    /computers
     }
 
 
@@ -253,6 +253,11 @@ Route::namespace('App\Http\Controllers\Front')->group(function() {
 
     // User account Confirmation E-mail which contains the 'Activation Link' to activate the user account (in resources/views/emails/confirmation.blade.php, using Mailtrap)    // https://www.youtube.com/watch?v=hpG0UD_DuR4&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=133
     Route::get('user/confirm/{code}', 'UserController@confirmAccount'); // {code} is the base64 encoded user's 'Activation Code' sent to the user in the Confirmation E-mail with which they have registered, which is received as a Route Parameters/URL Paramters in the 'Activation Link': https://laravel.com/docs/9.x/routing#required-parameters    // this route is requested (accessed/opened) from inside the mail sent to user (in resources/views/emails/confirmation.blade.php)
+
+
+
+    // Website Search Form (to search for all website products). Check the HTML Form in front/layout/header.blade.php    // https://www.youtube.com/watch?v=X5A8_TXcnRI&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=197
+    Route::get('search-products', 'ProductsController@listing');
 
 
 

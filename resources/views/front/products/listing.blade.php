@@ -1,5 +1,5 @@
 {{-- https://www.youtube.com/watch?v=A5hIj_0L648&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=77 --}}
-{{-- Note: listing.blade.php is the page that opens when you click on a category in the FRONT home page --}}
+{{-- Note: listing.blade.php is the page (rendered by listing() method in Front/ProductsController.php) that opens when you click on a category in the FRONT home page --}}
 
 
 @extends('front.layout.layout')
@@ -65,35 +65,41 @@
                                 {{-- <i class="fas fa-th"></i> --}}
                             {{-- </a> --}}
                         {{-- </div> --}}
-                        
 
 
-                        <!-- Toolbar Sorter 1  -->
-                        {{-- Sorting Filter WITHOUT AJAX (using HTML <form> and jQuery). Check front/js/custom.js file for the related script --}} {{-- https://www.youtube.com/watch?v=u2NiZzjRL8U&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=80 --}}
-                        {{-- Sidenote: There are TWO ways to submit a <form> to the backed: firstly, the regular one using the <button type="submit">, secondly, using AJAX by sending the "value" attributes of the <input> fields --}}
-                        <form name="sortProducts" id="sortProducts"> {{-- Absence of the "action" attribute means submitting the <form> data to the same page, and absence of "method" attribute means the <form> uses the default "method" which is "GET" --}}
-                            
-                            {{-- Sorting Filter WITH AJAX. Check ajax_products_listing.blade.php --}} {{-- https://www.youtube.com/watch?v=APPKmLlWEBY&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu --}}
-                            <input type="hidden" name="url" id="url" value="{{ $url }}"> {{-- $url is passed in from listing() method in Front/ProductsController.php --}}
 
-                            <div class="toolbar-sorter">
-                                <div class="select-box-wrapper">
-                                    <label class="sr-only" for="sort-by">Sort By</label>
-                                    <select name="sort" id="sort" class="select-box">
-                                        {{-- <option selected="selected" value="">Sort By: Best Selling</option> --}}
-                                        <option value="" selected>Select</option>
-                                        <option value="product_latest" @if(isset($_GET['sort']) && $_GET['sort'] == 'product_latest') selected @endif>Sort By: Latest</option>
-                                        <option value="price_lowest"   @if(isset($_GET['sort']) && $_GET['sort'] == 'price_lowest')   selected @endif>Sort By: Lowest Price</option>
-                                        <option value="price_highest"  @if(isset($_GET['sort']) && $_GET['sort'] == 'price_highest')  selected @endif>Sort By: Highest Price</option>
-                                        <option value="name_a_z"       @if(isset($_GET['sort']) && $_GET['sort'] == 'name_a_z')       selected @endif>Sort By: Name A - Z</option>
-                                        <option value="name_z_a"       @if(isset($_GET['sort']) && $_GET['sort'] == 'name_z_a')       selected @endif>Sort By: Name Z - A</option>
-                                        {{-- <option value="">Sort By: Best Rating</option> --}}
-                                    </select>
+                        {{-- If the Search Form is not used for searching in front/layout/header.blade.php. Note that Filters will be hidden and won't work in case of using the Search Form --}} {{-- Check 16:11 in https://www.youtube.com/watch?v=X5A8_TXcnRI&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=199 --}}
+                        @if (!isset($_REQUEST['search']))
+
+
+                            <!-- Toolbar Sorter 1  -->
+                            {{-- Sorting Filter WITHOUT AJAX (using HTML <form> and jQuery). Check front/js/custom.js file for the related script --}} {{-- https://www.youtube.com/watch?v=u2NiZzjRL8U&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=80 --}}
+                            {{-- Sidenote: There are TWO ways to submit a <form> to the backed: firstly, the regular one using the <button type="submit">, secondly, using AJAX by sending the "value" attributes of the <input> fields --}}
+                            <form name="sortProducts" id="sortProducts"> {{-- Absence of the "action" attribute means submitting the <form> data to the same page, and absence of "method" attribute means the <form> uses the default "method" which is "GET" --}}
+                                
+                                {{-- Sorting Filter WITH AJAX. Check ajax_products_listing.blade.php --}} {{-- https://www.youtube.com/watch?v=APPKmLlWEBY&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu --}}
+                                <input type="hidden" name="url" id="url" value="{{ $url }}"> {{-- $url is passed in from listing() method in Front/ProductsController.php --}}
+
+                                <div class="toolbar-sorter">
+                                    <div class="select-box-wrapper">
+                                        <label class="sr-only" for="sort-by">Sort By</label>
+                                        <select name="sort" id="sort" class="select-box">
+                                            {{-- <option selected="selected" value="">Sort By: Best Selling</option> --}}
+                                            <option value="" selected>Select</option>
+                                            <option value="product_latest" @if(isset($_GET['sort']) && $_GET['sort'] == 'product_latest') selected @endif>Sort By: Latest</option>
+                                            <option value="price_lowest"   @if(isset($_GET['sort']) && $_GET['sort'] == 'price_lowest')   selected @endif>Sort By: Lowest Price</option>
+                                            <option value="price_highest"  @if(isset($_GET['sort']) && $_GET['sort'] == 'price_highest')  selected @endif>Sort By: Highest Price</option>
+                                            <option value="name_a_z"       @if(isset($_GET['sort']) && $_GET['sort'] == 'name_a_z')       selected @endif>Sort By: Name A - Z</option>
+                                            <option value="name_z_a"       @if(isset($_GET['sort']) && $_GET['sort'] == 'name_z_a')       selected @endif>Sort By: Name Z - A</option>
+                                            {{-- <option value="">Sort By: Best Rating</option> --}}
+                                        </select>
+                                    </div>
                                 </div>
-                            </div>
-                        </form>
-                        <!-- //end Toolbar Sorter 1  -->
+                            </form>
+                            <!-- //end Toolbar Sorter 1  -->
 
+
+                        @endif
 
 
 
@@ -137,16 +143,24 @@
                     {{-- <div>{{ $categoryProducts->links() }}</div> --}}
 
 
-                    {{-- Fixing the Laravel Pagination problem with the Sorting Filter where sorting gets messed up with pagination). The cause of the problem is that when you click on the pagination links like for example when you go to the second page, the URL query string parameters gets the pagination page number (e.g. 'page=2') but it loses the filter query string parameter (e.g. '&sort=desc'), so we have to always append the sorting filter query string parameter to the page number query string paramter  --}} {{-- Check 28:47 in https://www.youtube.com/watch?v=u2NiZzjRL8U&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=81 --}}
-                    {{-- Appending Query String Values: https://laravel.com/docs/9.x/pagination#appending-query-string-values --}}
-                    @if (isset($_GET['sort'])) {{-- if there's a Sorting Filter used --}}
-                        <div>
-                            {{ $categoryProducts->appends(['sort' => $_GET['sort']])->links() }}
-                        </div>
-                    @else
-                        <div>
-                            {{ $categoryProducts->links() }}
-                        </div>
+
+                    {{-- If the Search Form is not used for searching in front/layout/header.blade.php. Note that Filters will be hidden and won't work in case of using the Search Form --}} {{-- Check 16:11 in https://www.youtube.com/watch?v=X5A8_TXcnRI&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=199 --}}
+                    @if (!isset($_REQUEST['search']))
+
+
+                        {{-- Fixing the Laravel Pagination problem with the Sorting Filter where sorting gets messed up with pagination). The cause of the problem is that when you click on the pagination links like for example when you go to the second page, the URL query string parameters gets the pagination page number (e.g. 'page=2') but it loses the filter query string parameter (e.g. '&sort=desc'), so we have to always append the sorting filter query string parameter to the page number query string paramter  --}} {{-- Check 28:47 in https://www.youtube.com/watch?v=u2NiZzjRL8U&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=81 --}}
+                        {{-- Appending Query String Values: https://laravel.com/docs/9.x/pagination#appending-query-string-values --}}
+                        @if (isset($_GET['sort'])) {{-- if there's a Sorting Filter used --}}
+                            <div>
+                                {{ $categoryProducts->appends(['sort' => $_GET['sort']])->links() }}
+                            </div>
+                        @else
+                            <div>
+                                {{ $categoryProducts->links() }}
+                            </div>
+                        @endif
+
+
                     @endif
 
 

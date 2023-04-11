@@ -40,8 +40,8 @@ class Category extends Model
         // dd($categoryDetails['subCategories']); // Doesn't work!
         // dd($categoryDetails['sub_categories']); // Works!
 
-        $catIds = array(); // this array will contain both the parent category ids and its subcategories ids too
-        $catIds[] = $categoryDetails['id']; // add the PARENT category id to the $catIds array
+        $catIds = array(); // this array will contain both the parent category ids and its subcategories (child categories) ids too
+        $catIds[] = $categoryDetails['id']; // add/append the PARENT category id to the $catIds array
 
 
 
@@ -55,8 +55,8 @@ class Category extends Model
             // Show BOTH main (parent) category AND subcategory in the Breadcrumb
             $parentCategory = \App\Models\Category::select('category_name', 'url')->where('id', $categoryDetails['parent_id'])->first()->toArray();
             $breadcrumbs = '
-                <li class="has-separator"><a href="' . url($parentCategory['url'])  .'">' . $parentCategory['category_name']  .'</a></li>
-                <li class="is-marked"><a href="'     . url($categoryDetails['url']) .'">' . $categoryDetails['category_name'] .'</a></li>
+                <li class="has-separator"><a href="' . url($parentCategory['url'])  .'">' . $parentCategory['category_name']  . '</a></li>
+                <li class="is-marked"><a href="'     . url($categoryDetails['url']) .'">' . $categoryDetails['category_name'] . '</a></li>
             ';
         }
 
@@ -91,4 +91,13 @@ class Category extends Model
 
         return $getCategoryName->category_name;
     }
+
+    // Note: We also prevent making orders of the products of the Categories that are disabled (`status` = 0) (whether the Category is a Child Category or a Parent Category (Root Category) is disabled) in admin/categories/categories.blade.php. Check https://www.youtube.com/watch?v=tfkA9ATahiA&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=195
+    public static function getCategoryStatus($category_id) {
+        $getCategoryStatus = Category::select('status')->where('id', $category_id)->first();
+
+
+        return $getCategoryStatus->status;
+    }
+
 }

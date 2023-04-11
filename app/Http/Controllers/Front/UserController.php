@@ -231,6 +231,10 @@ class UserController extends Controller
         \Auth::logout(); // Logging Out: https://laravel.com/docs/9.x/authentication#logging-out
 
 
+        // Emptying the Session to empty the Cart when the user logs out. Check 14:14 in https://www.youtube.com/watch?v=tfkA9ATahiA&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=197
+        \Session::flush(); // Deleting Data: https://laravel.com/docs/9.x/session#deleting-data
+
+
         return redirect('/');
     }
 
