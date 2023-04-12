@@ -390,6 +390,11 @@
                         </form>
 
 
+                        {{-- PIN code Availability Check: check if the PIN code of the user's Delivery Address exists in our database (in both `cod_pincodes` and `prepaid_pincodes`) or not via AJAX. Check front/js/custom.js --}} {{-- https://www.youtube.com/watch?v=YxAjr_JMchA&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=198 --}}
+                        <br><br><b>Delivery</b>
+                        <input type="text" id="pincode" placeholder="Check Pincode" required>
+                        <button type="button" id="checkPincode">Go</button> {{-- We'll use that checkPincode HTML id attribute in front/js/custom.js as a handle for jQuery --}}
+
 
                     </div>
                     <!-- Product-details /- -->

@@ -987,6 +987,15 @@ class ProductsController extends Controller
 
             // Append/Add the Shipping Charge of every Delivery Address (depending on the 'country' of the Delivery Addresss) to the $deliveryAddresses array
             $deliveryAddresses[$key]['shipping_charges'] = $shippingCharges;
+
+            // Checking PIN code availability of BOTH COD and Prepaid PIN codes in BOTH `cod_pincodes` and `prepaid_pincodes` tables    // https://www.youtube.com/watch?v=djYkP9S30lE&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=197
+            // Check if the COD PIN code of that Delivery Address of the user exists in `cod_pincodes` table    // https://www.youtube.com/watch?v=djYkP9S30lE&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=197
+            $deliveryAddresses[$key]['codpincodeCount'] = \DB::table('cod_pincodes')->where('pincode', $value['pincode'])->count(); // Note that    $value['pincode']    denotes the `pincode` of the `delivery_addresses` table
+            // dd(\DB::table('cod_pincodes')->where('pincode', $value['pincode'])->count());
+
+            // Check if the Prepaid PIN code of that Delivery Address of the user exists in `prepaid_pincodes` table    // https://www.youtube.com/watch?v=djYkP9S30lE&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=197
+            $deliveryAddresses[$key]['prepaidpincodeCount'] = \DB::table('prepaid_pincodes')->where('pincode', $value['pincode'])->count(); // Note that    $value['pincode']    denotes the `pincode` of the `delivery_addresses` table
+            // dd(\DB::table('prepaid_pincodes')->where('pincode', $value['pincode'])->count());
         }
         // dd($deliveryAddresses);
         // dd($shippingCharges);
@@ -1267,6 +1276,35 @@ class ProductsController extends Controller
             return view('front.products.thanks');
         } else { // if there's no order has been placed
             return redirect('cart'); // redirect user to cart.blade.php page
+        }
+    }
+
+
+
+    // PIN code Availability Check: check if the PIN code of the user's Delivery Address exists in our database (in both `cod_pincodes` and `prepaid_pincodes`) or not in front/products/detail.blade.php via AJAX. Check front/js/custom.js    // https://www.youtube.com/watch?v=YxAjr_JMchA&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=198
+    public function checkPincode(Request $request) {
+        if ($request->ajax()) { // if the request is coming via an AJAX call
+            $data = $request->all(); // Getting the name/value pairs array that are sent from the AJAX request (AJAX call)
+            // dd($data); // dd() method DOESN'T WORK WITH AJAX! - SHOWS AN ERROR!! USE var_dump() and exit; INSTEAD!
+            // echo '<pre>', var_dump($data), '</pre>';
+            // exit;
+
+
+            // Checking PIN code availability of BOTH COD and Prepaid PIN codes in BOTH `cod_pincodes` and `prepaid_pincodes` tables    // https://www.youtube.com/watch?v=djYkP9S30lE&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=197
+            // Check if the COD PIN code of that Delivery Address of the user exists in `cod_pincodes` table    // https://www.youtube.com/watch?v=djYkP9S30lE&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=197
+            $codPincodeCount = \DB::table('cod_pincodes')->where('pincode', $data['pincode'])->count(); // $data['pincode'] comes from the 'data' object sent from inside the $.ajax() method in front/js/custom.js file
+            // dd(\DB::table('cod_pincodes')->where('pincode', $data['pincode'])->count());
+    
+            // Check if the Prepaid PIN code of that Delivery Address of the user exists in `prepaid_pincodes` table    // https://www.youtube.com/watch?v=djYkP9S30lE&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=197
+            $prepaidPincodeCount = \DB::table('prepaid_pincodes')->where('pincode', $data['pincode'])->count(); // $data['pincode'] comes from the 'data' object sent from inside the $.ajax() method in front/js/custom.js file
+            // dd(\DB::table('prepaid_pincodes')->where('pincode', $data['pincode'])->count());
+
+            // Check if the entered PIN code exists in BOTH `cod_pincodes` and `prepaid_pincodes` tables
+            if ($codPincodeCount == 0 && $prepaidPincodeCount == 0) {
+                echo 'This pincode is not available for delivery';
+            } else {
+                echo 'This pincode is available for delivery';
+            }
         }
     }
 

@@ -139,8 +139,8 @@
 
                                         @foreach ($deliveryAddresses as $address)
                                             <div class="control-group" style="float: left; margin-right: 5px">
-                                                {{-- We'll use the Custom HTML data attributes:    shipping_charges    ,    total_price    and    coupon_amount    to use them as handles for jQuery to change the calculations in "Your Order" section using jQuery. Check front/js/custom.js file --}} {{-- https://www.youtube.com/watch?v=krS-KXdMQ64&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=190 --}}
-                                                <input type="radio" id="address{{ $address['id'] }}" name="address_id" value="{{ $address['id'] }}" shipping_charges="{{ $address['shipping_charges'] }}" total_price="{{ $total_price }}" coupon_amount="{{ \Session::get('couponAmount') }}"> {{-- $total_price variable is passed in from checkout() method in Front/ProductsController.php --}} {{-- We created the Custom HTML Attribute id="address{{ $address['id'] }}" to get the UNIQUE ids of the addresses in order for the <label> HTML element to be able to point for that <input> --}}
+                                                {{-- We'll use the Custom HTML data attributes:    shipping_charges    ,    total_price    ,    coupon_amount    ,    codpincodeCount    and    prepaidpincodeCount    to use them as handles for jQuery to change the calculations in "Your Order" section using jQuery. Check front/js/custom.js file --}} {{-- https://www.youtube.com/watch?v=krS-KXdMQ64&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=190 --}} {{-- https://www.youtube.com/watch?v=djYkP9S30lE&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=197 --}}
+                                                <input type="radio" id="address{{ $address['id'] }}" name="address_id" value="{{ $address['id'] }}" shipping_charges="{{ $address['shipping_charges'] }}" total_price="{{ $total_price }}" coupon_amount="{{ \Session::get('couponAmount') }}" codpincodeCount="{{ $address['codpincodeCount'] }}" prepaidpincodeCount="{{ $address['prepaidpincodeCount'] }}"> {{-- $total_price variable is passed in from checkout() method in Front/ProductsController.php --}} {{-- We created the Custom HTML Attribute id="address{{ $address['id'] }}" to get the UNIQUE ids of the addresses in order for the <label> HTML element to be able to point for that <input> --}}
                                             </div>
                                             <div>
                                                 <label class="control-label" for="address{{ $address['id'] }}">
@@ -254,7 +254,7 @@
 
                                             </tbody>
                                         </table>
-                                        <div class="u-s-m-b-13">
+                                        <div class="u-s-m-b-13 codMethod"> {{-- We added the codMethod CSS class to disable that payment method (check front/js/custom.js) if the PIN code of that user's Delivery Address doesn't exist in our `cod_pincodes` database table. Check https://www.youtube.com/watch?v=djYkP9S30lE&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=197 --}}
                                             <input type="radio" class="radio-box" name="payment_gateway" id="cash-on-delivery" value="COD">
                                             <label class="label-text" for="cash-on-delivery">Cash on Delivery</label>
                                         </div>
@@ -262,7 +262,7 @@
                                             <input type="radio" class="radio-box" name="payment_gateway" id="credit-card-stripe" value="Stripe">
                                             <label class="label-text" for="credit-card-stripe">Credit Card (Stripe)</label>
                                         </div> --}}
-                                        <div class="u-s-m-b-13">
+                                        <div class="u-s-m-b-13 prepaidMethod"> {{-- We added the prepaidMethod CSS class to disable that payment method (check front/js/custom.js) if the PIN code of that user's Delivery Address doesn't exist in our `prepaid_pincodes` database table. Check https://www.youtube.com/watch?v=djYkP9S30lE&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=197 --}}
                                             <input type="radio" class="radio-box" name="payment_gateway" id="paypal" value="Paypal">
                                             <label class="label-text" for="paypal">PayPal</label>
                                         </div>

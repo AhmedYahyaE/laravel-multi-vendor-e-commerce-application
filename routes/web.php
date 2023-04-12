@@ -261,6 +261,11 @@ Route::namespace('App\Http\Controllers\Front')->group(function() {
 
 
 
+    // PIN code Availability Check: check if the PIN code of the user's Delivery Address exists in our database (in both `cod_pincodes` and `prepaid_pincodes`) or not in front/products/detail.blade.php via AJAX. Check front/js/custom.js    // https://www.youtube.com/watch?v=YxAjr_JMchA&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=198
+    Route::post('check-pincode', 'ProductsController@checkPincode');
+
+
+
     // Protecting the routes of user (user must be authenticated/logged in) (to prevent access to these links while being unauthenticated/not being logged in (logged out))    // Protecting Routes: https://laravel.com/docs/9.x/authentication#protecting-routes    // https://www.youtube.com/watch?v=VK2RX6zJ220&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=137
     Route::group(['middleware' => ['auth']], function() {
         // Render User Account page with 'GET' request (front/users/user_account.blade.php), or the HTML Form submission in the same page with 'POST' request using AJAX (to update user details). Check front/js/custom.js    // https://www.youtube.com/watch?v=wWITxuhwLtc&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=136
