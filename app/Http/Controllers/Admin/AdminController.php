@@ -497,6 +497,22 @@ class AdminController extends Controller
         return view('admin/settings/update_vendor_details')->with(compact('slug', 'vendorDetails', 'countries')); // compact('slug', 'vendorDetails') is used to pass $slug and $vendorDetails to the view
     }
 
+    // Update the vendor's commission percentage (by the Admin) in `vendors` table (for every vendor on their own) in the Admin Panel in admin/admins/view_vendor_details.blade.php (Commissions module: Every vendor must pay a certain commission (that may vary from a vendor to another) for the website owner (admin) on every item sold, and it's defined by the website owner (admin))    // https://www.youtube.com/watch?v=e8Gj_8MPFSg&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=199 --}}
+    public function updateVendorCommission(Request $request) {
+        if ($request->isMethod('post')) { // if the HTML Form is submitted (in admin/admins/view_vendor_details.blade.php)
+            $data = $request->all();
+            // dd($data);
+            // echo '<pre>', var_dump($data), '</pre>';
+            // exit;
+
+
+            // UPDATE the `vendors` table with the `commission` percentage requested by the admin from the vendor
+            \App\Models\Vendor::where('id', $data['vendor_id'])->update(['commission' => $data['commission']]);
+
+            return redirect()->back()->with('success_message', 'Vendor commission updated successfully!');
+        }
+    }
+
     public function admins($type = null) { // $type is the `type` column in the `admins` which can only be: superadmin, admin, subadmin or vendor    // A default value of null (to allow not passing a {type} slug, and in this case, the page will view ALL of the superadmin, admins, subadmins and vendors at the same time)
         // $admins = new \App\Models\Admin();
         // dd($admins);
