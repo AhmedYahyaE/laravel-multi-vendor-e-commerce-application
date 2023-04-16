@@ -30,7 +30,7 @@ class Order extends Model
     }
 
     // Shiprocket API Integration!    // https://www.youtube.com/watch?v=mcSoGDSrdsU&list=PLLUtELdNs2ZaPSOuYoosmSj5TUuXjl_uu&index=2
-    public static function pushOrder($order_id) { // this method is called from the pushOrder() method in API/APIController.php
+    public static function pushOrder($order_id) { // this method is called from the pushOrder() method in API/APIController.php and from updateOrderStatus() method in Admin/OrderController.php
         $orderDetails = Order::with('order_items')->where('id', $order_id)->first()->toArray(); // Eager Loading: https://laravel.com/docs/9.x/eloquent-relationships#eager-loading    // 'order_items' is the relationship method name in Order.php model
         // dd($orderDetails);
 
