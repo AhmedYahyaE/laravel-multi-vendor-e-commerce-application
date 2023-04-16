@@ -110,6 +110,12 @@ class OrderController extends Controller
             $data = $request->all();
             // dd($data);
 
+
+
+            // Configure the Shiprocket API in our Admin Panel in admin/orders/order_details.blade.php
+
+
+
             // Update Order Status in `orders` table
             \App\Models\Order::where('id', $data['order_id'])->update(['order_status' => $data['order_status']]);
 
