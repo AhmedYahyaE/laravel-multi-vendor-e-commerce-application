@@ -318,71 +318,145 @@
                         </div>
                     </div>
                 </div>
+
+                {{-- https://www.youtube.com/watch?v=EraPx_a3iBg&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=166 --}}
                 <div class="col-md-12 grid-margin stretch-card">
                     <div class="card">
                         <div class="card-body">
                             <h4 class="card-title">Ordered Products</h4>
 
-                            {{-- Order products info table --}}
-                            <table class="table table-striped table-borderless">
-                                <tr class="table-danger">
-                                    <th>Product Image</th>
-                                    <th>Product Code</th>
-                                    <th>Product Name</th>
-                                    <th>Product Size</th>
-                                    <th>Product Color</th>
-                                    <th>Product Qty</th>
-                                    <th>Item Status</th> {{-- can be updated by both 'vendor'-s and 'admin'-s. This is in contrast to 'Update Order Status' which can be updated by 'admin'-s ONLY --}} {{-- https://www.youtube.com/watch?v=QEdO_maniDY&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=168 --}}
-                                    {{-- Note: The `order_statuses` table contains all kinds of order statuses (that can be updated by 'admin'-s ONLY in `orders` table) like: pending, in progress, shipped, canceled, ...etc. In `order_statuses` table, the `name` column can be: 'New', 'Pending', 'Canceled', 'In Progress', 'Shipped', 'Partially Shipped', 'Delivered', 'Partially Delivered' and 'Paid'. 'Partially Shipped': If one order has products from different vendors, and one vendor has shipped their product to the customer while other vendor (or vendors) didn't!. 'Partially Delivered': if one order has products from different vendors, and one vendor has shipped and DELIVERED their product to the customer while other vendor (or vendors) didn't!    // The `order_item_statuses` table contains all kinds of order statuses (that can be updated by both 'vendor'-s and 'admin'-s in `orders_products` table) like: pending, in progress, shipped, canceled, ...etc. --}}
-                                </tr>
-                                @foreach ($orderDetails['orders_products'] as $product)
-                                    <tr>
-                                        <td>
-                                            @php
-                                                $getProductImage = \App\Models\Product::getProductImage($product['product_id']);
-                                            @endphp
-                                            <a target="_blank" href="{{ url('product/' . $product['product_id']) }}">
-                                                <img src="{{ asset('front/images/product_images/small/' . $getProductImage) }}">
-                                            </a>
-                                        </td>
-                                        <td>{{ $product['product_code'] }}</td>
-                                        <td>{{ $product['product_name'] }}</td>
-                                        <td>{{ $product['product_size'] }}</td>
-                                        <td>{{ $product['product_color'] }}</td>
-                                        <td>{{ $product['product_qty'] }}</td>
+                            <div class="table-responsive">
+                                {{-- Order products info table --}}
+                                <table class="table table-striped table-borderless">
+                                    <tr class="table-danger">
+                                        <th>Product Image</th>
+                                        <th>Code</th>
+                                        <th>Name</th>
+                                        <th>Size</th>
+                                        <th>Color</th>
+                                        <th>Unit Price</th> {{-- https://www.youtube.com/watch?v=2TxZP5zq4Wo&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=201 --}}
+                                        <th>Product Qty</th>
+                                        <th>Total Price</th> {{-- https://www.youtube.com/watch?v=2TxZP5zq4Wo&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=201 --}}
 
-                                        {{-- https://www.youtube.com/watch?v=QEdO_maniDY&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=168 --}}
-                                        <td>
+                                        {{-- https://www.youtube.com/watch?v=CSaJYv9Xefk&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=202 --}}
+                                        @if (\Auth::guard('admin')->user()->type != 'vendor') {{-- If the authenticated/logged-in user is an 'admin', 'superadmin' or 'subadmin', NOT 'vendor' --}} {{-- Accessing Specific Guard Instances: https://laravel.com/docs/9.x/authentication#accessing-specific-guard-instances --}}
+                                            <th>Product by</th>
+                                        @endif
+
+                                        {{-- https://www.youtube.com/watch?v=CSaJYv9Xefk&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=202 --}}
+                                        {{-- https://www.youtube.com/watch?v=2TxZP5zq4Wo&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=201 --}}
+                                        {{-- @if (\Auth::guard('admin')->user()->type == 'vendor')--}} {{-- Show these table columns ONLY if the authenticated/logged-in user is 'vendor' --}} {{-- Accessing Specific Guard Instances: https://laravel.com/docs/9.x/authentication#accessing-specific-guard-instances --}}
+                                        <th>Commission</th> {{-- Vendor's Commission percentage must be paid on every product sold to the Website Owner --}}
+                                        <th>Final Amount</th> {{-- Vendor's profit after paying (deducting) the Commission percentage --}}
+                                        {{-- @endif --}}
+
+                                        <th>Item Status</th> {{-- can be updated by both 'vendor'-s and 'admin'-s. This is in contrast to 'Update Order Status' which can be updated by 'admin'-s ONLY --}} {{-- https://www.youtube.com/watch?v=QEdO_maniDY&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=168 --}}
+                                        {{-- Note: The `order_statuses` table contains all kinds of order statuses (that can be updated by 'admin'-s ONLY in `orders` table) like: pending, in progress, shipped, canceled, ...etc. In `order_statuses` table, the `name` column can be: 'New', 'Pending', 'Canceled', 'In Progress', 'Shipped', 'Partially Shipped', 'Delivered', 'Partially Delivered' and 'Paid'. 'Partially Shipped': If one order has products from different vendors, and one vendor has shipped their product to the customer while other vendor (or vendors) didn't!. 'Partially Delivered': if one order has products from different vendors, and one vendor has shipped and DELIVERED their product to the customer while other vendor (or vendors) didn't!    // The `order_item_statuses` table contains all kinds of order statuses (that can be updated by both 'vendor'-s and 'admin'-s in `orders_products` table) like: pending, in progress, shipped, canceled, ...etc. --}}
+                                    </tr>
+
+                                    @foreach ($orderDetails['orders_products'] as $product)
+                                        <tr>
+                                            <td>
+                                                @php
+                                                    $getProductImage = \App\Models\Product::getProductImage($product['product_id']);
+                                                @endphp
+                                                <a target="_blank" href="{{ url('product/' . $product['product_id']) }}">
+                                                    <img src="{{ asset('front/images/product_images/small/' . $getProductImage) }}">
+                                                </a>
+                                            </td>
+                                            <td>{{ $product['product_code'] }}</td>
+                                            <td>{{ $product['product_name'] }}</td>
+                                            <td>{{ $product['product_size'] }}</td>
+                                            <td>{{ $product['product_color'] }}</td>
+                                            <td>{{ $product['product_price'] }}</td> {{-- https://www.youtube.com/watch?v=2TxZP5zq4Wo&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=201 --}}
+                                            <td>{{ $product['product_qty'] }}</td>
+                                            <td>
+                                                {{-- https://www.youtube.com/watch?v=CSaJYv9Xefk&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=202 --}}
+                                                @if ($product['vendor_id'] > 0) {{-- if the product belongs to a 'vendor', not 'admin' --}}
+
+                                                    {{-- https://www.youtube.com/watch?v=l4egzHaPfBI&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=203 --}}
+                                                    @if ($orderDetails['coupon_amount'] > 0) {{-- If there's a Coupon Code used --}}
+
+                                                        {{-- @if ($orderDetails['coupon_amount'] > 0) --}} {{-- if a Coupon Code has been used --}}
+                                                        {{-- Handling 'vendor'-'s Commission while using Coupon Codes. Check 5:53 in https://www.youtube.com/watch?v=l4egzHaPfBI&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=203 --}}
+                                                        {{-- @if ($orderDetails['coupon_amount'] > 0 && \App\Models\Coupon::couponDetails($orderDetails['coupon_code'])['vendor_id'] > 0) --}} {{-- if a Coupon Code has been used, and this Coupon Code belongs to a 'vendor', not 'admin' (Because in `coupons` table, if the `vendor_id` column is 1 one, this means that the Coupon Code is added by a 'vendor', not 'admin', and if the `vendor_id` column is 0 zero, this means that the Coupon Code is added by an 'admin', not' 'vendor') --}}
+                                                        @if (\App\Models\Coupon::couponDetails($orderDetails['coupon_code'])['vendor_id'] > 0) {{-- if a Coupon Code has been used, and this Coupon Code belongs to a 'vendor', not 'admin' (Because in `coupons` table, if the `vendor_id` column is 1 one, this means that the Coupon Code is added by a 'vendor', not 'admin', and if the `vendor_id` column is 0 zero, this means that the Coupon Code is added by an 'admin', not 'vendor') --}}
+                                                            @php
+                                                                // dd(\App\Models\Coupon::couponDetails($orderDetails['coupon_code'])['vendor_id']);    
+                                                            @endphp
+                                                            
+                                                        {{ $total_price = ($product['product_price'] * $product['product_qty']) - $item_discount }}
+                                                        @else{{-- if a Coupon Code has been used, and this Coupon Code belongs to an 'admin', not 'vendor' (Because in `coupons` table, if the `vendor_id` column is 1 one, this means that the Coupon Code is added by a 'vendor', not 'admin', and if the `vendor_id` column is 0 zero, this means that the Coupon Code is added by an 'admin', not 'vendor') --}}
+                                                            {{ $total_price = $product['product_price'] * $product['product_qty'] }}
+                                                        @endif
+                                                    
+                                                    @else {{-- If there isn't a Coupon Code used --}}
+                                                        {{ $total_price = $product['product_price'] * $product['product_qty'] }}
+                                                    @endif
+
+                                                @else {{-- if the product belongs to an 'admin', not 'vendor' --}}
+                                                    {{ $total_price = $product['product_price'] * $product['product_qty'] }}
+                                                @endif
+                                            </td> {{-- Total Price = Unit Price * Quantity --}} {{-- https://www.youtube.com/watch?v=2TxZP5zq4Wo&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=201 --}}
+
+                                            {{-- https://www.youtube.com/watch?v=CSaJYv9Xefk&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=202 --}}
+                                            @if (\Auth::guard('admin')->user()->type != 'vendor') {{-- If the authenticated/logged-in user is an 'admin', 'superadmin' or 'subadmin', NOT 'vendor' --}} {{-- Accessing Specific Guard Instances: https://laravel.com/docs/9.x/authentication#accessing-specific-guard-instances --}}
+                                                @if ($product['vendor_id'] > 0) {{-- if the product belongs to a 'vendor' --}}
+                                                    <td>
+                                                        <a href="/admin/view-vendor-details/{{ $product['admin_id'] }}" target="_blank">Vendor</a>
+                                                    </td>
+                                                @else
+                                                    <td>Admin</td>
+                                                @endif
+                                            @endif
+
+                                            {{-- https://www.youtube.com/watch?v=2TxZP5zq4Wo&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=201 --}}
+                                            {{-- @if (\Auth::guard('admin')->user()->type == 'vendor') --}} {{-- Show these table columns ONLY if the authenticated/logged-in user is 'vendor' --}} {{-- Accessing Specific Guard Instances: https://laravel.com/docs/9.x/authentication#accessing-specific-guard-instances --}}
+                                            {{-- https://www.youtube.com/watch?v=CSaJYv9Xefk&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=202 --}}
+                                            @if ($product['vendor_id'] > 0) {{-- if the product belongs to a 'vendor' --}}
+                                                {{-- <td>{{ $commission = round($total_price * (\App\Models\Vendor::getVendorCommission(\Auth::guard('admin')->user()->vendor_id) / 100), 2) }}</td> --}} {{-- Accessing Specific Guard Instances: https://laravel.com/docs/9.x/authentication#accessing-specific-guard-instances --}}
+                                                <td>{{ $commission = round($total_price * \App\Models\Vendor::getVendorCommission($product['vendor_id']) / 100, 2) }}</td>
+                                                <td>{{ $total_price - $commission }}</td>
+                                            @else
+                                                <td>0</td>
+                                                <td>{{ $total_price }}</td>
+                                            @endif
+                                            {{-- @endif --}}
 
                                             {{-- https://www.youtube.com/watch?v=QEdO_maniDY&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=168 --}}
-                                            {{-- Note: The `order_statuses` table contains all kinds of order statuses (that can be updated by 'admin'-s ONLY in `orders` table) like: pending, in progress, shipped, canceled, ...etc. In `order_statuses` table, the `name` column can be: 'New', 'Pending', 'Canceled', 'In Progress', 'Shipped', 'Partially Shipped', 'Delivered', 'Partially Delivered' and 'Paid'. 'Partially Shipped': If one order has products from different vendors, and one vendor has shipped their product to the customer while other vendor (or vendors) didn't!. 'Partially Delivered': if one order has products from different vendors, and one vendor has shipped and DELIVERED their product to the customer while other vendor (or vendors) didn't!    // The `order_item_statuses` table contains all kinds of order statuses (that can be updated by both 'vendor'-s and 'admin'-s in `orders_products` table) like: pending, in progress, shipped, canceled, ...etc. --}}
-                                            <form action="{{ url('admin/update-order-item-status') }}" method="post">  {{-- can be updated by both 'vendor'-s and 'admin'-s. This is in contrast to 'Update Order Status' which can be updated by 'admin'-s ONLY --}}
-                                                @csrf {{-- Preventing CSRF Requests: https://laravel.com/docs/9.x/csrf#preventing-csrf-requests --}}
+                                            <td>
+                                                {{-- https://www.youtube.com/watch?v=QEdO_maniDY&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=168 --}}
+                                                {{-- Note: The `order_statuses` table contains all kinds of order statuses (that can be updated by 'admin'-s ONLY in `orders` table) like: pending, in progress, shipped, canceled, ...etc. In `order_statuses` table, the `name` column can be: 'New', 'Pending', 'Canceled', 'In Progress', 'Shipped', 'Partially Shipped', 'Delivered', 'Partially Delivered' and 'Paid'. 'Partially Shipped': If one order has products from different vendors, and one vendor has shipped their product to the customer while other vendor (or vendors) didn't!. 'Partially Delivered': if one order has products from different vendors, and one vendor has shipped and DELIVERED their product to the customer while other vendor (or vendors) didn't!    // The `order_item_statuses` table contains all kinds of order statuses (that can be updated by both 'vendor'-s and 'admin'-s in `orders_products` table) like: pending, in progress, shipped, canceled, ...etc. --}}
+                                                <form action="{{ url('admin/update-order-item-status') }}" method="post">  {{-- can be updated by both 'vendor'-s and 'admin'-s. This is in contrast to 'Update Order Status' which can be updated by 'admin'-s ONLY --}}
+                                                    @csrf {{-- Preventing CSRF Requests: https://laravel.com/docs/9.x/csrf#preventing-csrf-requests --}}
 
-                                                <input type="hidden" name="order_item_id" value="{{ $product['id'] }}">
+                                                    <input type="hidden" name="order_item_id" value="{{ $product['id'] }}">
 
-                                                <select name="order_item_status" id="order_item_status" required>
-                                                    <option value="">Select</option>
-                                                    @foreach ($orderItemStatuses as $status)
-                                                        <option value="{{ $status['name'] }}"  @if (!empty($product['item_status']) && $product['item_status'] == $status['name']) selected @endif>{{ $status['name'] }}</option>
-                                                    @endforeach
-                                                </select>
+                                                    <select id="order_item_status" name="order_item_status" required>
+                                                        <option value="">Select</option>
+                                                        @foreach ($orderItemStatuses as $status)
+                                                            <option value="{{ $status['name'] }}"  @if (!empty($product['item_status']) && $product['item_status'] == $status['name']) selected @endif>{{ $status['name'] }}</option>
+                                                        @endforeach
+                                                    </select>
 
-                                                {{-- // Note: There are two types of Shipping Process: "manual" and "automatic". "Manual" is in the case like small businesses, where the courier arrives at the owner warehouse to to pick up the order for shipping, and the small business owner takes the shipment details (like courier name, tracking number, ...) from the courier, and inserts those details themselves in the Admin Panel when they "Update Order Status" Section (by an 'admin') or "Update Item Status" Section (by a 'vendor' or 'admin') (in admin/orders/order_details.blade.php). With "automatic" shipping process, we're integrating third-party APIs and orders go directly to the shipping partner, and the updates comes from the courier's end, and orders are automatically delivered to customers. Check https://www.youtube.com/watch?v=WNCFYaSv-N4&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=173 --}}
-                                                <input style="width: 25%" type="text" name="item_courier_name"    id="item_courier_name"    placeholder="Item Courier Name"    @if (!empty($product['courier_name']))    value="{{ $product['courier_name'] }}"    @endif> {{-- This input field will only show up when 'Shipped' <option> is selected. Check admin/js/custom.js --}}
-                                                <input style="width: 25%" type="text" name="item_tracking_number" id="item_tracking_number" placeholder="Item Tracking Number" @if (!empty($product['tracking_number'])) value="{{ $product['tracking_number'] }}" @endif> {{-- This input field will only show up when 'Shipped' <option> is selected. Check admin/js/custom.js --}}
-        
-                                                <button type="submit">Update</button>
-                                            </form>
+                                                    {{-- // Note: There are two types of Shipping Process: "manual" and "automatic". "Manual" is in the case like small businesses, where the courier arrives at the owner warehouse to to pick up the order for shipping, and the small business owner takes the shipment details (like courier name, tracking number, ...) from the courier, and inserts those details themselves in the Admin Panel when they "Update Order Status" Section (by an 'admin') or "Update Item Status" Section (by a 'vendor' or 'admin') (in admin/orders/order_details.blade.php). With "automatic" shipping process, we're integrating third-party APIs and orders go directly to the shipping partner, and the updates comes from the courier's end, and orders are automatically delivered to customers. Check https://www.youtube.com/watch?v=WNCFYaSv-N4&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=173 --}}
+                                                    <input style="width: 110px" type="text" name="item_courier_name"    id="item_courier_name"    placeholder="Item Courier Name"    @if (!empty($product['courier_name']))    value="{{ $product['courier_name'] }}"    @endif> {{-- This input field will only show up when 'Shipped' <option> is selected. Check admin/js/custom.js --}}
+                                                    <input style="width: 110px" type="text" name="item_tracking_number" id="item_tracking_number" placeholder="Item Tracking Number" @if (!empty($product['tracking_number'])) value="{{ $product['tracking_number'] }}" @endif> {{-- This input field will only show up when 'Shipped' <option> is selected. Check admin/js/custom.js --}}
 
-                                        </td>
-                                    </tr>         
-                                @endforeach
-                            </table>
+                                                    <button type="submit">Update</button>
+                                                </form>
+                                            </td>
+                                        </tr>         
+                                    @endforeach
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
+
             </div>
+
+
         </div>
         <!-- content-wrapper ends -->
 

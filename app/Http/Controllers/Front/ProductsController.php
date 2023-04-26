@@ -475,6 +475,13 @@ class ProductsController extends Controller
             // dd($data);
 
 
+            // Correcting an issue with Coupon Codes when adding an item to the Cart which already has items in it (added before). Check 0:33 in https://www.youtube.com/watch?v=l4egzHaPfBI&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=203
+            // We need to remove/empty (forget) the 'couponAmount' and 'couponCode' Session Variables (reset the whole process of Applying the Coupon) whenever a user applies a new coupon, or updates Cart items (changes items quantity for example) or deletes items from the Cart or even Adds new items in the Cart    // Check 27:25 in https://www.youtube.com/watch?v=qRarBk49t7Q&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=149
+            \Session::forget('couponAmount'); // Deleting Data: https://laravel.com/docs/9.x/session#deleting-data
+            \Session::forget('couponCode');   // Deleting Data: https://laravel.com/docs/9.x/session#deleting-data
+
+
+
             // Prevent the ability to add an item to the Cart with 0 zero quantity. Check 16:30 in https://www.youtube.com/watch?v=tfkA9ATahiA&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=197
             if ($data['quantity'] <= 0) { // if the ordered quantity is 0, convert it to at least 1
                 $data['quantity'] = 1;
@@ -597,6 +604,13 @@ class ProductsController extends Controller
 
 
 
+            // Correcting an issue with Coupon Codes when adding an item to the Cart which already has items in it (added before). Check 0:33 in https://www.youtube.com/watch?v=l4egzHaPfBI&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=203
+            // We need to remove/empty (forget) the 'couponAmount' and 'couponCode' Session Variables (reset the whole process of Applying the Coupon) whenever a user applies a new coupon, or updates Cart items (changes items quantity for example) or deletes items from the Cart or even Adds new items in the Cart    // Check 27:25 in https://www.youtube.com/watch?v=qRarBk49t7Q&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=149
+            \Session::forget('couponAmount'); // Deleting Data: https://laravel.com/docs/9.x/session#deleting-data
+            \Session::forget('couponCode');   // Deleting Data: https://laravel.com/docs/9.x/session#deleting-data
+        
+
+
             // Apply some conditions (and showing them in the view!) before Update-ing the Cart Item Quantity (making sure that the desired quantity is not more than (doesn't exceed) the available `stock` in `products_attributes` table, and that the desired product `size` is not disabled/inactive (`status` is not zero 0) in `products_attributes` table)    // https://www.youtube.com/watch?v=egO3Jpw0qaM&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=123
             // Get user's Cart details
             $cartDetails = \App\Models\Cart::find($data['cartid']); // $data['cartid'] comes from the 'data' object sent from inside the $.ajax() method in front/js/custom.js file
@@ -671,7 +685,7 @@ class ProductsController extends Controller
 
 
 
-            // We need to remove/empty (forget) the 'couponAmount' Session Variable (reset the whole process of Applying the Coupon) whenever a user applies a new coupon, or updates Cart items (changes items quantity for example) or deletes items from the Cart or even adds new items in the Cart    // Check 27:25 in https://www.youtube.com/watch?v=qRarBk49t7Q&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=149
+            // We need to remove/empty (forget) the 'couponAmount' and 'couponCode' Session Variables (reset the whole process of Applying the Coupon) whenever a user applies a new coupon, or updates Cart items (changes items quantity for example) or deletes items from the Cart or even Adds new items in the Cart    // Check 27:25 in https://www.youtube.com/watch?v=qRarBk49t7Q&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=149
             \Session::forget('couponAmount'); // Deleting Data: https://laravel.com/docs/9.x/session#deleting-data
             \Session::forget('couponCode');   // Deleting Data: https://laravel.com/docs/9.x/session#deleting-data
 
@@ -692,7 +706,7 @@ class ProductsController extends Controller
     // Delete a Cart Item AJAX call in front/products/cart_items.blade.php. Check front/js/custom.js    // https://www.youtube.com/watch?v=GCZ8a3Dw_Zg&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=127
     public function cartDelete(Request $request) {
         if ($request->ajax()) { // if the request is coming via an AJAX call
-            // We need to remove/empty (forget) the 'couponAmount' Session Variable (reset the whole process of Applying the Coupon) whenever a user applies a new coupon, or updates Cart items (changes items quantity for example) or deletes items from the Cart or even adds new items in the Cart    // Check 27:25 in https://www.youtube.com/watch?v=qRarBk49t7Q&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=149
+            // We need to remove/empty (forget) the 'couponAmount' and 'couponCode' Session Variables (reset the whole process of Applying the Coupon) whenever a user applies a new coupon, or updates Cart items (changes items quantity for example) or deletes items from the Cart or even Adds new items in the Cart    // Check 27:25 in https://www.youtube.com/watch?v=qRarBk49t7Q&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=149
             \Session::forget('couponAmount'); // Deleting Data: https://laravel.com/docs/9.x/session#deleting-data
             \Session::forget('couponCode');   // Deleting Data: https://laravel.com/docs/9.x/session#deleting-data
 
@@ -739,7 +753,7 @@ class ProductsController extends Controller
 
 
 
-            // We need to remove/empty (forget) the 'couponAmount' Session Variable (reset the whole process of Applying the Coupon) whenever a user applies a new coupon, or updates Cart items (changes items quantity for example) or deletes items from the Cart or even adds new items in the Cart    // Check 27:25 in https://www.youtube.com/watch?v=qRarBk49t7Q&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=149
+            // We need to remove/empty (forget) the 'couponAmount' and 'couponCode' Session Variables (reset the whole process of Applying the Coupon) whenever a user applies a new coupon, or updates Cart items (changes items quantity for example) or deletes items from the Cart or even Adds new items in the Cart    // Check 27:25 in https://www.youtube.com/watch?v=qRarBk49t7Q&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=149
             \Session::forget('couponAmount'); // Deleting Data: https://laravel.com/docs/9.x/session#deleting-data
             \Session::forget('couponCode');   // Deleting Data: https://laravel.com/docs/9.x/session#deleting-data
 
@@ -873,7 +887,7 @@ class ProductsController extends Controller
 
                     foreach ($getCartItems as $item) {
                         if (!in_array($item['product']['id'], $productIds)) { // if the user id of one of the products in the Cart doesn't belong to the products ids of that vendor (to check if the submitted coupon code pertains to that specific/very vendor or not)
-                            $message = 'This coupon code is not available for you! Try again with a valid coupon code! (vendor validation)!. The coupon code exists but one of the products in the Cart doesn\'t belong to that specific vendor who created that Coupon';
+                            $message = 'This coupon code is not available for you! Try again with a valid coupon code! (vendor validation)!. The coupon code exists but one of the products in the Cart doesn\'t belong to that specific vendor who created/owns that Coupon!';
                         }
                     }
                 }
@@ -891,7 +905,7 @@ class ProductsController extends Controller
                         'headerview'     => (String) \Illuminate\Support\Facades\View::make('front.layout.header_cart_items')->with(compact('getCartItems')) // View Responses: https://laravel.com/docs/9.x/responses#view-responses    // Creating & Rendering Views: https://laravel.com/docs/9.x/views#creating-and-rendering-views    // Passing Data To Views: https://laravel.com/docs/9.x/views#passing-data-to-views
                     ]);
 
-                } else { // if the sumbitted coupon code is correct and passes the previous coupon code validation and passes all the previous if conditions (free of errors)
+                } else { // if the submitted coupon code is correct and passes the previous coupon code validation and passes all the previous if conditions (free of errors)
                     // https://www.youtube.com/watch?v=qRarBk49t7Q&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=149
 
                     // Check if the submitted Coupon code Amount Type is 'Fixed' or 'Percentage'
@@ -1147,8 +1161,8 @@ class ProductsController extends Controller
             $order->mobile           = $deliveryAddress['mobile'];
             $order->email            = \Auth::user()->email; // Retrieving The Authenticated User: https://laravel.com/docs/9.x/authentication#retrieving-the-authenticated-user
             $order->shipping_charges = $shipping_charges;
-            $order->coupon_code      = \Session::get('couponCode');
-            $order->coupon_amount    = \Session::get('couponAmount');
+            $order->coupon_code      = \Session::get('couponCode');   // it was set inside applyCoupon() method
+            $order->coupon_amount    = \Session::get('couponAmount'); // it was set inside applyCoupon() method
             $order->order_status     = $order_status;
             $order->payment_method   = $payment_method;
             $order->payment_gateway  = $data['payment_gateway'];

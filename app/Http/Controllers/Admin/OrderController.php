@@ -100,7 +100,25 @@ class OrderController extends Controller
         // dd($orderLog);
 
 
-        return view('admin.orders.order_details')->with(compact('orderDetails', 'userDetails', 'orderStatuses', 'orderItemStatuses', 'orderLog'));
+
+        // https://www.youtube.com/watch?v=CSaJYv9Xefk&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=202
+        // Calculate the total items count (the total quantity of all items) in the Cart (including how many items of the same product i.e. 3 small-sized T-shirts + 2 mobile phones of 128GB RAM)
+        $total_items = 0;
+        foreach ($orderDetails['orders_products'] as $product) {
+            $total_items = $total_items + $product['product_qty'];
+        }
+        // dd($total_items);
+
+        // Calculate item discount, if any (if exists)
+        if ($orderDetails['coupon_amount'] > 0) { // if there's a Coupon Code (discount) used
+            $item_discount = round($orderDetails['coupon_amount'] / $total_items, 2); // (Not very convinced about the logic!) For example, if the discout of the Coupon Code gives a discount of 200 LE on all Cart items of a certain user (the discount is on the WHOLE order), and the user has 4 items in their Cart, then this means every item has a 200/4= 50 LE discount (quota)
+            // dd($item_discount);
+        } else {
+            $item_discount = 0;
+        }
+
+
+        return view('admin.orders.order_details')->with(compact('orderDetails', 'userDetails', 'orderStatuses', 'orderItemStatuses', 'orderLog', 'item_discount'));
     }
 
     // Update Order Status (by 'admin'-s ONLY, not 'vendor'-s, in contrast to "Update Item Status" which can be updated by both 'vendor'-s and 'admin'-s) (Pending, Shipped, In Progress, Canceled, ...) in admin/orders/order_details.blade.php in Admin Panel    // https://www.youtube.com/watch?v=W-aEaJQGeKE&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=167

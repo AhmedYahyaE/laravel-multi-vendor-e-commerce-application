@@ -26,4 +26,12 @@ class Vendor extends Model
         return $getVendorShop['shop_name'];
     }
 
+    // Get Vendor's Commission Percentage that they must pay for the Website Owner from `commission` column of `vendors` table    // https://www.youtube.com/watch?v=2TxZP5zq4Wo&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=201
+    public static function getVendorCommission($vendor_id) {
+        $getVendorCommission = Vendor::select('commission')->where('id', $vendor_id)->first()->toArray();
+
+
+        return $getVendorCommission['commission'];
+    }
+
 }
