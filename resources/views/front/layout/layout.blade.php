@@ -16,7 +16,27 @@
 
         <meta name="description" content="">
         <meta name="author" content="">
-        <title>Laravel Multi Vendor E-commerce Template - By Stack Developers Youtube Channel</title>
+
+
+        {{-- Static And Dynamic SEO (HTML meta tags): Check the HTML <meta> tags and <title> tag in front/layout/layout.blade.php. Check index() method in Front/IndexController.php, listing() method in Front/ProductsController.php, detail() method in Front/ProductsController.php and cart() method in Front/ProductsController.php    // https://www.youtube.com/watch?v=TFSalJbhuvg&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=206 --}}
+        @if (!empty($meta_description))
+            <meta name="description" content="{{ $meta_description }}">
+        @endif
+
+        @if (!empty($meta_keywords))
+            <meta name="keywords" content="{{ $meta_keywords }}">
+        @endif
+
+        <title>
+
+            {{-- Static And Dynamic SEO (HTML meta tags): Check the HTML <meta> tags and <title> tag in front/layout/layout.blade.php. Check index() method in Front/IndexController.php, listing() method in Front/ProductsController.php, detail() method in Front/ProductsController.php and cart() method in Front/ProductsController.php    // https://www.youtube.com/watch?v=TFSalJbhuvg&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=206 --}}
+            @if (!empty($meta_title))
+                {{ $meta_title }}
+            @else
+                Laravel Multi Vendor E-commerce Template - By Stack Developers Youtube Channel
+            @endif
+            
+        </title>
         <!-- Standard Favicon -->
         <link href="favicon.ico" rel="shortcut icon">
         <!-- Base Google Font for Web-app -->

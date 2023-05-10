@@ -208,6 +208,7 @@ class UserController extends Controller
                         'type' => 'success',
                         'url'  => $redirectTo // redirect user to the Cart cart.blade.php page
                     ]);
+
                 } else { // if Validation passes / is okay but login credentials provided by user are incorrect, login fails, and send a generic 'Wrong Credentials!' message
                     // Here, we return a JSON response because the request is ORIGINALLY submitting an HTML <form> data using an AJAX request
                     return response()->json([ // JSON Responses: https://laravel.com/docs/9.x/responses#json-responses

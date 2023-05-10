@@ -234,9 +234,14 @@ class ProductsController extends Controller
                 // echo '<pre>', var_dump($categoryProducts), '</pre>';
                 // exit;
 
-    
-    
-                return view('front.products.ajax_products_listing')->with(compact('categoryDetails', 'categoryProducts', 'url'));
+
+                // Dynamic SEO (HTML meta tags): Check the HTML <meta> tags and <title> tag in front/layout/layout.blade.php    // https://www.youtube.com/watch?v=TFSalJbhuvg&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=206
+                $meta_title       = $categoryDetails['categoryDetails']['meta_title'];
+                $meta_description = $categoryDetails['categoryDetails']['meta_description'];
+                $meta_keywords    = $categoryDetails['categoryDetails']['meta_keywords'];
+
+
+                return view('front.products.ajax_products_listing')->with(compact('categoryDetails', 'categoryProducts', 'url', 'meta_title', 'meta_description', 'meta_keywords'));
 
             } else {
                 abort(404); // we will create the 404 page later on    // https://laravel.com/docs/9.x/helpers#method-abort
@@ -259,7 +264,7 @@ class ProductsController extends Controller
                     'products.id', 'products.section_id', 'products.category_id', 'products.brand_id', 'products.vendor_id', 'products.product_name', 'products.product_code', 'products.product_color', 'products.product_price',  'products.product_discount', 'products.product_image', 'products.description'
                 )->with('brand')->join( // Joins: Inner Join Clause: https://laravel.com/docs/9.x/queries#inner-join-clause    // moving the paginate() method after checking for the sorting filter <form>    // Paginating Eloquent Results: https://laravel.com/docs/9.x/pagination#paginating-eloquent-results    // Displaying Pagination Results Using Bootstrap: https://laravel.com/docs/9.x/pagination#using-bootstrap    // https://www.youtube.com/watch?v=tQNmKdQ-f-s&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=79    // https://laravel.com/docs/9.x/queries#additional-where-clauses    // using the brand() relationship method in Product.php model    // Eager Loading (using with() method): https://laravel.com/docs/9.x/eloquent-relationships#eager-loading    // 'brand' is the relationship method name in Product.php model
                     'categories', // `categories` table
-                    'categories.id', '=', 'products.category_id' // JOIN both `products` and `categories` table at    `categories`.`id` = `products`.`category_id`
+                    'categories.id', '=', 'products.category_id' // JOIN both `products` and `categories` tables at    `categories`.`id` = `products`.`category_id`
                 )->where(function($query) use ($search_product) { // Constraining Eager Loads: https://laravel.com/docs/9.x/eloquent-relationships#constraining-eager-loads    // Subquery Where Clauses: https://laravel.com/docs/9.x/queries#subquery-where-clauses    // Advanced Subqueries: https://laravel.com/docs/9.x/eloquent#advanced-subqueries    // Eager Loading (using with() method): https://laravel.com/docs/9.x/eloquent-relationships#eager-loading    // 'brand' is the relationship method name in Product.php model    // function () use ()     syntax: https://www.php.net/manual/en/functions.anonymous.php#:~:text=the%20use%20language%20construct
                     // We'll search for the searched term by the user in the `product_name`, `product_code`, `product_color` and `description` columns in the `products` table and in the `category_name` column in the `categories` table
                     $query->where('products.product_name',    'like', '%' . $search_product . '%')  // 'like' SQL operator    // '%' SQL Wildcard Character    // Basic Where Clauses: Where Clauses: https://laravel.com/docs/9.x/queries#where-clauses
@@ -324,9 +329,15 @@ class ProductsController extends Controller
                     // Pagination (after the Sorting Filter)
                     $categoryProducts = $categoryProducts->paginate(30); // Moved the pagination after checking for the sorting filter <form>
                     // dd($categoryProducts);
-        
-        
-                    return view('front.products.listing')->with(compact('categoryDetails', 'categoryProducts', 'url'));
+
+
+                    // Dynamic SEO (HTML meta tags): Check the HTML <meta> tags and <title> tag in front/layout/layout.blade.php    // https://www.youtube.com/watch?v=TFSalJbhuvg&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=206
+                    $meta_title       = $categoryDetails['categoryDetails']['meta_title'];
+                    $meta_description = $categoryDetails['categoryDetails']['meta_description'];
+                    $meta_keywords    = $categoryDetails['categoryDetails']['meta_keywords'];
+
+
+                    return view('front.products.listing')->with(compact('categoryDetails', 'categoryProducts', 'url', 'meta_title', 'meta_description', 'meta_keywords'));
 
                 } else {
                     abort(404); // we will create the 404 page later on    // https://laravel.com/docs/9.x/helpers#method-abort
@@ -426,7 +437,13 @@ class ProductsController extends Controller
         // dd($totalStock);
 
 
-        return view('front.products.detail')->with(compact('productDetails', 'categoryDetails', 'totalStock', 'similarProducts', 'recentlyViewedProducts', 'groupProducts'));
+        // Dynamic SEO (HTML meta tags): Check the HTML <meta> tags and <title> tag in front/layout/layout.blade.php    // https://www.youtube.com/watch?v=TFSalJbhuvg&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=206
+        $meta_title       = $productDetails['meta_title'];
+        $meta_description = $productDetails['meta_description'];
+        $meta_keywords    = $productDetails['meta_keywords'];
+
+
+        return view('front.products.detail')->with(compact('productDetails', 'categoryDetails', 'totalStock', 'similarProducts', 'recentlyViewedProducts', 'groupProducts', 'meta_title', 'meta_description', 'meta_keywords'));
     }
 
 
@@ -591,7 +608,13 @@ class ProductsController extends Controller
         // dd($getCartItems);
 
 
-        return view('front.products.cart')->with(compact('getCartItems'));
+        // Static SEO (HTML meta tags): Check the HTML <meta> tags and <title> tag in front/layout/layout.blade.php    // https://www.youtube.com/watch?v=TFSalJbhuvg&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=206
+        $meta_title       = 'Shopping Cart - Multi Vendor E-commerce';
+        // $meta_description = 'Online Shopping Website which deals in Clothing, Electronics & Appliances Products';
+        $meta_keywords    = 'shopping cart, multi vendor';
+
+
+        return view('front.products.cart')->with(compact('getCartItems', 'meta_title', /* 'meta_description', */ 'meta_keywords'));
     }
 
     // Update Cart Item Quantity AJAX call in front/products/cart_items.blade.php. Check front/js/custom.js

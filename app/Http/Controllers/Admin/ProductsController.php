@@ -427,6 +427,7 @@ class ProductsController extends Controller
         }
         // exit;
 
+
         return view('admin.attributes.add_edit_attributes')->with(compact('product'));
     }
 

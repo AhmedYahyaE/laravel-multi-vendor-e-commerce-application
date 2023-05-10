@@ -31,8 +31,13 @@ class IndexController extends Controller
         // dd($discountedProducts);
         // dd($featuredProducts);
 
+        // Static SEO (HTML meta tags): Check the HTML <meta> tags and <title> tag in front/layout/layout.blade.php    // https://www.youtube.com/watch?v=TFSalJbhuvg&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=206
+        $meta_title       = 'Multi Vendor E-commerce Website';
+        $meta_description = 'Online Shopping Website which deals in Clothing, Electronics & Appliances Products';
+        $meta_keywords    = 'eshop website, online shopping, multi vendor e-commerce';
+
 
         // return view('front.index')->with(compact('banners')); // this is the same as:    return view('front/index');
-        return view('front.index')->with(compact('sliderBanners', 'fixBanners', 'newProducts', 'bestSellers', 'discountedProducts', 'featuredProducts')); // this is the same as:    return view('front/index');
+        return view('front.index')->with(compact('sliderBanners', 'fixBanners', 'newProducts', 'bestSellers', 'discountedProducts', 'featuredProducts', 'meta_title', 'meta_description', 'meta_keywords')); // this is the same as:    return view('front/index');
     }
 }

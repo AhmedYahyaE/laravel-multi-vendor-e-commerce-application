@@ -1,5 +1,5 @@
 {{-- https://www.youtube.com/watch?v=YqBzJmwrh8I&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=37 --}}
-
+{{-- This page is rendered by addAttributes() method in Admin/ProductsController.php --}}
 
 
 @extends('admin.layout.layout')
