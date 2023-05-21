@@ -315,6 +315,15 @@ Route::namespace('App\Http\Controllers\Front')->group(function() {
 
         // PayPal failed payment    // Check 22:49 https://www.youtube.com/watch?v=EPU6wqcQeto&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=183
         Route::get('error', 'PaypalController@error');
+
+
+
+        // iyzipay (iyzico) routes:    // iyzico Payment Gateway integration in/with Laravel    // https://www.youtube.com/watch?v=fEpjSro84Ag&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=208
+        // iyzico payment gateway integration in Laravel (this route is accessed from checkout() method in Front/ProductsController.php). Rendering front/iyzipay/iyzipay.blade.php page. Check https://www.youtube.com/watch?v=fEpjSro84Ag&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=208
+        Route::get('iyzipay', 'IyzipayController@iyzipay');
+
+        // Make an iyzipay payment (redirect the user to iyzico payment gateway with the order details)    // Check https://www.youtube.com/watch?v=fEpjSro84Ag&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=208
+        Route::get('iyzipay/pay', 'IyzipayController@pay'); // Named Routes: https://laravel.com/docs/9.x/routing#named-routes
     });
 
 

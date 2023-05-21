@@ -114,7 +114,7 @@ class PaypalController extends Controller
 
 
                 // Send making the order PayPal payment confirmation email to the user    // https://www.youtube.com/watch?v=dF7OhPttepE&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=169
-                $orderDetails = \App\Models\Order::with('orders_products')->where('id', $order_id)->first()->toArray();// Eager Loading: https://laravel.com/docs/9.x/eloquent-relationships#eager-loading    // 'orders_products' is the relationship method name in Order.php model
+                $orderDetails = \App\Models\Order::with('orders_products')->where('id', $order_id)->first()->toArray(); // Eager Loading: https://laravel.com/docs/9.x/eloquent-relationships#eager-loading    // 'orders_products' is the relationship method name in Order.php model
                 $email = \Auth::user()->email; // Retrieving The Authenticated User: https://laravel.com/docs/9.x/authentication#retrieving-the-authenticated-user
 
                 // The email message data/variables that will be passed in to the email view
@@ -173,6 +173,7 @@ class PaypalController extends Controller
     public function paypal() {
         if (\Session::has('order_id')) { // if there's an order has been placed (and got redirected from inside the checkout() method inside Front/ProductsController.php)    // 'user_id' was stored in Session inside checkout() method in Front/ProductsController.php
             return view('front.paypal.paypal');
+
         } else { // if there's no order has been placed
             return redirect('cart'); // redirect user to cart.blade.php page
         }

@@ -310,22 +310,22 @@ $sections = \App\Models\Section::sections();
                 <div class="col-lg-9">
                     <ul class="bottom-nav g-nav u-d-none-lg">
                         <li>
-                            <a href="listing-without-filters.html">New Arrivals
+                            <a href="{{ url('search-products?search=new-arrivals') }}">New Arrivals {{-- https://www.youtube.com/watch?v=iGPFLac21dA&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=207 --}}
                             <span class="superscript-label-new">NEW</span>
                             </a>
                         </li>
                         <li>
-                            <a href="listing-without-filters.html">Best Seller
+                            <a href="{{ url('search-products?search=best-sellers') }}">Best Seller {{-- https://www.youtube.com/watch?v=iGPFLac21dA&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=207 --}}
                             <span class="superscript-label-hot">HOT</span>
                             </a>
                         </li>
                         <li>
-                            <a href="listing-without-filters.html">Featured
+                            <a href="{{ url('search-products?search=featured') }}">Featured {{-- https://www.youtube.com/watch?v=iGPFLac21dA&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=207 --}}
                             </a>
                         </li>
                         <li>
-                            <a href="listing-without-filters.html">Discounted
-                            <span class="superscript-label-discount">-30%</span>
+                            <a href="{{ url('search-products?search=discounted') }}">Discounted {{-- https://www.youtube.com/watch?v=iGPFLac21dA&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=207 --}}
+                            <span class="superscript-label-discount">>10%</span>
                             </a>
                         </li>
                         <li class="mega-position">

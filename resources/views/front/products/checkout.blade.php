@@ -266,6 +266,15 @@
                                             <input type="radio" class="radio-box" name="payment_gateway" id="paypal" value="Paypal">
                                             <label class="label-text" for="paypal">PayPal</label>
                                         </div>
+
+
+                                        {{-- iyzico Payment Gateway integration in/with Laravel. Check https://www.youtube.com/watch?v=fEpjSro84Ag&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=208 --}}
+                                        <div class="u-s-m-b-13 prepaidMethod"> {{-- We added the prepaidMethod CSS class to disable that payment method (check front/js/custom.js) if the PIN code of that user's Delivery Address doesn't exist in our `prepaid_pincodes` database table. Check https://www.youtube.com/watch?v=djYkP9S30lE&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=197 --}}
+                                            <input type="radio" class="radio-box" name="payment_gateway" id="iyzipay" value="iyzipay">
+                                            <label class="label-text" for="iyzipay">iyzipay</label>
+                                        </div>
+
+
                                         <div class="u-s-m-b-13">
                                             <input type="checkbox" class="check-box" id="accept" name="accept" value="Yes" title="Please agree to T&C">
                                             <label class="label-text no-color" for="accept">I’ve read and accept the
