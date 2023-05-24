@@ -13,9 +13,20 @@ class AdminController extends Controller
     public function dashboard() {
         // Correcting issues in the Skydash Admin Panel Sidebar using Session:  Check 6:33 in https://www.youtube.com/watch?v=i_SUdNILIrc&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=29
         \Session::put('page', 'dashboard');
+
+
+        // https://www.youtube.com/watch?v=vC1osbWjeaU&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=211
+        $sectionsCount   = \App\Models\Section::count();
+        $categoriesCount = \App\Models\Category::count();
+        $productsCount   = \App\Models\Product::count();
+        $ordersCount     = \App\Models\Order::count();
+        $couponsCount    = \App\Models\Coupon::count();
+        $brandsCount     = \App\Models\Brand::count();
+        $usersCount      = \App\Models\User::count();
         
         
-        return view('admin/dashboard'); // is the same as:    return view('admin.dashboard');
+        // return view('admin/dashboard'); // is the same as:    return view('admin.dashboard');
+        return view('admin/dashboard')->with(compact('sectionsCount', 'categoriesCount', 'productsCount', 'ordersCount', 'couponsCount', 'brandsCount', 'usersCount')); // is the same as:    return view('admin.dashboard');
     }
 
     public function login(Request $request) { // Logging in using our 'admin' guard (whether 'vendor' or 'admin' (depending on the `type` and `vendor_id` columns in `admins` table)) we created in auth.php

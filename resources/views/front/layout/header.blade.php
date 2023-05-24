@@ -44,20 +44,20 @@ $sections = \App\Models\Section::sections();
                         </a>
                         <ul class="g-dropdown" style="width:200px">
                             <li>
-                                <a href="cart.html">
+                                <a href="{{ url('cart') }}">
                                 <i class="fas fa-cog u-s-m-r-9"></i>
                                 My Cart</a>
                             </li>
-                            <li>
+                            {{-- <li>
                                 <a href="wishlist.html">
                                 <i class="far fa-heart u-s-m-r-9"></i>
                                 My Wishlist</a>
-                            </li>
-                            {{-- <li>
-                                <a href="checkout.html">
+                            </li> --}}
+                            <li>
+                                <a href="{{ url('checkout') }}">
                                 <i class="far fa-check-circle u-s-m-r-9"></i>
                                 Checkout</a>
-                            </li> --}}
+                            </li>
 
 
 
@@ -142,7 +142,7 @@ $sections = \App\Models\Section::sections();
 
 
                         {{-- <a href="{{ url('/') }}"> --}} {{-- This is exactly THE SAME AS:    <a href="/">    --}}
-                        <a href="/">                        {{-- This is exactly THE SAME AS:    <a href="{{ url('/') }}">    --}}
+                        <a href="{{ url('/') }}">                        {{-- This is exactly THE SAME AS:    <a href="{{ url('/') }}">    --}}
 
 
                             <img src="{{ asset('front/images/main-logo/stack-developers-logo.png') }}" alt="Stack Developers" class="app-brand-logo">
@@ -184,20 +184,20 @@ $sections = \App\Models\Section::sections();
                     <nav>
                         <ul class="mid-nav g-nav">
                             <li class="u-d-none-lg">
-                                <a href="index.html">
+                                <a href="{{ url('/') }}">
                                 <i class="ion ion-md-home u-c-brand"></i>
                                 </a>
                             </li>
-                            <li class="u-d-none-lg">
+                            {{-- <li class="u-d-none-lg">
                                 <a href="wishlist.html">
                                 <i class="far fa-heart"></i>
                                 </a>
-                            </li>
+                            </li> --}}
                             <li>
                                 <a id="mini-cart-trigger">
                                 <i class="ion ion-md-basket"></i>
                                 <span class="item-counter totalCartItems">{{ totalCartItems() }}</span> {{-- totalCartItems() function is in our custom Helpers/Helper.php file that we have registered in 'composer.json' file --}} {{-- We created the CSS class 'totalCartItems' to use it in front/js/custom.js to update the total cart items via AJAX, because in pages that we originally use AJAX to update the cart items (such as when we delete a cart item in http://127.0.0.1:8000/cart using AJAX), the number doesn't change in the header automatically because AJAX is already used and no page reload/refresh has occurred. Check 12:08 in https://www.youtube.com/watch?v=J8ynmQSbZYY&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=139 --}}
-                                <span class="item-price">$220.00</span>
+                                {{-- <span class="item-price">$220.00</span> --}}
                                 </a>
                             </li>
                         </ul>
@@ -212,12 +212,12 @@ $sections = \App\Models\Section::sections();
         <div class="fixed-responsive-wrapper">
             <button type="button" class="button fas fa-search" id="responsive-search"></button>
         </div>
-        <div class="fixed-responsive-wrapper">
+        {{-- <div class="fixed-responsive-wrapper">
             <a href="wishlist.html">
             <i class="far fa-heart"></i>
             <span class="fixed-item-counter">4</span>
             </a>
-        </div>
+        </div> --}}
     </div>
     <!-- Responsive-Buttons /- -->
 
@@ -296,12 +296,12 @@ $sections = \App\Models\Section::sections();
 
                                     
 
-                                    <li>
+                                    {{-- <li>
                                         <a class="v-more">
                                         <i class="ion ion-md-add"></i>
                                         <span>View More</span>
                                         </a>
-                                    </li>
+                                    </li> --}}
                                 </ul>
                             </div>
                         </nav>
@@ -336,37 +336,37 @@ $sections = \App\Models\Section::sections();
                                 <ul>
                                     <li class="menu-title">COMPANY</li>
                                     <li>
-                                        <a href="about.html" class="u-c-brand">About Us</a>
+                                        <a href="{{ url('about-us') }}" class="u-c-brand">About Us</a>
                                     </li>
                                     <li>
-                                        <a href="contact.html">Contact Us</a>
+                                        <a href="{{ url('contact') }}">Contact Us</a>
                                     </li>
                                     <li>
-                                        <a href="faq.html">FAQ</a>
+                                        <a href="{{ url('faq') }}">FAQ</a>
                                     </li>
                                 </ul>
                                 <ul>
                                     <li class="menu-title">COLLECTION</li>
                                     <li>
-                                        <a href="cart.html">Men Clothing</a>
+                                        <a href="{{ url('men') }}">Men Clothing</a>
                                     </li>
                                     <li>
-                                        <a href="checkout.html">Women Clothing</a>
+                                        <a href="{{ url('women') }}">Women Clothing</a>
                                     </li>
                                     <li>
-                                        <a href="account.html">Kids Clothing</a>
+                                        <a href="{{ url('kids') }}">Kids Clothing</a>
                                     </li>
                                 </ul>
                                 <ul>
                                     <li class="menu-title">ACCOUNT</li>
                                     <li>
-                                        <a href="shop-v1-root-category.html">My Account</a>
+                                        <a href="{{ url('user/account') }}">My Account</a>
                                     </li>
+                                    {{-- <li>
+                                        <a href="{{ url('men') }}">My Profile</a>
+                                    </li> --}}
                                     <li>
-                                        <a href="shop-v1-root-category.html">My Profile</a>
-                                    </li>
-                                    <li>
-                                        <a href="listing.html">My Orders</a>
+                                        <a href="{{ url('user/orders') }}">My Orders</a>
                                     </li>
                                 </ul>
                             </div>

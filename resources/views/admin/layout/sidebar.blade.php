@@ -175,7 +175,7 @@
 
 
 
-        <li class="nav-item">
+        {{-- <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#form-elements" aria-expanded="false" aria-controls="form-elements">
                 <i class="icon-columns menu-icon"></i>
                 <span class="menu-title">Form elements</span>
@@ -254,6 +254,6 @@
                 <i class="icon-paper menu-icon"></i>
                 <span class="menu-title">Documentation</span>
             </a>
-        </li>
+        </li> --}}
     </ul>
 </nav>
