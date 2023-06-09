@@ -128,6 +128,7 @@
             </li>
 
             {{-- https://www.youtube.com/watch?v=-ZVzg8vwUjk&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=26 --}}
+            {{-- https://www.youtube.com/watch?v=SZ9NBHi6IQo&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=214 --}}
             <li class="nav-item">
                 <a @if (Session::get('page') == 'users' || Session::get('page') == 'subscribers') style="background: #4B49AC !important; color: #FFF !important" @endif class="nav-link" data-toggle="collapse" href="#ui-users" aria-expanded="false" aria-controls="ui-users">
                     <i class="icon-layout menu-icon"></i>

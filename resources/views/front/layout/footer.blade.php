@@ -12,11 +12,20 @@
             <p>
                 Subscribe to the mailing list to receive updates on promotions, new arrivals, discount and coupons.
             </p>
+
+
+
+            {{-- https://www.youtube.com/watch?v=XUxWmZOjZR0&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=215 --}}
             <form class="newsletter-form">
-                <label class="sr-only" for="newsletter-field">Enter your Email</label>
-                <input type="text" id="newsletter-field" placeholder="Your Email Address">
-                <button type="submit" class="button">SUBMIT</button>
+                {{-- <label class="sr-only" for="newsletter-field">Enter your Email</label> --}}
+                <label class="sr-only" for="subscriber_email">Enter your Email</label>
+                <input type="text" placeholder="Your Email Address" id="subscriber_email" name="subscriber_email" required> {{-- We'll use the HTML id Global Attribute in jQuery in front/js/custom.js --}} {{-- https://www.youtube.com/watch?v=XUxWmZOjZR0&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=215 --}}
+                {{-- <button type="submit" class="button">SUBMIT</button> --}}
+                <button type="button" class="button" onclick="addSubscriber()">SUBMIT</button> {{-- Check the addSubscriber() function in front/js/custom.js. We'll use it in conjunction with the    id="subscriber_email"    of the <input> field --}}
             </form>
+
+
+
         </div>
         <!-- Outer-Footer /- -->
         <!-- Mid-Footer -->

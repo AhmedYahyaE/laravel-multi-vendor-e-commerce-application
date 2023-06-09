@@ -169,6 +169,23 @@ Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function
 
         // Render admin/shipping/edit_shipping_charges.blade.php page in case of HTTP 'GET' request ('Edit/Update Shipping Charges'), or hadle the HTML Form submission in the same page in case of HTTP 'POST' request    // https://www.youtube.com/watch?v=pE_WG9HaocQ&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=188
         Route::match(['get', 'post'], 'edit-shipping-charges/{id}', 'ShippingController@editShippingCharges'); // Route Parameters: Required Parameters: https://laravel.com/docs/9.x/routing#required-parameters
+
+
+
+        // Newsletter Subscribers module
+        // Render admin/subscribers/subscribers.blade.php page (Show all Newsletter subscribers in the Admin Panel)    // https://www.youtube.com/watch?v=SZ9NBHi6IQo&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=214
+        Route::get('subscribers', 'NewsletterController@subscribers');
+
+        // Update Subscriber Status (active/inactive) via AJAX in admin/subscribers/subscribers.blade.php, check admin/js/custom.js    // https://www.youtube.com/watch?v=SZ9NBHi6IQo&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=214
+        Route::post('update-subscriber-status', 'NewsletterController@updateSubscriberStatus');
+
+        // Delete a Subscriber via AJAX in admin/subscribers/subscribers.blade.php, check admin/js/custom.js    // https://www.youtube.com/watch?v=SZ9NBHi6IQo&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=214
+        Route::get('delete-subscriber/{id}', 'NewsletterController@deleteSubscriber'); // Route Parameters: Required Parameters: https://laravel.com/docs/9.x/routing#required-parameters
+
+
+
+        // Export subscribers (`newsletter_subscribers` database table) as an Excel file using Maatwebsite/Laravel Excel Package in admin/subscribers/subscribers.blade.php    // https://www.youtube.com/watch?v=HpFbynW2TCw&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=217
+        Route::get('export-subscribers', 'NewsletterController@exportSubscribers');
     });
 
 });
@@ -268,6 +285,9 @@ Route::namespace('App\Http\Controllers\Front')->group(function() {
     // Render the Contact Us page (front/pages/contact.blade.php) using GET HTTP Requests, or the HTML Form Submission using POST HTTP Requests    // https://www.youtube.com/watch?v=FIdyrw6La4g&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=204
     // Important Note!: Bullshit instructor used an unknown "CMSController" controller!!. I created it!!
     Route::match(['get', 'post'], 'contact', 'CmsController@contact');
+
+    // Add a Newsletter Subscriber email HTML Form Submission in front/layout/footer.blade.php when clicking on the Submit button (using an AJAX Request/Call)    // https://www.youtube.com/watch?v=XUxWmZOjZR0&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=215
+    Route::post('add-subscriber-email', 'NewsletterController@addSubscriber');
 
 
 

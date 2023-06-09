@@ -2,16 +2,17 @@
 $(document).ready(function() {
 
     // Calling the DataTable class for all pages: Check 18:55 in https://www.youtube.com/watch?v=1XJ7908SJcM&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=34
-    $('#sections').DataTable();   // in sections.blade.php
-    $('#categories').DataTable(); // in categories.blade.php
-    $('#brands').DataTable();     // in brands.blade.php
-    $('#products').DataTable();   // in products.blade.php
-    $('#banners').DataTable();    // in banners.blade.php
-    $('#filters').DataTable();    // in filters.blade.php
-    $('#coupons').DataTable();    // in admin/coupons/coupons.blade.php              // https://www.youtube.com/watch?v=VYUjkgA9W0k&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=143
-    $('#users').DataTable();      // in admin/users/users.blade.php                  // https://www.youtube.com/watch?v=xY9OYug0uaQ&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=151
-    $('#orders').DataTable();     // in admin/orders/orders.blade.php                // https://www.youtube.com/watch?v=WqPCkJaTgFI&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=166
-    $('#shipping').DataTable();   // in admin/shipping/shipping_charges.blade.php    // https://www.youtube.com/watch?v=igoiH9VVxzs&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=187
+    $('#sections').DataTable();    // in sections.blade.php
+    $('#categories').DataTable();  // in categories.blade.php
+    $('#brands').DataTable();      // in brands.blade.php
+    $('#products').DataTable();    // in products.blade.php
+    $('#banners').DataTable();     // in banners.blade.php
+    $('#filters').DataTable();     // in filters.blade.php
+    $('#coupons').DataTable();     // in admin/coupons/coupons.blade.php              // https://www.youtube.com/watch?v=VYUjkgA9W0k&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=143
+    $('#users').DataTable();       // in admin/users/users.blade.php                  // https://www.youtube.com/watch?v=xY9OYug0uaQ&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=151
+    $('#orders').DataTable();      // in admin/orders/orders.blade.php                // https://www.youtube.com/watch?v=WqPCkJaTgFI&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=166
+    $('#shipping').DataTable();    // in admin/shipping/shipping_charges.blade.php    // https://www.youtube.com/watch?v=igoiH9VVxzs&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=187
+    $('#subscribers').DataTable(); // in admin/subscribers/subscribers.blade.php      // https://www.youtube.com/watch?v=SZ9NBHi6IQo&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=214
 
 
 
@@ -530,6 +531,43 @@ $(document).ready(function() {
         });
     });
 
+    // Update Subscriber Status (active/inactive) via AJAX in admin/subscribers/subscribers.blade.php, check admin/js/custom.js    // https://www.youtube.com/watch?v=SZ9NBHi6IQo&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=214
+    $(document).on('click', '.updateSubscriberStatus', function() { // '.updateUserStatus' is the anchor link <a> CSS class    // This is the same as    $('.updateUserStatus').on('click', function() {
+        // alert('test');
+
+        // var status = $(this).children();
+        // var status = $(this).children('i');
+        var status  = $(this).children('i').attr('status'); // Using HTML Custom Attributes
+        var subscriber_id = $(this).attr('subscriber_id'); // Using HTML Custom Attributes
+        // console.log(status);
+        // console.log(subscriber_id);
+        // var status = $(this).children(); // the child of the <a> anchor link
+
+        
+        $.ajax({
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}, // X-CSRF-TOKEN: https://laravel.com/docs/9.x/csrf#csrf-x-csrf-token    // Check 12:37 in https://www.youtube.com/watch?v=maEXuJNzE8M&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=16 AND Check 12:06 in https://www.youtube.com/watch?v=APPKmLlWEBY&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu
+            type   : 'post',
+            url    : '/admin/update-subscriber-status', // check the web.php for this route and check the NewsletterController for the updateSubscriberStatus() method
+            data   : {status: status, subscriber_id: subscriber_id}, // we pass in the status and subscriber_id
+            success: function(resp) {
+                // alert(resp);
+                // console.log(resp);
+                // console.log(resp.status);
+                // console.log(resp.user_id);
+                // console.log('#user-' + user_id);
+                // console.log($('#user-' + user_id));
+                if (resp.status == 0) { // in case of success, reverse the status (active/inactive) and show the right icon in the frontend    // Or the same    if (resp['status'] == 0) {
+                    $('#subscriber-' + subscriber_id).html('<i style="font-size: 25px" class="mdi mdi-bookmark-outline" status="Inactive"></i>');
+                } else if (resp.status == 1) {
+                    $('#subscriber-' + subscriber_id).html('<i style="font-size: 25px" class="mdi mdi-bookmark-check" status="Active"></i>');
+                }
+            },
+            error  : function() {
+                alert('Error');
+            }
+        });
+    });
+
 
 
     // Confirm Deletion alert using Pure JavaScript: Check 5:02 in https://www.youtube.com/watch?v=6TfdD5w-kls&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=33
@@ -572,8 +610,8 @@ $(document).ready(function() {
                 'success'
               )
 
-              // We added this line by ourselves
-              window.location = '/admin/delete-' + module + '/' + moduleid; // e.g.    '/admin/delete-sections/3'    or    '/admin/delete-category/5'    or    '/admin/delete-category-image/4'
+              // We added this line by ourselves (to go to this route to delete the said module ...)
+              window.location = '/admin/delete-' + module + '/' + moduleid; // e.g.    '/admin/delete-sections/3'    or    '/admin/delete-category/5'    or    '/admin/delete-category-image/4'    or    /admin/delete-subscriber/43
             }
         })
     });

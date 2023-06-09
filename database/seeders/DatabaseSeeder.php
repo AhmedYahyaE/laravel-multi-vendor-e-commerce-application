@@ -42,9 +42,10 @@ class DatabaseSeeder extends Seeder
         $this->call(BannersTableSeeder::class);
         $this->call(FiltersTableSeeder::class);
         $this->call(FiltersValuesTableSeeder::class);
-        $this->call(CouponsTableSeeder::class);         // https://www.youtube.com/watch?v=egx7-Hmb63Q&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=142
-        $this->call(DeliveryAddressTableSeeder::class); // https://www.youtube.com/watch?v=anlZdqno-nw&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=151
-        $this->call(OrderStatusTableSeeder::class);     // https://www.youtube.com/watch?v=W-aEaJQGeKE&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=167
-        $this->call(OrderItemStatusTableSeeder::class); // https://www.youtube.com/watch?v=QEdO_maniDY&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=168
+        $this->call(CouponsTableSeeder::class);              // https://www.youtube.com/watch?v=egx7-Hmb63Q&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=142
+        $this->call(DeliveryAddressTableSeeder::class);      // https://www.youtube.com/watch?v=anlZdqno-nw&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=151
+        $this->call(OrderStatusTableSeeder::class);          // https://www.youtube.com/watch?v=W-aEaJQGeKE&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=167
+        $this->call(OrderItemStatusTableSeeder::class);      // https://www.youtube.com/watch?v=QEdO_maniDY&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=168
+        $this->call(NewsletterSubscriberTableSeeder::class); // https://www.youtube.com/watch?v=RhJKeFxTT0U&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=212
     }
 }

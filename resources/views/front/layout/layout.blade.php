@@ -219,7 +219,7 @@
 
 
         {{-- To enable us to write PHP code within JavaScript code (to operate the Dynamic Filters dynamically (the second way)) --}} {{-- https://www.youtube.com/watch?v=rwj3nRYpUEk&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=90 --}}
-        @include('front.layout.scripts')
+        @include('front.layout.scripts') {{-- scripts.blade.php --}}
 
 
 
