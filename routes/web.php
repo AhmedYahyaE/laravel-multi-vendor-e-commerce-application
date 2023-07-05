@@ -186,6 +186,16 @@ Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function
 
         // Export subscribers (`newsletter_subscribers` database table) as an Excel file using Maatwebsite/Laravel Excel Package in admin/subscribers/subscribers.blade.php    // https://www.youtube.com/watch?v=HpFbynW2TCw&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=217
         Route::get('export-subscribers', 'NewsletterController@exportSubscribers');
+
+        // User Ratings & Reviews    // https://www.youtube.com/watch?v=xYDsEiQBXzk&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=225
+        // Render admin/ratings/ratings.blade.php page in the Admin Panel    // https://www.youtube.com/watch?v=xYDsEiQBXzk&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=225
+        Route::get('ratings', 'RatingController@ratings');
+
+        // Update Rating Status (active/inactive) via AJAX in admin/ratings/ratings.blade.php, check admin/js/custom.js    // https://www.youtube.com/watch?v=xYDsEiQBXzk&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=225
+        Route::post('update-rating-status', 'RatingController@updateRatingStatus');
+
+        // Delete a Rating via AJAX in admin/ratings/ratings.blade.php, check admin/js/custom.js    // https://www.youtube.com/watch?v=xYDsEiQBXzk&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=225
+        Route::get('delete-rating/{id}', 'RatingController@deleteRating'); // Route Parameters: Required Parameters: https://laravel.com/docs/9.x/routing#required-parameters
     });
 
 });

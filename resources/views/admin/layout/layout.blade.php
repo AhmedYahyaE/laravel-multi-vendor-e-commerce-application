@@ -100,11 +100,17 @@
 
 
 
+        {{-- NOTE: I MOVED THIS SECTION TO admin/js/My-Sweet-Alert.js FILE! After the SweetAlert2 CDN link block in the Country! I downloaded the library using 'npm' --}}
+        {{-- The SweetAlert2 package for Confirm Deletion Message in sections.blade.php. Check 5:02 in https://www.youtube.com/watch?v=6TfdD5w-kls&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=33 --}}
+        {{-- <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script> --}} <!-- CDNs blocked in Country! -->
+        {{-- <script type="module" src="{{ url('admin/js/sweetalert2.js') }}"></script>
+        <script type="module" src="{{ url('admin/js/My-Sweet-Alert.js') }}"></script> --}}
+        
+
+
+
         {{-- Start: Our Custom Admin JS --}}
         <script src="{{ url('admin/js/custom.js') }}"></script>
         {{-- End: Our Custom Admin JS --}}
-
-        {{-- Our The SweetAlert2 package for Confirm Deletion Message in sections.blade.php. Check 5:02 in https://www.youtube.com/watch?v=6TfdD5w-kls&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=33 --}}
-        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     </body>
 </html>

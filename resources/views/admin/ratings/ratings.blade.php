@@ -1,4 +1,4 @@
-{{-- This page (view) is rendered from subscribers() method in Admin/NewsletterController.php Controller, check https://www.youtube.com/watch?v=SZ9NBHi6IQo&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=214 --}}
+{{-- This view is rendered by ratings() method in Admin/RatingController.php, check https://www.youtube.com/watch?v=xYDsEiQBXzk&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=225 --}}
 
 
 @extends('admin.layout.layout')
@@ -12,17 +12,14 @@
                 <div class="col-lg-12 grid-margin stretch-card">
                     <div class="card">
                         <div class="card-body">
-                            <h4 class="card-title">Subscribers</h4>
+                            <h4 class="card-title">Ratings</h4>
                             {{-- <p class="card-description">
                                 Add class <code>.table-bordered</code>
                             </p> --}}
 
 
-
-                            {{-- Export Subscribers (the `newsletter_subscribers` database table) as an Excel file Button --}} {{-- https://www.youtube.com/watch?v=HpFbynW2TCw&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=217 --}}
-                            <a href="{{ url('admin/export-subscribers') }}" style="max-width: 100px; float: right" class="btn btn-block btn-primary">Export</a>
-
-
+                            {{-- https://www.youtube.com/watch?v=YqBzJmwrh8I&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=37 --}}
+                            {{-- <a href="{{ url('admin/add-edit-rating') }}" style="max-width: 150px; float: right; display: inline-block" class="btn btn-block btn-primary">Add Rating</a> --}}
 
                             {{-- Displaying The Validation Errors: https://laravel.com/docs/9.x/validation#quick-displaying-the-validation-errors AND https://laravel.com/docs/9.x/blade#validation-errors --}}
                             {{-- Determining If An Item Exists In The Session (using has() method): https://laravel.com/docs/9.x/session#determining-if-an-item-exists-in-the-session --}}
@@ -40,55 +37,56 @@
 
                             <div class="table-responsive pt-3">
                                 {{-- DataTable: Check 18:55 in https://www.youtube.com/watch?v=1XJ7908SJcM&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=34 --}}
-                                <table id="subscribers" class="table table-bordered"> {{-- using the id here for the DataTable --}}
+                                <table id="ratings" class="table table-bordered"> {{-- using the id here for the DataTable --}}
                                     <thead>
                                         <tr>
                                             <th>ID</th>
-                                            <th>Email</th>
-                                            <th>Subscribed on</th>
+                                            <th>Product Name</th>
+                                            <th>User Email</th>
+                                            <th>Review</th>
+                                            <th>Rating</th>
                                             <th>Status</th>
                                             <th>Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-
-
-                                        @foreach ($subscribers as $subscriber)
+                                        @foreach ($ratings as $rating)
                                             <tr>
-                                                <td>{{ $subscriber['id'] }}</td>
-                                                <td>{{ $subscriber['email'] }}</td>
+                                                <td>{{ $rating['id'] }}</td>
                                                 <td>
-                                                    {{ date("F j, Y, g:i a", strtotime($subscriber['created_at'])) }} {{-- https://stackoverflow.com/questions/2487921/convert-a-date-format-in-php --}} {{-- https://www.php.net/manual/en/function.date.php#:~:text=date(%22-,F%20j%2C%20Y%2C%20g%3Ai%20a,-%22)%3B%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20//%20March --}} {{-- https://www.youtube.com/watch?v=XUxWmZOjZR0&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=215 --}}
+                                                    <a target="_blank" href="{{ url('product/' . $rating['product']['id']) }}">
+                                                        {{ $rating['product']['product_name'] }}
+                                                    </a>
                                                 </td>
+                                                <td>{{ $rating['user']['email'] }}</td>
+                                                <td>{{ $rating['review'] }}</td>
+                                                <td>{{ $rating['rating'] }}</td>
                                                 <td>
-                                                    @if ($subscriber['status'] == 1)
-                                                        <a class="updateSubscriberStatus" id="subscriber-{{ $subscriber['id'] }}" subscriber_id="{{ $subscriber['id'] }}" href="javascript:void(0)"> {{-- Using HTML Custom Attributes. Check admin/js/custom.js --}}
+                                                    @if ($rating['status'] == 1)
+                                                        <a class="updateRatingStatus" id="rating-{{ $rating['id'] }}" rating_id="{{ $rating['id'] }}" href="javascript:void(0)"> {{-- Using HTML Custom Attributes. Check admin/js/custom.js --}}
                                                             <i style="font-size: 25px" class="mdi mdi-bookmark-check" status="Active"></i> {{-- Icons from Skydash Admin Panel Template --}}
                                                         </a>
                                                     @else {{-- if the admin status is inactive --}}
-                                                        <a class="updateSubscriberStatus" id="subscriber-{{ $subscriber['id'] }}" subscriber_id="{{ $subscriber['id'] }}" href="javascript:void(0)"> {{-- Using HTML Custom Attributes. Check admin/js/custom.js --}}
+                                                        <a class="updateRatingStatus" id="rating-{{ $rating['id'] }}" rating_id="{{ $rating['id'] }}" href="javascript:void(0)"> {{-- Using HTML Custom Attributes. Check admin/js/custom.js --}}
                                                             <i style="font-size: 25px" class="mdi mdi-bookmark-outline" status="Inactive"></i> {{-- Icons from Skydash Admin Panel Template --}}
                                                         </a>
                                                     @endif
                                                 </td>
                                                 <td>
-                                                    {{-- <a href="{{ url('admin/edit-shipping-charges/' . $shipping['id']) }}"> --}}
+                                                    {{-- <a href="{{ url('admin/add-edit-rating/' . $rating['id']) }}"> --}}
                                                         {{-- <i style="font-size: 25px" class="mdi mdi-pencil-box"></i> --}} {{-- Icons from Skydash Admin Panel Template --}}
                                                     {{-- </a> --}}
 
                                                     {{-- Confirm Deletion JS alert and Sweet Alert: Check 5:02 in https://www.youtube.com/watch?v=6TfdD5w-kls&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=33 --}}
-                                                    {{-- <a title="Shipping" class="confirmDelete" href="{{ url('admin/delete-shipping/' . $shipping['id']) }}"> --}}
+                                                    {{-- <a title="Rating" class="confirmDelete" href="{{ url('admin/delete-rating/' . $rating['id']) }}"> --}}
                                                         {{-- <i style="font-size: 25px" class="mdi mdi-file-excel-box"></i> --}} {{-- Icons from Skydash Admin Panel Template --}}
                                                     {{-- </a> --}}
-
-                                                    <a href="JavaScript:void(0)" class="confirmDelete" module="subscriber" moduleid="{{ $subscriber['id'] }}">
+                                                    <a href="JavaScript:void(0)" class="confirmDelete" module="rating" moduleid="{{ $rating['id'] }}">
                                                         <i style="font-size: 25px" class="mdi mdi-file-excel-box"></i> {{-- Icons from Skydash Admin Panel Template --}}
                                                     </a>
                                                 </td>
                                             </tr>
                                         @endforeach
-
-
                                     </tbody>
                                 </table>
                             </div>

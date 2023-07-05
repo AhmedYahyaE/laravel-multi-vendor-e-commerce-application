@@ -13,6 +13,7 @@ $(document).ready(function() {
     $('#orders').DataTable();      // in admin/orders/orders.blade.php                // https://www.youtube.com/watch?v=WqPCkJaTgFI&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=166
     $('#shipping').DataTable();    // in admin/shipping/shipping_charges.blade.php    // https://www.youtube.com/watch?v=igoiH9VVxzs&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=187
     $('#subscribers').DataTable(); // in admin/subscribers/subscribers.blade.php      // https://www.youtube.com/watch?v=SZ9NBHi6IQo&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=214
+    $('#ratings').DataTable();     // in admin/ratings/ratings.blade.php              // https://www.youtube.com/watch?v=xYDsEiQBXzk&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=225
 
 
 
@@ -568,17 +569,55 @@ $(document).ready(function() {
         });
     });
 
+    // Update Rating Status (active/inactive) via AJAX in admin/ratings/ratings.blade.php, check admin/js/custom.js    // https://www.youtube.com/watch?v=xYDsEiQBXzk&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=225
+    $(document).on('click', '.updateRatingStatus', function() { // '.updateUserStatus' is the anchor link <a> CSS class    // This is the same as    $('.updateUserStatus').on('click', function() {
+        // alert('test');
+
+        // var status = $(this).children();
+        // var status = $(this).children('i');
+        var status    = $(this).children('i').attr('status'); // Using HTML Custom Attributes
+        var rating_id = $(this).attr('rating_id'); // Using HTML Custom Attributes
+        // console.log(status);
+        // console.log(rating_id);
+        // var status = $(this).children(); // the child of the <a> anchor link
+
+        
+        $.ajax({
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}, // X-CSRF-TOKEN: https://laravel.com/docs/9.x/csrf#csrf-x-csrf-token    // Check 12:37 in https://www.youtube.com/watch?v=maEXuJNzE8M&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=16 AND Check 12:06 in https://www.youtube.com/watch?v=APPKmLlWEBY&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu
+            type   : 'post',
+            url    : '/admin/update-rating-status', // check the web.php for this route and check the NewsletterController for the updateRatingStatus() method
+            data   : {status: status, rating_id: rating_id}, // we pass in the status and rating_id
+            success: function(resp) {
+                // alert(resp);
+                // console.log(resp);
+                // console.log(resp.status);
+                // console.log(resp.user_id);
+                // console.log('#user-' + user_id);
+                // console.log($('#user-' + user_id));
+                if (resp.status == 0) { // in case of success, reverse the status (active/inactive) and show the right icon in the frontend    // Or the same    if (resp['status'] == 0) {
+                    $('#rating-' + rating_id).html('<i style="font-size: 25px" class="mdi mdi-bookmark-outline" status="Inactive"></i>');
+                } else if (resp.status == 1) {
+                    $('#rating-' + rating_id).html('<i style="font-size: 25px" class="mdi mdi-bookmark-check" status="Active"></i>');
+                }
+            },
+            error  : function() {
+                alert('Error');
+            }
+        });
+    });
 
 
+
+    // NOTE: I MOVED THIS SECTION TO admin/js/My-Sweet-Alert.js FILE! After the SweetAlert2 CDN link block in the Country! I downloaded the library using 'npm'
     // Confirm Deletion alert using Pure JavaScript: Check 5:02 in https://www.youtube.com/watch?v=6TfdD5w-kls&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=33
     // $('.confirmDelete').click(function() {
     //     var title = $(this).attr('title');
     //     // alert(title);
 
     //     if (confirm('Are you sure you want to delete this ' + title + '?')) {
-    //         return true; // return true    means COMPLETE THE EXECUTION!, you can do whatever you want to do
+    //         return true; // return true    STOP THE EXECUTION! Don't Do Anything! You can't do what you want to do!
     //     } else {
-    //         return false; // return true    means STOP THE EXECUTION!, you can't do what you want to do
+    //         return false; // return true    means STOP THE EXECUTION! Don't Do Anything! You can't do what you want to do!
     //     }
     // });
 
@@ -594,26 +633,38 @@ $(document).ready(function() {
         // return; // Just STOP function execution!    // This is the same as:    return false;
 
 
-        Swal.fire({
-            title: 'Are you sure?',
-            text: "You won't be able to revert this!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, delete it!'
-        }).then((result) => {
-            if (result.isConfirmed) {
-              Swal.fire(
-                'Deleted!',
-                'Your file has been deleted.',
-                'success'
-              )
+        
+        // After the CDNs block in the country, I resorted to this solution:
+        if (confirm('Are you sure you want to delete this?')) {
+            // return true; // return true    means COMPLETE THE EXECUTION!, you can do whatever you want to do
 
-              // We added this line by ourselves (to go to this route to delete the said module ...)
-              window.location = '/admin/delete-' + module + '/' + moduleid; // e.g.    '/admin/delete-sections/3'    or    '/admin/delete-category/5'    or    '/admin/delete-category-image/4'    or    /admin/delete-subscriber/43
-            }
-        })
+            window.location = '/admin/delete-' + module + '/' + moduleid; // e.g.    '/admin/delete-sections/3'    or    '/admin/delete-category/5'    or    '/admin/delete-category-image/4'    or    /admin/delete-subscriber/43
+        } else {
+            return false; // return true    means STOP THE EXECUTION! Don't Do Anything! You can't do what you want to do!
+        }
+
+        /*
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                Swal.fire(
+                    'Deleted!',
+                    'Your file has been deleted.',
+                    'success'
+                )
+
+                // We added this line by ourselves (to go to this route to delete the said module ...)
+                window.location = '/admin/delete-' + module + '/' + moduleid; // e.g.    '/admin/delete-sections/3'    or    '/admin/delete-category/5'    or    '/admin/delete-category-image/4'    or    /admin/delete-subscriber/43
+                }
+            })
+        */
     });
 
 

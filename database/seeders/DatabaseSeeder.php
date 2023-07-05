@@ -47,5 +47,6 @@ class DatabaseSeeder extends Seeder
         $this->call(OrderStatusTableSeeder::class);          // https://www.youtube.com/watch?v=W-aEaJQGeKE&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=167
         $this->call(OrderItemStatusTableSeeder::class);      // https://www.youtube.com/watch?v=QEdO_maniDY&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=168
         $this->call(NewsletterSubscriberTableSeeder::class); // https://www.youtube.com/watch?v=RhJKeFxTT0U&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=212
+        $this->call(RatingsTableSeeder::class);              // https://www.youtube.com/watch?v=xYDsEiQBXzk&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=225
     }
 }

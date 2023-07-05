@@ -1302,6 +1302,16 @@ class ProductsController extends Controller
                 $getDiscountAttributePrice = \App\Models\Product::getDiscountAttributePrice($item['product_id'], $item['size']); // from the `products_attributes` table, not the `products` table
                 $cartItem->product_price   = $getDiscountAttributePrice['final_price'];
 
+
+                // https://www.youtube.com/watch?v=kOYH2-Txmp4&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=218
+                $getProductStock = \App\Models\ProductsAttribute::getProductStock($item['product_id'], $item['size']);
+                if ($item['quantity'] > $getProductStock) { // if the ordered quantity is greater than the existing stock, cancel the order/opertation
+                    $message = $getProductDetails['product_name'] . ' with ' . $item['size'] . ' size stock is not available/enough for your order. Please reduce its quantity and try again!';
+
+                    return redirect('/cart')->with('error_message', $message); // Redirect to the Cart page with an error message
+                }
+
+
                 $cartItem->product_qty     = $item['quantity'];
 
                 $cartItem->save(); // INSERT data INTO the `orders_products` table
