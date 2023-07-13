@@ -299,6 +299,9 @@ Route::namespace('App\Http\Controllers\Front')->group(function() {
     // Add a Newsletter Subscriber email HTML Form Submission in front/layout/footer.blade.php when clicking on the Submit button (using an AJAX Request/Call)    // https://www.youtube.com/watch?v=XUxWmZOjZR0&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=215
     Route::post('add-subscriber-email', 'NewsletterController@addSubscriber');
 
+    // Add Rating & Review on a product in front/products/detail.blade.php    // https://www.youtube.com/watch?v=YlZPh9rb7Bw&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=226
+    Route::post('add-rating', 'RatingController@addRating');
+
 
 
 

@@ -511,6 +511,61 @@ class ProductsController extends Controller
         // dd($groupProducts);
 
 
+        // Show Ratings & Reviews in front/products/detail.blade.php    // https://www.youtube.com/watch?v=qmRyL6FaLGs&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=227
+        $ratings = \App\Models\Rating::with('user')->where([ // Eager Loading: https://laravel.com/docs/9.x/eloquent-relationships#eager-loading    // 'user' is the relationship method name in Rating.php model
+            'product_id' => $id,
+            'status'     => 1
+        ])->get()->toArray();
+        // dd($ratings);
+
+        // Calculate Average Rating (for a product):
+        $ratingSum = \App\Models\Rating::where([
+            'product_id' => $id,
+            'status'     => 1
+        ])->sum('rating');
+
+        // Number of times a product has been rated by users
+        $ratingCount = \App\Models\Rating::where([
+            'product_id' => $id,
+            'status'     => 1
+        ])->count();
+
+        if ($ratingCount > 0) { // if there's at least one rating for a product (if a product has been rated at least once)
+            $avgRating     = round($ratingSum / $ratingCount, 2);
+            $avgStarRating = round($ratingSum / $ratingCount); // for showing the "Stars" in HTML
+        }
+
+        // Calculate the count of Star Ratings for 1 Star, 2 Stars, 3 Stars, 4 Stars, and 5 Stars ratings (Each on its own)
+        $ratingOneStarCount = \App\Models\Rating::where([
+            'product_id' => $id,
+            'status'     => 1,
+            'rating'     => 1
+        ])->count();
+
+        $ratingTwoStarCount = \App\Models\Rating::where([
+            'product_id' => $id,
+            'status'     => 1,
+            'rating'     => 2
+        ])->count();
+
+        $ratingThreeStarCount = \App\Models\Rating::where([
+            'product_id' => $id,
+            'status'     => 1,
+            'rating'     => 3
+        ])->count();
+
+        $ratingFourStarCount = \App\Models\Rating::where([
+            'product_id' => $id,
+            'status'     => 1,
+            'rating'     => 4
+        ])->count();
+
+        $ratingFiveStarCount = \App\Models\Rating::where([
+            'product_id' => $id,
+            'status'     => 1,
+            'rating'     => 5
+        ])->count();
+
 
         $totalStock = \App\Models\ProductsAttribute::where('product_id', $id)->sum('stock'); // sum() the `stock` column of the `products_attributes` table    // sum(): https://laravel.com/docs/9.x/collections#method-sum
         // dd($totalStock);
@@ -522,7 +577,7 @@ class ProductsController extends Controller
         $meta_keywords    = $productDetails['meta_keywords'];
 
 
-        return view('front.products.detail')->with(compact('productDetails', 'categoryDetails', 'totalStock', 'similarProducts', 'recentlyViewedProducts', 'groupProducts', 'meta_title', 'meta_description', 'meta_keywords'));
+        return view('front.products.detail')->with(compact('productDetails', 'categoryDetails', 'totalStock', 'similarProducts', 'recentlyViewedProducts', 'groupProducts', 'meta_title', 'meta_description', 'meta_keywords', 'ratings', 'avgRating', 'avgStarRating', 'ratingOneStarCount', 'ratingTwoStarCount', 'ratingThreeStarCount', 'ratingFourStarCount', 'ratingFiveStarCount'));
     }
 
 
@@ -1344,7 +1399,7 @@ class ProductsController extends Controller
 
             // Send placing an order confirmation email to the user    // https://www.youtube.com/watch?v=dF7OhPttepE&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=169
             // Note: We send placing an order confirmation email and SMS to the user right away (immediately) if the order is "COD", but if the order payment method is like PayPal or any other payment gateway, we send the order confirmation email and SMS after the user makes the payment. Check https://www.youtube.com/watch?v=dF7OhPttepE&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=169
-            $orderDetails = \App\Models\Order::with('orders_products')->where('id', $order_id)->first()->toArray();// Eager Loading: https://laravel.com/docs/9.x/eloquent-relationships#eager-loading    // 'orders_products' is the relationship method name in Order.php model
+            $orderDetails = \App\Models\Order::with('orders_products')->where('id', $order_id)->first()->toArray(); // Eager Loading: https://laravel.com/docs/9.x/eloquent-relationships#eager-loading    // 'orders_products' is the relationship method name in Order.php model
             // dd($orderDetails);
 
             if ($data['payment_gateway'] == 'COD') { // if the `payment_gateway` selected by the user is 'COD' (in front/products/checkout.blade.php), we send the placing the order confirmation email and SMS immediately
