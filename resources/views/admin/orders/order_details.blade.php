@@ -360,6 +360,7 @@
                                                 @php
                                                     $getProductImage = \App\Models\Product::getProductImage($product['product_id']);
                                                 @endphp
+
                                                 <a target="_blank" href="{{ url('product/' . $product['product_id']) }}">
                                                     <img src="{{ asset('front/images/product_images/small/' . $getProductImage) }}">
                                                 </a>
@@ -415,7 +416,8 @@
                                             {{-- https://www.youtube.com/watch?v=CSaJYv9Xefk&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=202 --}}
                                             @if ($product['vendor_id'] > 0) {{-- if the product belongs to a 'vendor' --}}
                                                 {{-- <td>{{ $commission = round($total_price * (\App\Models\Vendor::getVendorCommission(\Auth::guard('admin')->user()->vendor_id) / 100), 2) }}</td> --}} {{-- Accessing Specific Guard Instances: https://laravel.com/docs/9.x/authentication#accessing-specific-guard-instances --}}
-                                                <td>{{ $commission = round($total_price * \App\Models\Vendor::getVendorCommission($product['vendor_id']) / 100, 2) }}</td>
+                                                {{-- <td>{{ $commission = round($total_price * \App\Models\Vendor::getVendorCommission($product['vendor_id']) / 100, 2) }}</td> --}}
+                                                <td>{{ $commission = round($total_price * $product['commission'] / 100, 2) }}</td> {{-- https://www.youtube.com/watch?v=9btUn5pZ304&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=229 --}}
                                                 <td>{{ $total_price - $commission }}</td>
                                             @else
                                                 <td>0</td>

@@ -17,6 +17,7 @@ return new class extends Migration
         Schema::table('orders_products', function($table) {
             $table->string('courier_name')->after('item_status')->nullable();
             $table->string('tracking_number')->after('courier_name')->nullable();
+            $table->float('commission')->nullable(); // https://www.youtube.com/watch?v=9btUn5pZ304&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=229
         });
     }
 

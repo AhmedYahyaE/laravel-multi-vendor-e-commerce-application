@@ -152,11 +152,11 @@
                         {{-- Appending Query String Values: https://laravel.com/docs/9.x/pagination#appending-query-string-values --}}
                         @if (isset($_GET['sort'])) {{-- if there's a Sorting Filter used --}}
                             <div>
-                                {{ $categoryProducts->appends(['sort' => $_GET['sort']])->links() }}
+                                {{ $categoryProducts->appends(['sort' => $_GET['sort']])->links() }} {{-- Appending Query String Values: https://laravel.com/docs/9.x/pagination#appending-query-string-values --}} {{-- Displaying Pagination Results: https://laravel.com/docs/9.x/pagination#displaying-pagination-results --}}
                             </div>
                         @else
                             <div>
-                                {{ $categoryProducts->links() }}
+                                {{ $categoryProducts->links() }} {{-- Displaying Pagination Results: https://laravel.com/docs/9.x/pagination#displaying-pagination-results --}}
                             </div>
                         @endif
 

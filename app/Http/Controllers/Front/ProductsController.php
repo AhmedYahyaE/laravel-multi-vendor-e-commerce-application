@@ -1348,6 +1348,14 @@ class ProductsController extends Controller
                 // Continue filling in data into the `orders_products` table
                 $cartItem->admin_id        = $getProductDetails['admin_id'];
                 $cartItem->vendor_id       = $getProductDetails['vendor_id'];
+
+                // https://www.youtube.com/watch?v=9btUn5pZ304&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=229
+                if ($getProductDetails['vendor_id'] > 0) { // if the order product's seller is a 'vendor'
+                    $vendorCommission = \App\Models\Vendor::getVendorCommission($getProductDetails['vendor_id']);
+                    $cartItem->commission  = $vendorCommission;
+                }
+                // $cartItem->commission      = $vendorCommission;
+
                 $cartItem->product_id      = $item['product_id'];
                 $cartItem->product_code    = $getProductDetails['product_code'];
                 $cartItem->product_name    = $getProductDetails['product_name'];
