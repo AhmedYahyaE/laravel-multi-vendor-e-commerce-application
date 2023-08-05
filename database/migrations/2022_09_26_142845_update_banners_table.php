@@ -16,7 +16,7 @@ return new class extends Migration
         // Our code: https://www.youtube.com/watch?v=GC_5WN0PeeM&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=70
         // Add the `type` column after `image` column to the already existing `banners` database table
         Schema::table('banners', function($table) {
-            $table->string('type')->after('image'); // add the `type` column AFTER the `image` column    // Column Modifiers: https://laravel.com/docs/9.x/migrations#column-modifiers
+            $table->string('type')->after('image')->nullable(); // add the `type` column AFTER the `image` column    // Column Modifiers: https://laravel.com/docs/9.x/migrations#column-modifiers
         });
     }
 

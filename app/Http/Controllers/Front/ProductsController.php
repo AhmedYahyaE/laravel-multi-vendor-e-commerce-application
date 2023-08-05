@@ -533,6 +533,9 @@ class ProductsController extends Controller
         if ($ratingCount > 0) { // if there's at least one rating for a product (if a product has been rated at least once)
             $avgRating     = round($ratingSum / $ratingCount, 2);
             $avgStarRating = round($ratingSum / $ratingCount); // for showing the "Stars" in HTML
+        } else {
+            $avgRating     = 0;
+            $avgStarRating = 0;
         }
 
         // Calculate the count of Star Ratings for 1 Star, 2 Stars, 3 Stars, 4 Stars, and 5 Stars ratings (Each on its own)

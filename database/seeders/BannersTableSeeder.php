@@ -22,7 +22,8 @@ class BannersTableSeeder extends Seeder
         $bannerRecords = [
             [
                 'id'     => 1,
-                'image'  => 'banner-1.png',
+                'image'  => 'banner-1.jpg',
+                'type'   => 'Slider',
                 'link'   => 'spring-collection', // e.g. www.our-domainname.com/spring-collection
                 'title'  => 'Spring Collection',
                 'alt'    => 'Spring Collection',
@@ -30,7 +31,8 @@ class BannersTableSeeder extends Seeder
             ],
             [
                 'id'     => 2,
-                'image'  => 'banner-2.png',
+                'image'  => 'banner-2.jpg',
+                'type'   => 'Slider',
                 'link'   => 'tops', // e.g. www.our-domainname.com/tops
                 'title'  => 'Tops',
                 'alt'    => 'Tops',
