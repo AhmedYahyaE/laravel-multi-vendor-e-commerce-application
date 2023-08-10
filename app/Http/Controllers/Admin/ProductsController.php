@@ -4,38 +4,23 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Auth;
+use Intervention\Image\Facades\Image;
+
 
 class ProductsController extends Controller
 {
-    //
-
-    // https://www.youtube.com/watch?v=hTP1Tk1018M&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=45
-
-
     public function products() { // render products.blade.php in the Admin Panel
-        \Session::put('page', 'products');
+        Session::put('page', 'products');
 
-        // $products = \App\Models\Product::get()->toArray();
-        // $products = \App\Models\Product::with(['section', 'category'])->get(); // ['section', 'category'] are the relationships methods names
-        // $products = \App\Models\Product::with(['section', 'category'])->get()->toArray(); // ['section', 'category'] are the relationships methods names
-        /*
-        $products = \App\Models\Product::with([ // Constraining Eager Loads: https://laravel.com/docs/9.x/eloquent-relationships#constraining-eager-loads    // Subquery Where Clauses: https://laravel.com/docs/9.x/queries#subquery-where-clauses    // Advanced Subqueries: https://laravel.com/docs/9.x/eloquent#advanced-subqueries
-            'section' => function($query) { // the 'section' relationship method in Product.php model
-                $query->select('id', 'name'); // Important Note: It's a MUST to select 'id' even if you don't need it, because the relationship Foreign Key `product_id` depends on it, or else the `product` relationship would give you 'null'!
-            },
-            'category' => function($query) { // the 'category' relationship method in Product.php model
-                $query->select('id', 'category_name'); // Important Note: It's a MUST to select 'id' even if you don't need it, because the relationship Foreign Key `product_id` depends on it, or else the `product` relationship would give you 'null'!
-            }
-        ])->get()->toArray(); // Using subqueries with Eager Loading for a better performance (Check 9:40 in https://www.youtube.com/watch?v=iDpDS9vNswE&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=46)    // Constraining Eager Loads: https://laravel.com/docs/9.x/eloquent-relationships#constraining-eager-loads    // Subquery Where Clauses: https://laravel.com/docs/9.x/queries#subquery-where-clauses    // Advanced Subqueries: https://laravel.com/docs/9.x/eloquent#advanced-subqueries    // ['section', 'category'] are the relationships methods names
-        // dd($products);
-        */
 
-        // Modify the last $products variable so that ONLY products that BELONG TO the 'vendor' show up in (not ALL products show up) in products.blade.php, and also make sure that the 'vendor' account is active/enabled/approved (`status` is 1) before they can access the products page    // Check 11:44 in https://www.youtube.com/watch?v=UXUDxtN68XE&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=103
-        $adminType = \Auth::guard('admin')->user()->type;      // `type`      is the column in `admins` table    // Accessing Specific Guard Instances: https://laravel.com/docs/9.x/authentication#accessing-specific-guard-instances    // Retrieving The Authenticated User and getting their `type`      column in `admins` table    // https://laravel.com/docs/9.x/authentication#retrieving-the-authenticated-user
-        $vendor_id = \Auth::guard('admin')->user()->vendor_id; // `vendor_id` is the column in `admins` table    // Accessing Specific Guard Instances: https://laravel.com/docs/9.x/authentication#accessing-specific-guard-instances    // Retrieving The Authenticated User and getting their `vendor_id` column in `admins` table    // https://laravel.com/docs/9.x/authentication#retrieving-the-authenticated-user
+        // Modify the last $products variable so that ONLY products that BELONG TO the 'vendor' show up in (not ALL products show up) in products.blade.php, and also make sure that the 'vendor' account is active/enabled/approved (`status` is 1) before they can access the products page    
+        $adminType = Auth::guard('admin')->user()->type;      // `type`      is the column in `admins` table    // Accessing Specific Guard Instances: https://laravel.com/docs/9.x/authentication#accessing-specific-guard-instances    // Retrieving The Authenticated User and getting their `type`      column in `admins` table    // https://laravel.com/docs/9.x/authentication#retrieving-the-authenticated-user
+        $vendor_id = Auth::guard('admin')->user()->vendor_id; // `vendor_id` is the column in `admins` table    // Accessing Specific Guard Instances: https://laravel.com/docs/9.x/authentication#accessing-specific-guard-instances    // Retrieving The Authenticated User and getting their `vendor_id` column in `admins` table    // https://laravel.com/docs/9.x/authentication#retrieving-the-authenticated-user
         
         if ($adminType == 'vendor') { // if the authenticated user (the logged in user) is 'vendor', check his `status`
-            $vendorStatus = \Auth::guard('admin')->user()->status; // `status` is the column in `admins` table    // Accessing Specific Guard Instances: https://laravel.com/docs/9.x/authentication#accessing-specific-guard-instances    // Retrieving The Authenticated User and getting their `status` column in `admins` table    // https://laravel.com/docs/9.x/authentication#retrieving-the-authenticated-user
+            $vendorStatus = Auth::guard('admin')->user()->status; // `status` is the column in `admins` table    // Accessing Specific Guard Instances: https://laravel.com/docs/9.x/authentication#accessing-specific-guard-instances    // Retrieving The Authenticated User and getting their `status` column in `admins` table    // https://laravel.com/docs/9.x/authentication#retrieving-the-authenticated-user
             if ($vendorStatus == 0) { // if the 'vendor' is inactive/disabled
                 return redirect('admin/update-vendor-details/personal')->with('error_message', 'Your Vendor Account is not approved yet. Please make sure to fill your valid personal, business and bank details.'); // the error_message will appear to the vendor in the route: 'admin/update-vendor-details/personal' which is the update_vendor_details.blade.php page
             }
@@ -56,7 +41,7 @@ class ProductsController extends Controller
             $produtcs = $products->where('vendor_id', $vendor_id);
         }
 
-        $products = $products->get()->toArray(); // $products will be either ALL products Or VENDOR products ONLY (depending on the last if condition)    // Using subqueries with Eager Loading for a better performance (Check 9:40 in https://www.youtube.com/watch?v=iDpDS9vNswE&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=46)    // Constraining Eager Loads: https://laravel.com/docs/9.x/eloquent-relationships#constraining-eager-loads    // Subquery Where Clauses: https://laravel.com/docs/9.x/queries#subquery-where-clauses    // Advanced Subqueries: https://laravel.com/docs/9.x/eloquent#advanced-subqueries    // ['section', 'category'] are the relationships methods names
+        $products = $products->get()->toArray(); // $products will be either ALL products Or VENDOR products ONLY (depending on the last if condition)    // Using subqueries with Eager Loading for a better performance    // Constraining Eager Loads: https://laravel.com/docs/9.x/eloquent-relationships#constraining-eager-loads    // Subquery Where Clauses: https://laravel.com/docs/9.x/queries#subquery-where-clauses    // Advanced Subqueries: https://laravel.com/docs/9.x/eloquent#advanced-subqueries    // ['section', 'category'] are the relationships methods names
         // dd($products);
 
 
@@ -66,9 +51,7 @@ class ProductsController extends Controller
     public function updateProductStatus(Request $request) { // Update Product Status using AJAX in products.blade.php
         if ($request->ajax()) { // if the request is coming via an AJAX call
             $data = $request->all(); // Getting the name/value pairs array that are sent from the AJAX request (AJAX call)
-            // dd($data); // dd() method DOESN'T WORK WITH AJAX! - SHOWS AN ERROR!! USE var_dump() and exit; INSTEAD!
-            // echo '<pre>', var_dump($data), '</pre>';
-            // exit;
+            // dd($data);
 
             if ($data['status'] == 'Active') { // $data['status'] comes from the 'data' object inside the $.ajax() method    // reverse the 'status' from (ative/inactive) 0 to 1 and 1 to 0 (and vice versa)
                 $status = 0;
@@ -88,16 +71,16 @@ class ProductsController extends Controller
     }
 
     public function deleteProduct($id) {
-        \App\Models\Product::where('id', $id)->delete(); // https://laravel.com/docs/9.x/queries#delete-statements
+        \App\Models\Product::where('id', $id)->delete();
         
         $message = 'Product has been deleted successfully!';
         
         return redirect()->back()->with('success_message', $message);
     }
 
-    public function addEditProduct(Request $request, $id = null) { // If the $id is not passed, this means 'Add a Product', if not, this means 'Edit the Product'    // https://www.youtube.com/watch?v=-Lnk1N1jTNQ&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=47
-        // Correcting issues in the Skydash Admin Panel Sidebar using Session:  Check 6:33 in https://www.youtube.com/watch?v=i_SUdNILIrc&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=29
-        \Session::put('page', 'products');
+    public function addEditProduct(Request $request, $id = null) { // If the $id is not passed, this means 'Add a Product', if not, this means 'Edit the Product'    
+        // Correcting issues in the Skydash Admin Panel Sidebar using Session
+        Session::put('page', 'products');
 
 
         if ($id == '') { // if there's no $id is passed in the route/URL parameters, this means 'Add a new product'
@@ -117,16 +100,15 @@ class ProductsController extends Controller
             // dd($data);
 
 
-            // Laravel's Validation    // Check 14:49 in https://www.youtube.com/watch?v=ydubcZC3Hbw&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=18
-            // Customizing Laravel's Validation Error Messages: https://laravel.com/docs/9.x/validation#customizing-the-error-messages    // Customizing Validation Rules: https://laravel.com/docs/9.x/validation#custom-validation-rules    // Check 14:49 in https://www.youtube.com/watch?v=ydubcZC3Hbw&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=18
+            // Laravel's Validation    // Customizing Laravel's Validation Error Messages: https://laravel.com/docs/9.x/validation#customizing-the-error-messages    // Customizing Validation Rules: https://laravel.com/docs/9.x/validation#custom-validation-rules
             $rules = [
                 'category_id'   => 'required',
-                // 'product_name'  => 'required|regex:/^[\pL\s\-]+$/u', // only alphabetical characters and spaces
                 'product_name'  => 'required', // only alphabetical characters and spaces
                 'product_code'  => 'required|regex:/^\w+$/', // alphanumeric regular expression
                 'product_price' => 'required|numeric',
                 'product_color' => 'required|regex:/^[\pL\s\-]+$/u', // only alphabetical characters and spaces
             ];
+
             $customMessages = [ // Specifying A Custom Message For A Given Attribute: https://laravel.com/docs/9.x/validation#specifying-a-custom-message-for-a-given-attribute
                 'category_id.required'   => 'Category is required',
                 'product_name.required'  => 'Product Name is required',
@@ -139,12 +121,13 @@ class ProductsController extends Controller
                 'product_color.regex'    => 'Valid Product Color is required',
 
             ];
+
             $this->validate($request, $rules, $customMessages);
 
             // Upload Product Image after Resize
             // Important Note: There are going to be 3 three sizes for the product image: Admin will upload the image with the recommended size which 1000*1000 which is the 'large' size, but then we're going to use 'Intervention' package to get another two sizes: 500*500 which is the 'medium' size and 250*250 which is the 'small' size
             // The 3 three image sizes: large: 1000x1000, medium: 500x500, small: 250x250
-            if ($request->hasFile('product_image')) { // Retrieving Uploaded Files: https://laravel.com/docs/9.x/requests#retrieving-uploaded-files
+            if ($request->hasFile('product_image')) {
                 $image_tmp = $request->file('product_image');
                 if ($image_tmp->isValid()) { // Validating Successful Uploads: https://laravel.com/docs/9.x/requests#validating-successful-uploads
                     // Get image extension
@@ -160,9 +143,9 @@ class ProductsController extends Controller
                     $smallImagePath  = 'front/images/product_images/small/'  . $imageName; // 'small'  images folder
 
                     // Upload the image using the 'Intervention' package and save it in our THREE paths (folders) inside the 'public' folder
-                    \Image::make($image_tmp)->resize(1000, 1000)->save($largeImagePath);  // resize the 'large'  image size then store it in the 'large'  folder
-                    \Image::make($image_tmp)->resize(500,   500)->save($mediumImagePath); // resize the 'medium' image size then store it in the 'medium' folder
-                    \Image::make($image_tmp)->resize(250,   250)->save($smallImagePath);  // resize the 'small'  image size then store it in the 'small'  folder
+                    Image::make($image_tmp)->resize(1000, 1000)->save($largeImagePath);  // resize the 'large'  image size then store it in the 'large'  folder
+                    Image::make($image_tmp)->resize(500,   500)->save($mediumImagePath); // resize the 'medium' image size then store it in the 'medium' folder
+                    Image::make($image_tmp)->resize(250,   250)->save($smallImagePath);  // resize the 'small'  image size then store it in the 'small'  folder
                 
                     // Insert the image name in the database table
                     $product->product_image = $imageName;
@@ -172,18 +155,14 @@ class ProductsController extends Controller
 
             // Upload Product Video
             // Important Note: Default php.ini file upload Maximum file size is 2MB (If you upload a file with a larger size, it won't be uploaded!). Check upload_max_filesize using phpinfo() method.
-            if ($request->hasFile('product_video')) { // Retrieving Uploaded Files: https://laravel.com/docs/9.x/requests#retrieving-uploaded-files
+            if ($request->hasFile('product_video')) {
                 $video_tmp = $request->file('product_video');
 
                 if ($video_tmp->isValid()) { // Validating Successful Uploads: https://laravel.com/docs/9.x/requests#validating-successful-uploads
                     // Upload video
-                    // $video_name = $video_tmp->getClientOriginalName();
                     $extension  = $video_tmp->getClientOriginalExtension();
-
-                    // exit;
                     
                     // Generate a new random name for the uploaded video (to avoid that the video might get overwritten if its name is repeated)
-                    // $videoName = $video_name . '-' . rand() . '.' . $extension; // e.g.    'shirtVideo-75935.mp4'
                     $videoName = rand() . '.' . $extension; // e.g.    75935.mp4
 
                     // Assigning the uploaded videos path inside the 'public' folder
@@ -205,48 +184,31 @@ class ProductsController extends Controller
             $product->section_id  = $categoryDetails['section_id'];
             $product->category_id = $data['category_id'];
             $product->brand_id    = $data['brand_id'];
-            $product->group_code  = $data['group_code']; // Managing Product Colors (in front/products/detail.blade.php)    // https://www.youtube.com/watch?v=Nle1w37JW2k&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=115
+            $product->group_code  = $data['group_code']; // Managing Product Colors (in front/products/detail.blade.php)
 
-
-
-            // Check 24:36 in https://www.youtube.com/watch?v=T7dcxauNyQc&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=91
+            
             // Saving the seleted filter for a product
             $productFilters = \App\Models\ProductsFilter::productFilters(); // Get ALL the (enabled/active) Filters
             foreach ($productFilters as $filter) { // get ALL the filters, then check if every filter's `filter_column` is submitted by the category_filters.blade.php page
                 // dd($filter);
 
-                // Data are sent from category_filters.blade.php
-                // dd($data);
-                // dd($data['ram']); // That's an example    // Or    dd($data['fabric']);
-                // echo $data[$filter['filter_column']];  // e.g.    $data['ram'];
-                // exit;
-                // if (isset($data[$filter['filter_column']])) { // check if every filter's `filter_column` is submitted by the category_filters.blade.php page
-                //     echo $data[$filter['filter_column']];
-                // }
-
                 // Firstly, for every filter in the `products_filters` table, Get the filter's (from the foreach loop) `cat_ids` using filterAvailable() method, then check if the current category_id exists in the filter cat_ids, then show the filter, if not, then don't show the filter
                 $filterAvailable = \App\Models\ProductsFilter::filterAvailable($filter['id'], $data['category_id']);
                 if ($filterAvailable == 'Yes') {
                     if (isset($filter['filter_column']) && $data[$filter['filter_column']]) { // check if every filter's `filter_column` is submitted by the category_filters.blade.php page
-                        // echo $data[$filter['filter_column']];
-                        // exit;
-
                         // Save the product filter in the `products` table
                         $product->{$filter['filter_column']} = $data[$filter['filter_column']]; // i.e. $product->filter_column = filter_value    // $data[$filter['filter_column']]    is like    $data['screen_size']    which is equal to the filter value e.g.    $data['screen_size'] = 5 to 5.4 in    // $data comes from the <select> box in category_filters.blade.php
                     }
                 }
-                                    
             }
 
 
-
-            // https://www.youtube.com/watch?v=kOYH2-Txmp4&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=218
             if ($id == '') { // if a NEW product is added by an 'admin' or 'vendor', assign those new values. Otherwise, when Edit/Update an already existing product, leave everything as is
-                // $adminType = \Auth::guard('admin')->user(); // Accessing Specific Guard Instances: https://laravel.com/docs/9.x/authentication#accessing-specific-guard-instances
-                $adminType = \Auth::guard('admin')->user()->type; // Accessing Specific Guard Instances: https://laravel.com/docs/9.x/authentication#accessing-specific-guard-instances    // Get the `type` column value of the `admins` table through Retrieving The Authenticated User (the logged in user) using the 'admin' guard which we defined in auth.php page: https://laravel.com/docs/9.x/authentication#retrieving-the-authenticated-user
+                // $adminType = Auth::guard('admin')->user(); // Accessing Specific Guard Instances: https://laravel.com/docs/9.x/authentication#accessing-specific-guard-instances
+                $adminType = Auth::guard('admin')->user()->type; // Accessing Specific Guard Instances: https://laravel.com/docs/9.x/authentication#accessing-specific-guard-instances    // Get the `type` column value of the `admins` table through Retrieving The Authenticated User (the logged in user) using the 'admin' guard which we defined in auth.php page: https://laravel.com/docs/9.x/authentication#retrieving-the-authenticated-user
                 // dd($adminType);
-                $vendor_id = \Auth::guard('admin')->user()->vendor_id; // Accessing Specific Guard Instances: https://laravel.com/docs/9.x/authentication#accessing-specific-guard-instances    // Get the `vendor_id` column value of the `admins` table through Retrieving The Authenticated User (the logged in user) using the 'admin' guard which we defined in auth.php page: https://laravel.com/docs/9.x/authentication#retrieving-the-authenticated-user
-                $admin_id  = \Auth::guard('admin')->user()->id; // Accessing Specific Guard Instances: https://laravel.com/docs/9.x/authentication#accessing-specific-guard-instances    // Get the `id` column value of the `admins` table through Retrieving The Authenticated User (the logged in user) using the 'admin' guard which we defined in auth.php page: https://laravel.com/docs/9.x/authentication#retrieving-the-authenticated-user
+                $vendor_id = Auth::guard('admin')->user()->vendor_id; // Accessing Specific Guard Instances: https://laravel.com/docs/9.x/authentication#accessing-specific-guard-instances    // Get the `vendor_id` column value of the `admins` table through Retrieving The Authenticated User (the logged in user) using the 'admin' guard which we defined in auth.php page: https://laravel.com/docs/9.x/authentication#retrieving-the-authenticated-user
+                $admin_id  = Auth::guard('admin')->user()->id; // Accessing Specific Guard Instances: https://laravel.com/docs/9.x/authentication#accessing-specific-guard-instances    // Get the `id` column value of the `admins` table through Retrieving The Authenticated User (the logged in user) using the 'admin' guard which we defined in auth.php page: https://laravel.com/docs/9.x/authentication#retrieving-the-authenticated-user
 
                 $product->admin_type = $adminType;
                 $product->admin_id   = $admin_id;
@@ -308,8 +270,7 @@ class ProductsController extends Controller
         }
 
 
-        // Get ALL the Sections with their Categories and Subcategories (Get all sections with its categories and subcategories)    // $categories are ALL the `sections` with their (parent) categories (if any (if exist)) and subcategories (if any (if exist))    // https://www.youtube.com/watch?v=-Lnk1N1jTNQ&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=47
-        // $categories = \App\Models\Section::find(1)->categories->toArray();
+        // Get ALL the Sections with their Categories and Subcategories (Get all sections with its categories and subcategories)    // $categories are ALL the `sections` with their (parent) categories (if any (if exist)) and subcategories (if any (if exist))    
         $categories = \App\Models\Section::with('categories')->get()->toArray(); // with('categories') is the relationship method name in the Section.php Model
         // dd($categories);
 
@@ -322,9 +283,9 @@ class ProductsController extends Controller
         return view('admin.products.add_edit_product')->with(compact('title', 'product', 'categories', 'brands'));
     }
 
-    public function deleteProductImage($id) { // AJAX call from admin/js/custom.js    // Delete the product image from BOTH SERVER (FILESYSTEM) & DATABASE    // $id is passed as a Route Parameter    // https://www.youtube.com/watch?v=0vLLzemWUmk&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=53
+    public function deleteProductImage($id) { // AJAX call from admin/js/custom.js    // Delete the product image from BOTH SERVER (FILESYSTEM) & DATABASE    // $id is passed as a Route Parameter    
         // Get the product image record stored in the database
-        $productImage = \App\Models\Product::select('product_image')->where('id', $id)->first(); // https://laravel.com/docs/9.x/queries#delete-statements
+        $productImage = \App\Models\Product::select('product_image')->where('id', $id)->first();
         // dd($productImage);
         
         // Get the product image three paths on the server (filesystem) ('small', 'medium' and 'large' folders)
@@ -332,20 +293,21 @@ class ProductsController extends Controller
         $medium_image_path = 'front/images/product_images/medium/';
         $large_image_path  = 'front/images/product_images/large/';
 
-        // Delete the product images on server (filesystem) (from the the THREE folders)
+        // Delete the product physical actual images on server (filesystem) (from the the THREE folders)
         // First: Delete from the 'small' folder
         if (file_exists($small_image_path . $productImage->product_image)) {
             unlink($small_image_path . $productImage->product_image);
         }
+
         // Second: Delete from the 'medium' folder
         if (file_exists($medium_image_path . $productImage->product_image)) {
             unlink($medium_image_path . $productImage->product_image);
         }
+
         // Third: Delete from the 'large' folder
         if (file_exists($large_image_path . $productImage->product_image)) {
             unlink($large_image_path . $productImage->product_image);
         }
-
 
 
         // Delete the product image name (record) from the `products` database table (Note: We won't use delete() method because we're not deleting a complete record (entry) (we're just deleting a one column `product_image` value), we will just use update() method to update the `product_image` name to an empty string value '')
@@ -353,12 +315,13 @@ class ProductsController extends Controller
 
         $message = 'Product Image has been deleted successfully!';
 
+
         return redirect()->back()->with('success_message', $message);
     }
 
-    public function deleteProductVideo($id) { // AJAX call from admin/js/custom.js    // Delete the product video from BOTH SERVER (FILESYSTEM) & DATABASE    // $id is passed as a Route Parameter    // https://www.youtube.com/watch?v=0vLLzemWUmk&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=53
+    public function deleteProductVideo($id) { // AJAX call from admin/js/custom.js    // Delete the product video from BOTH SERVER (FILESYSTEM) & DATABASE    // $id is passed as a Route Parameter    
         // Get the product video record stored in the database
-        $productVideo = \App\Models\Product::select('product_video')->where('id', $id)->first(); // https://laravel.com/docs/9.x/queries#delete-statements
+        $productVideo = \App\Models\Product::select('product_video')->where('id', $id)->first();
         // dd($productVideo);
         
         // Get the product video path on the server (filesystem)
@@ -377,22 +340,14 @@ class ProductsController extends Controller
         return redirect()->back()->with('success_message', $message);
     }
 
-    public function addAttributes(Request $request, $id) { // Add/Edit Attributes function    // https://www.youtube.com/watch?v=gaLXLO5knpc&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=52
-        \Session::put('page', 'products');
+    public function addAttributes(Request $request, $id) { // Add/Edit Attributes function    
+        Session::put('page', 'products');
 
-        // $product = \App\Models\Product::find($id);
-        // $product = \App\Models\Product::with('attributes')->find($id); // with('attributes') is the relationship method name in the Product.php model
-        // $product = \App\Models\Product::with('attributes')->find($id)->toArray(); // with('attributes') is the relationship method name in the Product.php model
         $product = \App\Models\Product::select('id', 'product_name', 'product_code', 'product_color', 'product_price', 'product_image')->with('attributes')->find($id); // with('attributes') is the relationship method name in the Product.php model
-        // dd($product);
-        // dd(json_decode(json_encode($product), true));
-        // dd($product->attributes); // is the same as:    dd($product['attributes']);
-        // dd($product['attributes']);  // is the same as:    dd($product->attributes);
 
         if ($request->isMethod('post')) { // When the <form> is submitted
             $data = $request->all();
             // dd($data);
-            // dd($data['sku']);
 
             foreach ($data['sku'] as $key => $value) { // or instead could be: $data['size'], $data['price'] or $data['stock']
                 // echo '<pre>', var_dump($key), '</pre>';
@@ -413,7 +368,6 @@ class ProductsController extends Controller
                     }
 
 
-                    // $attribute = new \app\Models\ProductsAttribute();
                     $attribute = new \App\Models\ProductsAttribute;
 
                     $attribute->product_id = $id; // $id is passed in up there to the addAttributes() method
@@ -428,7 +382,6 @@ class ProductsController extends Controller
             }
             return redirect()->back()->with('success_message', 'Product Attributes have been addded successfully!');
         }
-        // exit;
 
 
         return view('admin.attributes.add_edit_attributes')->with(compact('product'));
@@ -437,9 +390,7 @@ class ProductsController extends Controller
     public function updateAttributeStatus(Request $request) { // Update Attribute Status using AJAX in add_edit_attributes.blade.php
         if ($request->ajax()) { // if the request is coming via an AJAX call
             $data = $request->all(); // Getting the name/value pairs array that are sent from the AJAX request (AJAX call)
-            // dd($data); // dd() method DOESN'T WORK WITH AJAX! - SHOWS AN ERROR!! USE var_dump() and exit; INSTEAD!
-            // echo '<pre>', var_dump($data), '</pre>';
-            // exit;
+            // dd($data);
 
             if ($data['status'] == 'Active') { // $data['status'] comes from the 'data' object inside the $.ajax() method    // reverse the 'status' from (ative/inactive) 0 to 1 and 1 to 0 (and vice versa)
                 $status = 0;
@@ -449,7 +400,6 @@ class ProductsController extends Controller
 
 
             \App\Models\ProductsAttribute::where('id', $data['attribute_id'])->update(['status' => $status]); // $data['attribute_id'] comes from the 'data' object inside the $.ajax() method
-            // echo '<pre>', var_dump($data), '</pre>';
 
             return response()->json([ // JSON Responses: https://laravel.com/docs/9.x/responses#json-responses
                 'status'       => $status,
@@ -459,18 +409,13 @@ class ProductsController extends Controller
     }
 
     public function editAttributes(Request $request) {
-        \Session::put('page', 'products');
+        Session::put('page', 'products');
 
         if ($request->isMethod('post')) { // if the <form> is submitted
             $data = $request->all();
             // dd($data);
-            // dd($request->attributeId);
-            // dd($data['attributeId']);
 
             foreach ($data['attributeId'] as $key => $attribute) {
-                // dd($key);
-                // dd($attribute);
-
                 if (!empty($attribute)) {
                     \App\Models\ProductsAttribute::where([
                         'id' => $data['attributeId'][$key]
@@ -486,7 +431,7 @@ class ProductsController extends Controller
     }
 
     public function addImages(Request $request, $id) { // $id is the URL Paramter (slug) passed from the URL
-        \Session::put('page', 'products');
+        Session::put('page', 'products');
 
         $product = \App\Models\Product::select('id', 'product_name', 'product_code', 'product_color', 'product_price', 'product_image')->with('images')->find($id); // with('images') is the relationship method name in the Product.php model
 
@@ -501,8 +446,8 @@ class ProductsController extends Controller
 
                 foreach ($images as $key => $image) {
                     // Uploading the images:
-                    // Generate Temmp Image
-                    $image_tmp = \Image::make($image);
+                    // Generate Temp Image
+                    $image_tmp = Image::make($image);
 
                     // Get image name
                     $image_name = $image->getClientOriginalName();
@@ -521,9 +466,9 @@ class ProductsController extends Controller
                     $smallImagePath  = 'front/images/product_images/small/'  . $imageName; // 'small'  images folder
 
                     // Upload the image using the 'Intervention' package and save it in our THREE paths (folders) inside the 'public' folder
-                    \Image::make($image_tmp)->resize(1000, 1000)->save($largeImagePath);  // resize the 'large'  image size then store it in the 'large'  folder
-                    \Image::make($image_tmp)->resize(500,   500)->save($mediumImagePath); // resize the 'medium' image size then store it in the 'medium' folder
-                    \Image::make($image_tmp)->resize(250,   250)->save($smallImagePath);  // resize the 'small'  image size then store it in the 'small'  folder
+                    Image::make($image_tmp)->resize(1000, 1000)->save($largeImagePath);  // resize the 'large'  image size then store it in the 'large'  folder
+                    Image::make($image_tmp)->resize(500,   500)->save($mediumImagePath); // resize the 'medium' image size then store it in the 'medium' folder
+                    Image::make($image_tmp)->resize(250,   250)->save($smallImagePath);  // resize the 'small'  image size then store it in the 'small'  folder
                 
                     // Insert the image name in the database table `products_images`
                     $image = new \App\Models\ProductsImage;
@@ -546,9 +491,7 @@ class ProductsController extends Controller
     public function updateImageStatus(Request $request) { // Update Image Status using AJAX in add_images.blade.php
         if ($request->ajax()) { // if the request is coming via an AJAX call
             $data = $request->all(); // Getting the name/value pairs array that are sent from the AJAX request (AJAX call)
-            // dd($data); // dd() method DOESN'T WORK WITH AJAX! - SHOWS AN ERROR!! USE var_dump() and exit; INSTEAD!
-            // echo '<pre>', var_dump($data), '</pre>';
-            // exit;
+            // dd($data);
 
             if ($data['status'] == 'Active') { // $data['status'] comes from the 'data' object inside the $.ajax() method    // reverse the 'status' from (ative/inactive) 0 to 1 and 1 to 0 (and vice versa)
                 $status = 0;
@@ -558,7 +501,6 @@ class ProductsController extends Controller
 
 
             \App\Models\ProductsImage::where('id', $data['image_id'])->update(['status' => $status]); // $data['image_id'] comes from the 'data' object inside the $.ajax() method
-            // echo '<pre>', var_dump($data), '</pre>';
 
             return response()->json([ // JSON Responses: https://laravel.com/docs/9.x/responses#json-responses
                 'status'   => $status,
@@ -567,9 +509,9 @@ class ProductsController extends Controller
         }
     }
 
-    public function deleteImage($id) { // AJAX call from admin/js/custom.js    // Delete the product image from BOTH SERVER (FILESYSTEM) & DATABASE    // $id is passed as a Route Parameter    // https://www.youtube.com/watch?v=N4LL5J2daCE&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=60
+    public function deleteImage($id) { // AJAX call from admin/js/custom.js    // Delete the product image from BOTH SERVER (FILESYSTEM) & DATABASE    // $id is passed as a Route Parameter    
         // Get the product image record stored in the database
-        $productImage = \App\Models\ProductsImage::select('image')->where('id', $id)->first(); // https://laravel.com/docs/9.x/queries#delete-statements
+        $productImage = \App\Models\ProductsImage::select('image')->where('id', $id)->first();
         // dd($productImage);
         
         // Get the product image three paths on the server (filesystem) ('small', 'medium' and 'large' folders)
@@ -582,15 +524,16 @@ class ProductsController extends Controller
         if (file_exists($small_image_path . $productImage->image)) {
             unlink($small_image_path . $productImage->image);
         }
+
         // Second: Delete from the 'medium' folder
         if (file_exists($medium_image_path . $productImage->image)) {
             unlink($medium_image_path . $productImage->image);
         }
+
         // Third: Delete from the 'large' folder
         if (file_exists($large_image_path . $productImage->image)) {
             unlink($large_image_path . $productImage->image);
         }
-
 
 
         // Delete the product image name (record) from the `products_images` database table

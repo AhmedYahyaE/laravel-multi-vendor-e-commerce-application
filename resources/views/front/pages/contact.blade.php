@@ -1,9 +1,5 @@
-{{-- https://www.youtube.com/watch?v=FIdyrw6La4g&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=204 --}}
 {{-- This page is rendered by contact() method inside Front/CmsController.php --}}
-
-
 @extends('front.layout.layout')
-
 
 
 @section('content')
@@ -34,8 +30,7 @@
                         <h1 class="contact-h1">Get In Touch With Us</h1>
 
 
-                        {{-- Displaying Laravel Validation Errors: https://laravel.com/docs/9.x/validation#quick-displaying-the-validation-errors --}}    {{-- Check 17:38 in https://www.youtube.com/watch?v=ydubcZC3Hbw&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=18 --}}
-                        {{-- https://www.youtube.com/watch?v=oAZKXYrkcr4&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=17 --}}
+                        {{-- Displaying Laravel Validation Errors: https://laravel.com/docs/9.x/validation#quick-displaying-the-validation-errors --}}    
                         {{-- Determining If An Item Exists In The Session (using has() method): https://laravel.com/docs/9.x/session#determining-if-an-item-exists-in-the-session --}}
                         @if (Session::has('error_message')) <!-- Check AdminController.php, updateAdminPassword() method -->
                             <div class="alert alert-danger alert-dismissible fade show" role="alert">
@@ -48,14 +43,9 @@
 
 
 
-                        {{-- Displaying Laravel Validation Errors: https://laravel.com/docs/9.x/validation#quick-displaying-the-validation-errors --}}    {{-- Check 17:38 in https://www.youtube.com/watch?v=ydubcZC3Hbw&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=18 --}}
+                        {{-- Displaying Laravel Validation Errors: https://laravel.com/docs/9.x/validation#quick-displaying-the-validation-errors --}}    
                         @if ($errors->any())
                             <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                {{-- <strong>Error:</strong> {{ Session::get('error_message') }} --}}
-
-                                {{-- @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach --}}
 
                                 @php
                                     echo implode('', $errors->all('<div>:message</div>'))
@@ -68,10 +58,9 @@
                         @endif
 
 
-                        {{-- Displaying The Validation Errors: https://laravel.com/docs/9.x/validation#quick-displaying-the-validation-errors AND https://laravel.com/docs/9.x/blade#validation-errors --}} {{-- https://www.youtube.com/watch?v=QbEFPGnTdBc&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=99 --}}
+                        {{-- Displaying The Validation Errors: https://laravel.com/docs/9.x/validation#quick-displaying-the-validation-errors AND https://laravel.com/docs/9.x/blade#validation-errors --}} 
                         {{-- Determining If An Item Exists In The Session (using has() method): https://laravel.com/docs/9.x/session#determining-if-an-item-exists-in-the-session --}}
                         {{-- Our Bootstrap success message in case of updating admin password is successful: --}}
-                        {{-- https://www.youtube.com/watch?v=oAZKXYrkcr4&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=17 --}}
                         {{-- Displaying Success Message --}}
                         @if (Session::has('success_message')) <!-- Check vendorRegister() method in Front/VendorController.php -->
                             <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -81,7 +70,6 @@
                                 </button>
                             </div>
                         @endif
-
 
 
                         <form action="{{ url('contact') }}" method="post">

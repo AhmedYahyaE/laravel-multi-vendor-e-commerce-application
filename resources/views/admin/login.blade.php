@@ -24,9 +24,6 @@
                     <div class="row w-100 mx-0">
                         <div class="col-lg-4 mx-auto">
                             <div class="auth-form-light text-left py-5 px-4 px-sm-5">
-                                {{-- <div class="brand-logo"> --}}
-                                    {{-- <img src="{{ asset('admin/images/logo.svg') }}" alt="logo"> --}}
-                                {{-- </div> --}}
                                 <h4>Hello! let's get started</h4>
                                 <h6 class="font-weight-light">Sign in to continue.</h6>
 
@@ -42,10 +39,10 @@
                                     </div>
                                 @endif
                                 
-                                {{-- Displaying Laravel Validation Errors: https://laravel.com/docs/9.x/validation#quick-displaying-the-validation-errors --}}    {{-- Check 7:25 in https://www.youtube.com/watch?v=IiyqoBUrkZA&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=12 --}}
+                                {{-- Displaying Laravel Validation Errors: https://laravel.com/docs/9.x/validation#quick-displaying-the-validation-errors --}}    
                                 @if ($errors->any())
                                     <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                        {{-- <strong>Error:</strong> {{ Session::get('error_message') }} --}}
+    
 
                                         @foreach ($errors->all() as $error)
                                             <li>{{ $error }}</li>
@@ -58,7 +55,7 @@
                                 @endif
 
 
-                                {{-- Our code: https://www.youtube.com/watch?v=_vBCl-77GYc&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=11 --}}
+                                {{-- My code --}}
                                 <form class="pt-3" action="{{ url('admin/login') }}" method="post">
                                     @csrf {{-- https://laravel.com/docs/9.x/csrf#preventing-csrf-requests --}}
 
@@ -70,9 +67,8 @@
                                         <input type="password" name="password" id="password" class="form-control form-control-lg" id="exampleInputPassword1" placeholder="Password" required>
                                     </div>
                                     <div class="mt-3">
-                                        {{-- <a class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn" href="../../index.html">SIGN IN</a> --}}
                                         
-                                        {{-- Our code: --}}
+                                        {{-- My code: --}}
                                         <button type="submit" class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn">SIGN IN</button>
 
                                     </div>

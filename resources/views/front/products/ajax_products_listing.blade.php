@@ -2,14 +2,11 @@
 {{-- <div class="row product-container list-style"> --}}
 <div class="row product-container grid-style">
 
-
-
     @foreach ($categoryProducts as $product)
         <div class="product-item col-lg-4 col-md-6 col-sm-6">
             <div class="item">
                 <div class="image-container">
                     <a class="item-img-wrapper-link" href="{{ url('product/' . $product['id']) }}">
-
 
 
                         @php
@@ -21,7 +18,6 @@
                         @else {{-- show the dummy image --}}
                             <img class="img-fluid" src="{{ asset('front/images/product_images/small/no-image.png') }}" alt="Product">
                         @endif
-
 
 
                     </a>
@@ -57,17 +53,11 @@
 
 
                         </div>
-                        {{-- <div class="item-stars">
-                            <div class='star' title="4.5 out of 5 - based on 23 Reviews">
-                                <span style='width:67px'></span>
-                            </div>
-                            <span>(23)</span>
-                        </div> --}}
                     </div>
 
 
 
-                    {{-- Call the static getDiscountPrice() method in the Product.php Model to determine the final price of a product because a product can have a discount from TWO things: either a `CATEGORY` discount or `PRODUCT` discout    // Check 19:09 in https://www.youtube.com/watch?v=T_CWdKW5he0&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=72 --}}
+                    {{-- Call the static getDiscountPrice() method in the Product.php Model to determine the final price of a product because a product can have a discount from TWO things: either a `CATEGORY` discount or `PRODUCT` discout     --}}
                     @php
                         $getDiscountPrice = \App\Models\Product::getDiscountPrice($product['id']);
                     @endphp
@@ -76,16 +66,16 @@
                     @if ($getDiscountPrice > 0) {{-- If there's a discount on the price, show the price before (the original price) and after (the new price) the discount --}}
                         <div class="price-template">
                             <div class="item-new-price">
-                                Rs.{{ $getDiscountPrice }} {{-- 'Rs' means Rupees the Indian currency --}}
+                                EGP{{ $getDiscountPrice }}
                             </div>
                             <div class="item-old-price">
-                                Rs.{{ $product['product_price'] }}
+                                EGP{{ $product['product_price'] }}
                             </div>
                         </div>
                     @else {{-- if there's no discount on the price, show the original price --}}
                         <div class="price-template">
                             <div class="item-new-price">
-                                Rs.{{ $product['product_price'] }}
+                                EGP{{ $product['product_price'] }}
                             </div>
                         </div>
                     @endif
@@ -96,7 +86,7 @@
 
 
 
-                {{-- https://www.youtube.com/watch?v=tQNmKdQ-f-s&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=79 --}}
+                
                 @php
                     $isProductNew = \App\Models\Product::isProductNew($product['id'])
                 @endphp

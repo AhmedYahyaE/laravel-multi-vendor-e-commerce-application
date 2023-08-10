@@ -16,7 +16,7 @@ class SectionsTableSeeder extends Seeder
     {
         //
 
-        // Databas Seeding: https://www.youtube.com/watch?v=E5kNg68u3lw&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=32
+        // Databas Seeding
         // Note: Check DatabaseSeeder.php        
         $sectionRecords = [
             ['id' => 1, 'name' => 'Clothing'   , 'status' => 1],

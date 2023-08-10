@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('delivery_addresses', function (Blueprint $table) {
             $table->id();
 
-            // https://www.youtube.com/watch?v=anlZdqno-nw&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=151
+            
             $table->integer('user_id');
             $table->string('name');
             $table->string('address');

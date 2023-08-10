@@ -16,7 +16,7 @@ class CategoriesTableSeeder extends Seeder
     {
         //
 
-        // Databas Seeding: https://www.youtube.com/watch?v=80wL_AEQzAE&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=35
+        // Databas Seeding
         // Note: Check DatabaseSeeder.php
         $categoryRecords = [
             [

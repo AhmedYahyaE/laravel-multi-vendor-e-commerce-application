@@ -1,4 +1,3 @@
-{{-- https://www.youtube.com/watch?v=4d_Hq33jihY&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=164 --}}
 {{-- This page is rendered by orders() method inside Front/OrderController.php (depending on if the order id Optional Parameter (slug) is passed in or not) --}}
 
 
@@ -47,11 +46,11 @@
                     </tr>
                     <tr>
                         <td>Order Total</td>
-                        <td>Rs.{{ $orderDetails['grand_total'] }}</td>
+                        <td>EGP{{ $orderDetails['grand_total'] }}</td>
                     </tr>
                     <tr>
                         <td>Shipping Charges</td>
-                        <td>Rs.{{ $orderDetails['shipping_charges'] }}</td>
+                        <td>EGP{{ $orderDetails['shipping_charges'] }}</td>
                     </tr>
 
                     @if ($orderDetails['coupon_code'] != '')
@@ -61,11 +60,11 @@
                         </tr>
                         <tr>
                             <td>Coupon Amount</td>
-                            <td>Rs.{{ $orderDetails['coupon_amount'] }}</td>
+                            <td>EGP{{ $orderDetails['coupon_amount'] }}</td>
                         </tr>
                     @endif
 
-                    {{-- https://www.youtube.com/watch?v=WNCFYaSv-N4&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=173 --}}
+                    
                     @if ($orderDetails['courier_name'] != '')
                         <tr>
                             <td>Courier Name</td>
@@ -111,7 +110,7 @@
                             <td>{{ $product['product_qty'] }}</td>
                         </tr>
 
-                        {{-- https://www.youtube.com/watch?v=WNCFYaSv-N4&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=173 --}}
+                        
                         @if ($product['courier_name'] != '')
                             <tr>
                                 <td colspan="6">Courier Name: {{ $product['courier_name'] }}, Tracking Number: {{ $product['tracking_number'] }}</td>

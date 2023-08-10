@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('prepaid_pincodes', function (Blueprint $table) {
-            // https://www.youtube.com/watch?v=djYkP9S30lE&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=197
+            
             $table->id();
 
             $table->string('pincode', 10);

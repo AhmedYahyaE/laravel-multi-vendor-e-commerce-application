@@ -14,7 +14,7 @@ class CouponsTableSeeder extends Seeder
      */
     public function run()
     {
-        // https://www.youtube.com/watch?v=egx7-Hmb63Q&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=142
+        
         // Note: Check DatabaseSeeder.php!
         $couponRecords = [
             [

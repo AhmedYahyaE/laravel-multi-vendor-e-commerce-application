@@ -15,7 +15,7 @@ class VendorsBankDetailsTableSeeder extends Seeder
     public function run()
     {
 
-        // https://www.youtube.com/watch?v=wMJH5FrP1G8&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=21
+        
         // Note: Check DatabaseSeeder.php
         $vendorsBankDetailsRecords = [
             [

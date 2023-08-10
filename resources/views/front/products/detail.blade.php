@@ -1,12 +1,9 @@
-{{-- Check 19:09 in https://www.youtube.com/watch?v=fv9ZnNRKBBE&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=103 --}}
 {{-- Note: front/products/detail.blade.php is the page that opens when you click on a product in the FRONT home page --}} {{-- $productDetails, categoryDetails and $totalStock are passed in from detail() method in Front/ProductsController.php --}}
-
-
 @extends('front.layout.layout')
 
 
 @section('content')
-    {{-- Star Rating (of a Product) (in the "Reviews" tab). Check https://codepen.io/hesguru/pen/BaybqXv    AND    Check https://www.youtube.com/watch?v=YlZPh9rb7Bw&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=226 --}}
+    {{-- Star Rating (of a Product) (in the "Reviews" tab) --}}
     <style>
         *{
             margin: 0;
@@ -48,8 +45,6 @@
         .rate > label:hover ~ input:checked ~ label {
             color: #c59b08;
         }
-
-        /* Modified from: https://github.com/mukulkant/Star-rating-using-pure-css */
     </style>
 
 
@@ -81,40 +76,29 @@
 
 
 
-                    {{-- EasyZoom plugin for zooming product images upon hover: https://www.youtube.com/watch?v=bWV92NrhyOk&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=108 --}}
-                    {{-- Our EasyZoom (jQuery image zoom plugin): https://i-like-robots.github.io/EasyZoom/ --}}
+                    {{-- EasyZoom plugin for zooming product images upon hover --}}
+                    {{-- My EasyZoom (jQuery image zoom plugin): https://i-like-robots.github.io/EasyZoom/ --}}
 
                     <!-- Product-zoom-area -->
-                    {{-- <div class="zoom-area"> --}}
-                    <div class="easyzoom easyzoom--overlay easyzoom--with-thumbnails"> {{-- EasyZoom plugin: https://www.youtube.com/watch?v=bWV92NrhyOk&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=108 --}}
+                    <div class="easyzoom easyzoom--overlay easyzoom--with-thumbnails"> {{-- EasyZoom plugin --}}
                         <a      href="{{ asset('front/images/product_images/large/' . $productDetails['product_image']) }}">
                             <img src="{{ asset('front/images/product_images/large/' . $productDetails['product_image']) }}" alt="" width="500" height="500" />
                         </a>
-                        {{-- Show the Main image (`product_image` in `products` table) --}}
-                        {{-- <img id="zoom-pro" class="img-fluid" src="{{ asset('front/images/product_images/large/' . $productDetails['product_image']) }}" data-zoom-image="{{ asset('front/images/product_images/large/' . $productDetails['product_image']) }}" alt="Zoom Image"> --}}
                     </div>
 
-                    {{-- <div id="gallery" class="u-s-m-t-10"> --}}
-                    <div class="thumbnails" style="margin-top: 30px"> {{-- EasyZoom plugin: https://www.youtube.com/watch?v=bWV92NrhyOk&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=108 --}}
+                    <div class="thumbnails" style="margin-top: 30px"> {{-- EasyZoom plugin --}}
                         <a      href="{{ asset('front/images/product_images/large/' . $productDetails['product_image']) }}" data-standard="{{ asset('front/images/product_images/small/' . $productDetails['product_image']) }}">
                             <img src="{{ asset('front/images/product_images/small/' . $productDetails['product_image']) }}" width="120" height="120" alt="" />
                         </a>
-                        {{-- Show the product main image (`product_image` in `products` table) as the first image --}}
-                        {{-- <a class="active" data-image="{{ asset('front/images/product_images/large/' . $productDetails['product_image']) }}" data-zoom-image="{{ asset('front/images/product_images/large/' . $productDetails['product_image']) }}">
-                            <img src="{{ asset('front/images/product_images/large/' . $productDetails['product_image']) }}" width="120" height="120" alt="Product">
-                        </a> --}}
 
 
 
                         {{-- Show the product Alternative images (`image` in `products_images` table) --}}
                         @foreach ($productDetails['images'] as $image)
-                            {{-- EasyZoom plugin: https://www.youtube.com/watch?v=bWV92NrhyOk&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=108 --}}
+                            {{-- EasyZoom plugin --}}
                             <a      href="{{ asset('front/images/product_images/large/' . $image['image']) }}" data-standard="{{ asset('front/images/product_images/small/' . $image['image']) }}">
                                 <img src="{{ asset('front/images/product_images/small/' . $image['image']) }}" width="120" height="120" alt="" />
                             </a>
-                            {{-- <a data-image="{{ asset('front/images/product_images/large/' . $image['image']) }}" data-zoom-image="{{ asset('front/images/product_images/large/' . $image['image']) }}">
-                                <img       src="{{ asset('front/images/product_images/large/' . $image['image']) }}" width="120" height="120" alt="Product">
-                            </a> --}}
                         @endforeach
 
 
@@ -127,10 +111,7 @@
                     <div class="all-information-wrapper">
 
 
-                        {{-- https://www.youtube.com/watch?v=qMa1g05oX74&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=117 --}}
-
-                        {{-- Our Bootstrap error code in case of wrong current password or the new password and confirm password are not matching: --}}
-                        {{-- https://www.youtube.com/watch?v=oAZKXYrkcr4&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=17 --}}
+                        {{-- My Bootstrap error code in case of wrong current password or the new password and confirm password are not matching: --}}
                         {{-- Determining If An Item Exists In The Session (using has() method): https://laravel.com/docs/9.x/session#determining-if-an-item-exists-in-the-session --}}
                         @if (Session::has('error_message')) <!-- Check AdminController.php, updateAdminPassword() method -->
                             <div class="alert alert-danger alert-dismissible fade show" role="alert">
@@ -142,10 +123,9 @@
                         @endif
 
 
-                        {{-- Displaying Laravel Validation Errors: https://laravel.com/docs/9.x/validation#quick-displaying-the-validation-errors --}}    {{-- Check 17:38 in https://www.youtube.com/watch?v=ydubcZC3Hbw&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=18 --}}
+                        {{-- Displaying Laravel Validation Errors: https://laravel.com/docs/9.x/validation#quick-displaying-the-validation-errors --}}    
                         @if ($errors->any())
                             <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                {{-- <strong>Error:</strong> {{ Session::get('error_message') }} --}}
 
                                 @foreach ($errors->all() as $error)
                                     <li>{{ $error }}</li>
@@ -160,14 +140,11 @@
 
                         {{-- Displaying The Validation Errors: https://laravel.com/docs/9.x/validation#quick-displaying-the-validation-errors AND https://laravel.com/docs/9.x/blade#validation-errors --}}
                         {{-- Determining If An Item Exists In The Session (using has() method): https://laravel.com/docs/9.x/session#determining-if-an-item-exists-in-the-session --}}
-                        {{-- Our Bootstrap success message in case of updating admin password is successful: --}}
-                        {{-- https://www.youtube.com/watch?v=oAZKXYrkcr4&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=17 --}}
+                        {{-- My Bootstrap success message in case of updating admin password is successful: --}}
                         @if (Session::has('success_message')) <!-- Check AdminController.php, updateAdminPassword() method -->
                             <div class="alert alert-success alert-dismissible fade show" role="alert">
-                                {{-- <strong>Success:</strong> {{ Session::get('success_message') }} --}} {{-- Displaying Data: https://laravel.com/docs/9.x/blade#displaying-data --}}
 
                                 {{-- There are TWO ways to: Displaying Unescaped Data: https://laravel.com/docs/9.x/blade#displaying-unescaped-data --}}
-                                {{--    <strong>Success:</strong> {!! Session::get('success_message') !!}    --}} {{-- Displaying Unescaped Data: https://laravel.com/docs/9.x/blade#displaying-unescaped-data --}}
                                 <strong>Success:</strong> @php echo Session::get('success_message') @endphp       {{-- Displaying Unescaped Data: https://laravel.com/docs/9.x/blade#displaying-unescaped-data --}}
 
                                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -196,15 +173,6 @@
                                     <a href="javascript:;">{{ $productDetails['section']['name'] }}</a> {{-- Section Name --}}
                                 </li>
                                 @php echo $categoryDetails['breadcrumbs'] @endphp {{-- $categoryDetails is passed in from detail() method in Front/ProductsController.php --}}
-                                {{-- <li class="has-separator">
-                                    <a href="shop-v1-root-category.html">Men Clothing </a>
-                                </li>
-                                <li class="has-separator">
-                                    <a href="listing.html">Tops</a>
-                                </li>
-                                <li class="is-marked">
-                                    <a href="shop-v3-sub-sub-category.html">Hoodies</a>
-                                </li> --}}
                             </ul>
                             {{-- Breadcrumb --}}
 
@@ -212,7 +180,6 @@
 
                             <div class="product-rating">
                                 <div title="{{ $avgRating }} out of 5 - based on {{ count($ratings) }} Reviews">
-                                    {{-- <span style='width:67px'></span> --}}
 
                                     {{-- Show/Display the Rating Stars --}}
                                     @if ($avgStarRating > 0) {{-- If the product has been rated at least once, show the "Stars" HTML Entities --}}
@@ -247,23 +214,15 @@
 
                                 @if ($getDiscountPrice > 0) {{-- if there's a discount on the product price --}}
                                     <div class="price">
-                                        <h4>Rs.{{ $getDiscountPrice }}</h4>
+                                        <h4>EGP{{ $getDiscountPrice }}</h4>
                                     </div>
                                     <div class="original-price">
                                         <span>Original Price:</span>
-                                        <span>Rs.{{ $productDetails['product_price'] }}</span> {{-- the product original price (without discount) --}}
+                                        <span>EGP{{ $productDetails['product_price'] }}</span> {{-- the product original price (without discount) --}}
                                     </div>
-                                    {{-- <div class="discount-price">
-                                        <span>Discount:</span>
-                                        <span>15%</span>
-                                    </div>
-                                    <div class="total-save">
-                                        <span>Save:</span>
-                                        <span>$20</span>
-                                    </div> --}}
                                 @else {{-- if there's no discount on the product price --}}
                                     <div class="price">
-                                        <h4>Rs.{{ $productDetails['product_price'] }}</h4> {{-- the product original price (without discount) --}}
+                                        <h4>EGP{{ $productDetails['product_price'] }}</h4> {{-- the product original price (without discount) --}}
                                     </div>
                                 @endif
 
@@ -286,8 +245,6 @@
                                 <span>Availability:</span>
 
 
-
-                                {{-- https://www.youtube.com/watch?v=0Bpk4JfwvpI&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=105 --}}
                                 @if ($totalStock > 0)
                                     <span>In Stock</span>
                                 @else
@@ -313,11 +270,11 @@
 
 
 
-                        {{-- Show the vendor shop name (only in case that the product is added by a vendor, not admin or superadmin) --}} {{-- https://www.youtube.com/watch?v=uu8CBDsWD7g&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=109 --}}
+                        {{-- Show the vendor shop name (only in case that the product is added by a vendor, not admin or superadmin) --}}
                         @if(isset($productDetails['vendor']))
                             <div>
                                 {{-- Sold by: {{ $productDetails['vendor']['name'] }} --}}
-                                Sold by: <a href="/products/{{ $productDetails['vendor']['id'] }}"> {{-- https://www.youtube.com/watch?v=S8xbldfdLXc&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=111 --}}
+                                Sold by: <a href="/products/{{ $productDetails['vendor']['id'] }}">
                                             {{ $productDetails['vendor']['vendorbusinessdetails']['shop_name'] }}
                                         </a>
                             </div>
@@ -325,30 +282,19 @@
 
 
 
-                        {{-- Add to Cart <form> --}} {{-- https://www.youtube.com/watch?v=LmovzZ9zdzE&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=116 --}}
+                        {{-- Add to Cart <form> --}} 
                         <form action="{{ url('cart/add') }}" method="Post" class="post-form">
                             @csrf {{-- Preventing CSRF Requests: https://laravel.com/docs/9.x/csrf#preventing-csrf-requests --}}
 
 
-                            <input type="hidden" name="product_id" value="{{ $productDetails['id'] }}"> {{-- Add to Cart <form> --}} {{-- https://www.youtube.com/watch?v=LmovzZ9zdzE&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=116 --}}
+                            <input type="hidden" name="product_id" value="{{ $productDetails['id'] }}"> {{-- Add to Cart <form> --}} 
 
 
                             <div class="section-5-product-variants u-s-p-y-14">
-                                {{-- <h6 class="information-heading u-s-m-b-8">Product Variants:</h6>
-                                <div class="color u-s-m-b-11">
-                                    <span>Available Color:</span>
-                                    <div class="color-variant select-box-wrapper">
-                                        <select class="select-box product-color">
-                                            <option value="1">Heather Grey</option>
-                                            <option value="3">Black</option>
-                                            <option value="5">White</option>
-                                        </select>
-                                    </div>
-                                </div> --}}
 
 
 
-                                {{-- Managing Product Colors (using the `group_code` column in `products` table) --}} {{-- https://www.youtube.com/watch?v=Nle1w37JW2k&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=115 --}}
+                                {{-- Managing Product Colors (using the `group_code` column in `products` table) --}} 
                                 @if (count($groupProducts) > 0) {{-- if there's a value for the `group_code` column (in `products` table) for the currently viewed product --}}
                                     <div>
                                         <div><strong>Product Colors</strong></div>
@@ -378,66 +324,16 @@
 
 
 
-                                            {{-- <option value="">Male 3XL</option>
-                                            <option value="">Kids 4</option>
-                                            <option value="">Kids 6</option>
-                                            <option value="">Kids 8</option>
-                                            <option value="">Kids 10</option>
-                                            <option value="">Kids 12</option>
-                                            <option value="">Female Small</option>
-                                            <option value="">Male Small</option>
-                                            <option value="">Female Medium</option>
-                                            <option value="">Male Medium</option>
-                                            <option value="">Female Large</option>
-                                            <option value="">Male Large</option>
-                                            <option value="">Female XL</option>
-                                            <option value="">Male XL</option> --}}
                                         </select>
                                     </div>
                                 </div>
                             </div>
                             <div class="section-6-social-media-quantity-actions u-s-p-y-14">
 
-
-
-                                {{-- <div class="quick-social-media-wrapper u-s-m-b-22">
-                                    <span>Share:</span>
-                                    <ul class="social-media-list">
-                                        <li>
-                                            <a href="#">
-                                                <i class="fab fa-facebook-f"></i>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#">
-                                                <i class="fab fa-twitter"></i>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#">
-                                                <i class="fab fa-google-plus-g"></i>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#">
-                                                <i class="fas fa-rss"></i>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#">
-                                                <i class="fab fa-pinterest"></i>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div> --}}
-
                                 
                                 <div class="quantity-wrapper u-s-m-b-22">
                                     <span>Quantity:</span>
                                     <div class="quantity">
-                                        {{-- <input type="text" class="quantity-text-field" value="1">
-                                        <a class="plus-a" data-max="1000">&#43;</a>
-                                        <a class="minus-a" data-min="1">&#45;</a> --}}
                                         <input class="quantity-text-field" type="number" name="quantity" value="1">
                                     </div>
                                 </div>
@@ -453,7 +349,7 @@
                         </form>
 
 
-                        {{-- PIN code Availability Check: check if the PIN code of the user's Delivery Address exists in our database (in both `cod_pincodes` and `prepaid_pincodes`) or not via AJAX. Check front/js/custom.js --}} {{-- https://www.youtube.com/watch?v=YxAjr_JMchA&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=198 --}}
+                        {{-- PIN code Availability Check: check if the PIN code of the user's Delivery Address exists in our database (in both `cod_pincodes` and `prepaid_pincodes`) or not via AJAX. Check front/js/custom.js --}} 
                         <br><br><b>Delivery</b>
                         <input type="text" id="pincode" placeholder="Check Pincode" required>
                         <button type="button" id="checkPincode">Go</button> {{-- We'll use that checkPincode HTML id attribute in front/js/custom.js as a handle for jQuery --}}
@@ -499,8 +395,6 @@
 
 
 
-                                    {{-- <img class="desc-img img-fluid u-s-m-b-26" src="{{ asset('front/images/product/product@3x.jpg') }}" alt="Product"> --}}
-                                    {{-- <iframe class="desc-iframe u-s-m-b-45" width="710" height="400" src="{{ asset('front/images/product/iframe-youtube.jpg') }}" allowfullscreen></iframe> --}}
                                 </div>
                             </div>
                             <!-- Description-Tab /- -->
@@ -513,9 +407,7 @@
 
 
 
-                                            {{-- https://www.youtube.com/watch?v=iEqfJk_ye7M&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=107 --}}
                                             @php
-                                                // https://www.youtube.com/watch?v=Rr2tkfVtVMc&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=86
                                                 $productFilters = \App\Models\ProductsFilter::productFilters(); // Get ALL the (enabled/active) Filters
                                                 // dd($productFilters);
                                             @endphp
@@ -621,7 +513,7 @@
                                         <div class="col-lg-12">
 
 
-                                            {{-- Star Rating (of a Product) (in the "Reviews" tab). Check https://codepen.io/hesguru/pen/BaybqXv    AND    Check https://www.youtube.com/watch?v=YlZPh9rb7Bw&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=226 --}}
+                                            {{-- Star Rating (of a Product) (in the "Reviews" tab). --}}
                                             <form method="POST" action="{{ url('add-rating') }}" name="formRating" id="formRating">
                                                 @csrf {{-- Preventing CSRF Requests: https://laravel.com/docs/9.x/csrf#preventing-csrf-requests --}}
 
@@ -630,15 +522,9 @@
                                                     <h6 class="review-h6">Your Review matters.</h6>
                                                     <h6 class="review-h6">Have you used this product before?</h6>
                                                     <div class="star-wrapper u-s-m-b-8">
-                                                        {{-- <div class="star">
-                                                            <span id="your-stars" style='width:0'></span>
-                                                        </div>
-                                                        <label for="your-rating-value"></label>
-                                                        <input id="your-rating-value" type="text" class="text-field" placeholder="0.0">
-                                                        <span id="star-comment"></span> --}}
 
 
-                                                        {{-- Star Rating (of a Product) (in the "Reviews" tab). Check https://codepen.io/hesguru/pen/BaybqXv    AND    Check https://www.youtube.com/watch?v=YlZPh9rb7Bw&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=226 --}}
+                                                        {{-- Star Rating (of a Product) (in the "Reviews" tab). --}}
                                                         <div class="rate">
                                                             <input style="display: none" type="radio" id="star5" name="rating" value="5" />
                                                             <label for="star5" title="text">5 stars</label>
@@ -658,22 +544,6 @@
 
 
                                                     </div>
-                                                    {{-- <form> --}}
-                                                        {{-- <label for="your-name">Name
-                                                            <span class="astk"> *</span>
-                                                        </label>
-                                                        <input id="your-name" type="text" class="text-field" placeholder="Your Name">
-                                                        <label for="your-email">Email
-                                                            <span class="astk"> *</span>
-                                                        </label>
-                                                        <input id="your-email" type="text" class="text-field" placeholder="Your Email">
-                                                        <label for="review-title">Review Title
-                                                            <span class="astk"> *</span>
-                                                        </label>
-                                                        <input id="review-title" type="text" class="text-field" placeholder="Review Title">
-                                                        <label for="review-text-area">Review
-                                                            <span class="astk"> *</span>
-                                                        </label> --}}
                                                         <textarea class="text-area u-s-m-b-8" id="review-text-area" placeholder="Your Review" name="review" required></textarea>
                                                         <button class="button button-outline-secondary">Submit Review</button>
                                                     {{-- </form> --}}
@@ -692,21 +562,12 @@
                                                     <span> ({{ count($ratings) }}) </span>
                                                 </h6>
                                             </div>
-                                            {{-- <div class="review-option-box">
-                                                <div class="select-box-wrapper">
-                                                    <label class="sr-only" for="review-sort">Review Sorter</label>
-                                                    <select class="select-box" id="review-sort">
-                                                        <option value="">Sort by: Best Rating</option>
-                                                        <option value="">Sort by: Worst Rating</option>
-                                                    </select>
-                                                </div>
-                                            </div> --}}
                                         </div>
                                         <!-- Review-Options /- -->
                                         <!-- All-Reviews -->
                                         <div class="reviewers">
 
-                                            {{-- Display/Show user's Ratings. Check https://www.youtube.com/watch?v=qmRyL6FaLGs&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=227 --}}
+                                            {{-- Display/Show user's Ratings --}}
                                             @if (count($ratings) > 0) {{-- if there're any ratings for the product --}}
                                                 @foreach($ratings as $rating)
                                                     <div class="review-data">
@@ -716,10 +577,6 @@
                                                         </div>
                                                         <div class="reviewer-stars-title-body">
                                                             <div class="reviewer-stars">
-                                                                {{-- <div class="star">
-                                                                    <span style='width:67px'></span>
-                                                                </div> --}}
-                                                                {{-- <span class="review-title">Good!</span> --}}
 
 
                                                                 {{-- Show/Display the Star Rating of the Review/Rating --}}
@@ -750,37 +607,7 @@
                                         </div>
                                         <!-- All-Reviews /- -->
                                         <!-- Pagination-Review -->
-                                        {{-- <div class="pagination-review-area">
-                                            <div class="pagination-review-number">
-                                                <ul>
-                                                    <li style="display: none">
-                                                        <a href="single-product.html" title="Previous">
-                                                            <i class="fas fa-angle-left"></i>
-                                                        </a>
-                                                    </li>
-                                                    <li class="active">
-                                                        <a href="single-product.html">1</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="single-product.html">2</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="single-product.html">3</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="single-product.html">...</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="single-product.html">10</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="single-product.html" title="Next">
-                                                            <i class="fas fa-angle-right"></i>
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div> --}}
+
                                         <!-- Pagination-Review /- -->
                                     </div>
                                     <!-- Get-Reviews /- -->
@@ -805,7 +632,7 @@
 
 
 
-                                {{-- Show similar products (or related products) (functionality) by getting other products from THE SAME CATEGORY --}}    {{-- https://www.youtube.com/watch?v=cC23wnRCumo&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=111 --}}
+                                {{-- Show similar products (or related products) (functionality) by getting other products from THE SAME CATEGORY --}}    
                                 @foreach ($similarProducts as $product)
                                     <div class="item">
                                         <div class="image-container">
@@ -855,17 +682,12 @@
                                                 <h6 class="item-title">
                                                     <a href="{{ url('product/' . $product['id']) }}">{{ $product['product_name'] }}</a>
                                                 </h6>
-                                                {{-- <div class="item-stars">
-                                                    <div class='star' title="0 out of 5 - based on 0 Reviews">
-                                                        <span style='width:0'></span>
-                                                    </div>
-                                                    <span>(0)</span>
-                                                </div> --}}
+
                                             </div>
 
 
 
-                                            {{-- Call the static getDiscountPrice() method in the Product.php Model to determine the final price of a product because a product can have a discount from TWO things: either a `CATEGORY` discount or `PRODUCT` discout    // Check 19:09 in https://www.youtube.com/watch?v=T_CWdKW5he0&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=72 --}}
+                                            {{-- Call the static getDiscountPrice() method in the Product.php Model to determine the final price of a product because a product can have a discount from TWO things: either a `CATEGORY` discount or `PRODUCT` discout --}}
                                             @php
                                                 $getDiscountPrice = \App\Models\Product::getDiscountPrice($product['id']);
                                             @endphp
@@ -873,16 +695,16 @@
                                             @if ($getDiscountPrice > 0) {{-- If there's a discount on the price, show the price before (the original price) and after (the new price) the discount --}}
                                                 <div class="price-template">
                                                     <div class="item-new-price">
-                                                        Rs.{{ $getDiscountPrice }} {{-- 'Rs' means Rupees the Indian currency --}}
+                                                        EGP{{ $getDiscountPrice }} 
                                                     </div>
                                                     <div class="item-old-price">
-                                                        Rs.{{ $product['product_price'] }}
+                                                        EGP{{ $product['product_price'] }}
                                                     </div>
                                                 </div>
                                             @else {{-- if there's no discount on the price, show the original price --}}
                                                 <div class="price-template">
                                                     <div class="item-new-price">
-                                                        Rs.{{ $product['product_price'] }}
+                                                        EGP{{ $product['product_price'] }}
                                                     </div>
                                                 </div>
                                             @endif
@@ -915,7 +737,7 @@
 
 
 
-                                {{-- Recently Viewed Products (Items) functionality --}} {{-- https://www.youtube.com/watch?v=if1nn-837wA&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=112 --}}
+                                {{-- Recently Viewed Products (Items) functionality --}}
                                 @foreach ($recentlyViewedProducts as $product)
                                     <div class="item">
                                         <div class="image-container">
@@ -965,17 +787,11 @@
                                                 <h6 class="item-title">
                                                     <a href="{{ url('product/' . $product['id']) }}">{{ $product['product_name'] }}</a>
                                                 </h6>
-                                                {{-- <div class="item-stars">
-                                                    <div class='star' title="0 out of 5 - based on 0 Reviews">
-                                                        <span style='width:0'></span>
-                                                    </div>
-                                                    <span>(0)</span>
-                                                </div> --}}
                                             </div>
 
 
 
-                                            {{-- Call the static getDiscountPrice() method in the Product.php Model to determine the final price of a product because a product can have a discount from TWO things: either a `CATEGORY` discount or `PRODUCT` discout    // Check 19:09 in https://www.youtube.com/watch?v=T_CWdKW5he0&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=72 --}}
+                                            {{-- Call the static getDiscountPrice() method in the Product.php Model to determine the final price of a product because a product can have a discount from TWO things: either a `CATEGORY` discount or `PRODUCT` discout --}}
                                             @php
                                                 $getDiscountPrice = \App\Models\Product::getDiscountPrice($product['id']);
                                             @endphp
@@ -983,16 +799,16 @@
                                             @if ($getDiscountPrice > 0) {{-- If there's a discount on the price, show the price before (the original price) and after (the new price) the discount --}}
                                                 <div class="price-template">
                                                     <div class="item-new-price">
-                                                        Rs.{{ $getDiscountPrice }} {{-- 'Rs' means Rupees the Indian currency --}}
+                                                        EGP{{ $getDiscountPrice }} 
                                                     </div>
                                                     <div class="item-old-price">
-                                                        Rs.{{ $product['product_price'] }}
+                                                        EGP{{ $product['product_price'] }}
                                                     </div>
                                                 </div>
                                             @else {{-- if there's no discount on the price, show the original price --}}
                                                 <div class="price-template">
                                                     <div class="item-new-price">
-                                                        Rs.{{ $product['product_price'] }}
+                                                        EGP{{ $product['product_price'] }}
                                                     </div>
                                                 </div>
                                             @endif

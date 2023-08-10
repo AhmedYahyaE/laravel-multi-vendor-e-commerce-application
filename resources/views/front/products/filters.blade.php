@@ -1,9 +1,6 @@
 {{-- This is the filters sidebar which is included by 'listing.blade.php' --}}
-
-
-
 @php
-    // https://www.youtube.com/watch?v=Rr2tkfVtVMc&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=86
+    
     $productFilters = \App\Models\ProductsFilter::productFilters(); // Get all the (enabled/active) Filters
     // dd($productFilters);
 @endphp
@@ -58,13 +55,13 @@
 
 
 
-    {{-- If the Search Form is not used for searching in front/layout/header.blade.php. Note that Filters will be hidden and won't work in case of using the Search Form --}} {{-- Check 16:11 in https://www.youtube.com/watch?v=X5A8_TXcnRI&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=199 --}}
+    {{-- If the Search Form is not used for searching in front/layout/header.blade.php. Note that Filters will be hidden and won't work in case of using the Search Form --}} 
     @if (!isset($_REQUEST['search']))
 
         <!-- Filters -->
         <!-- Filter-Size -->
 
-        {{-- https://www.youtube.com/watch?v=7Y1OOQr-PTs&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=92 --}}
+        
         {{-- Size, price, color, brand, … are also Dynamic Filters, but won't be managed like the other Dynamic Filters, but we will manage every filter of them from the suitable respective database table, like the 'size' Filter from the `products_attributes` database table, 'color' Filter and `price` Filter from `products` table, 'brand' Filter from `brands` table --}}
         {{-- First: the 'size' filter (from `products_attributes` database table). Show the correct relevant product 'size' filter values (e.g. for the 'men' category (small, medium, large, XL, ...) BUT for the mobiles category (64GB-4GB, 128GB-6GB, ...)) depending on the URL --}}
         @php
@@ -80,7 +77,7 @@
 
 
 
-                    {{-- https://www.youtube.com/watch?v=7Y1OOQr-PTs&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=92 --}}
+                    
                     {{-- Size, price, color, brand, … are also Dynamic Filters, but won't be managed like the other Dynamic Filters, but we will manage every filter of them from the suitable respective database table, like the 'size' Filter from the `products_attributes` database table, 'color' Filter and `price` Filter from `products` table, 'brand' Filter from `brands` table --}}
                     {{-- First: the 'size' filter (from `products_attributes` database table). Show the correct relevant product 'size' filter values (e.g. for the 'men' category (small, medium, large, XL, ...) BUT for the mobiles category (64GB-4GB, 128GB-6GB, ...)) depending on the URL --}}
                     @foreach ($getSizes as $key => $size) {{-- show the correct relevant product 'size' filter values (e.g. for the 'men' category (small, medium, large, XL, ...) BUT for the mobiles category (64GB-4GB, 128GB-6GB, ...)) depending on the URL --}}
@@ -102,7 +99,7 @@
 
         <!-- Filter-Color -->
 
-        {{-- https://www.youtube.com/watch?v=kan0Vypzalk&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=92 --}}
+        
         {{-- Size, price, color, brand, … are also Dynamic Filters, but won't be managed like the other Dynamic Filters, but we will manage every filter of them from the suitable respective database table, like the 'size' Filter from the `products_attributes` database table, 'color' Filter and `price` Filter from `products` table, 'brand' Filter from `brands` table --}}
         {{-- Second: the 'color' filter (from `products` database table). Show the correct relevant product 'color' filter values (e.g. for the 'men' category (red, blue, ...) BUT for the mobiles category (grey, black, ...)) depending on the URL --}}
         @php
@@ -116,7 +113,7 @@
 
 
 
-                    {{-- https://www.youtube.com/watch?v=kan0Vypzalk&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=92 --}}
+                    
                     {{-- Size, price, color, brand, … are also Dynamic Filters, but won't be managed like the other Dynamic Filters, but we will manage every filter of them from the suitable respective database table, like the 'size' Filter from the `products_attributes` database table, 'color' Filter and `price` Filter from `products` table, 'brand' Filter from `brands` table --}}
                     {{-- Second: the 'color' filter (from `products` database table). Show the correct relevant product 'color' filter values (e.g. for the 'men' category (red, blue, ...) BUT for the mobiles category (grey, black, ...)) depending on the URL --}}
                     @foreach ($getColors as $key => $color) {{-- show the correct relevant product 'color' filter values (e.g. for the 'men' category (red, blue, ...) BUT for the mobiles category (grey, black, ...)) depending on the URL --}}
@@ -136,7 +133,7 @@
 
         <!-- Filter-Brand -->
 
-        {{-- https://www.youtube.com/watch?v=Q9-5g1qgsn4&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=94 --}}
+        
         {{-- Size, price, color, brand, … are also Dynamic Filters, but won't be managed like the other Dynamic Filters, but we will manage every filter of them from the suitable respective database table, like the 'size' Filter from the `products_attributes` database table, 'color' Filter and `price` Filter from `products` table, 'brand' Filter from `brands` table --}}
         {{-- Fourth: the 'brand' filter (from `products` and `brands` database table). Show the correct relevant product 'price' filter values (e.g. for the 'men' category (LC Waikiki, Concrete, ...) BUT for the mobiles category (iPhone, Xiaomi, ...)) depending on the URL --}}
         @php
@@ -150,7 +147,7 @@
 
 
 
-                    {{-- https://www.youtube.com/watch?v=Q9-5g1qgsn4&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=94 --}}
+                    
                     {{-- Size, price, color, brand, … are also Dynamic Filters, but won't be managed like the other Dynamic Filters, but we will manage every filter of them from the suitable respective database table, like the 'size' Filter from the `products_attributes` database table, 'color' Filter and `price` Filter from `products` table, 'brand' Filter from `brands` table --}}
                     {{-- Fourth: the 'brand' filter (from `products` and `brands` database table). Show the correct relevant product 'price' filter values (e.g. for the 'men' category (LC Waikiki, Concrete, ...) BUT for the mobiles category (iPhone, Xiaomi, ...)) depending on the URL --}}
                     @foreach ($getBrands as $key => $brand) {{-- show the correct relevant product 'brand' filter values (e.g. for the 'men' category (LC Waikiki, Concrete, ...) BUT for the mobiles category (iPhone, Xiaomi, ...)) depending on the URL --}}
@@ -168,7 +165,7 @@
 
         <!-- Filter-Price -->
 
-        {{-- https://www.youtube.com/watch?v=0opzfLVfwqg&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=93 --}}
+        
         {{-- Size, price, color, brand, … are also Dynamic Filters, but won't be managed like the other Dynamic Filters, but we will manage every filter of them from the suitable respective database table, like the 'size' Filter from the `products_attributes` database table, 'color' Filter and `price` Filter from `products` table, 'brand' Filter from `brands` table --}}
         {{-- Third: the 'price' filter (from `products` database table). Show the correct relevant product 'price' filter values (e.g. for the 'men' category (red, blue, ...) BUT for the mobiles category (grey, black, ...)) depending on the URL --}}
         <div class="facet-filter-associates">
@@ -177,7 +174,7 @@
                 <div class="associate-wrapper">
 
 
-                    {{-- Third: the 'price' filter --}} {{-- https://www.youtube.com/watch?v=0opzfLVfwqg&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=93 --}}
+                    {{-- Third: the 'price' filter --}} 
                     @php
                         // our desired array of price ranges
                         $prices = array('0-1000', '1000-2000', '2000-5000', '5000-10000', '10000-100000');
@@ -185,8 +182,7 @@
 
                     @foreach ($prices as $key => $price)
                         <input type="checkbox" class="check-box price" id="price{{ $key }}" name="price[]" value="{{ $price }}"> {{-- Note!!: PLEASE NOTE THE SQUARE BRACKETS [] OF THE "name" ATTRIBUTE!! --}} {{-- echo the $price as a 'CSS class' to be able to use it in jQuery for filtering --}} {{-- the checked checkboxes <input> fields of the price filter values (like '1000-2000', '2000-5000', ...) will be submitted as an ARRAY because we used SQUARE BRACKETS [] with the "name" HTML attribute in the checkbox <input> field in filters.blade.php, or else, AJAX is used to send the <input> values WITHOUT submitting the <form> at all --}}
-                        <label class="label-text" for="price{{ $key }}">Rs. {{ $price }} {{-- Rs. is Rupee --}}
-                            {{-- <span class="total-fetch-items">(0)</span> --}}
+                        <label class="label-text" for="price{{ $key }}">EGP {{ $price }}
                         </label>
                     @endforeach
                 </div>
@@ -196,7 +192,7 @@
 
 
 
-        {{-- https://www.youtube.com/watch?v=Rr2tkfVtVMc&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=86 --}}
+        
         {{-- Dynamic Filters --}}
         <!-- Filter -->
         @foreach ($productFilters as $filter) {{-- $productFilters comes from the far top of this file --}}
@@ -217,7 +213,7 @@
                                 @foreach ($filter['filter_values'] as $value) {{-- $value means 'filter value' --}}
                                     {{-- <input type="checkbox" class="check-box" id="{{ $value['filter_value'] }}"> --}}
 
-                                    {{-- We used TWO ways to operate the Dynamic Filters: statically for every filter using jQuery and dynamically from Admin Panel. Check https://www.youtube.com/watch?v=r-NjOGA4qFw&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=88 --}}
+                                    {{-- We used TWO ways to operate the Dynamic Filters: statically for every filter using jQuery and dynamically from Admin Panel --}}
                                     {{-- First way: Statically using jQuery. Check front/custom.js --}}
                                     <input type="checkbox" class="check-box {{ $filter['filter_column'] }}" id="{{ $value['filter_value'] }}" name="{{ $filter['filter_column'] }}[]" value="{{ $value['filter_value'] }}"> {{-- Note!!: PLEASE NOTE THE SQUARE BRACKETS [] OF THE "name" ATTRIBUTE!! --}} {{-- echo the filter name as a 'CSS class' to be able to use it in jQuery for filtering, and also add the "name" (as an array!! PLEASE NOTE THE SQUARE BRACKETS [] !!! e.g.    'fabric' => ['cotton', 'polyester']    ) and "value" HTML attributes too --}}    {{-- the checked checkboxes <input> fields will be submitted as an ARRAY because we used SQUARE BRACKETS [] with the "name" HTML attribute in the checkbox <input> field in filters.blade.php e.g.    'fabric' => ['cotton', 'polyester']    , or else, AJAX is used to send the <input> values WITHOUT submitting the <form> at all --}}
                                     <label class="label-text" for="{{ $value['filter_value'] }}">{{ ucwords($value['filter_value']) }}
@@ -232,100 +228,6 @@
 
         @endforeach
         <!-- Filter -->
-
-
-
-        {{-- <!-- Filter-Price -->
-        <div class="facet-filter-by-price">
-            <h3 class="title-name">Price</h3>
-            <form class="facet-form" action="#" method="post">
-                <!-- Final-Result -->
-                <div class="amount-result clearfix">
-                    <div class="price-from">$0</div>
-                    <div class="price-to">$3000</div>
-                </div>
-                <!-- Final-Result /- -->
-                <!-- Range-Slider  -->
-                <div class="price-filter"></div>
-                <!-- Range-Slider /- -->
-                <!-- Range-Manipulator -->
-                <div class="price-slider-range" data-min="0" data-max="5000" data-default-low="0" data-default-high="3000" data-currency="$"></div>
-                <!-- Range-Manipulator /- -->
-                <button type="submit" class="button button-primary">Filter</button>
-            </form>
-        </div>
-        <!-- Filter-Price /- -->
-
-
-        <!-- Filter-Free-Shipping -->
-        <div class="facet-filter-by-shipping">
-            <h3 class="title-name">Shipping</h3>
-            <form class="facet-form" action="#" method="post">
-                <input type="checkbox" class="check-box" id="cb-free-ship">
-                <label class="label-text" for="cb-free-ship">Free Shipping</label>
-            </form>
-        </div>
-        <!-- Filter-Free-Shipping /- -->
-
-
-        <!-- Filter-Rating -->
-        <div class="facet-filter-by-rating">
-            <h3 class="title-name">Rating</h3>
-            <div class="facet-form">
-                <!-- 5 Stars -->
-                <div class="facet-link">
-                    <div class="item-stars">
-                        <div class='star'>
-                            <span style='width:76px'></span>
-                        </div>
-                    </div>
-                    <span class="total-fetch-items">(0)</span>
-                </div>
-                <!-- 5 Stars /- -->
-                <!-- 4 & Up Stars -->
-                <div class="facet-link">
-                    <div class="item-stars">
-                        <div class='star'>
-                            <span style='width:60px'></span>
-                        </div>
-                    </div>
-                    <span class="total-fetch-items">& Up (5)</span>
-                </div>
-                <!-- 4 & Up Stars /- -->
-                <!-- 3 & Up Stars -->
-                <div class="facet-link">
-                    <div class="item-stars">
-                        <div class='star'>
-                            <span style='width:45px'></span>
-                        </div>
-                    </div>
-                    <span class="total-fetch-items">& Up (0)</span>
-                </div>
-                <!-- 3 & Up Stars /- -->
-                <!-- 2 & Up Stars -->
-                <div class="facet-link">
-                    <div class="item-stars">
-                        <div class='star'>
-                            <span style='width:30px'></span>
-                        </div>
-                    </div>
-                    <span class="total-fetch-items">& Up (0)</span>
-                </div>
-                <!-- 2 & Up Stars /- -->
-                <!-- 1 & Up Stars -->
-                <div class="facet-link">
-                    <div class="item-stars">
-                        <div class='star'>
-                            <span style='width:15px'></span>
-                        </div>
-                    </div>
-                    <span class="total-fetch-items">& Up (0)</span>
-                </div>
-                <!-- 1 & Up Stars /- -->
-            </div>
-        </div>
-        <!-- Filter-Rating -->
-        <!-- Filters /- --> --}}
 
     @endif
 

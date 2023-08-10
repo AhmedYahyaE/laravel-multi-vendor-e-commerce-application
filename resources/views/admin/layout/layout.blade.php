@@ -7,7 +7,7 @@
 
 
 
-        {{-- X-CSRF-TOKEN: https://laravel.com/docs/9.x/csrf#csrf-x-csrf-token --}} {{-- Our code: Check 12:37 in https://www.youtube.com/watch?v=maEXuJNzE8M&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=16 AND Check 12:06 in https://www.youtube.com/watch?v=APPKmLlWEBY&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu --}}
+        {{-- X-CSRF-TOKEN: https://laravel.com/docs/9.x/csrf#csrf-x-csrf-token --}} 
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
 
@@ -32,9 +32,9 @@
         <!-- inject:css -->
         <link rel="stylesheet" href="{{ url('admin/css/vertical-layout-light/style.css') }}">
         <!-- endinject -->
-        <link rel="shortcut icon" href="{{ url('admin/images/favicon.png') }}" />
+        <link rel="shortcut icon" href="{{ url('admin/images/favicon.jpg') }}" />
 
-        {{-- DataTable: Check 18:55 in https://www.youtube.com/watch?v=1XJ7908SJcM&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=34 --}}
+        {{-- DataTable --}}
         <link rel="stylesheet" href="{{ url('admin/css/bootstrap.css') }}">
         <link rel="stylesheet" href="{{ url('admin/css/dataTables.bootstrap4.min.css') }}">
     </head>
@@ -51,7 +51,7 @@
 
             <!-- partial -->
             <div class="container-fluid page-body-wrapper">
-                <!-- partial -->
+            <!-- partial -->
 
 
 
@@ -101,7 +101,7 @@
 
 
         {{-- NOTE: I MOVED THIS SECTION TO admin/js/My-Sweet-Alert.js FILE! After the SweetAlert2 CDN link block in the Country! I downloaded the library using 'npm' --}}
-        {{-- The SweetAlert2 package for Confirm Deletion Message in sections.blade.php. Check 5:02 in https://www.youtube.com/watch?v=6TfdD5w-kls&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=33 --}}
+        {{-- The SweetAlert2 package for Confirm Deletion Message in sections.blade.php --}}
         {{-- <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script> --}} <!-- CDNs blocked in Country! -->
         {{-- <script type="module" src="{{ url('admin/js/sweetalert2.js') }}"></script>
         <script type="module" src="{{ url('admin/js/My-Sweet-Alert.js') }}"></script> --}}

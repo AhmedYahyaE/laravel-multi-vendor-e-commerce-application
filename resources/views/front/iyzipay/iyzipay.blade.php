@@ -1,4 +1,3 @@
-{{-- https://www.youtube.com/watch?v=fEpjSro84Ag&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=208 --}}
 {{-- This page is rendered by iyzipay() method inside Front/IyzipayController.php --}}
 
 
@@ -8,7 +7,6 @@
 
 @section('content')
 
-    {{-- https://www.w3schools.com/tags/tryit.asp?filename=tryhtml_button_css --}}
     <style>
         .button {
         border: none;

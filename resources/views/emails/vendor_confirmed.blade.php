@@ -1,4 +1,3 @@
-{{-- https://www.youtube.com/watch?v=UcN-IMTUWOA&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=100 --}}
 {{-- This is the vendor confirmation/registration Success Mail file using Mailtrap --}} {{-- All the variables (like $name, $mobile, $email, ...) used here are passed in from the vendorRegister() method in Front/VendorController.php --}}
 
 
@@ -25,6 +24,6 @@
         <tr><td>&nbsp;</td></tr>
         <tr><td>Thanks & Regards,</td></tr>
         <tr><td>&nbsp;</td></tr>
-        <tr><td>Stack Developers</td></tr>
+        <tr><td>Multi-vendor E-commerce Application</td></tr>
     </body>
 </html>

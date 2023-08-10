@@ -15,19 +15,19 @@ class VendorsTableSeeder extends Seeder
     public function run()
     {
         //
-        // Databas Seeding: Check 15:59 in https://www.youtube.com/watch?v=LfK-eMcUJsw&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=20
+        // Databas Seeding
         // Note: Check DatabaseSeeder.php
         $vendorRecords = [
             [
                 'id'      => 1,
-                'name'    => 'John Singh - Vendor',
-                'address' => 'CP-112',
-                'city'    => 'New Delhi',
-                'state'   => 'Delhi',
-                'country' => 'India',
+                'name'    => 'Yasser Fouaad - Vendor',
+                'address' => '17 El-Salam St.',
+                'city'    => 'Maadi',
+                'state'   => 'Cairo',
+                'country' => 'Egypt',
                 'pincode' => '110001',
                 'mobile'  => '9700000000',
-                'email'   => 'john@admin.com',
+                'email'   => 'yasser@admin.com',
                 'status'  => 1,
             ],
         ];

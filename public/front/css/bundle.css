@@ -175,7 +175,7 @@ body {
  * Includes support for styling links too.
  */
 .u-c-brand {
-  color: #d90429 !important; }
+  color: #3f0000 !important; }
 
 /*--------------------------------------------------------------
 5.0 Vendor Extensions
@@ -505,7 +505,7 @@ body {
     position: relative;
     height: 52px;
     line-height: 52px;
-    background: #d90429;
+    background: #3f0000;
     border-radius: 8px 8px 0 0;
     color: #ffffff;
     cursor: pointer;
@@ -819,7 +819,7 @@ body {
     outline: 0; }
 
 .button-primary {
-  background: #d90429;
+  background: #3f0000;
   font-weight: 700;
   color: #ffffff; }
   .button-primary:hover {
@@ -1709,7 +1709,7 @@ body {
   overflow: hidden; }
   .form-searchbox .text-field {
     padding: 0 0 0 15px;
-    border-color: #d90429; }
+    border-color: #3f0000; }
   .form-searchbox .select-hide {
     visibility: hidden; }
   .form-searchbox .select-box-position {
@@ -1718,7 +1718,7 @@ body {
     top: 50%;
     transform: translateY(-50%); }
     .form-searchbox .select-box-position .select-box {
-      border-left: 1px solid #d90429;
+      border-left: 1px solid #3f0000;
       border-right: none;
       border-top: none;
       border-bottom: none; }

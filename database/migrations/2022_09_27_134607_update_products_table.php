@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        // Our code: Check 3:10 in https://www.youtube.com/watch?v=jCWz6fqoFno&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=72
+        // My code
         // Add the `is_bestseller` column after `is_featured` column to the already existing `products` database table
         Schema::table('products', function($table) {
             // Note: Only 'superadmin' can mark a product as 'bestseller', but 'vendor' can't
@@ -28,7 +28,7 @@ return new class extends Migration
      */
     public function down()
     {
-        // Check 5:27 in https://www.youtube.com/watch?v=jCWz6fqoFno&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=72
+        
         // this gets executed in case the we run the 'rollback' command
         Schema::table('products', function($table) {
             $table->dropColumn('is_bestseller'); // Reverse the up() method procedure, and in this case, the up() method adds a column, so here in down() method, we reverse the operation, so we delete (drop) the column (in case a 'rollback' command is run)

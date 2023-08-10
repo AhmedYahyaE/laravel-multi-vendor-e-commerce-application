@@ -14,31 +14,31 @@ class DeliveryAddressTableSeeder extends Seeder
      */
     public function run()
     {
-        // https://www.youtube.com/watch?v=anlZdqno-nw&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=151
+        
         // Note: Check DatabaseSeeder.php!
         $deliveryRecords = [
             [
                 'id'      => 1,
                 'user_id' => 1,
-                'name'    => 'Amit Gupta',
-                'address' => '123-a',
-                'city'    => 'New Delhi',
-                'state'   => 'Delhi',
-                'country' => 'India',
+                'name'    => 'Ahmed Yahya',
+                'address' => '37 Salah Salem',
+                'city'    => 'Cairo',
+                'state'   => 'Cairo',
+                'country' => 'Egypt',
                 'pincode' => 10001,
-                'mobile'  => 9800000000,
+                'mobile'  => 1255642718,
                 'status'  => 1
             ],
             [
                 'id'      => 2,
                 'user_id' => 1, // the same user_id in the previous record which means the the delivery address is for the same person
-                'name'    => 'Amit Gupta',
-                'address' => '12345-a',
-                'city'    => 'Ludhiana',
-                'state'   => 'Punjab',
-                'country' => 'India',
+                'name'    => 'Ahmed Yahya',
+                'address' => '15 Fouaad St.',
+                'city'    => 'Alexandria',
+                'state'   => 'Alexandria',
+                'country' => 'Egypt',
                 'pincode' => 141001,
-                'mobile'  => 9700000000,
+                'mobile'  => 1095632526,
                 'status'  => 1
             ],
         ];

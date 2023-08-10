@@ -17,7 +17,7 @@ class ProductsAttributesTableSeeder extends Seeder
         //
 
 
-        // Databas Seeding: https://www.youtube.com/watch?v=E5kNg68u3lw&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=32
+        // Databas Seeding
         // Note: Check DatabaseSeeder.php
         $productAttributesRecords = [
             // Note: The three attributes we will insert ALL are related to one product (T-shirt): small, medium and large sizes of one T-shirt

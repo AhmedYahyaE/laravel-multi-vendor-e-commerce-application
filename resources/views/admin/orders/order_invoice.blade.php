@@ -1,4 +1,3 @@
-{{-- https://www.youtube.com/watch?v=T87FAMHeIsU&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=176 --}}
 {{-- This is the HTML Order Invoice. This page is rendered by viewOrderInvoice() method inside Admin/OrderController.php --}}
 
 
@@ -16,7 +15,7 @@
                 <h3 class="pull-right">
                     Order # {{ $orderDetails['id'] }}
 
-                    {{-- Laravel barcode/QR code generation package (to show barcodes/QR codes for both Product ID and Product Code): https://github.com/milon/barcode --}} {{-- https://www.youtube.com/watch?v=CP2ugX_utKA&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=177 --}}
+                    {{-- Laravel barcode/QR code generation package (to show barcodes/QR codes for both Product ID and Product Code): https://github.com/milon/barcode --}} 
                     @php
                         echo DNS1D::getBarcodeHTML($orderDetails['id'], 'C39');       // This is the product `id` Barcode
                         // echo DNS2D::getBarcodeHTML($orderDetails['id'], 'QRCODE'); // This is the product `id` QR code
@@ -97,7 +96,6 @@
                                 </tr>
     						</thead>
     						<tbody>
-    							<!-- foreach ($order->lineItems as $line) or some such thing here -->
 
 
                                 {{-- Calculate the Subtotal --}}
@@ -110,7 +108,7 @@
                                         <td>
                                             {{ $product['product_code'] }}
 
-                                            {{-- Laravel barcode/QR code generation package (to show barcodes/QR codes for both Product ID and Product Code): https://github.com/milon/barcode --}} {{-- https://www.youtube.com/watch?v=CP2ugX_utKA&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=177 --}}
+                                            {{-- Laravel barcode/QR code generation package (to show barcodes/QR codes for both Product ID and Product Code): https://github.com/milon/barcode --}} 
                                             @php
                                                 echo DNS1D::getBarcodeHTML($product['product_code'], 'C39');       // This is the product `product_code` Barcode
                                                 // echo DNS2D::getBarcodeHTML($product['product_code'], 'QRCODE'); // This is the product `product_code` QR code

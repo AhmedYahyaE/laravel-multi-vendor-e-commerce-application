@@ -65,7 +65,7 @@ class Kernel extends HttpKernel
         'verified'         => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
 
 
-        // Our code:
+        // My code:
         // Registering Middleware: Assigning Middleware To Routes: https://laravel.com/docs/9.x/middleware#assigning-middleware-to-routes
         'admin' => \App\Http\Middleware\Admin::class,
     ];

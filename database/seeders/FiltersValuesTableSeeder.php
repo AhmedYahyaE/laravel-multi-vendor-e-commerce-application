@@ -18,7 +18,7 @@ class FiltersValuesTableSeeder extends Seeder
 
 
 
-        // https://www.youtube.com/watch?v=mV_W5rGIuak&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=82
+        
         // Note: Check DatabaseSeeder.php!
         $filtervalueRecords = [
             [

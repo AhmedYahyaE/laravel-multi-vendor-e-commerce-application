@@ -10,17 +10,11 @@ class ShippingCharge extends Model
     use HasFactory;
 
 
-    // https://www.youtube.com/watch?v=igoiH9VVxzs&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=187
-
-
-
-    // https://www.youtube.com/watch?v=krS-KXdMQ64&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=190
+    
     public static function getShippingCharges($total_weight , $country) { // this method is used inside checkout() method in Front/ProductsController.php
-        // $getShippingCharges = ShippingCharge::select('rate')->where('country', $country)->first();
-        $shippingDetails = ShippingCharge::where('country', $country)->first()->toArray(); // https://www.youtube.com/watch?v=FUQyTb1vOI4&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=192
-        // dd($shippingDetails);
+        $shippingDetails = ShippingCharge::where('country', $country)->first()->toArray(); 
 
-        // https://www.youtube.com/watch?v=FUQyTb1vOI4&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=192
+        
         if ($total_weight > 0) {
 
             if ($total_weight > 0 && $total_weight <= 500) {
@@ -47,10 +41,7 @@ class ShippingCharge extends Model
         }
 
 
-        // dd($rate);
-
-
-        // return $getShippingCharges->rate;
-        return $rate; // https://www.youtube.com/watch?v=FUQyTb1vOI4&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=192
+        return $rate; 
     }
+
 }

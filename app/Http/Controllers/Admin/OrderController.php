@@ -4,31 +4,34 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
-    // https://www.youtube.com/watch?v=WqPCkJaTgFI&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=166
-    // Note: In the Admin Panel, in the Orders Management section, if the authenticated/logged-in user is 'vendor', we'll show the orders of the products added by/related to that 'vendor' ONLY, but if the authenticated/logged-in user is 'admin', we'll show ALL orders    // Check https://www.youtube.com/watch?v=WqPCkJaTgFI&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=166
+    // Note: In the Admin Panel, in the Orders Management section, if the authenticated/logged-in user is 'vendor', we'll show the orders of the products added by/related to that 'vendor' ONLY, but if the authenticated/logged-in user is 'admin', we'll show ALL orders    
 
 
 
-    // Render admin/orders/orders.blade.php page (Orders Management section) in the Admin Panel    // https://www.youtube.com/watch?v=WqPCkJaTgFI&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=166
+    // Render admin/orders/orders.blade.php page (Orders Management section) in the Admin Panel    
     public function orders() {
-        // Correcting issues in the Skydash Admin Panel Sidebar using Session:  Check 6:33 in https://www.youtube.com/watch?v=i_SUdNILIrc&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=29
-        \Session::put('page', 'orders');
+        // Correcting issues in the Skydash Admin Panel Sidebar using Session
+        Session::put('page', 'orders');
 
 
-        // We determine the authenticated/logged-in user. If the authenticated/logged-in user is 'vendor', we show ONLY the orders of the products added by that specific 'vendor' ONLY, but if the authenticated/logged-in user is 'admin', we show ALL orders    // Check 16:00 in https://www.youtube.com/watch?v=WqPCkJaTgFI&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=166
-        $adminType = \Auth::guard('admin')->user()->type;      // `type`      is the column in `admins` table    // Accessing Specific Guard Instances: https://laravel.com/docs/9.x/authentication#accessing-specific-guard-instances    // Retrieving The Authenticated User and getting their `type`      column in `admins` table    // https://laravel.com/docs/9.x/authentication#retrieving-the-authenticated-user
-        $vendor_id = \Auth::guard('admin')->user()->vendor_id; // `vendor_id` is the column in `admins` table    // Accessing Specific Guard Instances: https://laravel.com/docs/9.x/authentication#accessing-specific-guard-instances    // Retrieving The Authenticated User and getting their `vendor_id` column in `admins` table    // https://laravel.com/docs/9.x/authentication#retrieving-the-authenticated-user
-        
+        // We determine the authenticated/logged-in user. If the authenticated/logged-in user is 'vendor', we show ONLY the orders of the products added by that specific 'vendor' ONLY, but if the authenticated/logged-in user is 'admin', we show ALL orders    
+        $adminType = Auth::guard('admin')->user()->type;      // `type`      is the column in `admins` table    // Accessing Specific Guard Instances: https://laravel.com/docs/9.x/authentication#accessing-specific-guard-instances    // Retrieving The Authenticated User and getting their `type`      column in `admins` table    
+        $vendor_id = Auth::guard('admin')->user()->vendor_id; // `vendor_id` is the column in `admins` table    // Accessing Specific Guard Instances: https://laravel.com/docs/9.x/authentication#accessing-specific-guard-instances    // Retrieving The Authenticated User and getting their `vendor_id` column in `admins` table    
+
+
         if ($adminType == 'vendor') { // if the authenticated user (the logged in user) is 'vendor', check his `status`
-            $vendorStatus = \Auth::guard('admin')->user()->status; // `status` is the column in `admins` table    // Accessing Specific Guard Instances: https://laravel.com/docs/9.x/authentication#accessing-specific-guard-instances    // Retrieving The Authenticated User and getting their `status` column in `admins` table    // https://laravel.com/docs/9.x/authentication#retrieving-the-authenticated-user
+            $vendorStatus = Auth::guard('admin')->user()->status; // `status` is the column in `admins` table    // Accessing Specific Guard Instances: https://laravel.com/docs/9.x/authentication#accessing-specific-guard-instances    // Retrieving The Authenticated User and getting their `status` column in `admins` table    
 
             if ($vendorStatus == 0) { // if the 'vendor' is inactive/disabled
                 return redirect('admin/update-vendor-details/personal')->with('error_message', 'Your Vendor Account is not approved yet. Please make sure to fill your valid personal, business and bank details.'); // the error_message will appear to the vendor in the route: 'admin/update-vendor-details/personal' which is the update_vendor_details.blade.php page
             }
         }
+
 
         if ($adminType == 'vendor') { // If the authenticated/logged-in user is 'vendor', we show ONLY the orders of the products added by that specific 'vendor' ONLY
             $orders = \App\Models\Order::with([ // Eager Loading: https://laravel.com/docs/9.x/eloquent-relationships#eager-loading    // 'orders_products' is the relationship method name in Order.php model    // Constraining Eager Loads: https://laravel.com/docs/9.x/eloquent-relationships#constraining-eager-loads    // Subquery Where Clauses: https://laravel.com/docs/9.x/queries#subquery-where-clauses    // Advanced Subqueries: https://laravel.com/docs/9.x/eloquent#advanced-subqueries
@@ -47,19 +50,18 @@ class OrderController extends Controller
         return view('admin.orders.orders')->with(compact('orders'));
     }
 
-    // Render admin/orders/order_details.blade.php (View Order Details page) when clicking on the View Order Details icon in admin/orders/orders.blade.php (Orders tab under Orders Management section in Admin Panel)    // https://www.youtube.com/watch?v=EraPx_a3iBg&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=168
+    // Render admin/orders/order_details.blade.php (View Order Details page) when clicking on the View Order Details icon in admin/orders/orders.blade.php (Orders tab under Orders Management section in Admin Panel)    
     public function orderDetails($id) {
-        // Correcting issues in the Skydash Admin Panel Sidebar using Session:  Check 6:33 in https://www.youtube.com/watch?v=i_SUdNILIrc&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=29
-        \Session::put('page', 'orders');
+        // Correcting issues in the Skydash Admin Panel Sidebar using Session
+        Session::put('page', 'orders');
 
-
-        // https://www.youtube.com/watch?v=QEdO_maniDY&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=168
-        // We determine the authenticated/logged-in user. If the authenticated/logged-in user is 'vendor', we show ONLY the details (the `orders_products` table) of the orders of the products added by that specific 'vendor' ONLY (in admin/orders/order_details.blade.php page), but if the authenticated/logged-in user is 'admin', we show ALL orders details (in admin/orders/order_details.blade.php page)    // Check 16:00 in https://www.youtube.com/watch?v=WqPCkJaTgFI&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=166
-        $adminType = \Auth::guard('admin')->user()->type;      // `type`      is the column in `admins` table    // Accessing Specific Guard Instances: https://laravel.com/docs/9.x/authentication#accessing-specific-guard-instances    // Retrieving The Authenticated User and getting their `type`      column in `admins` table    // https://laravel.com/docs/9.x/authentication#retrieving-the-authenticated-user
-        $vendor_id = \Auth::guard('admin')->user()->vendor_id; // `vendor_id` is the column in `admins` table    // Accessing Specific Guard Instances: https://laravel.com/docs/9.x/authentication#accessing-specific-guard-instances    // Retrieving The Authenticated User and getting their `vendor_id` column in `admins` table    // https://laravel.com/docs/9.x/authentication#retrieving-the-authenticated-user
+        
+        // We determine the authenticated/logged-in user. If the authenticated/logged-in user is 'vendor', we show ONLY the details (the `orders_products` table) of the orders of the products added by that specific 'vendor' ONLY (in admin/orders/order_details.blade.php page), but if the authenticated/logged-in user is 'admin', we show ALL orders details (in admin/orders/order_details.blade.php page)    
+        $adminType = Auth::guard('admin')->user()->type;      // `type`      is the column in `admins` table    // Accessing Specific Guard Instances: https://laravel.com/docs/9.x/authentication#accessing-specific-guard-instances    // Retrieving The Authenticated User and getting their `type`      column in `admins` table    
+        $vendor_id = Auth::guard('admin')->user()->vendor_id; // `vendor_id` is the column in `admins` table    // Accessing Specific Guard Instances: https://laravel.com/docs/9.x/authentication#accessing-specific-guard-instances    // Retrieving The Authenticated User and getting their `vendor_id` column in `admins` table    
         
         if ($adminType == 'vendor') { // if the authenticated user (the logged in user) is 'vendor', check his `status`
-            $vendorStatus = \Auth::guard('admin')->user()->status; // `status` is the column in `admins` table    // Accessing Specific Guard Instances: https://laravel.com/docs/9.x/authentication#accessing-specific-guard-instances    // Retrieving The Authenticated User and getting their `status` column in `admins` table    // https://laravel.com/docs/9.x/authentication#retrieving-the-authenticated-user
+            $vendorStatus = Auth::guard('admin')->user()->status; // `status` is the column in `admins` table    // Accessing Specific Guard Instances: https://laravel.com/docs/9.x/authentication#accessing-specific-guard-instances    // Retrieving The Authenticated User and getting their `status` column in `admins` table    
 
             if ($vendorStatus == 0) { // if the 'vendor' is inactive/disabled
                 return redirect('admin/update-vendor-details/personal')->with('error_message', 'Your Vendor Account is not approved yet. Please make sure to fill your valid personal, business and bank details.'); // the error_message will appear to the vendor in the route: 'admin/update-vendor-details/personal' which is the update_vendor_details.blade.php page
@@ -67,7 +69,7 @@ class OrderController extends Controller
         }
 
 
-        // https://www.youtube.com/watch?v=QEdO_maniDY&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=168
+        
         if ($adminType == 'vendor') { // If the authenticated/logged-in user is 'vendor', we show ONLY the details of the orders of the products added by that specific 'vendor' ONLY (from `orders_products` table) in admin/orders/order_details.blade.php page
             $orderDetails = \App\Models\Order::with([ // Eager Loading: https://laravel.com/docs/9.x/eloquent-relationships#eager-loading    // 'orders_products' is the relationship method name in Order.php model    // Constraining Eager Loads: https://laravel.com/docs/9.x/eloquent-relationships#constraining-eager-loads    // Subquery Where Clauses: https://laravel.com/docs/9.x/queries#subquery-where-clauses    // Advanced Subqueries: https://laravel.com/docs/9.x/eloquent#advanced-subqueries
                 'orders_products' => function($query) use ($vendor_id) { // function () use ()     syntax: https://www.php.net/manual/en/functions.anonymous.php#:~:text=the%20use%20language%20construct     // 'orders_products' is the Relationship method name in Order.php model
@@ -85,25 +87,25 @@ class OrderController extends Controller
         $userDetails = \App\Models\User::where('id', $orderDetails['user_id'])->first()->toArray();
         // dd($userDetails);
 
-        // Get the 'active' order statuses from `orders` table (which is determined by 'admin'-s ONLY, not 'vendor'-s, in contrast to "Update Item Status" which can be updated by both 'vendor'-s and 'admin'-s) (Pending, Shipped, In Progress, Canceled, ...)    // https://www.youtube.com/watch?v=W-aEaJQGeKE&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=167
+        // Get the 'active' order statuses from `orders` table (which is determined by 'admin'-s ONLY, not 'vendor'-s, in contrast to "Update Item Status" which can be updated by both 'vendor'-s and 'admin'-s) (Pending, Shipped, In Progress, Canceled, ...)    
         // Note: The `order_statuses` table contains all kinds of order statuses (that can be updated by 'admin'-s ONLY in `orders` table) like: pending, in progress, shipped, canceled, ...etc. In `order_statuses` table, the `name` column can be: 'New', 'Pending', 'Canceled', 'In Progress', 'Shipped', 'Partially Shipped', 'Delivered', 'Partially Delivered' and 'Paid'. 'Partially Shipped': If one order has products from different vendors, and one vendor has shipped their product to the customer while other vendor (or vendors) didn't!. 'Partially Delivered': if one order has products from different vendors, and one vendor has shipped and DELIVERED their product to the customer while other vendor (or vendors) didn't!    // The `order_item_statuses` table contains all kinds of order statuses (that can be updated by both 'vendor'-s and 'admin'-s in `orders_products` table) like: pending, in progress, shipped, canceled, ...etc.
         $orderStatuses = \App\Models\OrderStatus::where('status', 1)->get()->toArray();
         // dd($orderStatuses);
 
-        // Get the 'active' item statuses from `orders_products` table (which can be determined by both 'vendor'-s and 'admin'-s, in contrast to "Update Order Status" which is updated by 'admin'-s ONLY, not 'vendor'-s) (Pending, In Progress, Shipped, Delivered, ...)    // Check 8:25 in https://www.youtube.com/watch?v=QEdO_maniDY&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=168
+        // Get the 'active' item statuses from `orders_products` table (which can be determined by both 'vendor'-s and 'admin'-s, in contrast to "Update Order Status" which is updated by 'admin'-s ONLY, not 'vendor'-s) (Pending, In Progress, Shipped, Delivered, ...)    
         // Note: The `order_statuses` table contains all kinds of order statuses (that can be updated by 'admin'-s ONLY in `orders` table) like: pending, in progress, shipped, canceled, ...etc. In `order_statuses` table, the `name` column can be: 'New', 'Pending', 'Canceled', 'In Progress', 'Shipped', 'Partially Shipped', 'Delivered', 'Partially Delivered' and 'Paid'. 'Partially Shipped': If one order has products from different vendors, and one vendor has shipped their product to the customer while other vendor (or vendors) didn't!. 'Partially Delivered': if one order has products from different vendors, and one vendor has shipped and DELIVERED their product to the customer while other vendor (or vendors) didn't!    // The `order_item_statuses` table contains all kinds of order statuses (that can be updated by both 'vendor'-s and 'admin'-s in `orders_products` table) like: pending, in progress, shipped, canceled, ...etc.
         $orderItemStatuses = \App\Models\OrderItemStatus::where('status', 1)->get()->toArray();
         // dd($orderItemStatuses);
 
-        // Show the "Update Order Status" History/Log in admin/orders/order_details.blade.php    // Check 7:47 in https://www.youtube.com/watch?v=7nb4feE7FBY&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=171
+        // Show the "Update Order Status" History/Log in admin/orders/order_details.blade.php    
         $orderLog = \App\Models\OrdersLog::with('orders_products')->where('order_id', $id)->orderBy('id', 'Desc')->get()->toArray(); // Show Order Log descendingly    // Eager Loading: https://laravel.com/docs/9.x/eloquent-relationships#eager-loading    // 'orders_products' is the relationship method name in OrdersLog.php model
         // dd($orderLog);
 
 
-
-        // https://www.youtube.com/watch?v=CSaJYv9Xefk&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=202
+        
         // Calculate the total items count (the total quantity of all items) in the Cart (including how many items of the same product i.e. 3 small-sized T-shirts + 2 mobile phones of 128GB RAM)
         $total_items = 0;
+
         foreach ($orderDetails['orders_products'] as $product) {
             $total_items = $total_items + $product['product_qty'];
         }
@@ -121,26 +123,24 @@ class OrderController extends Controller
         return view('admin.orders.order_details')->with(compact('orderDetails', 'userDetails', 'orderStatuses', 'orderItemStatuses', 'orderLog', 'item_discount'));
     }
 
-    // Update Order Status (by 'admin'-s ONLY, not 'vendor'-s, in contrast to "Update Item Status" which can be updated by both 'vendor'-s and 'admin'-s) (Pending, Shipped, In Progress, Canceled, ...) in admin/orders/order_details.blade.php in Admin Panel    // https://www.youtube.com/watch?v=W-aEaJQGeKE&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=167
+    // Update Order Status (by 'admin'-s ONLY, not 'vendor'-s, in contrast to "Update Item Status" which can be updated by both 'vendor'-s and 'admin'-s) (Pending, Shipped, In Progress, Canceled, ...) in admin/orders/order_details.blade.php in Admin Panel    
     // Note: The `order_statuses` table contains all kinds of order statuses (that can be updated by 'admin'-s ONLY in `orders` table) like: pending, in progress, shipped, canceled, ...etc. In `order_statuses` table, the `name` column can be: 'New', 'Pending', 'Canceled', 'In Progress', 'Shipped', 'Partially Shipped', 'Delivered', 'Partially Delivered' and 'Paid'. 'Partially Shipped': If one order has products from different vendors, and one vendor has shipped their product to the customer while other vendor (or vendors) didn't!. 'Partially Delivered': if one order has products from different vendors, and one vendor has shipped and DELIVERED their product to the customer while other vendor (or vendors) didn't!    // The `order_item_statuses` table contains all kinds of order statuses (that can be updated by both 'vendor'-s and 'admin'-s in `orders_products` table) like: pending, in progress, shipped, canceled, ...etc.
     public function updateOrderStatus(Request $request) {
         if ($request->isMethod('post')) {
             $data = $request->all();
             // dd($data);
 
-
-
-            // Note: There are two types of Shipping Process: "manual" and "automatic". "Manual" is in the case like small businesses, where the courier arrives at the owner warehouse to to pick up the order for shipping, and the small business owner takes the shipment details (like courier name, tracking number, ...) from the courier, and inserts those details themselves in the Admin Panel when they "Update Order Status" Section (by an 'admin') or "Update Item Status" Section (by a 'vendor' or 'admin') (in admin/orders/order_details.blade.php). With "automatic" shipping process, we're integrating third-party APIs (e.g. Shiprocket API) and orders go directly to the shipping partner, and the updates comes from the courier's end, and orders are automatically delivered to customers. Check https://www.youtube.com/watch?v=ZjeCjuzU9wM&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=172
-            // "Automatic" Shipping Process (when 'admin' does NOT enter the Courier Name and Tracking Number): Configure the Shiprocket API in our Admin Panel in admin/orders/order_details.blade.php (to automate Pushing Orders to Shiprocket API by selecting "Shipped" from the drop-down menu)    // https://www.youtube.com/watch?v=4ZjMeU-dyTU&list=PLLUtELdNs2ZaPSOuYoosmSj5TUuXjl_uu&index=4
+            // Note: There are two types of Shipping Process: "manual" and "automatic". "Manual" is in the case like small businesses, where the courier arrives at the owner warehouse to to pick up the order for shipping, and the small business owner takes the shipment details (like courier name, tracking number, ...) from the courier, and inserts those details themselves in the Admin Panel when they "Update Order Status" Section (by an 'admin') or "Update Item Status" Section (by a 'vendor' or 'admin') (in admin/orders/order_details.blade.php). With "automatic" shipping process, we're integrating third-party APIs (e.g. Shiprocket API) and orders go directly to the shipping partner, and the updates comes from the courier's end, and orders are automatically delivered to customers
+            // "Automatic" Shipping Process (when 'admin' does NOT enter the Courier Name and Tracking Number): Configure the Shiprocket API in our Admin Panel in admin/orders/order_details.blade.php (to automate Pushing Orders to Shiprocket API by selecting "Shipped" from the drop-down menu)    
             if (empty($data['courier_name']) && empty($data['tracking_number']) && $data['order_status'] == 'Shipped') { // if the 'admin' didn't enter the Courier Name and Tracking Nubmer when they selected "Shipped" from the drop-down menu in admin/orders/order_details.blade.php, use the "Automatic" Shipping Process (Push Orders to Shiprocket API), not the "Manual" Shipping process. Check the "Manual" Shipping process in the next if statement
                 // dd('Inside Automatic Shipping Process if statement in updateOrderStatus() method in Admin/OrderController.php<br>');
                 // echo 'Inside Automatic Shipping Process if statement in updateOrderStatus() method in Admin/OrderController.php<br>';
                 // exit;
 
                 $getResults = \App\Models\Order::pushOrder($data['order_id']);
-                dd($getResults);
+                // dd($getResults);
                 if (!isset($getResults['status']) || (isset($getResults['status']) && $getResults['status'] == false)) { // If Status is not coming at all, or it's coming but it's false
-                    \Session::put('error_message', $getResults['message']); // The message is coming from the Shiprocket API    // Storing Data: https://laravel.com/docs/9.x/session#storing-data
+                    Session::put('error_message', $getResults['message']); // The message is coming from the Shiprocket API    // Storing Data: https://laravel.com/docs/9.x/session#storing-data
 
                     return redirect()->back(); // Redirecting With Flashed Session Data: https://laravel.com/docs/10.x/responses#redirecting-with-flashed-session-data
                     // return redirect()->back()->with('error_message', $getResults['message']); // Redirecting With Flashed Session Data: https://laravel.com/docs/10.x/responses#redirecting-with-flashed-session-data
@@ -148,12 +148,11 @@ class OrderController extends Controller
             }
 
 
-
             // Update Order Status in `orders` table
             \App\Models\Order::where('id', $data['order_id'])->update(['order_status' => $data['order_status']]);
 
 
-            // Note: There are two types of Shipping Process: "manual" and "automatic". "Manual" is in the case like small businesses, where the courier arrives at the owner warehouse to to pick up the order for shipping, and the small business owner takes the shipment details (like courier name, tracking number, ...) from the courier, and inserts those details themselves in the Admin Panel when they "Update Order Status" Section (by an 'admin') or "Update Item Status" Section (by a 'vendor' or 'admin') (in admin/orders/order_details.blade.php). With "automatic" shipping process, we're integrating third-party APIs (e.g. Shiprocket API) and orders go directly to the shipping partner, and the updates comes from the courier's end, and orders are automatically delivered to customers. Check https://www.youtube.com/watch?v=ZjeCjuzU9wM&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=172
+            // Note: There are two types of Shipping Process: "manual" and "automatic". "Manual" is in the case like small businesses, where the courier arrives at the owner warehouse to to pick up the order for shipping, and the small business owner takes the shipment details (like courier name, tracking number, ...) from the courier, and inserts those details themselves in the Admin Panel when they "Update Order Status" Section (by an 'admin') or "Update Item Status" Section (by a 'vendor' or 'admin') (in admin/orders/order_details.blade.php). With "automatic" shipping process, we're integrating third-party APIs (e.g. Shiprocket API) and orders go directly to the shipping partner, and the updates comes from the courier's end, and orders are automatically delivered to customers
             // First: "Manual" Shipping Process (when 'admin' enters the Courier Name and Tracking Number. Check the last if statement for the "Automatic" Shipping Process) (Business owner takes the order shipment information from the courier and inserts them themselves when they "Update Order Status" (by an 'admin') (in admin/orders/order_details.blade.php)) i.e. Updating `courier_name` and `tracking_number` columns in `orders` table
             if (!empty($data['courier_name']) && !empty($data['tracking_number'])) { // if an 'admin' Updates the Order Status to 'Shipped' in admin/orders/order_details.blade.php, and submits both Courier Name and Tracking Number HTML input fields
                 \App\Models\Order::where('id', $data['order_id'])->update([
@@ -163,18 +162,18 @@ class OrderController extends Controller
             }
 
 
-            // We'll save the "Update Order Status" History/Logs in `orders_logs` database table (whenever an 'admin' updates an order status)    // https://www.youtube.com/watch?v=7nb4feE7FBY&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=171
+            // We'll save the "Update Order Status" History/Logs in `orders_logs` database table (whenever an 'admin' updates an order status)    
             $log = new \App\Models\OrdersLog;
             $log->order_id     = $data['order_id'];
             $log->order_status = $data['order_status'];
             $log->save();
 
 
-            // "Update Order Status" email: We send an email and SMS to the user when the general Order Status is updated by an 'admin' (pending, shipped, in progress, …). Check https://www.youtube.com/watch?v=nUM9e83WzIo&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=170
+            // "Update Order Status" email: We send an email and SMS to the user when the general Order Status is updated by an 'admin' (pending, shipped, in progress, …)
             $deliveryDetails = \App\Models\Order::select('mobile', 'email', 'name')->where('id', $data['order_id'])->first()->toArray();
             $orderDetails    = \App\Models\Order::with('orders_products')->where('id', $data['order_id'])->first()->toArray(); // Eager Loading: https://laravel.com/docs/9.x/eloquent-relationships#eager-loading    // 'orders_products' is the relationship method name in Order.php model
 
-            // Check 36:55 in https://www.youtube.com/watch?v=WNCFYaSv-N4&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=173
+            
             if (!empty($data['courier_name']) && !empty($data['tracking_number'])) { // if an 'admin' Updates the Order Status to 'Shipped' in admin/orders/order_details.blade.php, and submits both Courier Name and Tracking Number HTML input fields, include the Courier Name and Tracking Nubmer data in the email (send them with the email)
                 $email = $deliveryDetails['email'];
 
@@ -190,7 +189,7 @@ class OrderController extends Controller
                 ];
 
                 \Illuminate\Support\Facades\Mail::send('emails.order_status', $messageData, function ($message) use ($email) { // Sending Mail: https://laravel.com/docs/9.x/mail#sending-mail    // 'emails.order_status' is the order_status.blade.php file inside the 'resources/views/emails' folder that will be sent as an email    // We pass in all the variables that order_status.blade.php will use    // https://www.php.net/manual/en/functions.anonymous.php
-                    $message->to($email)->subject('Order Status Updated - StackDevelopers.in');
+                    $message->to($email)->subject('Order Status Updated - MultiVendorEcommerceApplication.com.eg');
                 });
 
             } else { // if there are no Courier Name and Tracking Number data, don't include them in the email
@@ -206,28 +205,18 @@ class OrderController extends Controller
                 ];
     
                 \Illuminate\Support\Facades\Mail::send('emails.order_status', $messageData, function ($message) use ($email) { // Sending Mail: https://laravel.com/docs/9.x/mail#sending-mail    // 'emails.order_status' is the order_status.blade.php file inside the 'resources/views/emails' folder that will be sent as an email    // We pass in all the variables that order_status.blade.php will use    // https://www.php.net/manual/en/functions.anonymous.php
-                    $message->to($email)->subject('Order Status Updated - StackDevelopers.in');
+                    $message->to($email)->subject('Order Status Updated - MultiVendorEcommerceApplication.com.eg');
                 });
             }
 
-            /*
-            // "Update Order Status" SMS: We send an email and SMS to the user when the general Order Status is updated by an 'admin' (pending, shipped, in progress, …). Check https://www.youtube.com/watch?v=nUM9e83WzIo&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=170
-            // Sending the Order Status Update (by 'admin') SMS
-            // Send an SMS using an SMS API and cURL    // https://www.youtube.com/watch?v=dF7OhPttepE&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=170
-            $message = 'Dear Customer, your order #' . $data['order_id'] . ' status has been updated to ' . $data['order_status'] . ' placed with StackDevelopers';
-            // $mobile = $data['mobile']; // the user's mobile that they entered while submitting the registration form
-            $mobile = $deliveryDetails['mobile'];
-            // $mobile = \Auth::user()->moblie; // Retrieving The Authenticated User: https://laravel.com/docs/9.x/authentication#retrieving-the-authenticated-user
-            \App\Models\Sms::sendSms($message, $mobile); // Send the SMS
-            */
-
-
             $message = 'Order Status has been updated successfully!';
+
+
             return redirect()->back()->with('success_message', $message);
         }
     }
 
-    // Update Item Status (which can be determined by both 'vendor'-s and 'admin'-s, in contrast to "Update Order Status" which is updated by 'admin'-s ONLY, not 'vendor'-s) (Pending, In Progress, Shipped, Delivered, ...) in admin/orders/order_details.blade.php in Admin Panel    // https://www.youtube.com/watch?v=QEdO_maniDY&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=168
+    // Update Item Status (which can be determined by both 'vendor'-s and 'admin'-s, in contrast to "Update Order Status" which is updated by 'admin'-s ONLY, not 'vendor'-s) (Pending, In Progress, Shipped, Delivered, ...) in admin/orders/order_details.blade.php in Admin Panel    
     // Note: The `order_statuses` table contains all kinds of order statuses (that can be updated by 'admin'-s ONLY in `orders` table) like: pending, in progress, shipped, canceled, ...etc. In `order_statuses` table, the `name` column can be: 'New', 'Pending', 'Canceled', 'In Progress', 'Shipped', 'Partially Shipped', 'Delivered', 'Partially Delivered' and 'Paid'. 'Partially Shipped': If one order has products from different vendors, and one vendor has shipped their product to the customer while other vendor (or vendors) didn't!. 'Partially Delivered': if one order has products from different vendors, and one vendor has shipped and DELIVERED their product to the customer while other vendor (or vendors) didn't!    // The `order_item_statuses` table contains all kinds of order statuses (that can be updated by both 'vendor'-s and 'admin'-s in `orders_products` table) like: pending, in progress, shipped, canceled, ...etc.
     public function updateOrderItemStatus(Request $request) {
         if ($request->isMethod('post')) {
@@ -238,7 +227,7 @@ class OrderController extends Controller
             \App\Models\OrdersProduct::where('id', $data['order_item_id'])->update(['item_status' => $data['order_item_status']]);
 
 
-            // Note: There are two types of Shipping Process: "manual" and "automatic". "Manual" is in the case like small businesses, where the courier arrives at the owner warehouse to to pick up the order for shipping, and the small business owner takes the shipment details (like courier name, tracking number, ...) from the courier, and inserts those details themselves in the Admin Panel when they "Update Order Status" Section (by an 'admin') or "Update Item Status" Section (by a 'vendor' or 'admin') (in admin/orders/order_details.blade.php). With "automatic" shipping process, we're integrating third-party APIs and orders go directly to the shipping partner, and the updates comes from the courier's end, and orders are automatically delivered to customers. Check https://www.youtube.com/watch?v=ZjeCjuzU9wM&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=172
+            // Note: There are two types of Shipping Process: "manual" and "automatic". "Manual" is in the case like small businesses, where the courier arrives at the owner warehouse to to pick up the order for shipping, and the small business owner takes the shipment details (like courier name, tracking number, ...) from the courier, and inserts those details themselves in the Admin Panel when they "Update Order Status" Section (by an 'admin') or "Update Item Status" Section (by a 'vendor' or 'admin') (in admin/orders/order_details.blade.php). With "automatic" shipping process, we're integrating third-party APIs and orders go directly to the shipping partner, and the updates comes from the courier's end, and orders are automatically delivered to customers
             // First: "Manual" Shipping Process (Business owner takes the order shipment information from the courier and inserts them themselves when they "Update Order Item Status" (by a 'vendor' or 'admin') (in admin/orders/order_details.blade.php)) i.e. Updating `courier_name` and `tracking_number` columns in `orders_products` table
             if (!empty($data['item_courier_name']) && !empty($data['item_tracking_number'])) { // if a 'vendor' or 'admin' updates the order Item Status to 'Shipped' in admin/orders/order_details.blade.php, and submits both Courier Name and Tracking Number HTML input fields
                 \App\Models\OrdersProduct::where('id', $data['order_item_id'])->update([
@@ -252,7 +241,7 @@ class OrderController extends Controller
             $getOrderId = \App\Models\OrdersProduct::select('order_id')->where('id', $data['order_item_id'])->first()->toArray();
 
 
-            // We'll save the Update "Item Status" History/Logs in `orders_logs` database table (whenever a 'vendor' or 'admin' updates an order item status)    // https://www.youtube.com/watch?v=WNCFYaSv-N4&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=173
+            // We'll save the Update "Item Status" History/Logs in `orders_logs` database table (whenever a 'vendor' or 'admin' updates an order item status)    
             // Note: In `orders_logs` table, if the `order_item_id` column is zero 0, this means the "Item Status" has never been updated, and if it's not zero 0, this means it's been previously updated by a 'vendor' or 'admin' and the number references/denotes the `id` column (foreign key) of the `orders_products` table
             $log = new \App\Models\OrdersLog;
             $log->order_id      = $getOrderId['order_id'];
@@ -261,11 +250,10 @@ class OrderController extends Controller
             $log->save();
 
 
-            // "Item Status" update email: We send an email and SMS to the user when the Item Status (in the "Ordered Products" section) is updated by a 'vendor' or 'admin' (pending, shipped, in progress, …) for every product on its own in the email (not the whole order products, but the email is about the product that has been updated ONLY). Check https://www.youtube.com/watch?v=lyG3Ut317M8&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=175 AND check https://www.youtube.com/watch?v=nUM9e83WzIo&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=170
-            // $getOrderId = \App\Models\OrdersProduct::select('order_id')->where('id', $data['order_item_id'])->first()->toArray();
+            // "Item Status" update email: We send an email and SMS to the user when the Item Status (in the "Ordered Products" section) is updated by a 'vendor' or 'admin' (pending, shipped, in progress, …) for every product on its own in the email (not the whole order products, but the email is about the product that has been updated ONLY)
             $deliveryDetails = \App\Models\Order::select('mobile', 'email', 'name')->where('id', $getOrderId['order_id'])->first()->toArray();
 
-            // Making sure that ONLY ONE order product (from the `orders_products` table) that has been item status updated, NOT all the order products, are sent in the email. Check 34:00 in https://www.youtube.com/watch?v=lyG3Ut317M8&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=175
+            // Making sure that ONLY ONE order product (from the `orders_products` table) that has been item status updated, NOT all the order products, are sent in the email
             $order_item_id = $data['order_item_id'];
             $orderDetails  = \App\Models\Order::with([ // Eager Loading: https://laravel.com/docs/9.x/eloquent-relationships#eager-loading    // 'orders_products' is the relationship method name in Order.php model    // Constraining Eager Loads: https://laravel.com/docs/9.x/eloquent-relationships#constraining-eager-loads    // Subquery Where Clauses: https://laravel.com/docs/9.x/queries#subquery-where-clauses    // Advanced Subqueries: https://laravel.com/docs/9.x/eloquent#advanced-subqueries
                 'orders_products' => function($query) use ($order_item_id) { // function () use ()     syntax: https://www.php.net/manual/en/functions.anonymous.php#:~:text=the%20use%20language%20construct     // 'orders_products' is the Relationship method name in Order.php model
@@ -273,9 +261,9 @@ class OrderController extends Controller
                 }
             ])->where('id', $getOrderId['order_id'])->first()->toArray(); // Eager Loading: https://laravel.com/docs/9.x/eloquent-relationships#eager-loading    // 'orders_products' is the relationship method name in Order.php model
             // dd($orderDetails);
-            // Note: Now in this case, updating the item status of one product will send an email to user but with telling the item statuses of all of the Order items (not ONLY the item with the status updated!). The solution to this is using a subquery (Constraining Eager Loads), check 16:44 in https://www.youtube.com/watch?v=nUM9e83WzIo&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=170
+            // Note: Now in this case, updating the item status of one product will send an email to user but with telling the item statuses of all of the Order items (not ONLY the item with the status updated!). The solution to this is using a subquery (Constraining Eager Loads)
 
-            // Check 36:55 in https://www.youtube.com/watch?v=WNCFYaSv-N4&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=173
+
             if (!empty($data['item_courier_name']) && !empty($data['item_tracking_number'])) { // if a 'vendor' or 'admin' Updates the Order "Item Status" to 'Shipped' in admin/orders/order_details.blade.php, and submits both Courier Name and Tracking Number HTML input fields, include the Courier Name and Tracking Nubmer data in the email (send them with the email)
                 $email = $deliveryDetails['email'];
 
@@ -291,7 +279,7 @@ class OrderController extends Controller
                 ];
 
                 \Illuminate\Support\Facades\Mail::send('emails.order_item_status', $messageData, function ($message) use ($email) { // Sending Mail: https://laravel.com/docs/9.x/mail#sending-mail    // 'emails.order_item_status' is the order_item_status.blade.php file inside the 'resources/views/emails' folder that will be sent as an email    // We pass in all the variables that order_item_status.blade.php will use    // https://www.php.net/manual/en/functions.anonymous.php
-                    $message->to($email)->subject('Order Item Status Updated - StackDevelopers.in');
+                    $message->to($email)->subject('Order Item Status Updated - MultiVendorEcommerceApplication.com.eg');
                 });
 
             } else { // if there are no Courier Name and Tracking Number data, don't include them in the email
@@ -307,28 +295,18 @@ class OrderController extends Controller
                 ];
     
                 \Illuminate\Support\Facades\Mail::send('emails.order_item_status', $messageData, function ($message) use ($email) { // Sending Mail: https://laravel.com/docs/9.x/mail#sending-mail    // 'emails.order_item_status' is the order_item_status.blade.php file inside the 'resources/views/emails' folder that will be sent as an email    // We pass in all the variables that order_item_status.blade.php will use    // https://www.php.net/manual/en/functions.anonymous.php
-                    $message->to($email)->subject('Order Item Status Updated - StackDevelopers.in');
+                    $message->to($email)->subject('Order Item Status Updated - MultiVendorEcommerceApplication.com.eg');
                 });
             }
 
-            /*
-            // "Item Status" update SMS: We send an email and SMS to the user when the Item Status (in the "Ordered Products" section) is updated by a 'vendor' or 'admin' (pending, shipped, in progress, …). Check https://www.youtube.com/watch?v=nUM9e83WzIo&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=170
-            // Sending the Item Status Update (by 'admin') SMS
-            // Send an SMS using an SMS API and cURL    // https://www.youtube.com/watch?v=dF7OhPttepE&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=170
-            $message = 'Dear Customer, your order #' . $data['order_id'] . ' item status has been updated to ' . $data['order_status'] . ' placed with StackDevelopers';
-            // $mobile = $data['mobile']; // the user's mobile that they entered while submitting the registration form
-            $mobile = $deliveryDetails['mobile'];
-            // $mobile = \Auth::user()->moblie; // Retrieving The Authenticated User: https://laravel.com/docs/9.x/authentication#retrieving-the-authenticated-user
-            \App\Models\Sms::sendSms($message, $mobile); // Send the SMS
-            */
-
-
             $message = 'Order Item Status has been updated successfully!';
+
+
             return redirect()->back()->with('success_message', $message);
         }
     }
 
-    // Render order invoice page (HTML) in order_invoice.blade.php    // https://www.youtube.com/watch?v=T87FAMHeIsU&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=176
+    // Render order invoice page (HTML) in order_invoice.blade.php    
     public function viewOrderInvoice($order_id) { // Route Parameters: Required Parameters: https://laravel.com/docs/9.x/routing#required-parameters
         $orderDetails = \App\Models\Order::with('orders_products')->where('id', $order_id)->first()->toArray(); // Eager Loading: https://laravel.com/docs/9.x/eloquent-relationships#eager-loading    // 'orders_products' is the relationship method name in Order.php model
         // dd($orderDetails);
@@ -338,8 +316,8 @@ class OrderController extends Controller
         return view('admin.orders.order_invoice')->with(compact('orderDetails', 'userDetails'));
     }
 
-    // Render order PDF invoice in order_invoice.blade.php using Dompdf Package    // https://www.youtube.com/watch?v=h1vWl1SUe6w&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=178
-    // (We'll use the same viewPDFInvoice() function (but with different routes/URLs!) to render the PDF invoice for 'admin'-s in the Admin Panel and for the user to download it!). Check https://www.youtube.com/watch?v=C_Y1URpGMVE&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=179    // User download order PDF invoice (we created this route outside outside the Admin Panel routes so that the user could use it!)
+    // Render order PDF invoice in order_invoice.blade.php using Dompdf Package    
+    // (We'll use the same viewPDFInvoice() function (but with different routes/URLs!) to render the PDF invoice for 'admin'-s in the Admin Panel and for the user to download it!)    // User download order PDF invoice (we created this route outside outside the Admin Panel routes so that the user could use it!)
     public function viewPDFInvoice($order_id) { // Route Parameters: Required Parameters: https://laravel.com/docs/9.x/routing#required-parameters
         $orderDetails = \App\Models\Order::with('orders_products')->where('id', $order_id)->first()->toArray(); // Eager Loading: https://laravel.com/docs/9.x/eloquent-relationships#eager-loading    // 'orders_products' is the relationship method name in Order.php model
         // dd($orderDetails);
@@ -630,10 +608,10 @@ class OrderController extends Controller
                 <header class="clearfix">
                     <div class="container">
                         <div class="company-address">
-                            <h2 class="title">STACK DEVELOPERS</h2>
+                            <h2 class="title">Multi-vendor E-commerce Application</h2>
                             <p>
-                                123 - ABC, Mall Road<br>
-                                Delhi, India
+                                37 Salah Salem St.<br>
+                                Cairo, Egypt
                             </p>
                         </div>
                         <div class="company-contact">

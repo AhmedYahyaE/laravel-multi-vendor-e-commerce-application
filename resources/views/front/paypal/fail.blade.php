@@ -1,10 +1,5 @@
-{{-- https://www.youtube.com/watch?v=fkl3-HmTSWI&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=185 --}}
 {{-- This page is rendered by the error() method inside Front/PaypalController.php (if making the order PayPal payment fails) --}}
-
-
-
 @extends('front.layout.layout')
-
 
 
 @section('content')
@@ -42,10 +37,12 @@
 
 
 
-{{-- Forget/Remove some data in the Session after making the PayPal payment --}} {{-- https://www.youtube.com/watch?v=fkl3-HmTSWI&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=185 --}}
+{{-- Forget/Remove some data in the Session after making the PayPal payment --}} 
 @php
-    \Session::forget('grand_total');  // Deleting Data: https://laravel.com/docs/9.x/session#deleting-data
-    \Session::forget('order_id');     // Deleting Data: https://laravel.com/docs/9.x/session#deleting-data
-    \Session::forget('couponCode');   // Deleting Data: https://laravel.com/docs/9.x/session#deleting-data
-    \Session::forget('couponAmount'); // Deleting Data: https://laravel.com/docs/9.x/session#deleting-data
+    use Illuminate\Support\Facades\Session;
+
+    Session::forget('grand_total');  // Deleting Data: https://laravel.com/docs/9.x/session#deleting-data
+    Session::forget('order_id');     // Deleting Data: https://laravel.com/docs/9.x/session#deleting-data
+    Session::forget('couponCode');   // Deleting Data: https://laravel.com/docs/9.x/session#deleting-data
+    Session::forget('couponAmount'); // Deleting Data: https://laravel.com/docs/9.x/session#deleting-data
 @endphp

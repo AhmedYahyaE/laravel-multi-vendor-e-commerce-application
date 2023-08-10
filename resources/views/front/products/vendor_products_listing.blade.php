@@ -1,9 +1,7 @@
-{{-- Show all Vendor products --}} {{-- This file is 'iclude'-ed in front/products/vendor_listing.blade.php --}} {{-- https://www.youtube.com/watch?v=S8xbldfdLXc&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=111 --}}
-
+{{-- Show all Vendor products --}} {{-- This file is 'iclude'-ed in front/products/vendor_listing.blade.php --}} 
 
 
 <!-- Row-of-Product-Container -->
-{{-- <div class="row product-container list-style"> --}}
 <div class="row product-container grid-style">
 
 
@@ -56,17 +54,11 @@
                         <div class="item-description">
                             <p>{{ $product['description'] }}</p>
                         </div>
-                        {{-- <div class="item-stars">
-                            <div class='star' title="4.5 out of 5 - based on 23 Reviews">
-                                <span style='width:67px'></span>
-                            </div>
-                            <span>(23)</span>
-                        </div> --}}
                     </div>
 
 
 
-                    {{-- Call the static getDiscountPrice() method in the Product.php Model to determine the final price of a product because a product can have a discount from TWO things: either a `CATEGORY` discount or `PRODUCT` discout    // Check 19:09 in https://www.youtube.com/watch?v=T_CWdKW5he0&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=72 --}}
+                    {{-- Call the static getDiscountPrice() method in the Product.php Model to determine the final price of a product because a product can have a discount from TWO things: either a `CATEGORY` discount or `PRODUCT` discout     --}}
                     @php
                         $getDiscountPrice = \App\Models\Product::getDiscountPrice($product['id']);
                     @endphp
@@ -75,7 +67,7 @@
                     @if ($getDiscountPrice > 0) {{-- If there's a discount on the price, show the price before (the original price) and after (the new price) the discount --}}
                         <div class="price-template">
                             <div class="item-new-price">
-                                Rs . {{ $getDiscountPrice }} {{-- 'Rs' means Rupees the Indian currency --}}
+                                Rs . {{ $getDiscountPrice }} 
                             </div>
                             <div class="item-old-price">
                                 Rs . {{ $product['product_price'] }}
@@ -95,7 +87,7 @@
 
 
 
-                {{-- https://www.youtube.com/watch?v=tQNmKdQ-f-s&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=79 --}}
+                
                 @php
                     $isProductNew = \App\Models\Product::isProductNew($product['id'])
                 @endphp

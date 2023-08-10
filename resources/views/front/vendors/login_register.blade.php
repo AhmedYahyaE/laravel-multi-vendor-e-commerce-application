@@ -1,6 +1,4 @@
-{{-- This page is accessed from Vendor Login tab in the drop-down menu in the header (in front/layout/header.blade.php) --}} {{-- https://www.youtube.com/watch?v=ODwOtaa2GxU&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=98 --}}
-
-
+{{-- This page is accessed from Vendor Login tab in the drop-down menu in the header (in front/layout/header.blade.php) --}} 
 @extends('front.layout.layout')
 
 
@@ -29,10 +27,9 @@
 
 
 
-            {{-- Displaying The Validation Errors: https://laravel.com/docs/9.x/validation#quick-displaying-the-validation-errors AND https://laravel.com/docs/9.x/blade#validation-errors --}} {{-- https://www.youtube.com/watch?v=QbEFPGnTdBc&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=99 --}}
+            {{-- Displaying The Validation Errors: https://laravel.com/docs/9.x/validation#quick-displaying-the-validation-errors AND https://laravel.com/docs/9.x/blade#validation-errors --}} 
             {{-- Determining If An Item Exists In The Session (using has() method): https://laravel.com/docs/9.x/session#determining-if-an-item-exists-in-the-session --}}
             {{-- Our Bootstrap success message in case of updating admin password is successful: --}}
-            {{-- https://www.youtube.com/watch?v=oAZKXYrkcr4&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=17 --}}
             {{-- Displaying Success Message --}}
             @if (Session::has('success_message')) <!-- Check vendorRegister() method in Front/VendorController.php -->
                 <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -71,7 +68,7 @@
                         <h6 class="account-h6 u-s-m-b-30">Welcome back! Sign in to your account.</h6>
 
 
-                        {{-- https://www.youtube.com/watch?v=UXUDxtN68XE&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=101 --}}
+                        
                         <form action="{{ url('admin/login') }}" method="post"> {{-- the same HTML Form as the one in the Admin Panel in admin/login.blade.php --}}
                             @csrf {{-- https://laravel.com/docs/9.x/csrf#preventing-csrf-requests --}}
 
@@ -88,18 +85,6 @@
                                 </label>
                                 <input type="password" name="password" id="vendor-password" class="text-field" placeholder="Password">
                             </div>
-                            {{-- <div class="group-inline u-s-m-b-30">
-                                <div class="group-1">
-                                    <input type="checkbox" class="check-box" id="remember-me-token">
-                                    <label class="label-text" for="remember-me-token">Remember me</label>
-                                </div>
-                                <div class="group-2 text-right">
-                                    <div class="page-anchor">
-                                        <a href="lost-password.html">
-                                            <i class="fas fa-circle-o-notch u-s-m-r-9"></i>Lost your password?</a>
-                                    </div>
-                                </div>
-                            </div> --}}
                             <div class="m-b-45">
                                 <button class="button button-outline-secondary w-100">Login</button>
                             </div>
@@ -115,7 +100,7 @@
 
 
 
-                        {{-- https://www.youtube.com/watch?v=QbEFPGnTdBc&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=98 --}}
+                        
                         <form id="vendorForm" action="{{ url('/vendor/register') }}" method="post">
                             @csrf
 

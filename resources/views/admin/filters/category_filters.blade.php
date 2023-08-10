@@ -1,18 +1,14 @@
-{{-- This page is included by the add_edit_product.php page to show the related filters <select> box for the newly added product DEPENDING ON THE SELECTED CATEGORY of the product --}} {{-- https://www.youtube.com/watch?v=T7dcxauNyQc&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=88 --}}
+{{-- This page is included by the add_edit_product.php page to show the related filters <select> box for the newly added product DEPENDING ON THE SELECTED CATEGORY of the product --}} 
 
 
 @php
-    // https://www.youtube.com/watch?v=Rr2tkfVtVMc&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=86
+    
     $productFilters = \App\Models\ProductsFilter::productFilters(); // Get ALL the (enabled/active) Filters
     // dd($productFilters);
 
+    // Note: $category_id may come from TWO places: the AJAX call and gets passed in through categoryFilters() method in Admin/FilterController.php    OR    the $product object in case of 'Edit Product' from addEditProduct() method in Admin/ProductsController    
 
-
-    // Note: $category_id may come from TWO places: the AJAX call and gets passed in through categoryFilters() method in Admin/FilterController.php    OR    the $product object in case of 'Edit Product' from addEditProduct() method in Admin/ProductsController    // Check 38:48 in https://www.youtube.com/watch?v=T7dcxauNyQc&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=91
-
-
-
-    // In case of 'Edit a Product' only (NOT 'Add a new Product' and NOT from the $category_id which comes from the AJAX call), where $product is passed from addEditProduct() method in Admin/ProductsController    // Check 38:48 in https://www.youtube.com/watch?v=T7dcxauNyQc&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=91
+    // In case of 'Edit a Product' only (NOT 'Add a new Product' and NOT from the $category_id which comes from the AJAX call), where $product is passed from addEditProduct() method in Admin/ProductsController    
     if (isset($product['category_id'])) {
         $category_id = $product['category_id'];
     }

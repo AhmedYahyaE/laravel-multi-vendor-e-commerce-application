@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('newsletter_subscribers', function (Blueprint $table) {
-            // https://www.youtube.com/watch?v=RhJKeFxTT0U&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=212
+            
             $table->id();
 
             $table->string('email');

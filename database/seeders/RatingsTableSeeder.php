@@ -12,7 +12,7 @@ class RatingsTableSeeder extends Seeder
      */
     public function run(): void
     {
-        // https://www.youtube.com/watch?v=xYDsEiQBXzk&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=225
+        
         // Note: Check DatabaseSeeder.php!
         $ratingRecords = [
             [

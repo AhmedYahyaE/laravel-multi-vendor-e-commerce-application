@@ -17,7 +17,7 @@ class BannersTableSeeder extends Seeder
         //
 
         
-        // https://www.youtube.com/watch?v=KPK-WrVGY-Q&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=65
+        
         // Note: Check DatabaseSeeder.php!
         $bannerRecords = [
             [

@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('coupons', function (Blueprint $table) {
 
-            // https://www.youtube.com/watch?v=egx7-Hmb63Q&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=142
+            
             $table->id();
 
             $table->integer('vendor_id'); // if the coupon is added by an admin, it'll be zero 0, but if it's added by a vendor, it'll be equal to the vendor id

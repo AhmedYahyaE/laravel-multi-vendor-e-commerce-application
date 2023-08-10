@@ -9,12 +9,12 @@ class Order extends Model
 {
     use HasFactory;
 
-    // Note: For the Orders module, we created two database tables: orders and orders_products tables. The first one holds/stores the main information about the orders of a user (e.g. delivery address, coupon code, shipping, payment method, ...etc), and the second one holds/stores the detailed information about the order (the items/products that are bought by the order and product name, code, color, size, price, ...etc). There is a one-to-many relationship between the two tables where one order can have many order products.
+    // Note: For the Orders module, we created two database tables: `orders` and `orders_products` tables. The first one holds/stores the main information about the orders of a user (e.g. delivery address, coupon code, shipping, payment method, ...etc), and the second one holds/stores the detailed information about the order (the items/products that are bought by the order and product name, code, color, size, price, ...etc). There is a one-to-many relationship between the two tables where one order can have many order products.
 
 
 
-    // Relationship of an Order `orders` table with Order_Products `orders_products` table (every Order has many Order_Products)    // https://www.youtube.com/watch?v=4d_Hq33jihY&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=164
-    public function orders_products() { // vendor() is in the SINGULAR!    // A Product `products` belongs to a Vendor `vendors`, and the Foreign Key of the Relationship is the `vendor_id` column
+    // Relationship of an Order `orders` table with Order_Products `orders_products` table (every Order has many Order_Products)    
+    public function orders_products() {    
         return $this->hasMany('App\Models\OrdersProduct', 'order_id'); // 'order_id' (column of `orders_products` table) is the Foreign Key of the Relationship
     }
 
@@ -22,14 +22,13 @@ class Order extends Model
 
 
 
-
-    // Shiprocket API Integration! Shiprocket needs an "order_items" key/name in the JSON request, so we create this relationship method specifically for this matter (in order for the $getResults array in pushOrder() method in APIController.php to have the key/name of "order_items"). Check 11:22 in https://www.youtube.com/watch?v=mcSoGDSrdsU&list=PLLUtELdNs2ZaPSOuYoosmSj5TUuXjl_uu&index=2
-    // Relationship of an Order `orders` table with Order_Products `orders_products` table (every Order has many Order_Products)    // https://www.youtube.com/watch?v=4d_Hq33jihY&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=164
-    public function order_items() { // vendor() is in the SINGULAR!    // A Product `products` belongs to a Vendor `vendors`, and the Foreign Key of the Relationship is the `vendor_id` column
+    // Shiprocket API Integration! Shiprocket needs an "order_items" key/name in the JSON request, so we create this relationship method specifically for this matter (in order for the $getResults array in pushOrder() method in APIController.php to have the key/name of "order_items")
+    // Relationship of an Order `orders` table with Order_Products `orders_products` table (every Order has many Order_Products)    
+    public function order_items() {    
         return $this->hasMany('App\Models\OrdersProduct', 'order_id'); // 'order_id' (column of `orders_products` table) is the Foreign Key of the Relationship
     }
 
-    // Shiprocket API Integration!    // https://www.youtube.com/watch?v=mcSoGDSrdsU&list=PLLUtELdNs2ZaPSOuYoosmSj5TUuXjl_uu&index=2
+    // Shiprocket API Integration!    
     public static function pushOrder($order_id) { // this method is called from the pushOrder() method in API/APIController.php and from updateOrderStatus() method in Admin/OrderController.php
         $orderDetails = Order::with('order_items')->where('id', $order_id)->first()->toArray(); // Eager Loading: https://laravel.com/docs/9.x/eloquent-relationships#eager-loading    // 'order_items' is the relationship method name in Order.php model
         // dd($orderDetails);
@@ -37,8 +36,8 @@ class Order extends Model
         // Prepare the Shiprocket's JSON request: We copy the "Create Order" JSON request keys/names from Shiprocket Documentation: https://apidocs.shiprocket.in/#639199eb-4fed-4770-9057-c8b3e32b2cd6, and place (append) them as array keys in $orderDetails array:
         $orderDetails['order_id']              = $orderDetails['id'];         // 'order_id'                is the Shiprocket's JSON request key/name, while 'id'         is our `orders` table column name
         $orderDetails['order_date']            = $orderDetails['created_at']; // 'order_date'              is the Shiprocket's JSON request key/name, while 'created_at' is our `orders` table column name
-        $orderDetails['pickup_location']       = "Test";    // We created a Pickup Location (We called it "Test") while creating the Shiprocket account for the first time. Check the last video: https://www.youtube.com/watch?v=UZ33MfeR6wM&list=PLLUtELdNs2ZaPSOuYoosmSj5TUuXjl_uu&index=1
-        $orderDetails['channel_id']            = "1855855"; // We generated a channel_id using the Channels API. Check the last video: https://www.youtube.com/watch?v=UZ33MfeR6wM&list=PLLUtELdNs2ZaPSOuYoosmSj5TUuXjl_uu&index=1
+        $orderDetails['pickup_location']       = "Test";    // We created a Pickup Location (We called it "Test") while creating the Shiprocket account for the first time.
+        $orderDetails['channel_id']            = "1855855"; // We generated a channel_id using the Channels API
         $orderDetails['comment']               = 'Test Order';
         $orderDetails['billing_customer_name'] = $orderDetails['name'];       // 'billing_customer_name'   is the Shiprocket's JSON request key/name, while 'name'       is our `orders` table column name
         $orderDetails['billing_last_name']     = '';
@@ -75,7 +74,7 @@ class Order extends Model
         }
 
         // $orderDetails['payment_method']      = '';                           // 'payment_method'      is the Shiprocket's JSON request key/name
-        // $orderDetails['payment_method']      = 'prepaid'; // Important Note: By the time I watched the video, the 'payment_method' became Mandatory!, so I couldn't leave it empty '' as in the video (the instructor commented it out ALTOGETHER!) and I set it to always be 'prepaid'!    // 'payment_method'      is the Shiprocket's JSON request key/name
+        // $orderDetails['payment_method']      = 'prepaid';
         $orderDetails['shipping_charges']    = 0;                            // 'shipping_charges'    is the Shiprocket's JSON request key/name
         $orderDetails['giftwrap_charges']    = 0;                            // 'giftwrap_charges'    is the Shiprocket's JSON request key/name
         $orderDetails['transaction_charges'] = 0;                            // 'transaction_charges' is the Shiprocket's JSON request key/name
@@ -95,8 +94,7 @@ class Order extends Model
 
 
 
-        // Using PHP cURL for sending an HTTP Request to an integrated API (Shiprocket API) (to push the Order to the Shiprocket's admin panel), check https://www.youtube.com/watch?v=_94aEnDcJoU&list=PLLUtELdNs2ZaPSOuYoosmSj5TUuXjl_uu&index=3    // For an example of PHP cURL code/commands for an API integration into PHP/Laravel, check     http://laravel.stackdevelopers.in/payumoney-transaction-status-api/
-        // Note: Important Tip: If you want to get insight on, or you don't know how to write a certain HTTP Request code or command in cURL commands (terminal), PHP cURL code, PHP Guzzle code, JavaScript code, jQuery code or AJAX (XHR) code, you can resort to Postman, and create your complete HTTP Request in Postman (make sure to fill in all your request data like headers, authentication, body, ...etc), and then click on the </> icon on the far right side of Postman, and from the drop-down menu, choose your desired programming language, command line library, framwork or library, and there you can get your desired code/commands generated by Postman
+        // Using PHP cURL for sending an HTTP Request to an integrated API (Shiprocket API) (to push the Order to the Shiprocket's admin panel)
         // 1st: Generate an Access Token for the first time (to use it in all subsequent HTTP requests):
         $c = curl_init(); // Initialize a cURL session (The cURL Handle)
         $url = 'https://apiv2.shiprocket.in/v1/external/auth/login'; // Shiprocket API endpoint (URL/link) to generate an Access Token: https://apiv2.shiprocket.in/v1/external/auth/login . Check: https://apidocs.shiprocket.in/#c148860e-26ab-4737-a8be-23589f681b03
@@ -106,25 +104,6 @@ class Order extends Model
         curl_setopt($c, CURLOPT_POST, 1); // From the Shiprocket API Documentation, the Access Token generation API endpoint is accesses through a 'POST' HTTP request    // true (i.e. 1) to do a regular HTTP POST. This POST is the normal application/x-www-form-urlencoded kind, most commonly used by HTML forms.
         curl_setopt($c, CURLOPT_POSTFIELDS, 'email=stackdevelopers2@gmail.com&password=123456'); // We pass in our POST fields required for the Authentication API to generate the Access Token: our Shiprocket E-mail and Password    // The full data to post in a HTTP "POST" operation.    // Note: Passing an array (i.e.     [ 'name' => 'John', 'age' => 23 ]     ) to CURLOPT_POSTFIELDS will encode the data as "multipart/form-data", while passing a URL-encoded string (e.g.     "name=John&age=23"     ) will encode the data as application/x-www-form-urlencoded. Check     https://www.php.net/manual/en/function.curl-setopt.php#:~:text=Passing%20an%20array%20to%20CURLOPT_POSTFIELDS%20will%20encode%20the%20data%20as%20multipart/form%2Ddata%2C%20while%20passing%20a%20URL%2Dencoded%20string%20will%20encode%20the%20data%20as%20application/x%2Dwww%2Dform%2Durlencoded.     AND     https://www.php.net/manual/en/function.curl-setopt.php#:~:text=If%20value%20is%20an%20array%2C%20the%20Content%2DType%20header%20will%20be%20set%20to%20multipart/form%2Ddata
         curl_setopt($c, CURLOPT_RETURNTRANSFER, 1); // true (i.e. 1) to return the transfer as a string of the return value of curl_exec() instead of outputting it directly.
-        /* curl_setopt($c, CURLOPT_HTTPHEADER, [ // An array of HTTP header fields to set, in the format array('Content-type: text/plain', 'Content-length: 100')
-            'Content-Type: application/json',
-            'Content-length: 100'
-        ]); // An array of HTTP header fields to set, in the format array('Content-type: text/plain', 'Content-length: 100') */
-
-        /*
-            // As I said earlier, instead of using many curl_setopt() functions, we can use ONE curl_setopt_array() function (in one go) as follows:
-            curl_setopt_array($c, [ // Set multiple options for a cURL transfer
-                // We use the same Options we've used in the last curl_setopt() functions
-                CURLOPT_URL            => $url,
-                CURLOPT_POST           => 1,
-                CURLOPT_POSTFIELDS     => 'email=stackdevelopers2@gmail.com&password=123456', // Note: Passing an array (i.e.     [ 'name' => 'John', 'age' => 23 ]     ) to CURLOPT_POSTFIELDS will encode the data as "multipart/form-data", while passing a URL-encoded string (e.g.     "name=John&age=23"     ) will encode the data as application/x-www-form-urlencoded. Check     https://www.php.net/manual/en/function.curl-setopt.php#:~:text=Passing%20an%20array%20to%20CURLOPT_POSTFIELDS%20will%20encode%20the%20data%20as%20multipart/form%2Ddata%2C%20while%20passing%20a%20URL%2Dencoded%20string%20will%20encode%20the%20data%20as%20application/x%2Dwww%2Dform%2Durlencoded.     AND     https://www.php.net/manual/en/function.curl-setopt.php#:~:text=If%20value%20is%20an%20array%2C%20the%20Content%2DType%20header%20will%20be%20set%20to%20multipart/form%2Ddata
-                CURLOPT_RETURNTRANSFER => 1,
-                // CURLOPT_HTTPHEADER     => [
-                //     'Content-Type: application/json',
-                //     'Content-length: 100'
-                // ]
-            ]);
-        */
 
         $server_output = curl_exec($c); // The JSON server response for our HTTP request    // Perform a cURL session
         // dd($server_output); // The server's JSON response (the generated Access Token)
@@ -160,6 +139,7 @@ class Order extends Model
         // We use PHP cURL once again to create the Order in Shiprocket!
         $url = 'https://apiv2.shiprocket.in/v1/external/orders/create/adhoc'; // Shiprocket API endpoint (URL/link) to create an order: https://apiv2.shiprocket.in/v1/external/orders/create/adhoc . Check: https://apidocs.shiprocket.in/#247e58f3-37f3-4dfb-a4bb-b8f6ab6d41ec
         $c = curl_init($url); // Initialize a cURL session (The cURL Handle)
+
         curl_setopt($c, CURLOPT_POST, 1); // From the Shiprocket API Documentation, the Create an Order API endpoint is accesses through a 'POST' HTTP request    // true (i.e. 1) to do a regular HTTP POST. This POST is the normal application/x-www-form-urlencoded kind, most commonly used by HTML forms.
         curl_setopt($c, CURLOPT_POSTFIELDS, $orderDetails); // We pass in our POST fields required for creating the Order in Shiprocket (We pass in our Order Details that we've fetched earlier from our database tables: `orders` and `orders_products`)    // The full data to post in a HTTP "POST" operation.    // Note: Passing an array (i.e.     [ 'name' => 'John', 'age' => 23 ]     ) to CURLOPT_POSTFIELDS will encode the data as "multipart/form-data", while passing a URL-encoded string (e.g.     "name=John&age=23"     ) will encode the data as application/x-www-form-urlencoded. Check     https://www.php.net/manual/en/function.curl-setopt.php#:~:text=Passing%20an%20array%20to%20CURLOPT_POSTFIELDS%20will%20encode%20the%20data%20as%20multipart/form%2Ddata%2C%20while%20passing%20a%20URL%2Dencoded%20string%20will%20encode%20the%20data%20as%20application/x%2Dwww%2Dform%2Durlencoded.     AND     https://www.php.net/manual/en/function.curl-setopt.php#:~:text=If%20value%20is%20an%20array%2C%20the%20Content%2DType%20header%20will%20be%20set%20to%20multipart/form%2Ddata
         curl_setopt($c, CURLOPT_RETURNTRANSFER, 1); // true (i.e. 1) to return the transfer as a string of the return value of curl_exec() instead of outputting it directly.
@@ -167,24 +147,8 @@ class Order extends Model
         curl_setopt($c, CURLOPT_SSL_VERIFYPEER, 0); // false (i.e. 0) to stop cURL from verifying the peer's certificate. Alternate certificates to verify against can be specified with the CURLOPT_CAINFO option or a certificate directory can be specified with the CURLOPT_CAPATH option.
         curl_setopt($c, CURLOPT_HTTPHEADER, [ // We set the TWO Headers of the HTTP request which are required by the Shiprocket API in ALL of its requests: the 'Content-Type: application/json' Header and the Authorization: Bearer Token    // An array of HTTP header fields to set, in the format array('Content-type: text/plain', 'Content-length: 100')
             'Content-Type: application/json',
-            'Authorization: Bearer ' . $server_output['token'] . '' // Send the Authorization Header (the Bearer Token) that we generated earlier from the Authentication API
+            'Authorization: Bearer ' . $server_output['token'] . '' // Note how we prefixed the Access Token string with the 'Bearer ' word and a space!    // Send the Authorization Header (the Bearer Token) that we generated earlier from the Authentication API
         ]);
-        /*
-            // As I said earlier, instead of using many curl_setopt() functions, we can use ONE curl_setopt_array() function (in one go) as follows:
-            curl_setopt_array($c, [ // Set multiple options for a cURL transfer
-                // We use the same Options we've used in the last curl_setopt() functions
-                // CURLOPT_URL         => $url,
-                CURLOPT_POST           => 1,
-                CURLOPT_POSTFIELDS     => $orderDetails, // Note: Passing an array (i.e.     [ 'name' => 'John', 'age' => 23 ]     ) to CURLOPT_POSTFIELDS will encode the data as "multipart/form-data", while passing a URL-encoded string (e.g.     "name=John&age=23"     ) will encode the data as application/x-www-form-urlencoded. Check     https://www.php.net/manual/en/function.curl-setopt.php#:~:text=Passing%20an%20array%20to%20CURLOPT_POSTFIELDS%20will%20encode%20the%20data%20as%20multipart/form%2Ddata%2C%20while%20passing%20a%20URL%2Dencoded%20string%20will%20encode%20the%20data%20as%20application/x%2Dwww%2Dform%2Durlencoded.     AND     https://www.php.net/manual/en/function.curl-setopt.php#:~:text=If%20value%20is%20an%20array%2C%20the%20Content%2DType%20header%20will%20be%20set%20to%20multipart/form%2Ddata
-                CURLOPT_RETURNTRANSFER => 1,
-                CURLOPT_SSL_VERIFYHOST => 0,
-                CURLOPT_SSL_VERIFYPEER => 0,
-                CURLOPT_HTTPHEADER     => [
-                    'Content-Type: application/json',
-                    'Authorization: Bearer ' . $server_output['token'] . ''
-                ]
-            ]);
-        */
 
         $result = curl_exec($c); // The JSON server response for our HTTP request    // Perform a cURL session
         // dd($result); // The server's JSON response

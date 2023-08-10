@@ -4,16 +4,17 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class FilterController extends Controller
 {
-    // Dynamic Filters in the Admin Panel (of products)    // https://www.youtube.com/watch?v=0eFPxTAwqnQ&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=83
+    // Dynamic Filters in the Admin Panel (of products)    
 
 
 
     public function filters() {
-        // Correcting issues in the Skydash Admin Panel Sidebar using Session:  Check 6:33 in https://www.youtube.com/watch?v=i_SUdNILIrc&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=29
-        \Session::put('page', 'filters');
+        // Correcting issues in the Skydash Admin Panel Sidebar using Session
+        Session::put('page', 'filters');
 
 
         $filters = \App\Models\ProductsFilter::get()->toArray();
@@ -23,12 +24,10 @@ class FilterController extends Controller
         return view('admin.filters.filters')->with(compact('filters'));
     }
 
-    public function updateFilterStatus(Request $request) { // Update Filter Status using AJAX in filters.blade.php    // https://www.youtube.com/watch?v=0eFPxTAwqnQ&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=83
+    public function updateFilterStatus(Request $request) { // Update Filter Status using AJAX in filters.blade.php    
         if ($request->ajax()) { // if the request is coming via an AJAX call
             $data = $request->all(); // Getting the name/value pairs array that are sent from the AJAX request (AJAX call)
-            // dd($data); // dd() method DOESN'T WORK WITH AJAX! - SHOWS AN ERROR!! USE var_dump() and exit; INSTEAD!
-            // echo '<pre>', var_dump($data), '</pre>';
-            // exit;
+            // dd($data);
 
             if ($data['status'] == 'Active') { // $data['status'] comes from the 'data' object inside the $.ajax() method    // reverse the 'status' from (ative/inactive) 0 to 1 and 1 to 0 (and vice versa)
                 $status = 0;
@@ -47,12 +46,10 @@ class FilterController extends Controller
         }
     }
 
-    public function updateFilterValueStatus(Request $request) { // Update Filter Value Status using AJAX in filters_values.blade.php    // https://www.youtube.com/watch?v=0eFPxTAwqnQ&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=83
+    public function updateFilterValueStatus(Request $request) { // Update Filter Value Status using AJAX in filters_values.blade.php    
         if ($request->ajax()) { // if the request is coming via an AJAX call
             $data = $request->all(); // Getting the name/value pairs array that are sent from the AJAX request (AJAX call)
-            // dd($data); // dd() method DOESN'T WORK WITH AJAX! - SHOWS AN ERROR!! USE var_dump() and exit; INSTEAD!
-            // echo '<pre>', var_dump($data), '</pre>';
-            // exit;
+            // dd($data);
 
             if ($data['status'] == 'Active') { // $data['status'] comes from the 'data' object inside the $.ajax() method    // reverse the 'status' from (ative/inactive) 0 to 1 and 1 to 0 (and vice versa)
                 $status = 0;
@@ -71,18 +68,9 @@ class FilterController extends Controller
         }
     }
 
-    
-    // public function deleteFilter($id) { // https://www.youtube.com/watch?v=0eFPxTAwqnQ&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=83
-    //     \App\Models\ProductsFilter::where('id', $id)->delete(); // https://laravel.com/docs/9.x/queries#delete-statements
-        
-    //     $message = 'Filter has been deleted successfully!';
-        
-    //     return redirect()->back()->with('success_message', $message);
-    // }
-
     public function filtersValues() {
-        // Correcting issues in the Skydash Admin Panel Sidebar using Session:  Check 6:33 in https://www.youtube.com/watch?v=i_SUdNILIrc&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=29
-        \Session::put('page', 'filters');
+        // Correcting issues in the Skydash Admin Panel Sidebar using Session
+        Session::put('page', 'filters');
 
 
         $filters_values = \App\Models\ProductsFiltersValue::get()->toArray();
@@ -92,9 +80,9 @@ class FilterController extends Controller
         return view('admin.filters.filters_values')->with(compact('filters_values'));
     }
 
-    public function addEditFilter(Request $request, $id = null) { // If the $id is not passed, this means 'Add a Filter', but if it's passed, this means 'Edit the Filter'    // https://www.youtube.com/watch?v=pGepSLCXH1Q&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=84
-        // Correcting issues in the Skydash Admin Panel Sidebar using Session:  Check 6:33 in https://www.youtube.com/watch?v=i_SUdNILIrc&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=29
-        \Session::put('page', 'filters');
+    public function addEditFilter(Request $request, $id = null) { // If the $id is not passed, this means 'Add a Filter', but if it's passed, this means 'Edit the Filter'    
+        // Correcting issues in the Skydash Admin Panel Sidebar using Session
+        Session::put('page', 'filters');
 
 
         // FIRSTLY, IF THE REQUEST METHOS IS 'GET', THEN RENDER THE add_edit_filter.blade.php PAGE:
@@ -136,8 +124,7 @@ class FilterController extends Controller
 
 
         // Note: Dynamic Filters are applied to `categories` (parent categories and subcategories (child categories)), and not `sections`!
-        // Get ALL the Sections with their Categories and Subcategories (Get all sections with its categories and subcategories) to select them while adding or updating a filter (to select the fitler's respective categories)    // $categories are ALL the `sections` with their related 'parent' categories (if any (if exist)) and their subcategories or 'child' categories (if any (if exist))    // https://www.youtube.com/watch?v=-Lnk1N1jTNQ&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=47
-        // $categories = \App\Models\Section::find(1)->categories->toArray();
+        // Get ALL the Sections with their Categories and Subcategories (Get all sections with its categories and subcategories) to select them while adding or updating a filter (to select the fitler's respective categories)    // $categories are ALL the `sections` with their related 'parent' categories (if any (if exist)) and their subcategories or 'child' categories (if any (if exist))    
         $categories = \App\Models\Section::with('categories')->get()->toArray(); // with('categories') is the relationship method name in the Section.php Model
         // dd($categories);
 
@@ -145,9 +132,9 @@ class FilterController extends Controller
         return view('admin.filters.add_edit_filter')->with(compact('title', 'categories', 'filter'));
     }
 
-    public function addEditFilterValue(Request $request, $id = null) { // If the $id is not passed, this means 'Add Filter Value', but if it's passed, this means 'Edit the Filter Value'    // https://www.youtube.com/watch?v=mT_mMOM3KzM&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=85
-        // Correcting issues in the Skydash Admin Panel Sidebar using Session:  Check 6:33 in https://www.youtube.com/watch?v=i_SUdNILIrc&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=29
-        \Session::put('page', 'filters');
+    public function addEditFilterValue(Request $request, $id = null) { // If the $id is not passed, this means 'Add Filter Value', but if it's passed, this means 'Edit the Filter Value'    
+        // Correcting issues in the Skydash Admin Panel Sidebar using Session
+        Session::put('page', 'filters');
 
 
         // FIRSTLY, IF THE REQUEST METHOS IS 'GET', THEN RENDER THE add_edit_filter_value.blade.php PAGE:
@@ -188,12 +175,10 @@ class FilterController extends Controller
         return view('admin.filters.add_edit_filter_value')->with(compact('title', 'filter', 'filters'));
     }
 
-    public function categoryFilters(Request $request) { // Show the related filters depending on the selected category <select> in category_filters.blade.php (which in turn is included by add_edit_product.php) using AJAX. Check admin/js/custom.js    // https://www.youtube.com/watch?v=T7dcxauNyQc&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=89
+    public function categoryFilters(Request $request) { // Show the related filters depending on the selected category <select> in category_filters.blade.php (which in turn is included by add_edit_product.php) using AJAX. Check admin/js/custom.js    
         if ($request->ajax()) {
             $data = $request->all();
-            // dd($data); // dd() method DOESN'T WORK WITH AJAX! - SHOWS AN ERROR!! USE var_dump() and exit; INSTEAD!
-            // echo '<pre>', var_dump($data), '</pre>';
-            // exit;
+            // dd($data);
 
 
             $category_id = $data['category_id']; // ['category_id'] comes from the AJAX call in admin/js/custom.js page from the 'data' object inside $.ajax() method
@@ -204,6 +189,5 @@ class FilterController extends Controller
             ]);
         }
     }
-
 
 }

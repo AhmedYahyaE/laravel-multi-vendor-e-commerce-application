@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('banners', function (Blueprint $table) { // https://www.youtube.com/watch?v=KPK-WrVGY-Q&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=65
+        Schema::create('banners', function (Blueprint $table) { 
             $table->id();
 
             $table->string('image'); // the FRONT banners image name

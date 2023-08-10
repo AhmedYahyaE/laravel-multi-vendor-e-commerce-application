@@ -7,20 +7,14 @@ use Illuminate\Http\Request;
 
 class CmsController extends Controller
 {
-    // Important Note!: Bullshit instructor used an unknown "CMSController" controller!!. I created it!! Check https://www.youtube.com/watch?v=FIdyrw6La4g&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=204
-
-
-    // Render the Contact Us page (front/pages/contact.blade.php) using GET HTTP Requests, or the HTML Form Submission using POST HTTP Requests    // https://www.youtube.com/watch?v=FIdyrw6La4g&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=204
+    // Render the Contact Us page (front/pages/contact.blade.php) using GET HTTP Requests, or the HTML Form Submission using POST HTTP Requests    
     public function contact(Request $request) {
         // If the HTML Form in front/pages/contact.blade.php is submitted (HTML Form Submission)
         if ($request->isMethod('post')) {
             $data = $request->all();
-            // dd($data);
-            /* echo '<pre>', var_dump($data), '</pre>';
-            exit; */
 
 
-            // Validation    // Manually Creating Validators: https://laravel.com/docs/9.x/validation#manually-creating-validators    // https://www.youtube.com/watch?v=gdxF2McDfN8&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=205
+            // Validation    // Manually Creating Validators: https://laravel.com/docs/9.x/validation#manually-creating-validators    
             $rules = [
                 // Fields/Column Names
                 'name'    => 'required|string|max:100',
@@ -43,7 +37,6 @@ class CmsController extends Controller
                 'message.required' => 'Message is required'
             ];
 
-            // $validator = \Illuminate\Support\Facades\Validator::make($userData, $rules);
             $validator = \Illuminate\Support\Facades\Validator::make($data, $rules, $customMessages);
 
             // dd($validator->errors());   // is THE SAME AS:    dd($validator->messages());    // Working With Error Messages: https://laravel.com/docs/9.x/validation#working-with-error-messages
@@ -52,7 +45,6 @@ class CmsController extends Controller
             if ($validator->fails()) {
                 return redirect()->back()->withErrors($validator)->withInput();
             }
-
 
 
             // Send the user's Contact Us inquiry as an email to the 'admin'

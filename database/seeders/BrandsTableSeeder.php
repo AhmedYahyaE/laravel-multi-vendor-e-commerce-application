@@ -16,7 +16,7 @@ class BrandsTableSeeder extends Seeder
     {
         //
 
-        // https://www.youtube.com/watch?v=dG7wmOhIcTM&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=41
+        
         // Note: Check DatabaseSeeder.php!
         $brandRecords = [
             ['id' => 1, 'name' => 'Arrow'  , 'status' => 1],

@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('payments', function (Blueprint $table) {
-            // https://www.youtube.com/watch?v=EPU6wqcQeto&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=183
+            
             $table->id();
 
             $table->integer('order_id');

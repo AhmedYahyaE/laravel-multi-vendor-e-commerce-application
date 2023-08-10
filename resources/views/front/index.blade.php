@@ -1,6 +1,4 @@
 {{-- This page is rendered by index() method in Front/IndexController.php --}}
-
-
 @extends('front.layout.layout')
 
 
@@ -9,7 +7,7 @@
     <div class="default-height ph-item">
         <div class="slider-main owl-carousel">
 
-            {{-- Show the banner dynamically depending on the Admin Panel choice --}} {{-- https://www.youtube.com/watch?v=rC6K7PLHzPw&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=68 --}}
+            {{-- Show the banner dynamically depending on the Admin Panel choice --}} 
             @foreach ($sliderBanners as $banner)
                 <div class="bg-image">
                     <div class="slide-content">
@@ -28,7 +26,7 @@
 
 
 
-    {{-- https://www.youtube.com/watch?v=GC_5WN0PeeM&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=70 --}}
+    
     @if (isset($fixBanners[1]['image']))
         <!-- Banner-Layer -->
         <div class="banner-layer">
@@ -72,7 +70,7 @@
                             <div class="slider-fouc">
                                 <div class="products-slider owl-carousel" data-item="4">
 
-                                    {{-- Show 'New Arrivals'. Show the LATEST 8 products ONLY. Check the index() method in IndexController.php --}} {{-- https://www.youtube.com/watch?v=T_CWdKW5he0&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=72 --}}
+                                    {{-- Show 'New Arrivals'. Show the LATEST 8 products ONLY. Check the index() method in IndexController.php --}} 
                                     @foreach ($newProducts as $product)
                                         @php
                                             $product_image_path = 'front/images/product_images/small/' . $product['product_image'];
@@ -121,7 +119,7 @@
 
 
 
-                                                {{-- Call the static getDiscountPrice() method in the Product.php Model to determine the final price of a product because a product can have a discount from TWO things: either a `CATEGORY` discount or `PRODUCT` discout    // Check 19:09 in https://www.youtube.com/watch?v=T_CWdKW5he0&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=72 --}}
+                                                {{-- Call the static getDiscountPrice() method in the Product.php Model to determine the final price of a product because a product can have a discount from TWO things: either a `CATEGORY` discount or `PRODUCT` discout     --}}
                                                 @php
                                                     $getDiscountPrice = \App\Models\Product::getDiscountPrice($product['id']);
                                                 @endphp
@@ -130,7 +128,7 @@
                                                 @if ($getDiscountPrice > 0) {{-- If there's a discount on the price, show the price before (the original price) and after (the new price) the discount --}}
                                                     <div class="price-template">
                                                         <div class="item-new-price">
-                                                            Rs . {{ $getDiscountPrice }} {{-- 'Rs' means Rupees the Indian currency --}}
+                                                            Rs . {{ $getDiscountPrice }}
                                                         </div>
                                                         <div class="item-old-price">
                                                             Rs . {{ $product['product_price'] }}
@@ -160,7 +158,7 @@
                                 <div class="products-slider owl-carousel" data-item="4">
 
 
-                                    {{-- Show the 'Best Seller' products. Check the index() method in IndexController.php --}} {{-- https://www.youtube.com/watch?v=jCWz6fqoFno&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=72 --}}
+                                    {{-- Show the 'Best Seller' products. Check the index() method in IndexController.php --}} 
                                     @foreach ($bestSellers as $product)
                                         @php
                                             $product_image_path = 'front/images/product_images/small/' . $product['product_image'];
@@ -207,14 +205,14 @@
                                                     </div>
                                                 </div>
 
-                                                {{-- Call the static getDiscountPrice() method in the Product.php Model to determine the final price of a product because a product can have a discount from TWO things: either a `CATEGORY` discount or `PRODUCT` discout    // Check 19:09 in https://www.youtube.com/watch?v=T_CWdKW5he0&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=72 --}}
+                                                {{-- Call the static getDiscountPrice() method in the Product.php Model to determine the final price of a product because a product can have a discount from TWO things: either a `CATEGORY` discount or `PRODUCT` discout     --}}
                                                 @php
                                                     $getDiscountPrice = \App\Models\Product::getDiscountPrice($product['id']);
                                                 @endphp
                                                 @if ($getDiscountPrice > 0) {{-- If there's a discount on the price, show the price before (the original price) and after (the new price) the discount --}}
                                                     <div class="price-template">
                                                         <div class="item-new-price">
-                                                            Rs . {{ $getDiscountPrice }} {{-- 'Rs' means Rupees the Indian currency --}}
+                                                            Rs . {{ $getDiscountPrice }}
                                                         </div>
                                                         <div class="item-old-price">
                                                             Rs . {{ $product['product_price'] }}
@@ -241,7 +239,7 @@
                                 <div class="products-slider owl-carousel" data-item="4">
 
 
-                                    {{-- Show the 'Best Seller' products. Check the index() method in IndexController.php --}} {{-- https://www.youtube.com/watch?v=jCWz6fqoFno&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=72 --}}
+                                    {{-- Show the 'Best Seller' products. Check the index() method in IndexController.php --}} 
                                     @foreach ($discountedProducts as $product)
                                         @php
                                             $product_image_path = 'front/images/product_images/small/' . $product['product_image'];
@@ -288,14 +286,14 @@
                                                     </div>
                                                 </div>
 
-                                                {{-- Call the static getDiscountPrice() method in the Product.php Model to determine the final price of a product because a product can have a discount from TWO things: either a `CATEGORY` discount or `PRODUCT` discout    // Check 19:09 in https://www.youtube.com/watch?v=T_CWdKW5he0&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=72 --}}
+                                                {{-- Call the static getDiscountPrice() method in the Product.php Model to determine the final price of a product because a product can have a discount from TWO things: either a `CATEGORY` discount or `PRODUCT` discout     --}}
                                                 @php
                                                     $getDiscountPrice = \App\Models\Product::getDiscountPrice($product['id']);
                                                 @endphp
                                                 @if ($getDiscountPrice > 0) {{-- If there's a discount on the price, show the price before (the original price) and after (the new price) the discount --}}
                                                     <div class="price-template">
                                                         <div class="item-new-price">
-                                                            Rs . {{ $getDiscountPrice }} {{-- 'Rs' means Rupees the Indian currency --}}
+                                                            Rs . {{ $getDiscountPrice }}
                                                         </div>
                                                         <div class="item-old-price">
                                                             Rs . {{ $product['product_price'] }}
@@ -322,7 +320,7 @@
                                 <div class="products-slider owl-carousel" data-item="4">
 
 
-                                    {{-- Show the 'Best Seller' products. Check the index() method in IndexController.php --}} {{-- https://www.youtube.com/watch?v=jCWz6fqoFno&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=72 --}}
+                                    {{-- Show the 'Best Seller' products. Check the index() method in IndexController.php --}} 
                                     @foreach ($featuredProducts as $product)
                                         @php
                                             $product_image_path = 'front/images/product_images/small/' . $product['product_image'];
@@ -369,14 +367,14 @@
                                                     </div>
                                                 </div>
 
-                                                {{-- Call the static getDiscountPrice() method in the Product.php Model to determine the final price of a product because a product can have a discount from TWO things: either a `CATEGORY` discount or `PRODUCT` discout    // Check 19:09 in https://www.youtube.com/watch?v=T_CWdKW5he0&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=72 --}}
+                                                {{-- Call the static getDiscountPrice() method in the Product.php Model to determine the final price of a product because a product can have a discount from TWO things: either a `CATEGORY` discount or `PRODUCT` discout     --}}
                                                 @php
                                                     $getDiscountPrice = \App\Models\Product::getDiscountPrice($product['id']);
                                                 @endphp
                                                 @if ($getDiscountPrice > 0) {{-- If there's a discount on the price, show the price before (the original price) and after (the new price) the discount --}}
                                                     <div class="price-template">
                                                         <div class="item-new-price">
-                                                            Rs . {{ $getDiscountPrice }} {{-- 'Rs' means Rupees the Indian currency --}}
+                                                            Rs . {{ $getDiscountPrice }}
                                                         </div>
                                                         <div class="item-old-price">
                                                             Rs . {{ $product['product_price'] }}
@@ -407,7 +405,7 @@
 
 
 
-    {{-- https://www.youtube.com/watch?v=GC_5WN0PeeM&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=70 --}}
+    
     @if (isset($fixBanners[1]['image']))
         <!-- Banner-Layer -->
         <div class="banner-layer">

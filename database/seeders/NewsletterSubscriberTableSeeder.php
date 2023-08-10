@@ -12,7 +12,7 @@ class NewsletterSubscriberTableSeeder extends Seeder
      */
     public function run(): void
     {
-        // https://www.youtube.com/watch?v=RhJKeFxTT0U&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=212
+        
         // Note: Check DatabaseSeeder.php!
         $subscriberRecords = [
             [

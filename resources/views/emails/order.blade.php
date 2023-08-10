@@ -1,4 +1,3 @@
-{{-- https://www.youtube.com/watch?v=dF7OhPttepE&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=169 --}}
 {{-- This is the user Placing Order Confirmation email file using Mailtrap --}} {{-- All the variables (like $name, $mobile, $email, ...) used here are passed in from the checkout() method in Front/ProductsController.php --}}
 
 
@@ -12,7 +11,7 @@
     <body>
         <table style="width: 700px">
             <tr><td>&nbsp;</td></tr>
-            <tr><td><img src="{{ asset('front/images/main-logo/stack-developers-logo.png') }}"></td></tr>
+            <tr><td><img src="{{ asset('front/images/main-logo/main-logo.png') }}"></td></tr>
             <tr><td>&nbsp;</td></tr>
             <tr><td>Hello {{ $name }}</td></tr>
             <tr><td>&nbsp;<br></td></tr>
@@ -92,7 +91,7 @@
             </td></tr>
             <tr><td>&nbsp;</td></tr>
 
-            {{-- PDF Invoice download link. Check https://www.youtube.com/watch?v=C_Y1URpGMVE&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=179 --}}
+            {{-- PDF Invoice download link --}}
             <tr>
                 <td>
                     <a href="{{ url('orders/invoice/download/' . $orderDetails['id']) }}">Click here to Download Order Invoice</a>
@@ -102,9 +101,9 @@
             </tr>
 
             <tr><td>&nbsp;</td></tr>
-            <tr><td>For any queries, you can contact us at <a href="mailto:info@stackdevelopers.in">info@stackdevelopers.in</a></td></tr>
+            <tr><td>For any queries, you can contact us at <a href="mailto:info@MultiVendorEcommerceApplication.com.eg">info@MultiVendorEcommerceApplication.com.eg</a></td></tr>
             <tr><td>&nbsp;</td></tr>
-            <tr><td>Regards,<br>Team Stack Developers</td></tr>
+            <tr><td>Regards,<br>Team Multi-vendor E-commerce Application</td></tr>
             <tr><td>&nbsp;</td></tr>
         </table>
     </body>

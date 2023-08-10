@@ -13,11 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        // Add `courier_name` and `tracking_number` columns to `orders_products` table    // https://www.youtube.com/watch?v=WNCFYaSv-N4&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=173
+        // Add `courier_name` and `tracking_number` columns to `orders_products` table    
         Schema::table('orders_products', function($table) {
             $table->string('courier_name')->after('item_status')->nullable();
             $table->string('tracking_number')->after('courier_name')->nullable();
-            $table->float('commission')->nullable(); // https://www.youtube.com/watch?v=9btUn5pZ304&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=229
+            $table->float('commission')->nullable(); 
         });
     }
 
@@ -28,7 +28,7 @@ return new class extends Migration
      */
     public function down()
     {
-        // Reverse the operation in case that we want to rollback changes (using the    php artisan migrate:rollback    command): Reverse what's done in the up() method: Delete `courier_name` and `tracking_number` columns from `orders_products` table    // https://www.youtube.com/watch?v=WNCFYaSv-N4&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=173
+        // Reverse the operation in case that we want to rollback changes (using the    php artisan migrate:rollback    command): Reverse what's done in the up() method: Delete `courier_name` and `tracking_number` columns from `orders_products` table    
         Schema::table('orders_products', function($table) {
             $table->dropColumn('courier_name');
             $table->dropColumn('tracking_number');

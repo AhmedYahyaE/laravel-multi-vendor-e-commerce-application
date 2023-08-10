@@ -9,11 +9,11 @@ class Iyzipay extends Model
 {
     use HasFactory;
 
-    // iyzico Payment Gateway integration in/with Laravel    // https://www.youtube.com/watch?v=fEpjSro84Ag&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=208
+    // iyzico Payment Gateway integration in/with Laravel    
 
 
 
-    // This method has been copied from    ecom9\vendor\iyzico\iyzipay-php\samples\config.php    file    // https://www.youtube.com/watch?v=F9LvPALxO6c&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=209
+    // This method has been copied from    Multi-vendor E-commerce Application\vendor\iyzico\iyzipay-php\samples\config.php    file    
     public static function options()
     {
         $options = new \Iyzipay\Options();
@@ -21,10 +21,10 @@ class Iyzipay extends Model
 
 
         // API Key:
-        $options->setApiKey('sandbox-W7IiunBL5OALo4iibT3r0S3t3fMswzkn');    // Check 12:21 in https://www.youtube.com/watch?v=F9LvPALxO6c&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=209
+        $options->setApiKey('sandbox-W7IiunBL5OALo4iibT3r0S3t3fMswzkn');    
 
         // Secret Key:
-        $options->setSecretKey('sandbox-gVf4cjziwu6FJGrwkeIyBlPlizniaqhw'); // Check 12:21 in https://www.youtube.com/watch?v=F9LvPALxO6c&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=209
+        $options->setSecretKey('sandbox-gVf4cjziwu6FJGrwkeIyBlPlizniaqhw'); 
 
 
 

@@ -4,17 +4,18 @@ namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class IyzipayController extends Controller
 {
-    // iyzico Payment Gateway integration in/with Laravel    // https://www.youtube.com/watch?v=fEpjSro84Ag&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=208
+    // iyzico Payment Gateway integration in/with Laravel    
     // https://github.com/iyzico/iyzipay-php
 
 
 
-    // iyzico payment gateway integration in Laravel (this route is accessed from checkout() method in Front/ProductsController.php). Rendering front/iyzipay/iyzipay.blade.php page. Check https://www.youtube.com/watch?v=fEpjSro84Ag&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=208
+    // iyzico payment gateway integration in Laravel (this route is accessed from checkout() method in Front/ProductsController.php). Rendering front/iyzipay/iyzipay.blade.php page
     public function iyzipay() {
-        if (\Session::has('order_id')) { // if there's an order has been placed (and got redirected from inside the checkout() method inside Front/ProductsController.php)    // 'user_id' was stored in Session inside checkout() method in Front/ProductsController.php
+        if (Session::has('order_id')) { // if there's an order has been placed (and got redirected from inside the checkout() method inside Front/ProductsController.php)    // 'user_id' was stored in Session inside checkout() method in Front/ProductsController.php
             return view('front.iyzipay.iyzipay');
 
         } else { // if there's no order has been placed
@@ -22,34 +23,32 @@ class IyzipayController extends Controller
         }
     }
 
-    // Make an iyzipay payment (redirect the user to iyzico payment gateway with the order details)    // Check https://www.youtube.com/watch?v=fEpjSro84Ag&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=208
+    // Make an iyzipay payment (redirect the user to iyzico payment gateway with the order details)    
     public function pay() {
-        // dd(\Session::get('order_id')); // 'order_id' was stored in the Session in checkout() method in Front/ProductsController.php    // Interacting With The Session: Retrieving Data: https://laravel.com/docs/9.x/session#retrieving-data
-        $orderDetails = \App\Models\Order::with('orders_products')->where('id', \Session::get('order_id'))->first()->toArray(); // Eager Loading: https://laravel.com/docs/9.x/eloquent-relationships#eager-loading    // 'order_id' was stored in the Session in checkout() method in Front/ProductsController.php    // Interacting With The Session: Retrieving Data: https://laravel.com/docs/9.x/session#retrieving-data
+        // dd(Session::get('order_id')); // 'order_id' was stored in the Session in checkout() method in Front/ProductsController.php    // Interacting With The Session: Retrieving Data: https://laravel.com/docs/9.x/session#retrieving-data
+        $orderDetails = \App\Models\Order::with('orders_products')->where('id', Session::get('order_id'))->first()->toArray(); // Eager Loading: https://laravel.com/docs/9.x/eloquent-relationships#eager-loading    // 'order_id' was stored in the Session in checkout() method in Front/ProductsController.php    // Interacting With The Session: Retrieving Data: https://laravel.com/docs/9.x/session#retrieving-data
         // dd($orderDetails);
 
         $nameArr = explode(' ', $orderDetails['name']); // to separate the First Name and Last Name to be able to send them with the data sent with the iyzico integrated service down below
         // dd($nameArr);
 
-
-
         $options = \App\Models\Iyzipay::options();
 
 
 
-        // This is a dummy request with dummy data    // Copied from: https://dev.iyzipay.com/en/iyzico-ile-ode/intialize#:~:text=request%20and%20response-,payWithIyzicoPageUrl,-value%20in%20the    // https://www.youtube.com/watch?v=F9LvPALxO6c&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=209
-        // We replace this expample's dummy data with our real data of the order details. Check https://www.youtube.com/watch?v=cWn1hWX3g8M&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=210
+        // This is a dummy request with dummy data    // Copied from: https://dev.iyzipay.com/en/iyzico-ile-ode/intialize#:~:text=request%20and%20response-,payWithIyzicoPageUrl,-value%20in%20the    
+        // We replace this expample's dummy data with our real data of the order details
         $request = new \Iyzipay\Request\CreatePayWithIyzicoInitializeRequest();
         $request->setLocale(\Iyzipay\Model\Locale::TR);
         // $request->setConversationId("123456789"); // dummy data
-        $request->setConversationId(\Session::get('order_id')); // real data (our order details)    // 'order_id' was stored in the Session in checkout() method in Front/ProductsController.php    // Interacting With The Session: Retrieving Data: https://laravel.com/docs/9.x/session#retrieving-data
+        $request->setConversationId(Session::get('order_id')); // real data (our order details)    // 'order_id' was stored in the Session in checkout() method in Front/ProductsController.php    // Interacting With The Session: Retrieving Data: https://laravel.com/docs/9.x/session#retrieving-data
         // $request->setPrice("1"); // dummy data
-        $request->setPrice(\Session::get('grand_total')); // real data (our order details)    // 'grand_total' was stored in the Session in checkout() method in Front/ProductsController.php    // Interacting With The Session: Retrieving Data: https://laravel.com/docs/9.x/session#retrieving-data
+        $request->setPrice(Session::get('grand_total')); // real data (our order details)    // 'grand_total' was stored in the Session in checkout() method in Front/ProductsController.php    // Interacting With The Session: Retrieving Data: https://laravel.com/docs/9.x/session#retrieving-data
         // $request->setPaidPrice("1.2"); // dummy data
-        $request->setPaidPrice(\Session::get('grand_total')); // real data (our order details)    // 'grand_total' was stored in the Session in checkout() method in Front/ProductsController.php    // Interacting With The Session: Retrieving Data: https://laravel.com/docs/9.x/session#retrieving-data
+        $request->setPaidPrice(Session::get('grand_total')); // real data (our order details)    // 'grand_total' was stored in the Session in checkout() method in Front/ProductsController.php    // Interacting With The Session: Retrieving Data: https://laravel.com/docs/9.x/session#retrieving-data
         $request->setCurrency(\Iyzipay\Model\Currency::TL);
         // $request->setBasketId("B67832"); // dummy data
-        $request->setBasketId(\Session::get('order_id')); // real data (our order details)    // 'order_id' was stored in the Session in checkout() method in Front/ProductsController.php    // Interacting With The Session: Retrieving Data: https://laravel.com/docs/9.x/session#retrieving-data
+        $request->setBasketId(Session::get('order_id')); // real data (our order details)    // 'order_id' was stored in the Session in checkout() method in Front/ProductsController.php    // Interacting With The Session: Retrieving Data: https://laravel.com/docs/9.x/session#retrieving-data
         $request->setPaymentGroup(\Iyzipay\Model\PaymentGroup::PRODUCT);
         $request->setCallbackUrl("https://www.merchant.com/callback");
         $request->setEnabledInstallments(array(2, 3, 6, 9));
@@ -106,16 +105,16 @@ class IyzipayController extends Controller
         $basketItems = array(); // dummy data
         $firstBasketItem = new \Iyzipay\Model\BasketItem(); // dummy data
         // $firstBasketItem->setId("BI101"); // dummy data
-        $firstBasketItem->setId(\Session::get('order_id')); // real data (our order details)    // 'order_id' was stored in the Session in checkout() method in Front/ProductsController.php    // Interacting With The Session: Retrieving Data: https://laravel.com/docs/9.x/session#retrieving-data
+        $firstBasketItem->setId(Session::get('order_id')); // real data (our order details)    // 'order_id' was stored in the Session in checkout() method in Front/ProductsController.php    // Interacting With The Session: Retrieving Data: https://laravel.com/docs/9.x/session#retrieving-data
         // $firstBasketItem->setName("Binocular"); // dummy data
-        $firstBasketItem->setName("Order ID: " . \Session::get('order_id')); // real data (our order details)    // 'order_id' was stored in the Session in checkout() method in Front/ProductsController.php    // Interacting With The Session: Retrieving Data: https://laravel.com/docs/9.x/session#retrieving-data
+        $firstBasketItem->setName("Order ID: " . Session::get('order_id')); // real data (our order details)    // 'order_id' was stored in the Session in checkout() method in Front/ProductsController.php    // Interacting With The Session: Retrieving Data: https://laravel.com/docs/9.x/session#retrieving-data
         // $firstBasketItem->setCategory1("Collectibles"); // dummy data
-        $firstBasketItem->setCategory1("Stack Developers Product"); // real data (our order details)
+        $firstBasketItem->setCategory1("Multi-vendor E-commerce Application Product"); // real data (our order details)
         // $firstBasketItem->setCategory2("Accessories"); // dummy data
         $firstBasketItem->setCategory2("");// Not mandatory (from the Documentation: https://dev.iyzipay.com/en/iyzico-ile-ode/intialize#:~:text=Sample%20Codes-,Request,-Parameters%20to%20be)
         $firstBasketItem->setItemType(\Iyzipay\Model\BasketItemType::PHYSICAL); // dummy data
         // $firstBasketItem->setPrice("0.3"); // dummy data
-        $firstBasketItem->setPrice(\Session::get('grand_total')); // real data (our order details)    // 'grand_total' was stored in the Session in checkout() method in Front/ProductsController.php    // Interacting With The Session: Retrieving Data: https://laravel.com/docs/9.x/session#retrieving-data
+        $firstBasketItem->setPrice(Session::get('grand_total')); // real data (our order details)    // 'grand_total' was stored in the Session in checkout() method in Front/ProductsController.php    // Interacting With The Session: Retrieving Data: https://laravel.com/docs/9.x/session#retrieving-data
         $basketItems[0] = $firstBasketItem; // dummy data
 
         /*
@@ -139,8 +138,7 @@ class IyzipayController extends Controller
 
         $request->setBasketItems($basketItems); // dummy data
         # make request
-        // $payWithIyzicoInitialize = \Iyzipay\Model\PayWithIyzicoInitialize::create($request, Config::options());
-        $payWithIyzicoInitialize = \Iyzipay\Model\PayWithIyzicoInitialize::create($request, $options); // Check 10:30 in https://www.youtube.com/watch?v=F9LvPALxO6c&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=209
+        $payWithIyzicoInitialize = \Iyzipay\Model\PayWithIyzicoInitialize::create($request, $options); 
 
 
 
@@ -156,13 +154,9 @@ class IyzipayController extends Controller
         exit; */
 
         foreach ($paymentResponse as $key => $response) {
-            // echo '<pre>', var_dump($response), '</pre>';
-
             $response_decode = json_decode($response);
-            // echo '<pre>', var_dump($response_decode), '</pre>';
 
             $pay_url = $response_decode->payWithIyzicoPageUrl;
-            // echo '<pre>', var_dump($pay_url), '</pre>';
 
             break; // get out of the loop just after the first iteration
         }

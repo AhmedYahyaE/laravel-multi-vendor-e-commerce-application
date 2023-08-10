@@ -14,14 +14,14 @@ $sections = \App\Models\Section::sections();
             <nav>
                 <ul class="primary-nav g-nav">
                     <li>
-                        <a href="tel:+111222333">
+                        <a href="tel:+201255845857">
                         <i class="fas fa-phone u-c-brand u-s-m-r-9"></i>
-                        Telephone:+111-222-333</a>
+                        Telephone: +201255845857</a>
                     </li>
                     <li>
-                        <a href="mailto:info@sitemakers.in">
+                        <a href="mailto:info@multi-vendore-commerce.com">
                         <i class="fas fa-envelope u-c-brand u-s-m-r-9"></i>
-                        E-mail: info@sitemakers.in
+                        E-mail: info@multi-vendore-commerce.com
                         </a>
                     </li>
                 </ul>
@@ -33,8 +33,8 @@ $sections = \App\Models\Section::sections();
 
 
                         <a>
-                            {{-- If the user is authenticated/logged in, show 'My Account', if not, show 'Login/Register' --}} {{-- https://www.youtube.com/watch?v=u_qC3I3BYAM&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=128 --}}
-                            @if (\Auth::check()) {{-- Determining If The Current User Is Authenticated: https://laravel.com/docs/9.x/authentication#determining-if-the-current-user-is-authenticated --}}
+                            {{-- If the user is authenticated/logged in, show 'My Account', if not, show 'Login/Register' --}} 
+                            @if (\Illuminate\Support\Facades\Auth::check()) {{-- Determining If The Current User Is Authenticated: https://laravel.com/docs/9.x/authentication#determining-if-the-current-user-is-authenticated --}}
                                 My Account
                             @else
                                 Login/Register
@@ -48,11 +48,6 @@ $sections = \App\Models\Section::sections();
                                 <i class="fas fa-cog u-s-m-r-9"></i>
                                 My Cart</a>
                             </li>
-                            {{-- <li>
-                                <a href="wishlist.html">
-                                <i class="far fa-heart u-s-m-r-9"></i>
-                                My Wishlist</a>
-                            </li> --}}
                             <li>
                                 <a href="{{ url('checkout') }}">
                                 <i class="far fa-check-circle u-s-m-r-9"></i>
@@ -61,32 +56,32 @@ $sections = \App\Models\Section::sections();
 
 
 
-                            {{-- If the user is authenticated/logged in, show 'My Account' and 'Logout', if not, show 'Customer Login' and 'Vendor Login' --}} {{-- https://www.youtube.com/watch?v=u_qC3I3BYAM&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=128 --}}
-                            @if (\Auth::check()) {{-- Determining If The Current User Is Authenticated: https://laravel.com/docs/9.x/authentication#determining-if-the-current-user-is-authenticated --}}
+                            {{-- If the user is authenticated/logged in, show 'My Account' and 'Logout', if not, show 'Customer Login' and 'Vendor Login' --}} 
+                            @if (\Illuminate\Support\Facades\Auth::check()) {{-- Determining If The Current User Is Authenticated: https://laravel.com/docs/9.x/authentication#determining-if-the-current-user-is-authenticated --}}
                                 <li>
-                                    <a href="{{ url('user/account') }}"> {{-- https://www.youtube.com/watch?v=xYzsUn8_NT0&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=127 --}}
+                                    <a href="{{ url('user/account') }}"> 
                                         <i class="fas fa-sign-in-alt u-s-m-r-9"></i>
                                         My Account
                                     </a>
                                 </li>
 
-                                {{-- https://www.youtube.com/watch?v=4d_Hq33jihY&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=164 --}}
+                                
                                 <li>
-                                    <a href="{{ url('user/orders') }}"> {{-- https://www.youtube.com/watch?v=xYzsUn8_NT0&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=127 --}}
+                                    <a href="{{ url('user/orders') }}"> 
                                         <i class="fas fa-sign-in-alt u-s-m-r-9"></i>
                                         My Orders
                                     </a>
                                 </li>
 
                                 <li>
-                                    <a href="{{ url('user/logout') }}"> {{-- https://www.youtube.com/watch?v=xYzsUn8_NT0&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=127 --}}
+                                    <a href="{{ url('user/logout') }}"> 
                                         <i class="fas fa-sign-in-alt u-s-m-r-9"></i>
                                         Logout
                                     </a>
                                 </li>
                             @else
                                 <li>
-                                    <a href="{{ url('user/login-register') }}"> {{-- https://www.youtube.com/watch?v=xYzsUn8_NT0&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=127 --}}
+                                    <a href="{{ url('user/login-register') }}"> 
                                         <i class="fas fa-sign-in-alt u-s-m-r-9"></i>
                                         Customer Login
                                     </a>
@@ -104,15 +99,15 @@ $sections = \App\Models\Section::sections();
                         </ul>
                     </li>
                     <li>
-                        <a>USD
+                        <a>EGP
                         <i class="fas fa-chevron-down u-s-m-l-9"></i>
                         </a>
                         <ul class="g-dropdown" style="width:90px">
                             <li>
-                                <a href="#" class="u-c-brand">($) USD</a>
+                                <a href="#" class="u-c-brand">LE EGP</a>
                             </li>
                             <li>
-                                <a href="#">(£) GBP</a>
+                                <a href="#">($) USD</a>
                             </li>
                         </ul>
                     </li>
@@ -141,11 +136,10 @@ $sections = \App\Models\Section::sections();
                     <div class="brand-logo text-lg-center">
 
 
-                        {{-- <a href="{{ url('/') }}"> --}} {{-- This is exactly THE SAME AS:    <a href="/">    --}}
-                        <a href="{{ url('/') }}">                        {{-- This is exactly THE SAME AS:    <a href="{{ url('/') }}">    --}}
+                        <a href="{{ url('/') }}">
 
 
-                            <img src="{{ asset('front/images/main-logo/stack-developers-logo.png') }}" alt="Stack Developers" class="app-brand-logo">
+                            <img src="{{ asset('front/images/main-logo/main-logo.png') }}" alt="Multi-vendor E-commerce Application" class="app-brand-logo">
                         </a>
                     </div>
                 </div>
@@ -153,7 +147,7 @@ $sections = \App\Models\Section::sections();
 
 
 
-                    {{-- Website Search Form (to search for all website products) --}} {{-- https://www.youtube.com/watch?v=X5A8_TXcnRI&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=197 --}}
+                    {{-- Website Search Form (to search for all website products) --}} 
                     <form class="form-searchbox" action="{{ url('/search-products') }}" method="get">
                         <label class="sr-only" for="search-landscape">Search</label>
                         <input id="search-landscape" type="text" class="text-field" placeholder="Search everything" name="search" @if (isset($_REQUEST['search']) && !empty($_REQUEST['search'])) value="{{ $_REQUEST['search'] }}" @endif> {{-- We use the "name" HTML attribute as a key/name for the "value" HTML attribute for submitting the Search Form. Check the "value" HTML attribute too inside the <option> HTML tag down below! --}} {{-- if the user uses the Search Form --}}
@@ -188,16 +182,10 @@ $sections = \App\Models\Section::sections();
                                 <i class="ion ion-md-home u-c-brand"></i>
                                 </a>
                             </li>
-                            {{-- <li class="u-d-none-lg">
-                                <a href="wishlist.html">
-                                <i class="far fa-heart"></i>
-                                </a>
-                            </li> --}}
                             <li>
                                 <a id="mini-cart-trigger">
                                 <i class="ion ion-md-basket"></i>
-                                <span class="item-counter totalCartItems">{{ totalCartItems() }}</span> {{-- totalCartItems() function is in our custom Helpers/Helper.php file that we have registered in 'composer.json' file --}} {{-- We created the CSS class 'totalCartItems' to use it in front/js/custom.js to update the total cart items via AJAX, because in pages that we originally use AJAX to update the cart items (such as when we delete a cart item in http://127.0.0.1:8000/cart using AJAX), the number doesn't change in the header automatically because AJAX is already used and no page reload/refresh has occurred. Check 12:08 in https://www.youtube.com/watch?v=J8ynmQSbZYY&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=139 --}}
-                                {{-- <span class="item-price">$220.00</span> --}}
+                                <span class="item-counter totalCartItems">{{ totalCartItems() }}</span> {{-- totalCartItems() function is in our custom Helpers/Helper.php file that we have registered in 'composer.json' file --}} {{-- We created the CSS class 'totalCartItems' to use it in front/js/custom.js to update the total cart items via AJAX, because in pages that we originally use AJAX to update the cart items (such as when we delete a cart item in http://127.0.0.1:8000/cart using AJAX), the number doesn't change in the header automatically because AJAX is already used and no page reload/refresh has occurred --}}
                                 </a>
                             </li>
                         </ul>
@@ -212,19 +200,13 @@ $sections = \App\Models\Section::sections();
         <div class="fixed-responsive-wrapper">
             <button type="button" class="button fas fa-search" id="responsive-search"></button>
         </div>
-        {{-- <div class="fixed-responsive-wrapper">
-            <a href="wishlist.html">
-            <i class="far fa-heart"></i>
-            <span class="fixed-item-counter">4</span>
-            </a>
-        </div> --}}
     </div>
     <!-- Responsive-Buttons /- -->
 
 
 
     <!-- Mini Cart Widget -->
-    <div id="appendHeaderCartItems"> {{-- We created the CSS class 'appendHeaderCartItems' to use it in front/js/custom.js to update the total cart items via AJAX in the Mini Cart Wedget, because in pages that we originally use AJAX to update the cart items (such as when we delete a cart item in http://127.0.0.1:8000/cart using AJAX), the number doesn't change in the header automatically because AJAX is already used and no page reload/refresh has occurred. Check https://www.youtube.com/watch?v=dH4eyzRUO-c&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=141 --}}
+    <div id="appendHeaderCartItems"> {{-- We created the CSS class 'appendHeaderCartItems' to use it in front/js/custom.js to update the total cart items via AJAX in the Mini Cart Wedget, because in pages that we originally use AJAX to update the cart items (such as when we delete a cart item in http://127.0.0.1:8000/cart using AJAX), the number doesn't change in the header automatically because AJAX is already used and no page reload/refresh has occurred --}}
         @include('front.layout.header_cart_items')
     </div>
     <!-- Mini Cart Widget /- -->
@@ -294,14 +276,7 @@ $sections = \App\Models\Section::sections();
                                         @endif
                                     @endforeach
 
-                                    
 
-                                    {{-- <li>
-                                        <a class="v-more">
-                                        <i class="ion ion-md-add"></i>
-                                        <span>View More</span>
-                                        </a>
-                                    </li> --}}
                                 </ul>
                             </div>
                         </nav>
@@ -310,21 +285,21 @@ $sections = \App\Models\Section::sections();
                 <div class="col-lg-9">
                     <ul class="bottom-nav g-nav u-d-none-lg">
                         <li>
-                            <a href="{{ url('search-products?search=new-arrivals') }}">New Arrivals {{-- https://www.youtube.com/watch?v=iGPFLac21dA&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=207 --}}
+                            <a href="{{ url('search-products?search=new-arrivals') }}">New Arrivals 
                             <span class="superscript-label-new">NEW</span>
                             </a>
                         </li>
                         <li>
-                            <a href="{{ url('search-products?search=best-sellers') }}">Best Seller {{-- https://www.youtube.com/watch?v=iGPFLac21dA&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=207 --}}
+                            <a href="{{ url('search-products?search=best-sellers') }}">Best Seller 
                             <span class="superscript-label-hot">HOT</span>
                             </a>
                         </li>
                         <li>
-                            <a href="{{ url('search-products?search=featured') }}">Featured {{-- https://www.youtube.com/watch?v=iGPFLac21dA&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=207 --}}
+                            <a href="{{ url('search-products?search=featured') }}">Featured 
                             </a>
                         </li>
                         <li>
-                            <a href="{{ url('search-products?search=discounted') }}">Discounted {{-- https://www.youtube.com/watch?v=iGPFLac21dA&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=207 --}}
+                            <a href="{{ url('search-products?search=discounted') }}">Discounted 
                             <span class="superscript-label-discount">>10%</span>
                             </a>
                         </li>
@@ -362,9 +337,6 @@ $sections = \App\Models\Section::sections();
                                     <li>
                                         <a href="{{ url('user/account') }}">My Account</a>
                                     </li>
-                                    {{-- <li>
-                                        <a href="{{ url('men') }}">My Profile</a>
-                                    </li> --}}
                                     <li>
                                         <a href="{{ url('user/orders') }}">My Orders</a>
                                     </li>

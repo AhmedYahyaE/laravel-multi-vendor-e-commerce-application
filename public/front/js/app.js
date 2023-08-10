@@ -692,7 +692,7 @@ $(function () {
      * Attach Click event to Grid & List
      */
 
-     $shopProductContainer.addClass('grid-style'); // Check 10:25 in https://www.youtube.com/watch?v=A5hIj_0L648&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=77
+     $shopProductContainer.addClass('grid-style'); 
      $shopProductContainer.removeClass('list-style');
 
      const attachClickGridAndList = function () {

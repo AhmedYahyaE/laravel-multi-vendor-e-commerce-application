@@ -14,20 +14,20 @@ class VendorsBusinessDetailsTableSeeder extends Seeder
      */
     public function run()
     {
-        // https://www.youtube.com/watch?v=wMJH5FrP1G8&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=21
+        
         // Note: Check DatabaseSeeder.php
         $vendorsBusinessDetailsRecords = [
             [
                 'id'                      => 1,
                 'vendor_id'               => 1,
                 'shop_name'               => 'John Electronics Store',
-                'shop_address'            => '1234-SCF',
-                'shop_city'               => 'New Delhi',
-                'shop_state'              => 'Delhi',
-                'shop_country'            => 'India',
+                'shop_address'            => '12 Mahmoud Saeed St.',
+                'shop_city'               => 'New Cairo',
+                'shop_state'              => 'Cairo',
+                'shop_country'            => 'Egypt',
                 'shop_pincode'            => '110001',
-                'shop_mobile'             => '9700000000',
-                'shop_website'            => 'sitemakers.in',
+                'shop_mobile'             => '1253247745',
+                'shop_website'            => 'amazon.com.eg',
                 'shop_email'              => 'john@admin.com',
                 'address_proof'           => 'Passport',
                 'address_proof_image'     => 'test.jpg',

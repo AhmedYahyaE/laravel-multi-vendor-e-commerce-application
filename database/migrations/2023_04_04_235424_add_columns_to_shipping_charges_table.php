@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('shipping_charges', function (Blueprint $table) {
-            // https://www.youtube.com/watch?v=aBu-PsYERIY&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=191
+            
             // We add those columns to apply the 'Advanced' Shipping Charges module instead of the 'Simple' one
             $table->float('0_500g')->after('country');
             $table->float('501g_1000g')->after('0_500g');

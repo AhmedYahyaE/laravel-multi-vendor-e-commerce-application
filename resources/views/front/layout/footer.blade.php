@@ -15,12 +15,10 @@
 
 
 
-            {{-- https://www.youtube.com/watch?v=XUxWmZOjZR0&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=215 --}}
+            
             <form class="newsletter-form">
-                {{-- <label class="sr-only" for="newsletter-field">Enter your Email</label> --}}
                 <label class="sr-only" for="subscriber_email">Enter your Email</label>
-                <input type="text" placeholder="Your Email Address" id="subscriber_email" name="subscriber_email" required> {{-- We'll use the HTML id Global Attribute in jQuery in front/js/custom.js --}} {{-- https://www.youtube.com/watch?v=XUxWmZOjZR0&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=215 --}}
-                {{-- <button type="submit" class="button">SUBMIT</button> --}}
+                <input type="text" placeholder="Your Email Address" id="subscriber_email" name="subscriber_email" required> {{-- We'll use the HTML id Global Attribute in jQuery in front/js/custom.js --}} 
                 <button type="button" class="button" onclick="addSubscriber()">SUBMIT</button> {{-- Check the addSubscriber() function in front/js/custom.js. We'll use it in conjunction with the    id="subscriber_email"    of the <input> field --}}
             </form>
 
@@ -70,9 +68,6 @@
                             <li>
                                 <a href="{{ url('user/account') }}">My Account</a>
                             </li>
-                            {{-- <li>
-                                <a href="shop-v1-root-category.html">My Profile</a>
-                            </li> --}}
                             <li>
                                 <a href="{{ url('user/orders') }}">My Orders</a>
                             </li>
@@ -85,19 +80,19 @@
                         <ul>
                             <li>
                                 <i class="fas fa-location-arrow u-s-m-r-9"></i>
-                                <span>Stack Developers Youtube Channel</span>
+                                <span>Multi-vendor E-commerce Application</span>
                             </li>
                             <li>
-                                <a href="tel:+111-222-333">
+                                <a href="tel:+201255845857">
                                 <i class="fas fa-phone u-s-m-r-9"></i>
-                                <span>+111-222-333</span>
+                                <span>+01255845857</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="mailto:info@sitemakers.in">
+                                <a href="mailto:info@multi-vendore-commerce.com">
                                 <i class="fas fa-envelope u-s-m-r-9"></i>
                                 <span>
-                                info@sitemakers.in</span>
+                                info@multi-vendore-commerce.com</span>
                                 </a>
                             </li>
                         </ul>
@@ -148,7 +143,7 @@
                 </ul>
             </div>
             <p class="copyright-text">Copyright &copy; 2022
-                <a target="_blank" rel="nofollow" href="https://youtube.com/stackdevelopers">Stack Developers</a> | All Right Reserved
+                <a target="_blank" rel="nofollow" href="#">Multi-vendor E-commerce Application</a> | All Right Reserved
             </p>
         </div>
     </div>

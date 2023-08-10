@@ -1,4 +1,3 @@
-{{-- https://www.youtube.com/watch?v=4d_Hq33jihY&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=164 --}}
 {{-- This page is rendered by orders() method inside Front/OrderController.php (depending on if the order id Optional Parameter (slug) is passed in or not) --}}
 
 
@@ -49,8 +48,7 @@
                                 </td>
                                 <td>{{ $order['payment_method'] }}</td>
                                 <td>{{ $order['grand_total'] }}</td>
-                                {{-- <td>{{ $order['created_at'] }}</td> --}} {{-- https://stackoverflow.com/questions/41561371/php-convert-date-time-like-2017-01-10t180000-000z-to-standard-time --}}
-                                <td>{{ date('Y-m-d h:i:s', strtotime($order['created_at'])) }}</td> {{-- https://stackoverflow.com/questions/41561371/php-convert-date-time-like-2017-01-10t180000-000z-to-standard-time --}}
+                                <td>{{ date('Y-m-d h:i:s', strtotime($order['created_at'])) }}</td>
                             </tr>
                         @endforeach
                     </tr>

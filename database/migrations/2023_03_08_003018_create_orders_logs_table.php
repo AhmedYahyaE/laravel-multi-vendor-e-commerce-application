@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('orders_logs', function (Blueprint $table) {
-            // https://www.youtube.com/watch?v=7nb4feE7FBY&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=171
+            
             $table->id();
 
             $table->integer('order_id'); // Foreign Key to the `id` column in `orders` table

@@ -1,4 +1,3 @@
-{{-- https://www.youtube.com/watch?v=nUM9e83WzIo&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=170 --}}
 {{-- This is the order "Update Order Status" by 'admin' email file using Mailtrap --}} {{-- All the variables (like $name, $mobile, $email, ...) used here are passed in from the updateOrderStatus() method in Admin/OrderController.php --}}
 
 
@@ -12,14 +11,14 @@
     <body>
         <table style="width: 700px">
             <tr><td>&nbsp;</td></tr>
-            <tr><td><img src="{{ asset('front/images/main-logo/stack-developers-logo.png') }}"></td></tr>
+            <tr><td><img src="{{ asset('front/images/main-logo/main-logo.png') }}"></td></tr>
             <tr><td>&nbsp;</td></tr>
             <tr><td>Hello {{ $name }}</td></tr>
             <tr><td>&nbsp;<br></td></tr>
             <tr><td>Your Order #{{ $order_id }} status has been updated to {{ $order_status }}</td></tr>
             <tr><td>&nbsp;</td></tr>
 
-            {{-- Check 35:55 in https://www.youtube.com/watch?v=WNCFYaSv-N4&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=173 --}}
+            
             @if (!empty($courier_name) && !empty($tracking_number))
                 <tr>
                     <td>Courier Name is {{ $courier_name }} and Tracking Number is {{ $tracking_number }}</td>
@@ -100,9 +99,9 @@
                 </table>    
             </td></tr>
             <tr><td>&nbsp;</td></tr>
-            <tr><td>For any queries, you can contact us at <a href="mailto:info@stackdevelopers.in">info@stackdevelopers.in</a></td></tr>
+            <tr><td>For any queries, you can contact us at <a href="mailto:info@MultiVendorEcommerceApplication.com.eg">info@MultiVendorEcommerceApplication.com.eg</a></td></tr>
             <tr><td>&nbsp;</td></tr>
-            <tr><td>Regards,<br>Team Stack Developers</td></tr>
+            <tr><td>Regards,<br>Team Multi-vendor E-commerce Application</td></tr>
             <tr><td>&nbsp;</td></tr>
         </table>
     </body>

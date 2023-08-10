@@ -1,10 +1,5 @@
-{{-- https://www.youtube.com/watch?v=fQPYHPDR9wI&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=162 --}}
 {{-- This page is rendered by the thanks() method inside Front/ProductsController.php --}}
-
-
-
 @extends('front.layout.layout')
-
 
 
 @section('content')
@@ -42,10 +37,12 @@
 
 
 
-{{-- Forget/Remove some data in the Session after making/placing the order --}} {{-- https://www.youtube.com/watch?v=fkl3-HmTSWI&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=185 --}}
+{{-- Forget/Remove some data in the Session after making/placing the order --}} 
 @php
-    \Session::forget('grand_total');  // Deleting Data: https://laravel.com/docs/9.x/session#deleting-data
-    \Session::forget('order_id');     // Deleting Data: https://laravel.com/docs/9.x/session#deleting-data
-    \Session::forget('couponCode');   // Deleting Data: https://laravel.com/docs/9.x/session#deleting-data
-    \Session::forget('couponAmount'); // Deleting Data: https://laravel.com/docs/9.x/session#deleting-data
+    use Illuminate\Support\Facades\Session;
+
+    Session::forget('grand_total');  // Deleting Data: https://laravel.com/docs/9.x/session#deleting-data
+    Session::forget('order_id');     // Deleting Data: https://laravel.com/docs/9.x/session#deleting-data
+    Session::forget('couponCode');   // Deleting Data: https://laravel.com/docs/9.x/session#deleting-data
+    Session::forget('couponAmount'); // Deleting Data: https://laravel.com/docs/9.x/session#deleting-data
 @endphp

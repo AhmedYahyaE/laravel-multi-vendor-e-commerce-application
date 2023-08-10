@@ -17,8 +17,8 @@ class AdminsTableSeeder extends Seeder
         //
 
 
-        // Our code: (Check DatabaseSeeder.php page too)
-        // Database Seeding: https://www.youtube.com/watch?v=UaZ3Zoa4c8U&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=11    // https://laravel.com/docs/9.x/seeding
+        // My code: (Check DatabaseSeeder.php page too)
+        // Database Seeding    // https://laravel.com/docs/9.x/seeding
         // Note: Check DatabaseSeeder.php
         $adminRecords = [
             [
@@ -33,7 +33,7 @@ class AdminsTableSeeder extends Seeder
                 'status'    => 1,
             ],
 
-            // Check 19:39 in https://www.youtube.com/watch?v=LfK-eMcUJsw&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=20
+            
             [
                 'id'        => 2,
                 'name'      => 'John Singh - Vendor',

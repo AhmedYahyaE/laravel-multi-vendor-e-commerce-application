@@ -11,10 +11,9 @@ class ProductsFilter extends Model
 
 
 
-    // this method is called in admin\filters\filters_values.blade.php to be able to translate the `filter_id` column to filter names to show them in the table in filters_values.blade.php in the Admin Panel    // Check 26:11 in https://www.youtube.com/watch?v=0eFPxTAwqnQ&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=83
+    // this method is called in admin\filters\filters_values.blade.php to be able to translate the `filter_id` column to filter names to show them in the table in filters_values.blade.php in the Admin Panel    
     public static function getFilterName($filter_id) {
         $getFilterName = \App\Models\ProductsFilter::select('filter_name')->where('id', $filter_id)->first();
-        // dd($getFilterName);
 
 
         return $getFilterName->filter_name;
@@ -22,7 +21,7 @@ class ProductsFilter extends Model
 
 
 
-    // Every Product Dynamic Filter has many Product Filter Values (hasMany) (A 'RAM' product dynamic filter has many values like: 4GB, 6GB, 8GB, ...)    // https://www.youtube.com/watch?v=Rr2tkfVtVMc&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=86
+    // Every Product Dynamic Filter has many Product Filter Values (hasMany) (A 'RAM' product dynamic filter has many values like: 4GB, 6GB, 8GB, ...)    
     public function filter_values() {
         return $this->hasMany('App\Models\ProductsFiltersValue', 'filter_id'); // 'filter_id' is the foreign key
     }
@@ -30,16 +29,15 @@ class ProductsFilter extends Model
 
 
     // Get all the (enabled/active) Filters
-    public static function productFilters() { // https://www.youtube.com/watch?v=Rr2tkfVtVMc&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=86
+    public static function productFilters() { 
         $productFilters = \App\Models\ProductsFilter::with('filter_values')->where('status', 1)->get()->toArray(); // with('filter_values') is the relationship method name to get the values of a filter
-        // dd($productFilters);
 
         return $productFilters;
     }
 
 
 
-    // Check if a specific filter has a said category    // Get the category related filters (to be able to get a some category filters to view them in filters.blade.php)    // https://www.youtube.com/watch?v=Rr2tkfVtVMc&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=86
+    // Check if a specific filter has a said category    // Get the category related filters (to be able to get a some category filters to view them in filters.blade.php)    
     public static function filterAvailable($filter_id, $category_id) {
         $filterAvailable = \App\Models\ProductsFilter::select('cat_ids')->where([
             'id'     => $filter_id,
@@ -61,31 +59,25 @@ class ProductsFilter extends Model
 
 
 
-    // Get the sizes of a product from a URL (URL of the category)    // https://www.youtube.com/watch?v=7Y1OOQr-PTs&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=92
+    // Get the sizes of a product from a URL (URL of the category)    
     public static function getSizes($url) { // this method is used in filters.blade.php
         // Get the parent category & its subcategories (child categories) ids of a certain URL
         $categoryDetails = \App\Models\Category::categoryDetails($url);
-        // echo '<pre>', var_dump($categoryDetails), '</pre>';
-        // dd($categoryDetails);
 
         // Get the product ids of the fetched categories of the URL from `products` table
         $getProductIds = \App\Models\Product::select('id')->whereIn('category_id', $categoryDetails['catIds'])->pluck('id')->toArray();
-        // dd($getProductIds);
 
         // Get the sizes of the product ids from the `products_attributes` table
         $getProductSizes = \App\Models\ProductsAttribute::select('size')->whereIn('product_id', $getProductIds)->groupBy('size')->pluck('size')->toArray(); // We used groupBy() method to eliminate the repeated product `size`-s (in order not to show repeated 'filters' values (like small, small, medium, ...)): https://laravel.com/docs/9.x/collections#method-groupby
-        // dd($getProductSizes);
 
 
         return $getProductSizes;
     }
 
-    // Get the colors of a product from a URL (URL of the category)    // https://www.youtube.com/watch?v=kan0Vypzalk&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=92
+    // Get the colors of a product from a URL (URL of the category)    
     public static function getColors($url) { // this method is used in filters.blade.php
         // Get the parent category & its subcategories (child categories) ids of a certain URL
         $categoryDetails = \App\Models\Category::categoryDetails($url);
-        // echo '<pre>', var_dump($categoryDetails), '</pre>';
-        // dd($categoryDetails);
 
         // Get the product ids of the fetched categories of the URL from `products` table
         $getProductIds = \App\Models\Product::select('id')->whereIn('category_id', $categoryDetails['catIds'])->pluck('id')->toArray();
@@ -99,32 +91,24 @@ class ProductsFilter extends Model
         return $getProductColors;
     }
 
-    // Get the brand of a product from a URL (URL of the category)    // https://www.youtube.com/watch?v=Q9-5g1qgsn4&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=94
+    // Get the brand of a product from a URL (URL of the category)    
     public static function getBrands($url) { // this method is used in filters.blade.php
         // Get the parent category & its subcategories (child categories) ids of a certain URL
         $categoryDetails = \App\Models\Category::categoryDetails($url);
-        // echo '<pre>', var_dump($categoryDetails), '</pre>';
-        // dd($categoryDetails);
 
         // Get the product ids of the fetched categories of the URL from `products` table
         $getProductIds = \App\Models\Product::select('id')->whereIn('category_id', $categoryDetails['catIds'])->pluck('id')->toArray();
-        // dd($getProductIds);
-
-        // Get the Brands of the product ids from the `products` table
-        // $getProductBrands = \App\Models\Product::select('product_brand')->whereIn('id', $getProductIds)->groupBy('product_brand')->pluck('product_brand')->toArray(); // We used groupBy() method to eliminate the repeated product `brand_id`-s (in order not to show repeated 'filters' values (like Samsung, Samsung, LG, ...)): https://laravel.com/docs/9.x/collections#method-groupby
-        // dd($getProductBrands);
 
 
         // Get the brand ids of the product ids of the fetched categories (depending on the URL)
         $brandIds = \App\Models\Product::select('brand_id')->whereIn('id', $getProductIds)->groupBy('brand_id')->pluck('brand_id')->toArray(); // We used groupBy() method to eliminate the repeated product `brand_id`-s (in order not to show repeated 'filters' values (like Samsung, Samsung, LG, ...)): https://laravel.com/docs/9.x/collections#method-groupby
-        // dd($brandIds);
 
 
         // Get the brand names from `brands` table
         $brandDetails = \App\Models\Brand::select('id', 'name')->whereIn('id', $brandIds)->get()->toArray(); // from `brands` table 
-        // dd($brandDetails);
 
 
         return $brandDetails;
     }
+
 }

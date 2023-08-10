@@ -9,7 +9,7 @@
 
 
 
-        {{-- X-CSRF-TOKEN: https://laravel.com/docs/9.x/csrf#csrf-x-csrf-token --}} {{-- Our code: Check 12:37 in https://www.youtube.com/watch?v=maEXuJNzE8M&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=16 AND Check 12:06 in https://www.youtube.com/watch?v=APPKmLlWEBY&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu --}}
+        {{-- X-CSRF-TOKEN: https://laravel.com/docs/9.x/csrf#csrf-x-csrf-token --}} 
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
 
@@ -18,7 +18,7 @@
         <meta name="author" content="">
 
 
-        {{-- Static And Dynamic SEO (HTML meta tags): Check the HTML <meta> tags and <title> tag in front/layout/layout.blade.php. Check index() method in Front/IndexController.php, listing() method in Front/ProductsController.php, detail() method in Front/ProductsController.php and cart() method in Front/ProductsController.php    // https://www.youtube.com/watch?v=TFSalJbhuvg&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=206 --}}
+        {{-- Static And Dynamic SEO (HTML meta tags): Check the HTML <meta> tags and <title> tag in front/layout/layout.blade.php. Check index() method in Front/IndexController.php, listing() method in Front/ProductsController.php, detail() method in Front/ProductsController.php and cart() method in Front/ProductsController.php     --}}
         @if (!empty($meta_description))
             <meta name="description" content="{{ $meta_description }}">
         @endif
@@ -29,11 +29,11 @@
 
         <title>
 
-            {{-- Static And Dynamic SEO (HTML meta tags): Check the HTML <meta> tags and <title> tag in front/layout/layout.blade.php. Check index() method in Front/IndexController.php, listing() method in Front/ProductsController.php, detail() method in Front/ProductsController.php and cart() method in Front/ProductsController.php    // https://www.youtube.com/watch?v=TFSalJbhuvg&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=206 --}}
+            {{-- Static And Dynamic SEO (HTML meta tags): Check the HTML <meta> tags and <title> tag in front/layout/layout.blade.php. Check index() method in Front/IndexController.php, listing() method in Front/ProductsController.php, detail() method in Front/ProductsController.php and cart() method in Front/ProductsController.php     --}}
             @if (!empty($meta_title))
                 {{ $meta_title }}
             @else
-                Laravel Multi Vendor E-commerce Template - By Stack Developers Youtube Channel
+                Laravel Multi Vendor E-commerce Template - By Multi-vendor E-commerce Application Channel
             @endif
             
         </title>
@@ -62,13 +62,13 @@
 
 
 
-        {{-- EasyZoom plugin for zooming product images upon hover: https://www.youtube.com/watch?v=bWV92NrhyOk&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=108 --}}
-        {{-- Our EasyZoom (jQuery image zoom plugin): https://i-like-robots.github.io/EasyZoom/ --}}
+        {{-- EasyZoom plugin for zooming product images upon hover --}}
+        {{-- My EasyZoom (jQuery image zoom plugin): https://i-like-robots.github.io/EasyZoom/ --}}
         <link rel="stylesheet" href="{{ url('front/css/easyzoom.css') }}">
 
 
 
-        {{-- Our Preloader/Loader/Loading page/Preloading screen --}} {{-- https://www.youtube.com/watch?v=yPg_eAiaWLw&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=134 --}}
+        {{-- My Preloader/Loader/Loading page/Preloading screen --}} 
         <link rel="stylesheet" href="{{ url('front/css/custom.css') }}">
 
 
@@ -77,7 +77,7 @@
     <body>
 
 
-        {{-- Our Preloader/Loader/Loading page/Preloading screen --}} {{-- https://www.youtube.com/watch?v=yPg_eAiaWLw&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=134 --}}
+        {{-- My Preloader/Loader/Loading page/Preloading screen --}} 
         <div class="loader">
             <img src="{{ asset('front/images/loaders/loader.gif') }}" alt="loading..." />
          </div>
@@ -176,13 +176,13 @@
 
 
 
-        <!-- Our front/js/custom.js file --> {{-- https://www.youtube.com/watch?v=u2NiZzjRL8U&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=80 --}}
+        <!-- Our front/js/custom.js file --> 
         <script type="text/javascript" src="{{ url('front/js/custom.js') }}"></script>
 
 
 
-        {{-- EasyZoom plugin for zooming product images upon hover: https://www.youtube.com/watch?v=bWV92NrhyOk&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=108 --}}
-        {{-- Our EasyZoom (jQuery image zoom plugin): https://i-like-robots.github.io/EasyZoom/ --}}
+        {{-- EasyZoom plugin for zooming product images upon hover --}}
+        {{-- My EasyZoom (jQuery image zoom plugin): https://i-like-robots.github.io/EasyZoom/ --}}
         <script type="text/javascript" src="{{ url('front/js/easyzoom.js') }}"></script>
         <script>
             // Instantiate EasyZoom instances
@@ -218,7 +218,7 @@
 
 
 
-        {{-- To enable us to write PHP code within JavaScript code (to operate the Dynamic Filters dynamically (the second way)) --}} {{-- https://www.youtube.com/watch?v=rwj3nRYpUEk&list=PLLUtELdNs2ZaAC30yEEtR6n-EPXQFmiVu&index=90 --}}
+        {{-- To enable us to write PHP code within JavaScript code (to operate the Dynamic Filters dynamically (the second way)) --}} 
         @include('front.layout.scripts') {{-- scripts.blade.php --}}
 
 
