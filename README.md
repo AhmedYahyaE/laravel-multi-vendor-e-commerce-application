@@ -3,6 +3,25 @@ Multi-vendor E-commerce is a large-scale project/application built with Laravel 
 
 Frontend technologies used: jQuery and AJAX.
 
+## Features:
+1- Third-pary API Integration (Shiprocket API integration (for shipping and order management services)).
+
+2- PayPal Payment Gateway Integration.
+
+3- Iyzico Payment Gateway Integration.
+
+4 - Using Laravel's '[storage](storage)' directory (public disk and local driver) for storing user-uploaded images (instead of the regular '[public](public)' directory). Then, using a Symbolic Link between the '[storage/app/public](storage/app/public)' directory and '[public/storage](public/storage)' directory to display images throughout the application.
+
+5- Using Route Model Binding.
+
+6- Using Alpine.js library for creating Session Flash Messages that disappears after a specified duration.
+
+7- Using Tailwind CSS for creating a completely responsive/mobile first design.
+
+8- Eloquent Pagination.
+
+9-  User Registration, Authentication and Authorization.
+
 ## Screenshots:
 ### Frontend Section Homepage:
 ![frontend-homepage](https://github.com/AhmedYahyaE/laravel-multi-vendor-e-commerce-application/assets/118033266/37646610-8c9f-4ac6-8a75-75e83cc469c7)
@@ -21,25 +40,6 @@ Frontend technologies used: jQuery and AJAX.
 
 ### Admin Panel Products Management Page:
 ![admin-panel-products-management](https://github.com/AhmedYahyaE/laravel-multi-vendor-e-commerce-application/assets/118033266/06d8fd5b-6538-4574-b6f4-c3bf4a6a5c32)
-
-## Features:
-1- Using a Scope Filter (Query Scopes) for both the Search Bar Form and Website Tags implementation.
-
-2- Using Blade Components and Component Slots.
-
-3- Using Database Seeders and Model Factories.
-
-4 - Using Laravel's '[storage](storage)' directory (public disk and local driver) for storing user-uploaded images (instead of the regular '[public](public)' directory). Then, using a Symbolic Link between the '[storage/app/public](storage/app/public)' directory and '[public/storage](public/storage)' directory to display images throughout the application.
-
-5- Using Route Model Binding.
-
-6- Using Alpine.js library for creating Session Flash Messages that disappears after a specified duration.
-
-7- Using Tailwind CSS for creating a completely responsive/mobile first design.
-
-8- Eloquent Pagination.
-
-9-  User Registration, Authentication and Authorization.
 
 ## Application Routes:
 All the application routes are defined in the [web.php](/routes/web.php) file.
