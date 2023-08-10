@@ -1,7 +1,7 @@
 # Laravel Multi-vendor E-commerce Application (Mega Project)
-YourJob is a powerful and user-friendly Laravel application for searching for jobs and posting vacancies too. This application is designed to help job seekers find relevant job opportunities quickly and efficiently. With its intuitive interface, responsive/mobile first design, and advanced search capabilities, YourJob makes the job search process a breeze.
+Multi-vendor E-commerce is a mega project/application that is built with Laravel framework. The application contains comprehensive and feature-rich modules and functionalities. This application is designed to provide a robust platform for businesses to create their online marketplaces, allowing multiple vendors to sell their products and manage their stores within a single platform. The application also has its dedicated extensive API, which requires authentication using Laravel Passport package.
 
-Frontend technologies used: Tailwind CSS (Responsive Design) and Alpine.js library.
+Frontend technologies used: jQuery and AJAX.
 
 ## Screenshots:
 ### Homepage:
