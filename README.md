@@ -1,5 +1,5 @@
 # Laravel Multi-vendor E-commerce Application (Mega Project)
-Multi-vendor E-commerce is a mega project/application that is built with Laravel framework. The application contains comprehensive and feature-rich modules and functionalities. This application is designed to provide a robust platform for businesses to create their online marketplaces, allowing multiple vendors to sell their products and manage their stores within a single platform. The application also has its dedicated extensive API, which requires authentication using Laravel Passport package.
+Multi-vendor E-commerce is a large-scale project/application built with Laravel framework. The application contains comprehensive and feature-rich modules and functionalities. It is designed to provide a robust platform for businesses to create their online marketplaces, allowing multiple vendors to sell their products and manage their stores within a single platform. Additionally, the application has its own dedicated extensive API, which requires authentication using Laravel Passport package.
 
 Frontend technologies used: jQuery and AJAX.
 
