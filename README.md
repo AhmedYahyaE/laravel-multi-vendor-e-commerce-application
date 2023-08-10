@@ -57,11 +57,11 @@ All the application routes are defined in the [web.php](/routes/web.php) file.
 7- Run the '***php artisan serve***' command, and then open your browser and visit **http://127.0.0.1:8000** to access YourJob application.
 
 \*\* Ready-to-use registered accounts credentials you can use to log in:
-> Email: **test@test.com**, Password: **123456**
+> Superadmin: Email: **test@test.com**, Password: **123456**
 
-> Email: **yasser@gmail.com**, Password: **123456**
+> Vendor: Email: **yasser@gmail.com**, Password: **123456**
     
-> Email: **test2@test.com**, Password: **123456**
+> User: Email: **ibrahim@gmail.com**, Password: **123456**
 
 ## Contribution:
 Contributions to my Multi-vendor E-commerce Laravel application are most welcome! If you find any issues or have suggestions for improvements or want to add new features, please open an issue or submit a pull request.
