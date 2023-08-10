@@ -4,19 +4,23 @@ Multi-vendor E-commerce is a large-scale project/application built with Laravel 
 Frontend technologies used: jQuery and AJAX.
 
 ## Screenshots:
-### Homepage:
-![YourJob-homepage-1](https://github.com/AhmedYahyaE/laravel-job-search-app/assets/118033266/490a6643-c017-487d-8e04-dbedef494339)
+### Frontend Section Homepage:
+![frontend-homepage](https://github.com/AhmedYahyaE/laravel-multi-vendor-e-commerce-application/assets/118033266/37646610-8c9f-4ac6-8a75-75e83cc469c7)
 
-![YourJob-homepage-2](https://github.com/AhmedYahyaE/laravel-job-search-app/assets/118033266/2c2cbf4e-95cf-4697-b185-7feacdfd2256)
+### Product Listing Page:
+![frontend-product-listing-page](https://github.com/AhmedYahyaE/laravel-multi-vendor-e-commerce-application/assets/118033266/6a68ba25-ebd0-4b93-b687-487e35bf4912)
 
-### Login Page:
-![YourJob-login](https://github.com/AhmedYahyaE/laravel-job-search-app/assets/118033266/9e1d40ba-bd64-43a4-b228-3ed137fa5ddd)
+### Shopping Cart Page:
+![shopping-cart-page](https://github.com/AhmedYahyaE/laravel-multi-vendor-e-commerce-application/assets/118033266/442ae3c2-5ddd-4461-9d85-91042e975abc)
 
-### Create a Job Listing Page:
-![YourJob-create-listing](https://github.com/AhmedYahyaE/laravel-job-search-app/assets/118033266/3a908b85-5e20-4c6f-9d99-2f5c5e32eefd)
+### Checkout Page:
+![checkout-page](https://github.com/AhmedYahyaE/laravel-multi-vendor-e-commerce-application/assets/118033266/0e4057a8-dd7e-4db5-944d-8d8754b86c32)
 
-### User Job Listings Management:
-![YourJob-manage-listings-page](https://github.com/AhmedYahyaE/laravel-job-search-app/assets/118033266/9268b566-8286-4401-8d56-204c0b80f98f)
+### Admin Panel HomePage:
+![admin-panel-homepage](https://github.com/AhmedYahyaE/laravel-multi-vendor-e-commerce-application/assets/118033266/afda126b-2ab2-4ce8-9f42-2bd6eee36bfa)
+
+### Admin Panel Products Management Page:
+![admin-panel-products-management](https://github.com/AhmedYahyaE/laravel-multi-vendor-e-commerce-application/assets/118033266/06d8fd5b-6538-4574-b6f4-c3bf4a6a5c32)
 
 ## Features:
 1- Using a Scope Filter (Query Scopes) for both the Search Bar Form and Website Tags implementation.
