@@ -10,17 +10,31 @@ Frontend technologies used: jQuery and AJAX.
 
 3- Iyzico Payment Gateway Integration.
 
-4 - Using Laravel's '[storage](storage)' directory (public disk and local driver) for storing user-uploaded images (instead of the regular '[public](public)' directory). Then, using a Symbolic Link between the '[storage/app/public](storage/app/public)' directory and '[public/storage](public/storage)' directory to display images throughout the application.
+4- A dedicated extensive API with multiple different endpoints for the application.
 
-5- Using Route Model Binding.
+5- API authentication using Laravel Passport package.
 
-6- Using Alpine.js library for creating Session Flash Messages that disappears after a specified duration.
+6- Webhook implemented for inventory/stock update.
 
-7- Using Tailwind CSS for creating a completely responsive/mobile first design.
+7 - Using PHP cURL.
 
-8- Eloquent Pagination.
+8- Multiple Authentication using Laravel Guards.
 
-9-  User Registration, Authentication and Authorization.
+9- Multi-level Relationships/Categories.
+
+10- Dynamic Filters.
+
+11- Shipping Charges Module.
+
+12- Vendor Commission Module.
+
+13- Coupon Codes Module.
+
+14- Star Rating Module.
+
+15- Recently Viewed Products Module.
+
+15- 
 
 ## Screenshots:
 ### Frontend Section Homepage:
