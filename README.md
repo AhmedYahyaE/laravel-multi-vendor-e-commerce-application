@@ -32,9 +32,11 @@ Frontend technologies used: jQuery and AJAX.
 
 14- Star Rating Module.
 
-15- Recently Viewed Products Module.
+15- Recently Viewed Products Feature.
 
-15- 
+16- Regular Expression.
+
+17- 
 
 ## Screenshots:
 ### Frontend Section Homepage:
