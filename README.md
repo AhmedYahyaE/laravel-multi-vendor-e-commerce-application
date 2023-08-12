@@ -24,11 +24,11 @@ Frontend technologies used: jQuery and AJAX.
 
 10- Dynamic Filters (using AJAX).
 
-11- Shipping Charges Module.
+11- Shipping Charges Module (third-party service API integration).
 
 12- Vendor Commission Module.
 
-13- Coupon Codes Module.
+13- Coupon Codes Module (single time/multiple times, percentage/fixed).
 
 14- Star Rating System.
 
@@ -39,6 +39,18 @@ Frontend technologies used: jQuery and AJAX.
 17- Dynamic Banners Module.
 
 18- Dynamic Breadcrumb Navigation.
+
+19 - Sending Confirmation Emails upon registration, account activation and approval, order shipping status, ...
+
+20- Sending offline SMSs.
+
+21- User Roles and Permissions.
+
+22- Tens of jQuery AJAX requests.
+
+23- Using external libraries such as Intervention Image for image manipulation, Dompdf library for printing PDF order invoices, Laravel Excel package for exporting database tables as Excel files, Laravel Barcode/QR code Generator to show barcodes and QR codes for both Product ID and Product Code, ...
+
+24- 
 
 ## Screenshots:
 ### Frontend Section Homepage:
