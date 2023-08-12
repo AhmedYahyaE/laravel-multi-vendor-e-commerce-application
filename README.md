@@ -22,7 +22,7 @@ Frontend technologies used: jQuery and AJAX.
 
 9- Multi-level Relationships/Categories.
 
-10- Dynamic Filters.
+10- Dynamic Filters (using AJAX).
 
 11- Shipping Charges Module.
 
@@ -30,13 +30,15 @@ Frontend technologies used: jQuery and AJAX.
 
 13- Coupon Codes Module.
 
-14- Star Rating Module.
+14- Star Rating System.
 
 15- Recently Viewed Products Feature.
 
 16- Regular Expression.
 
-17- 
+17- Dynamic Banners Module.
+
+18- Dynamic Breadcrumb Navigation.
 
 ## Screenshots:
 ### Frontend Section Homepage:
