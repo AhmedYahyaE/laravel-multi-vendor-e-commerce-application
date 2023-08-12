@@ -48,9 +48,13 @@ Frontend technologies used: jQuery and AJAX.
 
 22- Tens of jQuery AJAX requests.
 
-23- Using external libraries such as Intervention Image for image manipulation, Dompdf library for printing PDF order invoices, Laravel Excel package for exporting database tables as Excel files, Laravel Barcode/QR code Generator to show barcodes and QR codes for both Product ID and Product Code, ...
+23- Using external libraries such as 'Intervention Image' for image manipulation, 'Dompdf' library for printing PDF order invoices, 'Laravel Excel' package for exporting database tables as Excel files, 'Laravel Barcode/QR code Generator' to show barcodes and QR codes for both Product ID and Product Code, ...
 
-24- 
+24- Using JavaScript libraries and jQuery plugins such as 'DataTables' for adding interaction controls to HTML tables, 'EasyZoom' for zooming product images, ...
+
+25- Image & Video Upload Functionality.
+
+26- Using Favicons for both the Frontend and Admin Panel Sections of the application.
 
 ## Screenshots:
 ### Frontend Section Homepage:
