@@ -127,11 +127,11 @@ All application routes & API endpoints are defined in both the **[web.php](route
 6- Run the '***php artisan serve***' command, and then open your browser and visit **http://127.0.0.1:8000** to access the Frontend of the application, or http://127.0.0.1:8000/admin/login to access the Admin Panel.
 
 \*\* Ready-to-use registered accounts credentials you can use to log in:
-> Superadmin: Email: **test@test.com**, Password: **123456**
+> 1) Superadmin (to access the Admin Panel): Email: **admin@admin.com**, Password: **123456**
 
-> Vendor: Email: **yasser@gmail.com**, Password: **123456**
+> 2) Vendor (to access the Admin Panel): Email: **yasser@admin.com**, Password: **123456**
     
-> User: Email: **ibrahim@gmail.com**, Password: **123456**
+> 3) User (to access the Frontend): Email: **ibrahim@gmail.com**, Password: **123456**
 
 ## Contribution:
 Contributions to my Multi-vendor E-commerce Laravel application are most welcome! If you find any issues or have suggestions for improvements or want to add new features, please open an issue or submit a pull request.
