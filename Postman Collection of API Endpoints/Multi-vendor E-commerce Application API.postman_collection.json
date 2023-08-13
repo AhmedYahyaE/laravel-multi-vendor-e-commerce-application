@@ -1,9 +1,11 @@
 {
 	"info": {
-		"_postman_id": "f958f175-346a-4ab7-a520-0f30d3e1bf1d",
+		"_postman_id": "179adc20-2dcc-426c-a755-5a48da9ca7a4",
 		"name": "Multi-vendor E-commerce Application API (Laravel)",
+		"description": "Multi-vendor E-commerce is a large-scale project/application built with Laravel framework. The application contains comprehensive and feature-rich modules and functionalities. It is designed to provide a robust platform for businesses to create their online marketplaces, allowing multiple vendors to sell their products and manage their stores within a single platform. Additionally, the application has its own dedicated extensive API, which requires authentication using Laravel Passport package.",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "20855042"
+		"_exporter_id": "28181483",
+		"_collection_link": "https://www.postman.com/ahmed-yahya/workspace/my-public-portfolio-postman-workspace/collection/28181483-179adc20-2dcc-426c-a755-5a48da9ca7a4?action=share&source=collection_link&creator=28181483"
 	},
 	"item": [
 		{

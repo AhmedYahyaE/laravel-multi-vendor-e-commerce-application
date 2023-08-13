@@ -57,7 +57,7 @@ function addSubscriber() {
 
 // jQuery
 $(document).ready(function() {
-    // Show our Preloader/Loader/Loading page/Preloading screen ALL THE TIME FOR TESTING!    
+    // Show our Preloader/Loader/Loading Page/Preloading Screen ALL THE TIME FOR TESTING!    
     // $('.loader').show();
 
 
@@ -175,9 +175,9 @@ $(document).ready(function() {
 
 
 
-    // Show our Preloader/Loader/Loading page/Preloading screen while the placing order <form> is submitted using the    id="placeOrder"    HTML attribute in front/products/checkout.blade.php
+    // Show our Preloader/Loader/Loading Page/Preloading Screen while the placing order <form> is submitted using the    id="placeOrder"    HTML attribute in front/products/checkout.blade.php
     $(document).on('click', '#placeOrder', function() {
-        // Show our Preloader/Loader/Loading page/Preloading screen while the <form> is submitted    
+        // Show our Preloader/Loader/Loading Page/Preloading Screen while the <form> is submitted    
         $('.loader').show();
     });
 
@@ -186,7 +186,7 @@ $(document).ready(function() {
     // User Registration <form> submission (in front/users/login_register.blade.php)    
     $('#registerForm').submit(function() { // When the registration <form> is submitted
 
-        // Show our Preloader/Loader/Loading page/Preloading screen while the <form> is submitted    
+        // Show our Preloader/Loader/Loading Page/Preloading Screen while the <form> is submitted    
         $('.loader').show();
 
 
@@ -206,7 +206,7 @@ $(document).ready(function() {
                 // Showing Validation Errors in the view (from the backend/server response of our AJAX request):
                 
                 if (resp.type == 'error') { // if there're Validation Errors (login fails), show the Validation Error Messages (each of them under its respective <input> field)    // 'type' is sent as a PHP array key (in the HTTP response from the server (backend)) from inside the userRegister() method in Front/UserController.php
-                    // Hide our Preloader/Loader/Loading page/Preloading screen when there's an error    
+                    // Hide our Preloader/Loader/Loading Page/Preloading Screen when there's an error    
                     $('.loader').hide();
 
 
@@ -230,7 +230,7 @@ $(document).ready(function() {
                     });
 
                 } else if (resp.type == 'success') { // if there're no validation errors (login is successful), redirect to the Cart page    // 'type' is sent as a PHP array key (in the HTTP response from the server (backend)) from inside the userRegister() method in Front/UserController.php
-                    // Hide our Preloader/Loader/Loading page/Preloading screen when the response is 'success'    
+                    // Hide our Preloader/Loader/Loading Page/Preloading Screen when the response is 'success'    
                     $('.loader').hide();
 
                     $('#register-success').attr('style', 'color: green'); // I already did this in the HTML page in the <p> tags in the HTML in front/users/login_register.blade.php (    <p id="login-name" style="color: red"></p>    )    // This is the same as:    $('#login-' + i).css('color', 'green');    // Change the CSS color of the <p> tags
@@ -307,7 +307,7 @@ $(document).ready(function() {
     // User Forgot Password Functionality (this route is accessed from the <a> tag in front/users/login_register.blade.php through a 'GET' request, and through a 'POST' request when the HTML Form is submitted in front/users/forgot_password.blade.php))    
     $('#forgotForm').submit(function() { // When the forgot password <form> (in front/users/forgot_password.blade.php) is submitted
 
-        // Show our Preloader/Loader/Loading page/Preloading screen while the <form> is submitted    
+        // Show our Preloader/Loader/Loading Page/Preloading Screen while the <form> is submitted    
         $('.loader').show();
 
 
@@ -327,7 +327,7 @@ $(document).ready(function() {
                 // Showing Validation Errors in the view (from the backend/server response of our AJAX request):
                 
                 if (resp.type == 'error') { // if there're Validation Errors (login fails), show the Validation Error Messages (each of them under its respective <input> field)    // 'type' is sent as a PHP array key (in the HTTP response from the server (backend)) from inside the userRegister() method in Front/UserController.php
-                    // Hide our Preloader/Loader/Loading page/Preloading screen when there's an error    
+                    // Hide our Preloader/Loader/Loading Page/Preloading Screen when there's an error    
                     $('.loader').hide();
 
 
@@ -349,7 +349,7 @@ $(document).ready(function() {
                     });
 
                 } else if (resp.type == 'success') { // if there're no validation errors (login is successful), redirect to the Cart page    // 'type' is sent as a PHP array key (in the HTTP response from the server (backend)) from inside the userRegister() method in Front/UserController.php
-                    // Hide our Preloader/Loader/Loading page/Preloading screen when the response is 'success'    
+                    // Hide our Preloader/Loader/Loading Page/Preloading Screen when the response is 'success'    
                     $('.loader').hide();
 
 
@@ -368,7 +368,7 @@ $(document).ready(function() {
     // User Update Details HTML Form submission (in front/users/user_account.blade.php)    
     $('#accountForm').submit(function() { // When the registration <form> is submitted
 
-        // Show our Preloader/Loader/Loading page/Preloading screen while the <form> is submitted    
+        // Show our Preloader/Loader/Loading Page/Preloading Screen while the <form> is submitted    
         $('.loader').show();
 
         var formdata = $(this).serialize(); // serialize() method comes in handy when submitting an HTML Form using an AJAX request / Ajax call, as it collects all the name/value pairs from the HTML Form input fields like: <input>, <textarea>, <select><option>, ... HTML elements of the <form> (instead of the heavy work of assigning an identifier/handle for every <input> and <textarea>, ... using an HTML 'id' or CSS 'class', and then getting the value for every one of them like this:    $('#username).val();    )    // serialize() jQuery method: https://www.w3schools.com/jquery/ajax_serialize.asp
@@ -385,7 +385,7 @@ $(document).ready(function() {
             success: function(resp) { // if the AJAX request is successful
                 // Showing Validation Errors in the view (from the backend/server response of our AJAX request):
                 if (resp.type == 'error') { // if there're Validation Errors (login fails), show the Validation Error Messages (each of them under its respective <input> field)    // 'type' is sent as a PHP array key (in the HTTP response from the server (backend)) from inside the userAccount() method in Front/UserController.php
-                    // Hide our Preloader/Loader/Loading page/Preloading screen when there's an error    
+                    // Hide our Preloader/Loader/Loading Page/Preloading Screen when there's an error    
                     $('.loader').hide();
 
 
@@ -406,7 +406,7 @@ $(document).ready(function() {
                     });
 
                 } else if (resp.type == 'success') { // if there're no validation errors (login is successful), redirect to the Cart page    // 'type' is sent as a PHP array key (in the HTTP response from the server (backend)) from inside the userAccount() method in Front/UserController.php
-                    // Hide our Preloader/Loader/Loading page/Preloading screen when the response is 'success'    
+                    // Hide our Preloader/Loader/Loading Page/Preloading Screen when the response is 'success'    
                     $('.loader').hide();
 
 
@@ -433,7 +433,7 @@ $(document).ready(function() {
     // User Update Password HTML Form submission (in front/users/user_account.blade.php)    
     $('#passwordForm').submit(function() { // When the registration <form> is submitted
 
-        // Show our Preloader/Loader/Loading page/Preloading screen while the <form> is submitted    
+        // Show our Preloader/Loader/Loading Page/Preloading Screen while the <form> is submitted    
         $('.loader').show();
 
 
@@ -454,7 +454,7 @@ $(document).ready(function() {
 
                 // Showing Validation Errors in the view (from the backend/server response of our AJAX request):
                 if (resp.type == 'error') { // if there're Validation Errors (login fails), show the Validation Error Messages (each of them under its respective <input> field)    // 'type' is sent as a PHP array key (in the HTTP response from the server (backend)) from inside the userAccount() method in Front/UserController.php
-                    // Hide our Preloader/Loader/Loading page/Preloading screen when there's an error    
+                    // Hide our Preloader/Loader/Loading Page/Preloading Screen when there's an error    
                     $('.loader').hide();
 
 
@@ -474,7 +474,7 @@ $(document).ready(function() {
                     });
 
                 } else if (resp.type == 'incorrect') { // if the entered current password is incorrect/wrong    // 'type' is sent as a PHP array key (in the HTTP response from the server (backend)) from inside the userUpdatePassword() method in Front/UserController.php
-                    // Hide our Preloader/Loader/Loading page/Preloading screen when the response is 'success'    
+                    // Hide our Preloader/Loader/Loading Page/Preloading Screen when the response is 'success'    
                     $('.loader').hide();
 
                     $('#password-error').attr('style', 'color: red'); // I already did this in the HTML page in the <p> tags in the HTML in front/users/user_account.blade.php (    <p id="password-name" style="color: red"></p>    )    // This is the same as:    $('#password-' + i).css('color', 'red');    // Change the CSS color of the <p> tags
@@ -488,7 +488,7 @@ $(document).ready(function() {
                     }, 3000);
 
                 } else if (resp.type == 'success') { // if there're no validation errors (login is successful), redirect to the Cart page    // 'type' is sent as a PHP array key (in the HTTP response from the server (backend)) from inside the userAccount() method in Front/UserController.php
-                    // Hide our Preloader/Loader/Loading page/Preloading screen when the response is 'success'    
+                    // Hide our Preloader/Loader/Loading Page/Preloading Screen when the response is 'success'    
                     $('.loader').hide();
 
                     $('#password-success').attr('style', 'color: green'); // I already did this in the HTML page in the <p> tags in the HTML in front/users/user_account.blade.php (    <p id="password-name" style="color: red"></p>    )    // This is the same as:    $('#password-' + i).css('color', 'green');    // Change the CSS color of the <p> tags
@@ -640,7 +640,7 @@ $(document).ready(function() {
             success: function(resp) { // if the AJAX request / AJAX call is successful
                 // Showing Validation Errors in the view (from the backend/server response of our AJAX request):
                 if (resp.type == 'error') { // if there're Validation Errors, show the Validation Error Messages (each of them under its respective <input> field)    // 'type' is sent as a PHP array key (in the HTTP response from the server (backend)) from inside the saveDeliveryAddress() method in Front/AddressController.php
-                    // Hide our Preloader/Loader/Loading page/Preloading screen when there's an error    
+                    // Hide our Preloader/Loader/Loading Page/Preloading Screen when there's an error    
                     $('.loader').hide();
 
 

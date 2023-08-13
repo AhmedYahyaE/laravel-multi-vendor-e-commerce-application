@@ -1253,7 +1253,7 @@ body {
 
 .item-new-price {
   float: left;
-  color: #d90429; }
+  color: #3f0000; }
 
 .item-old-price {
   float: right;
@@ -2951,7 +2951,7 @@ body {
     .coupon-continue-checkout .button-area .checkout {
       margin-left: 6px;
       transition: all .4s;
-      background: #d90429;
+      background: #3f0000;
       color: #ffffff; }
       .coupon-continue-checkout .button-area .checkout:hover {
         background: #cf0427; }

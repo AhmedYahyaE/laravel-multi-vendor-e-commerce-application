@@ -205,7 +205,7 @@
                                                 <a href="terms-and-conditions.html" class="u-c-brand">terms & conditions</a>
                                             </label>
                                         </div>
-                                        <button type="submit" id="placeOrder" class="button button-outline-secondary">Place Order</button> {{-- Show our Preloader/Loader/Loading page/Preloading screen while the <form> is submitted using the    id="placeOrder"    HTML attribute. Check front/js/custom.js --}}
+                                        <button type="submit" id="placeOrder" class="button button-outline-secondary">Place Order</button> {{-- Show our Preloader/Loader/Loading Page/Preloading Screen while the <form> is submitted using the    id="placeOrder"    HTML attribute. Check front/js/custom.js --}}
                                     </div>
                                 </form>
 

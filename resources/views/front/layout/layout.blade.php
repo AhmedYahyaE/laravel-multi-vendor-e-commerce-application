@@ -68,7 +68,7 @@
 
 
 
-        {{-- My Preloader/Loader/Loading page/Preloading screen --}} 
+        {{-- My Preloader/Loader/Loading Page/Preloading Screen --}} 
         <link rel="stylesheet" href="{{ url('front/css/custom.css') }}">
 
 
@@ -77,7 +77,7 @@
     <body>
 
 
-        {{-- My Preloader/Loader/Loading page/Preloading screen --}} 
+        {{-- My Preloader/Loader/Loading Page/Preloading Screen --}} 
         <div class="loader">
             <img src="{{ asset('front/images/loaders/loader.gif') }}" alt="loading..." />
          </div>
