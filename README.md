@@ -1,7 +1,7 @@
 # Laravel Multi-vendor E-commerce Application (Mega Project)
 Multi-vendor E-commerce is a large-scale project/application built with Laravel framework. The application contains comprehensive and feature-rich modules and functionalities. It is designed to provide a robust platform for businesses to create their online marketplaces, allowing multiple vendors to sell their products and manage their stores within a single platform. Additionally, the application has its own dedicated extensive API, which requires authentication using Laravel Passport package.
 
-Frontend technologies used: jQuery, AJAX, and many JavaScript/jQuery libraries and plugins.
+Frontend technologies used: jQuery, AJAX, and many JavaScript & jQuery libraries and plugins.
 
 ## Features:
 1- Third-pary API Integration (Shiprocket API integration (for shipping and order management services)).
@@ -36,51 +36,50 @@ Frontend technologies used: jQuery, AJAX, and many JavaScript/jQuery libraries a
 
 15- Recently Viewed Products Feature.
 
-16- Regular Expression.
+34- Order Logs/History.
+
+27- New Arrivals, Discounted Products, Featured Products, Similar Products, and Best-Seller Products Features.
+
+23- Using external libraries and packages such as 'Intervention Image' for image manipulation, 'Dompdf' library for printing PDF order invoices, 'Laravel Excel' package for importing/exporting database tables as Excel files, 'Laravel Barcode/QR Code Generator' to generate barcodes and QR codes for both Product ID and Product Code in order invoices, etc.
+
+24- Using JavaScript libraries and jQuery plugins such as 'DataTables' for adding interaction controls to HTML tables, 'EasyZoom' for zooming product images, etc.
+
+19 - Sending Confirmation Emails (Mailtrap) upon registration, account activation and approval, order shipping status, etc.
+
+20- Sending offline SMSs (upon registration, starting order shipping process, ...).
+
+33- Multiple Delivery Addresses.
+
+35- Website Search Form functionality for products by name, color, and code.
+
+21- User Roles and Permissions (superadmin, admins, vendors, users).
+
+28- User and vendor registration approval by the superadmin.
+
+25- Image & Video Upload Functionality.
 
 17- Dynamic Banner Sliders Module.
 
 18- Dynamic Breadcrumb Navigation.
 
-19 - Sending Confirmation Emails (Mailtrap) upon registration, account activation and approval, order shipping status, ...
-
-20- Sending offline SMSs (upon starting order shipping process, ...).
-
-21- User Roles and Permissions (superadmin, admins, vendors, users).
-
-22- Tens of jQuery AJAX requests (update admin password via AJAX, AJAX form validation, ...).
-
-23- Using external libraries such as 'Intervention Image' for image manipulation, 'Dompdf' library for printing PDF order invoices, 'Laravel Excel' package for exporting database tables as Excel files, 'Laravel Barcode/QR code Generator' to show barcodes and QR codes for both Product ID and Product Code in order invoices, ...
-
-24- Using JavaScript libraries and jQuery plugins such as 'DataTables' for adding interaction controls to HTML tables, 'EasyZoom' for zooming product images, ...
-
-25- Image & Video Upload Functionality.
-
-26- Using two Favicons for both the Frontend and Admin Panel Sections of the application.
-
-27- New Arrivals, Discounted Products, Featured Products, Similar Products, and Best-Seller Products.
-
-28- User and vendor registration approval by the superadmin.
-
-29- Showing a Preloading Screen upon form submission.
-
-30- Forgot Password Functionality and resetting password via email.
-
-31- Custom AJAX pop-up mini-cart.
-
-32- Database Seeders.
-
-33- Multiple Delivery Addresses.
-
-34- Order Logs/History.
-
-35- Website Search Form functionality for products by name, color, and code.
-
 36- Dynamic SEO/HTML Meta tags.
 
 37- Newsletter Subscription (email).
 
+16- Regular Expression.
+
+32- Database Seeders.
+
+22- Tens of jQuery AJAX requests (update admin password via AJAX, AJAX form validation, ...).
+
+31- Custom AJAX pop-up Mini-Cart.
+
+29- Showing a Preloading Screen upon form submission.
+
 38- TinyMCE WYSIWYG Editor Integrated.
+
+26- Using two Favicons for both the Frontend and Admin Panel Sections of the application.
+
 
 ## Screenshots:
 ### Frontend Section Homepage:
