@@ -99,6 +99,11 @@ Frontend technologies used: jQuery, AJAX, and many JavaScript & jQuery libraries
 ### Admin Panel Products Management Page:
 ![admin-panel-products-management](https://github.com/AhmedYahyaE/laravel-multi-vendor-e-commerce-application/assets/118033266/06d8fd5b-6538-4574-b6f4-c3bf4a6a5c32)
 
+## Application URLs:
+1- **Frontend**: The public-facing website can be accessed at http://127.0.0.1:8000/. This is where users/customers/members can view categories and products and interact with the website in general. The frontend URL is typically accessible to all visitors of the website.
+
+2- **Admin Panel**: The Admin Panel for managing the application is available at http://127.0.0.1:8000/admin/login. This is a secure area accessible only to authorized administrators where only authenticated administrators (superadmin, admins, and vendors) can access the admin panel. It provides access to the administrative functionalities of the application such as adding new products and their features, orders management, users management, adding website sections and categories and editing them, orders shipping management, etc.
+
 ## Application Routes:
 All the application routes are defined in the [web.php](/routes/web.php) file.
 
