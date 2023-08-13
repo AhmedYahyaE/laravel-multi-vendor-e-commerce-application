@@ -24,7 +24,9 @@ Frontend technologies used: jQuery, AJAX, and many JavaScript/jQuery libraries a
 
 10- Product Dynamic Filters (using AJAX).
 
-11- Shipping Charges Module (third-party service API integration).
+11- Shipping Charges Module (third-party service API integration, product-weight and country-wise shipping charges, ...).
+
+11- Showing Order Shipping Status.
 
 12- Vendor Commission Module.
 
@@ -42,13 +44,13 @@ Frontend technologies used: jQuery, AJAX, and many JavaScript/jQuery libraries a
 
 19 - Sending Confirmation Emails (Mailtrap) upon registration, account activation and approval, order shipping status, ...
 
-20- Sending offline SMSs.
+20- Sending offline SMSs (upon starting order shipping process, ...).
 
 21- User Roles and Permissions (superadmin, admins, vendors, users).
 
-22- Tens of jQuery AJAX requests (update admin password via AJAX, ...).
+22- Tens of jQuery AJAX requests (update admin password via AJAX, AJAX form validation, ...).
 
-23- Using external libraries such as 'Intervention Image' for image manipulation, 'Dompdf' library for printing PDF order invoices, 'Laravel Excel' package for exporting database tables as Excel files, 'Laravel Barcode/QR code Generator' to show barcodes and QR codes for both Product ID and Product Code, ...
+23- Using external libraries such as 'Intervention Image' for image manipulation, 'Dompdf' library for printing PDF order invoices, 'Laravel Excel' package for exporting database tables as Excel files, 'Laravel Barcode/QR code Generator' to show barcodes and QR codes for both Product ID and Product Code in order invoices, ...
 
 24- Using JavaScript libraries and jQuery plugins such as 'DataTables' for adding interaction controls to HTML tables, 'EasyZoom' for zooming product images, ...
 
@@ -56,7 +58,23 @@ Frontend technologies used: jQuery, AJAX, and many JavaScript/jQuery libraries a
 
 26- Using two Favicons for both the Frontend and Admin Panel Sections of the application.
 
-27- New Arrivals, Discounted Products, Featured Products, 
+27- New Arrivals, Discounted Products, Featured Products, Similar Products,
+
+28- User and vendor registration approval by the superadmin.
+
+29- Showing a Preloading Screen upon form submission.
+
+30- Forgot Password Functionality and resetting password via email.
+
+31- Custom AJAX pop-up mini-cart.
+
+32- Database Seeders.
+
+33- Multiple Delivery Addresses.
+
+34- Order Logs/History.
+
+35- Website Search Form functionality for products by name, color, and code.
 
 ## Screenshots:
 ### Frontend Section Homepage:
