@@ -114,19 +114,17 @@ All application routes & API endpoints are defined in both the **[web.php](route
 
 ## Installation & Configuration:
 
-1- Open your terminal, and use the '***git clone https://github.com/AhmedYahyaE/laravel-job-search-app.git***' command, or just download the ZIP project.
+1- Open your terminal, and use the '***git clone https://github.com/AhmedYahyaE/laravel-multi-vendor-e-commerce-application.git***' command, or just download the ZIP project.
 
 2- Navigate/Change into (using the **cd** command) to the project root directory, then run the '***composer install***' command.
 
 3- Run the '***npm install***' command (and only in case you face any issues/errors, run the 'npm audit fix' command), and then run the '***npm run build***' command.
 
-4- Create a MySQL database named **\`yourjob\`**, then import the **[yourjob database SQL Dump File](<Database - yourjob/yourjob database - SQL Dump File - phpMyAdmin Export.sql>)** into your \`yourjob\` database.
+4- Create a MySQL database named **\`multivendor_ecommerce\`**, then import the **[multivendor_ecommerce database SQL Dump File](<Database - multivendor_ecommerce/multivendor_ecommerce database - SQL Dump File - phpMyAdmin Export.sql>)** into your **\`multivendor_ecommerce\`** database.
 
 5- Navigate to the **[.env](.env)** file and configure/update it with your MySQL database credentials and other configuration settings.
 
-6- In case the application images are broken (are not loaded), recreate the Symbolic Link between the '[storage/app/public](storage/app/public)' directory and '[public/storage](public/storage)' directory by removing/deleting the [public/storage](public/storage) directory first, then run the '***php artisan storage:link***' command.
-
-7- Run the '***php artisan serve***' command, and then open your browser and visit **http://127.0.0.1:8000** to access YourJob application.
+6- Run the '***php artisan serve***' command, and then open your browser and visit **http://127.0.0.1:8000** to access the Frontend of the application, or http://127.0.0.1:8000/admin/login to access the Admin Panel.
 
 \*\* Ready-to-use registered accounts credentials you can use to log in:
 > Superadmin: Email: **test@test.com**, Password: **123456**
