@@ -26,60 +26,59 @@ Frontend technologies used: jQuery, AJAX, and many JavaScript & jQuery libraries
 
 11- Shipping Charges Module (third-party service API integration, product-weight and country-wise shipping charges, ...).
 
-11- Showing Order Shipping Status.
+12- Showing Order Shipping Status.
 
-12- Vendor Commissions Module.
+13- Vendor Commissions Module.
 
-13- Coupon Codes Module (single time/multiple times, percentage/fixed).
+14- Coupon Codes Module (single time/multiple times, percentage/fixed).
 
-14- Star Rating and Reviews System.
+15- Star Rating and Reviews System.
 
-15- Recently Viewed Products Feature.
+16- Recently Viewed Products Feature.
 
-34- Order Logs/History.
+17- Order Logs/History.
 
-27- New Arrivals, Discounted Products, Featured Products, Similar Products, and Best-Seller Products Features.
+18- New Arrivals, Discounted Products, Featured Products, Similar Products, and Best-Seller Products Features.
 
-23- Using external libraries and packages such as 'Intervention Image' for image manipulation, 'Dompdf' library for printing PDF order invoices, 'Laravel Excel' package for importing/exporting database tables as Excel files, 'Laravel Barcode/QR Code Generator' to generate barcodes and QR codes for both Product ID and Product Code in order invoices, etc.
+19- Using external libraries and packages such as 'Intervention Image' for image manipulation, 'Dompdf' library for printing PDF order invoices, 'Laravel Excel' package for importing/exporting database tables as Excel files, 'Laravel Barcode/QR Code Generator' to generate barcodes and QR codes for both Product ID and Product Code in order invoices, etc.
 
-24- Using JavaScript libraries and jQuery plugins such as 'DataTables' for adding interaction controls to HTML tables, 'EasyZoom' for zooming product images, etc.
+20- Using JavaScript libraries and jQuery plugins such as 'DataTables' for adding interaction controls to HTML tables, 'EasyZoom' for zooming product images, etc.
 
-19 - Sending Confirmation Emails (Mailtrap) upon registration, account activation and approval, order shipping status, etc.
+21 - Sending Confirmation Emails (Mailtrap) upon registration, account activation and approval, order shipping status, etc.
 
-20- Sending offline SMSs (upon registration, starting order shipping process, ...).
+22- Sending offline SMSs (upon registration, starting order shipping process, ...).
 
-33- Multiple Delivery Addresses.
+23- Multiple Delivery Addresses.
 
-35- Website Search Form functionality for products by name, color, and code.
+24- Website Search Form functionality for products by name, color, and code.
 
-21- User Roles and Permissions (superadmin, admins, vendors, users).
+25- User Roles and Permissions (superadmin, admins, vendors, users).
 
-28- User and vendor registration approval by the superadmin.
+26- User and vendor registration approval by the superadmin.
 
-25- Image & Video Upload Functionality.
+27- Image & Video Upload Functionality.
 
-17- Dynamic Banner Sliders Module.
+28- Dynamic Banner Sliders Module.
 
-18- Dynamic Breadcrumb Navigation.
+29- Dynamic Breadcrumb Navigation.
 
-36- Dynamic SEO/HTML Meta tags.
+30- Dynamic SEO/HTML Meta tags.
 
-37- Newsletter Subscription (email).
+31- Newsletter Subscription (email).
 
-16- Regular Expression.
+32- Regular Expression.
 
-32- Database Seeders.
+33- Database Seeders.
 
-22- Tens of jQuery AJAX requests (update admin password via AJAX, AJAX form validation, ...).
+34- Tens of jQuery AJAX requests (update admin password via AJAX, AJAX form validation, ...).
 
-31- Custom AJAX pop-up Mini-Cart.
+35- Custom AJAX pop-up Mini-Cart.
 
-29- Showing a Preloading Screen upon form submission.
+36- Showing a Preloading Screen upon form submission.
 
-38- TinyMCE WYSIWYG Editor Integrated.
+37- TinyMCE WYSIWYG Editor Integrated.
 
-26- Using two Favicons for both the Frontend and Admin Panel Sections of the application.
-
+38- Using two Favicons for both the Frontend and Admin Panel Sections of the application.
 
 ## Screenshots:
 ### Frontend Section Homepage:
