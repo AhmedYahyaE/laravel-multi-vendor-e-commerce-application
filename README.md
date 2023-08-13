@@ -24,7 +24,7 @@ Frontend technologies used: jQuery, AJAX, and many JavaScript & jQuery libraries
 
 10- Product Dynamic Filters (using AJAX).
 
-11- Shipping Charges Module (third-party service API integration, product-weight and country-wise shipping charges, ...).
+11- Shipping Charges Module (third-party service API integration, product-weight and country-wise shipping charges, etc).
 
 12- Showing Order Shipping Status.
 
