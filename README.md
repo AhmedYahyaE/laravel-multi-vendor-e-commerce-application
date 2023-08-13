@@ -22,7 +22,7 @@ Frontend technologies used: jQuery, AJAX, and many JavaScript/jQuery libraries a
 
 9- Multi-level Relationships/Categories.
 
-10- Dynamic Filters (using AJAX).
+10- Product Dynamic Filters (using AJAX).
 
 11- Shipping Charges Module (third-party service API integration).
 
@@ -36,17 +36,17 @@ Frontend technologies used: jQuery, AJAX, and many JavaScript/jQuery libraries a
 
 16- Regular Expression.
 
-17- Dynamic Banners Module.
+17- Dynamic Banner Sliders Module.
 
 18- Dynamic Breadcrumb Navigation.
 
-19 - Sending Confirmation Emails upon registration, account activation and approval, order shipping status, ...
+19 - Sending Confirmation Emails (Mailtrap) upon registration, account activation and approval, order shipping status, ...
 
 20- Sending offline SMSs.
 
-21- User Roles and Permissions.
+21- User Roles and Permissions (superadmin, admins, vendors, users).
 
-22- Tens of jQuery AJAX requests.
+22- Tens of jQuery AJAX requests (update admin password via AJAX, ...).
 
 23- Using external libraries such as 'Intervention Image' for image manipulation, 'Dompdf' library for printing PDF order invoices, 'Laravel Excel' package for exporting database tables as Excel files, 'Laravel Barcode/QR code Generator' to show barcodes and QR codes for both Product ID and Product Code, ...
 
@@ -54,7 +54,9 @@ Frontend technologies used: jQuery, AJAX, and many JavaScript/jQuery libraries a
 
 25- Image & Video Upload Functionality.
 
-26- Using Favicons for both the Frontend and Admin Panel Sections of the application.
+26- Using two Favicons for both the Frontend and Admin Panel Sections of the application.
+
+27- New Arrivals, Discounted Products, Featured Products, 
 
 ## Screenshots:
 ### Frontend Section Homepage:
