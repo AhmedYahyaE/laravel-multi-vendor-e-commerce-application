@@ -32,7 +32,7 @@ Frontend technologies used: jQuery, AJAX, and many JavaScript/jQuery libraries a
 
 13- Coupon Codes Module (single time/multiple times, percentage/fixed).
 
-14- Star Rating System.
+14- Star Rating and Reviews System.
 
 15- Recently Viewed Products Feature.
 
@@ -77,6 +77,10 @@ Frontend technologies used: jQuery, AJAX, and many JavaScript/jQuery libraries a
 35- Website Search Form functionality for products by name, color, and code.
 
 36- Dynamic SEO/HTML Meta tags.
+
+37- Newsletter Subscription (email).
+
+38- TinyMCE WYSIWYG Editor Integrated.
 
 ## Screenshots:
 ### Frontend Section Homepage:
