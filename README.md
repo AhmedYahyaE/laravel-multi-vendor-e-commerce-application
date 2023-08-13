@@ -28,7 +28,7 @@ Frontend technologies used: jQuery, AJAX, and many JavaScript/jQuery libraries a
 
 11- Showing Order Shipping Status.
 
-12- Vendor Commission Module.
+12- Vendor Commissions Module.
 
 13- Coupon Codes Module (single time/multiple times, percentage/fixed).
 
@@ -58,7 +58,7 @@ Frontend technologies used: jQuery, AJAX, and many JavaScript/jQuery libraries a
 
 26- Using two Favicons for both the Frontend and Admin Panel Sections of the application.
 
-27- New Arrivals, Discounted Products, Featured Products, Similar Products,
+27- New Arrivals, Discounted Products, Featured Products, Similar Products, and Best-Seller Products.
 
 28- User and vendor registration approval by the superadmin.
 
@@ -76,6 +76,8 @@ Frontend technologies used: jQuery, AJAX, and many JavaScript/jQuery libraries a
 
 35- Website Search Form functionality for products by name, color, and code.
 
+36- Dynamic SEO/HTML Meta tags.
+
 ## Screenshots:
 ### Frontend Section Homepage:
 ![frontend-homepage](https://github.com/AhmedYahyaE/laravel-multi-vendor-e-commerce-application/assets/118033266/37646610-8c9f-4ac6-8a75-75e83cc469c7)
@@ -85,7 +87,6 @@ Frontend technologies used: jQuery, AJAX, and many JavaScript/jQuery libraries a
 
 ### Shopping Cart Page:
 ![shopping-cart-page](https://github.com/AhmedYahyaE/laravel-multi-vendor-e-commerce-application/assets/118033266/64f9cbbf-87d2-4f26-aaf1-5c942d1db85b)
-
 
 ### Checkout Page:
 ![checkout-page](https://github.com/AhmedYahyaE/laravel-multi-vendor-e-commerce-application/assets/118033266/0e4057a8-dd7e-4db5-944d-8d8754b86c32)
