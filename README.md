@@ -102,10 +102,15 @@ Frontend technologies used: jQuery, AJAX, and many JavaScript & jQuery libraries
 ## Application URLs:
 1- **Frontend**: The public-facing website can be accessed at http://127.0.0.1:8000/. This is where users/customers/members can view categories and products and interact with the website in general. The frontend URL is typically accessible to all visitors of the website.
 
-2- **Admin Panel**: The Admin Panel for managing the application is available at http://127.0.0.1:8000/admin/login. This is a secure area accessible only to authorized administrators where only authenticated administrators (superadmin, admins, and vendors) can access the admin panel. It provides access to the administrative functionalities of the application such as adding new products and their features, orders management, users management, adding website sections and categories and editing them, orders shipping management, etc.
+2- **Admin Panel**: The Admin Panel for managing the application is available at http://127.0.0.1:8000/admin/login. This secure area is exclusively accessible to authorized administrators where only authenticated superadmin, admins, and vendors can access. It grants access to the administrative functionalities of the application, such as adding new products and their features, orders management, users management, creating and editing website sections and categories, orders shipping management, etc.
 
-## Application Routes:
-All the application routes are defined in the [web.php](/routes/web.php) file.
+## Application Routes and API Endpoints:
+All application routes & API endpoints are defined in both the **[web.php](routes/web.php)** file (Frontend and Admin Panel routes) and **[api.php](routes/api.php)** file (API Endpoints).
+
+## API Endpoints:
+> ***\*\* Check the API Collection on my Postman Profile: https://www.postman.com/ahmed-yahya/workspace/my-public-portfolio-postman-workspace/collection/28181483-41805882-779b-42f7-a246-e96e32633ff5***
+
+> ***\*\* Also, you can test the API Endpoints using Postman. Here is the API's Postman Collection .json file [Postman Collection file](<Postman Collection of API Endpoints/Plain PHP REST API with Token-based Authentication and Image Uploading.postman_collection.json>) you can download and import in your Postman.***
 
 ## Installation & Configuration:
 
