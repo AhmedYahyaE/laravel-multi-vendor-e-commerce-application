@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Aug 07, 2023 at 08:54 PM
+-- Generation Time: Aug 13, 2023 at 11:59 PM
 -- Server version: 8.0.28
 -- PHP Version: 8.1.4
 
@@ -1739,8 +1739,8 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `section_id`, `category_id`, `brand_id`, `vendor_id`, `admin_id`, `admin_type`, `product_name`, `product_code`, `product_color`, `product_price`, `product_discount`, `product_weight`, `product_image`, `product_video`, `group_code`, `description`, `operating_system`, `screen_size`, `occasion`, `fit`, `pattern`, `sleeve`, `ram`, `fabric`, `meta_title`, `meta_keywords`, `meta_description`, `is_featured`, `is_bestseller`, `status`, `created_at`, `updated_at`) VALUES
-(1, 2, 5, 7, 0, 1, 'superadmin', 'Redmi Note 11', 'RN11', 'Blue', 15000, 20, 500, '91540.jpg', '', NULL, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.', 'Android', 'Up to 3.9 in', NULL, NULL, NULL, NULL, '4 GB', NULL, 'Redmi Note 11', 'redmi note 11', 'Best price for Redmi Note 11', 'Yes', 'Yes', 1, NULL, '2023-05-05 19:23:15'),
-(2, 1, 6, 2, 0, 1, 'superadmin', 'Red Casual T-Shirt', 'RC001', 'Red', 1100, 0, 200, '95575.jpg', '', '100', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.', NULL, NULL, NULL, NULL, NULL, 'half sleeve', NULL, 'cotton', NULL, NULL, NULL, 'Yes', 'Yes', 1, NULL, '2023-04-07 17:50:01'),
+(1, 2, 5, 7, 0, 1, 'superadmin', 'Redmi Note 11', 'RN11', 'Blue', 15000, 20, 500, '91540.jpg', '', NULL, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.', 'Android', 'Up to 3.9 in', NULL, NULL, NULL, NULL, '4 GB', NULL, 'Redmi Note 11', 'redmi note 11', 'Best price for Redmi Note 11', 'Yes', 'Yes', 1, NULL, '2023-08-13 20:44:59'),
+(2, 1, 6, 2, 0, 1, 'superadmin', 'Red Casual T-Shirt', 'RC001', 'Red', 1100, 0, 200, '95575.jpg', '', '100', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.', NULL, NULL, NULL, NULL, NULL, 'half sleeve', NULL, 'cotton', NULL, NULL, NULL, 'Yes', 'Yes', 1, NULL, '2023-08-13 20:44:39'),
 (3, 1, 6, 1, 0, 1, 'superadmin', 'Arrow T-Shirt', 'AT01', 'Red', 1500, 0, 400, '27416.jpg', '880084420.mp4', NULL, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.', NULL, NULL, NULL, NULL, NULL, 'half sleeve', NULL, 'cotton', 'Pure Cotton T-shirt', 'cotton T-shirt, red T-shirt', 'This is a high quality cotton T-shirt', 'No', 'Yes', 1, '2022-09-02 22:50:41', '2023-05-12 10:25:32'),
 (4, 1, 6, 3, 0, 1, 'superadmin', 'Blue T-Shirt', 'BT01', 'Blue', 2500, 0, 0, '58892.png', NULL, '100', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.', NULL, NULL, NULL, NULL, NULL, 'half sleeve', NULL, 'polyester', NULL, NULL, NULL, 'No', 'Yes', 1, '2022-09-26 18:44:39', '2023-05-12 10:21:52'),
 (5, 1, 6, 2, 0, 1, 'superadmin', 'Green T-Shirt', 'GT01', 'Green', 900, 10, 100, '79204.png', NULL, '100', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.', NULL, NULL, NULL, NULL, NULL, 'half sleeve', NULL, 'polyester', NULL, NULL, NULL, 'Yes', 'No', 1, '2022-09-26 18:46:39', '2023-05-12 10:22:05'),
@@ -2063,7 +2063,12 @@ INSERT INTO `recently_viewed_products` (`id`, `product_id`, `session_id`, `creat
 (132, 2, '2716a1c72c48670213369960cbbabdd5', NULL, NULL),
 (133, 1, 'af690783e2408f23b745c76873d045b3', NULL, NULL),
 (134, 9, 'af690783e2408f23b745c76873d045b3', NULL, NULL),
-(135, 10, 'af690783e2408f23b745c76873d045b3', NULL, NULL);
+(135, 10, 'af690783e2408f23b745c76873d045b3', NULL, NULL),
+(136, 4, 'ba8e260521c9e9e773e2080e131c7ea0', NULL, NULL),
+(137, 3, 'ba8e260521c9e9e773e2080e131c7ea0', NULL, NULL),
+(138, 2, 'ba8e260521c9e9e773e2080e131c7ea0', NULL, NULL),
+(139, 1, 'ba8e260521c9e9e773e2080e131c7ea0', NULL, NULL),
+(140, 8, 'ba8e260521c9e9e773e2080e131c7ea0', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -2820,142 +2825,10 @@ ALTER TABLE `newsletter_subscribers`
   MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT for table `oauth_clients`
---
-ALTER TABLE `oauth_clients`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
--- AUTO_INCREMENT for table `oauth_personal_access_clients`
---
-ALTER TABLE `oauth_personal_access_clients`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- AUTO_INCREMENT for table `orders`
---
-ALTER TABLE `orders`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
-
---
--- AUTO_INCREMENT for table `orders_logs`
---
-ALTER TABLE `orders_logs`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
-
---
--- AUTO_INCREMENT for table `orders_products`
---
-ALTER TABLE `orders_products`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=67;
-
---
--- AUTO_INCREMENT for table `order_item_statuses`
---
-ALTER TABLE `order_item_statuses`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
---
--- AUTO_INCREMENT for table `order_statuses`
---
-ALTER TABLE `order_statuses`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
-
---
--- AUTO_INCREMENT for table `payments`
---
-ALTER TABLE `payments`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
--- AUTO_INCREMENT for table `personal_access_tokens`
---
-ALTER TABLE `personal_access_tokens`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `prepaid_pincodes`
---
-ALTER TABLE `prepaid_pincodes`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=302;
-
---
--- AUTO_INCREMENT for table `products`
---
-ALTER TABLE `products`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
-
---
--- AUTO_INCREMENT for table `products_attributes`
---
-ALTER TABLE `products_attributes`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
-
---
--- AUTO_INCREMENT for table `products_filters`
---
-ALTER TABLE `products_filters`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
-
---
--- AUTO_INCREMENT for table `products_filters_values`
---
-ALTER TABLE `products_filters_values`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
-
---
--- AUTO_INCREMENT for table `products_images`
---
-ALTER TABLE `products_images`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
---
--- AUTO_INCREMENT for table `ratings`
---
-ALTER TABLE `ratings`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
-
---
 -- AUTO_INCREMENT for table `recently_viewed_products`
 --
 ALTER TABLE `recently_viewed_products`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=136;
-
---
--- AUTO_INCREMENT for table `sections`
---
-ALTER TABLE `sections`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
-
---
--- AUTO_INCREMENT for table `shipping_charges`
---
-ALTER TABLE `shipping_charges`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=247;
-
---
--- AUTO_INCREMENT for table `users`
---
-ALTER TABLE `users`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
-
---
--- AUTO_INCREMENT for table `vendors`
---
-ALTER TABLE `vendors`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
-
---
--- AUTO_INCREMENT for table `vendors_bank_details`
---
-ALTER TABLE `vendors_bank_details`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
--- AUTO_INCREMENT for table `vendors_business_details`
---
-ALTER TABLE `vendors_business_details`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=141;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
