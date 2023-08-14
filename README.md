@@ -58,27 +58,29 @@ Frontend technologies used: jQuery, AJAX, and many JavaScript & jQuery libraries
 
 27- Image & Video Upload Functionality.
 
-28- Dynamic Banner Sliders Module.
+28- Dynamically creating and editing Sections and Categories.
 
-29- Dynamic Breadcrumb Navigation.
+29- Dynamic Banner Sliders Module.
 
-30- Dynamic SEO/HTML Meta tags.
+30- Dynamic Breadcrumb Navigation.
 
-31- Newsletter Subscription (email).
+31- Dynamic SEO/HTML Meta tags.
 
-32- Regular Expression.
+32- Newsletter Subscription (email).
 
-33- Database Seeders.
+33- Regular Expression.
 
-34- Tens of jQuery AJAX requests (update admin password via AJAX, AJAX form validation, ...).
+34- Database Seeders.
 
-35- Custom AJAX pop-up Mini-Cart.
+35- Tens of jQuery AJAX requests (update admin password via AJAX, AJAX form validation, ...).
 
-36- Showing a Preloading Screen upon form submission.
+36- Custom AJAX pop-up Mini-Cart.
 
-37- TinyMCE WYSIWYG Editor Integrated.
+37- Showing a Preloading Screen upon form submission.
 
-38- Using two Favicons for both the Frontend and Admin Panel Sections of the application.
+38- TinyMCE WYSIWYG Editor Integrated.
+
+39- Using two Favicons for both the Frontend and Admin Panel Sections of the application.
 
 ## Screenshots:
 ### Frontend Section Homepage:
