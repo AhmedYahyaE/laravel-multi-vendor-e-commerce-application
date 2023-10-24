@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('orders_products', function (Blueprint $table) {
-            $table->id()->autoIncrement();
+            $table->id();
 
             $table->integer('order_id');   // Foreign Key to the `orders`   table
             $table->integer('user_id');    // Foreign Key to the `users`    table
