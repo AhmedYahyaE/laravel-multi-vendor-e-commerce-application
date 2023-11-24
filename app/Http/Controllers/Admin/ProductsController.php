@@ -187,7 +187,8 @@ class ProductsController extends Controller
             $product->group_code  = $data['group_code']; // Managing Product Colors (in front/products/detail.blade.php)
 
             
-            // Saving the seleted filter for a product
+            // Saving the selected filter for a product
+            $features = [];
             $productFilters = \App\Models\ProductsFilter::productFilters(); // Get ALL the (enabled/active) Filters
             foreach ($productFilters as $filter) { // get ALL the filters, then check if every filter's `filter_column` is submitted by the category_filters.blade.php page
                 // dd($filter);
@@ -197,10 +198,11 @@ class ProductsController extends Controller
                 if ($filterAvailable == 'Yes') {
                     if (isset($filter['filter_column']) && $data[$filter['filter_column']]) { // check if every filter's `filter_column` is submitted by the category_filters.blade.php page
                         // Save the product filter in the `products` table
-                        $product->{$filter['filter_column']} = $data[$filter['filter_column']]; // i.e. $product->filter_column = filter_value    // $data[$filter['filter_column']]    is like    $data['screen_size']    which is equal to the filter value e.g.    $data['screen_size'] = 5 to 5.4 in    // $data comes from the <select> box in category_filters.blade.php
+                        $features[$filter['filter_column']] = $data[$filter['filter_column']]; // i.e. $product->filter_column = filter_value    // $data[$filter['filter_column']]    is like    $data['screen_size']    which is equal to the filter value e.g.    $data['screen_size'] = 5 to 5.4 in    // $data comes from the <select> box in category_filters.blade.php
                     }
                 }
             }
+            $product->features         = json_encode($features);
 
 
             if ($id == '') { // if a NEW product is added by an 'admin' or 'vendor', assign those new values. Otherwise, when Edit/Update an already existing product, leave everything as is
@@ -278,6 +280,8 @@ class ProductsController extends Controller
         $brands = \App\Models\Brand::where('status', 1)->get()->toArray();
         // dd($brands);
 
+        $product->features = json_decode($product->features, true);
+        // dd($product);
 
         // return view('admin.products.add_edit_product')->with(compact('title', 'product'));
         return view('admin.products.add_edit_product')->with(compact('title', 'product', 'categories', 'brands'));

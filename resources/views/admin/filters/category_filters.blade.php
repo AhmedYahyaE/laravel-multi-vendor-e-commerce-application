@@ -41,7 +41,7 @@
                         @php
                             // echo '<pre>', var_dump($value), '</pre>'; exit;
                         @endphp
-                        <option value="{{ $value['filter_value'] }}" @if (!empty($product[$filter['filter_column']]) && $product[$filter['filter_column']] == $value['filter_value']) selected @endif>{{ ucwords($value['filter_value']) }}</option> {{-- $value['filter_value'] is like '4GB' --}} {{-- $product[$filter['filter_column']]    is like    $product['screen_size']    which in turn, may be equal to    '5 to 5.4 in' --}}
+                        <option value="{{ $value['filter_value'] }}" @if (!empty($product['features'][$filter['filter_column']]) && $product['features'][$filter['filter_column']] == $value['filter_value']) selected @endif>{{ ucwords($value['filter_value']) }}</option> {{-- $value['filter_value'] is like '4GB' --}} {{-- $product['features'][$filter['filter_column']]    is like    $product['features']['screen_size']    which in turn, may be equal to    '5 to 5.4 in' --}}
                     @endforeach
                 </select>
             </div>

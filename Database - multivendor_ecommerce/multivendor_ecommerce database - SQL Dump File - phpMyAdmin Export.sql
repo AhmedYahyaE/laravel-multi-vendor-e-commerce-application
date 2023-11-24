@@ -507,14 +507,15 @@ INSERT INTO `cod_pincodes` (`id`, `pincode`, `created_at`, `updated_at`) VALUES
 -- Table structure for table `countries`
 --
 
-CREATE TABLE `countries` (
-  `id` int NOT NULL,
-  `country_code` varchar(2) NOT NULL DEFAULT '',
-  `country_name` varchar(100) NOT NULL DEFAULT '',
-  `status` tinyint NOT NULL DEFAULT '1',
-  `created_at` datetime NOT NULL,
-  `updated_at` timestamp NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb3;
+CREATE TABLE `countries` ( 
+  `id` INT NOT NULL AUTO_INCREMENT, 
+  `country_code` VARCHAR(2) NOT NULL DEFAULT '', 
+  `country_name` VARCHAR(100) NOT NULL DEFAULT '', 
+  `status` TINYINT NOT NULL, 
+  `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP, 
+  `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP, 
+  PRIMARY KEY (`id`) 
+);
 
 --
 -- Dumping data for table `countries`
