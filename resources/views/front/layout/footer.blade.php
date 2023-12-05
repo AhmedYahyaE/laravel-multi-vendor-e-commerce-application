@@ -80,19 +80,19 @@
                         <ul>
                             <li>
                                 <i class="fas fa-location-arrow u-s-m-r-9"></i>
-                                <span>Multi-vendor E-commerce Application</span>
+                                <span>Kapiton</span>
                             </li>
                             <li>
-                                <a href="tel:+201255845857">
+                                <a href="tel:+639*********">
                                 <i class="fas fa-phone u-s-m-r-9"></i>
-                                <span>+01255845857</span>
+                                <span>+639*********</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="mailto:info@multi-vendore-commerce.com">
+                                <a href="mailto:info@kapiton.com">
                                 <i class="fas fa-envelope u-s-m-r-9"></i>
                                 <span>
-                                info@multi-vendore-commerce.com</span>
+                                info@kapiton.com</span>
                                 </a>
                             </li>
                         </ul>
@@ -142,8 +142,8 @@
                     </li>
                 </ul>
             </div>
-            <p class="copyright-text">Copyright &copy; 2022
-                <a target="_blank" rel="nofollow" href="#">Multi-vendor E-commerce Application</a> | All Right Reserved
+            <p class="copyright-text">Copyright &copy; 2023
+                <a target="_blank" rel="nofollow" href="#">Kapiton</a> | All Right Reserved
             </p>
         </div>
     </div>

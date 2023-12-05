@@ -22,7 +22,7 @@
             <tr><td>Password: {{ $password }}</td></tr> {{-- $password is passed in from forgotPassword() method in UserController.php --}}
             <tr><td>&nbsp;</td></tr>
             <tr><td>Thanks & Regards,</td></tr>
-            <tr><td>Multi-vendor E-commerce Application</td></tr>
+            <tr><td>Kapiton</td></tr>
         </table>
 
 

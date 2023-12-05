@@ -15,7 +15,7 @@
         <table>
             <tr><td>Dear {{ $name }},</td></tr>
             <tr><td>&nbsp;</td></tr>
-            <tr><td>Welcome to Multi-vendor E-commerce Application. Your account has been successfully created with below information:</td></tr>
+            <tr><td>Welcome to Kapiton. Your account has been successfully created with below information:</td></tr>
             <tr><td>&nbsp;</td></tr>
             <tr><td>Name: {{ $name }}</td></tr>
             <tr><td>&nbsp;</td></tr>
@@ -27,7 +27,7 @@
             <tr><td>&nbsp;</td></tr>
             <tr><td>&nbsp;</td></tr>
             <tr><td>Thanks & Regards,</td></tr>
-            <tr><td>Multi-vendor E-commerce Application</td></tr>
+            <tr><td>Kapiton</td></tr>
         </table>
 
 
