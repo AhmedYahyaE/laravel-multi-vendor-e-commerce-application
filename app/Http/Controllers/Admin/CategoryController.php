@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Intervention\Image\Facades\Image;
 
+use App\Models\Category;
+use App\Models\Section;
+
 
 class CategoryController extends Controller
 {
@@ -14,7 +17,7 @@ class CategoryController extends Controller
         // Correcting issues in the Skydash Admin Panel Sidebar using Session
         Session::put('page', 'categories');
 
-        $categories = \App\Models\Category::with(['section', 'parentCategory'])->get()->toArray();
+        $categories = Category::with(['section', 'parentCategory'])->get()->toArray();
         // dd($categories);
 
 
@@ -33,7 +36,7 @@ class CategoryController extends Controller
             }
 
 
-            \App\Models\Category::where('id', $data['category_id'])->update(['status' => $status]); // $data['category_id'] comes from the 'data' object inside the $.ajax() method in admin/js/custom.js
+            Category::where('id', $data['category_id'])->update(['status' => $status]); // $data['category_id'] comes from the 'data' object inside the $.ajax() method in admin/js/custom.js
             // echo '<pre>', var_dump($data), '</pre>';
 
             return response()->json([ // JSON Responses: https://laravel.com/docs/9.x/responses#json-responses
@@ -50,7 +53,7 @@ class CategoryController extends Controller
 
         if ($id == '') { // if there's no $id is passed in the route/URL parameters, this means Add a new Category
             $title = 'Add Category';
-            $category = new \App\Models\Category();
+            $category = new Category();
             // dd($category);
 
             $getCategories = array(); // An array that contains all the parent categories that are under this section    
@@ -58,10 +61,10 @@ class CategoryController extends Controller
             $message = 'Category added successfully!';
         } else { // if the $id is passed in the route/URL parameters, this means Edit the Category
             $title = 'Edit Category';
-            $category = \App\Models\Category::find($id);
+            $category = Category::find($id);
             // dd($category->parentCategory);
 
-            $getCategories = \App\Models\Category::with('subCategories')->where([ // $getCategories are all the parent categories, and their child categories    
+            $getCategories = Category::with('subCategories')->where([ // $getCategories are all the parent categories, and their child categories    
                 // $getCategories is the parent categories (with no parents i.e. parent_id is 0 zero) but having the subCategories (the categories that they're parent to) at the same time
                 'parent_id'  => 0, // parent_id is 0 zero BECAUSE IT'S A PARENT CATEGORY
                 'section_id' => $category['section_id']
@@ -142,21 +145,21 @@ class CategoryController extends Controller
 
 
         // Get all sections
-        $getSections = \App\Models\Section::get()->toArray();
+        $getSections = Section::get()->toArray();
         // dd($getSections);
 
 
         return view('admin.categories.add_edit_category')->with(compact('title', 'category', 'getSections', 'getCategories'));
     }
 
-    public function appendCategoryLevel(Request $request) { // (AJAX) Show Categories <select> <option> depending on the choosed Section (show the relevant categories of the choosed section) using AJAX in admin/js/custom.js in append_categories_level.blade.php page    
-        // Note: We created the <div> in a separate file in order for the appendCategoryLevel() method inside the CategoryController to be able to return the whole file as a response to the AJAX call in admin/js/custom.js to show the proper/relevant categories <select> box <option> depending on the selected (choosed) Section
+    public function appendCategoryLevel(Request $request) { // (AJAX) Show Categories <select> <option> depending on the chosen Section (show the relevant categories of the chosen section) using AJAX in admin/js/custom.js in append_categories_level.blade.php page    
+        // Note: We created the <div> in a separate file in order for the appendCategoryLevel() method inside the CategoryController to be able to return the whole file as a response to the AJAX call in admin/js/custom.js to show the proper/relevant categories <select> box <option> depending on the selected (chosen) Section
         if ($request->ajax()) { // if the request is coming via an AJAX call
             // if ($request->isMethod('get')) {
                 $data = $request->all();
                 // dd($data);
                 
-                $getCategories = \App\Models\Category::with('subCategories')->where([ // 'subCategories' is the relationship method inside the Category.php model    // $getCategories are all the parent categories, and their child categories    
+                $getCategories = Category::with('subCategories')->where([ // 'subCategories' is the relationship method inside the Category.php model    // $getCategories are all the parent categories, and their child categories    
                     'parent_id'  => 0,
                     'section_id' => $data['section_id'] // $data['section_id'] comes from the 'data' object inside the $.ajax() method in admin/js/custom.js
                 ])->get();
@@ -167,7 +170,7 @@ class CategoryController extends Controller
     }
 
     public function deleteCategory($id) { 
-        \App\Models\Category::where('id', $id)->delete();
+        Category::where('id', $id)->delete();
         
         $message = 'Category has been deleted successfully!';
         
@@ -176,7 +179,7 @@ class CategoryController extends Controller
 
     public function deleteCategoryImage($id) { // AJAX call from admin/js/custom.js    // Delete the category image from BOTH SERVER (FILESYSTEM) & DATABASE    // $id is passed as a Route Parameter    
         // Category image record in the database
-        $categoryImage = \App\Models\Category::select('category_image')->where('id', $id)->first();
+        $categoryImage = Category::select('category_image')->where('id', $id)->first();
         // dd($categoryImage);
         
         // Category image path on the server (filesystem)
@@ -188,7 +191,7 @@ class CategoryController extends Controller
         }
 
         // Delete the category image name from the `categories` database table (Note: We won't use delete() method because we're not deleting a complete record (entry) (we're just deleting a one column `category_image` value), we will just use update() method to update the `category_image` name to an empty string value '')
-        \App\Models\Category::where('id', $id)->update(['category_image' => '']);
+        Category::where('id', $id)->update(['category_image' => '']);
 
         $message = 'Category Image has been deleted successfully!';
 

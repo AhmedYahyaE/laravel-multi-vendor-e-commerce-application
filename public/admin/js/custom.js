@@ -454,7 +454,7 @@ $(document).ready(function() {
 
 
 
-    // Show Categories <select> <option> depending on the selected (choosed) Section (show the relevant categories of the choosed section) in append_categories_level.blade.php page        // https://www.w3schools.com/jquery/event_change.asp
+    // Show Categories <select> <option> depending on the selected (chosen) Section (show the relevant categories of the chosen section) in append_categories_level.blade.php page        // https://www.w3schools.com/jquery/event_change.asp
     $('#section_id').change(function() { // When the sections <select> <option> HTML element in add_edit_category.blade.php is selected or changed
         // console.log(this);
         var section_id = $(this).val();

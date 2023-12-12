@@ -7,13 +7,15 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Intervention\Image\Facades\Image;
 
+use App\Models\Banner;
+
 class BannersController extends Controller
 {
     public function banners() {
         // Correcting issues in the Skydash Admin Panel Sidebar using Session
         Session::put('page', 'banners');
 
-        $banners = \App\Models\Banner::get()->toArray();
+        $banners = Banner::get()->toArray();
         // dd($banners);
 
         
@@ -32,7 +34,7 @@ class BannersController extends Controller
             }
 
 
-            \App\Models\Banner::where('id', $data['banner_id'])->update(['status' => $status]); // $data['banner_id'] comes from the 'data' object inside the $.ajax() method in admin/js/custom.js
+            Banner::where('id', $data['banner_id'])->update(['status' => $status]); // $data['banner_id'] comes from the 'data' object inside the $.ajax() method in admin/js/custom.js
             // echo '<pre>', var_dump($data), '</pre>';
 
             return response()->json([ // JSON Responses: https://laravel.com/docs/9.x/responses#json-responses
@@ -44,7 +46,7 @@ class BannersController extends Controller
 
     public function deleteBanner($id) { // Delete banner using AJAX from BOTH SERVER (FILESYSTEM) and database table    
         // Get banner image record in `banners` database table
-        $bannerImage = \App\Models\Banner::where('id', $id)->first();
+        $bannerImage = Banner::where('id', $id)->first();
 
         // Get banner image path on server (filesystem)
         $banner_image_path = 'front/images/banner_images/';
@@ -55,7 +57,7 @@ class BannersController extends Controller
         }
 
         // Delete banner record from `banners` database table
-        \App\Models\Banner::where('id', $id)->delete();
+        Banner::where('id', $id)->delete();
         
         $message = 'Banner deleted successfully!';
         
@@ -69,11 +71,11 @@ class BannersController extends Controller
 
         // FIRSTLY, IF THE REQUEST METHOS IS 'GET', THEN RENDER THE add_edit_banner.blade.php PAGE:
         if ($id == '') { // if there's no $id passed in the route/URL parameters, this means 'Add a new Banner'
-            $banner = new \App\Models\Banner;
+            $banner = new Banner;
             $title = 'Add Banner Image';
             $message = 'Banner added successfully!';
         } else { // if the $id is passed in the route/URL parameter, this means Edit (Update) the Banner
-            $banner = \App\Models\Banner::find($id);
+            $banner = Banner::find($id);
             // dd($banner);
             $title = 'Edit Banner Image';
             $message = 'Banner updated successfully!';

@@ -7,6 +7,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Auth;
 
+use App\Models\Coupon;
+
+
+
 class CouponsController extends Controller
 {
     // Render admin/coupons/coupons.blade.php page in the Admin Panel    
@@ -26,10 +30,10 @@ class CouponsController extends Controller
                 return redirect('admin/update-vendor-details/personal')->with('error_message', 'Your Vendor Account is not approved yet. Please make sure to fill your valid personal, business and bank details'); // the error_message will appear to the vendor in the route: 'admin/update-vendor-details/personal' which is the update_vendor_details.blade.php page
             }
 
-            $coupons = \App\Models\Coupon::where('vendor_id', $vendor_id)->get()->toArray(); // Get ONLY the coupons that BELONG TO the vendor
+            $coupons = Coupon::where('vendor_id', $vendor_id)->get()->toArray(); // Get ONLY the coupons that BELONG TO the vendor
 
         } else { // if the $adminType is 'admin'
-            $coupons = \App\Models\Coupon::get()->toArray();
+            $coupons = Coupon::get()->toArray();
             // dd($coupons);
         }
 
@@ -50,7 +54,7 @@ class CouponsController extends Controller
             }
 
 
-            \App\Models\Coupon::where('id', $data['coupon_id'])->update(['status' => $status]); // $data['coupon_id'] comes from the 'data' object inside the $.ajax() method
+            Coupon::where('id', $data['coupon_id'])->update(['status' => $status]); // $data['coupon_id'] comes from the 'data' object inside the $.ajax() method
             // echo '<pre>', var_dump($data), '</pre>';
 
             return response()->json([ // JSON Responses: https://laravel.com/docs/9.x/responses#json-responses
@@ -62,7 +66,7 @@ class CouponsController extends Controller
 
     // Delete a Coupon via AJAX in admin/coupons/coupons.blade.php, check admin/js/custom.js    
     public function deleteCoupon($id) {
-        \App\Models\Coupon::where('id', $id)->delete();
+        Coupon::where('id', $id)->delete();
         
         $message = 'Coupon has been deleted successfully!';
         
@@ -78,7 +82,7 @@ class CouponsController extends Controller
         if ($id == '') { // if there's no $id is passed in the route/URL parameters (Optional Parameters {id?}), this means 'Add a new Coupon'
             // Add a new Coupon
             $title = 'Add Coupon';
-            $coupon = new \App\Models\Coupon;
+            $coupon = new Coupon;
             // dd($coupon);
 
             $selCats   = array();
@@ -90,7 +94,7 @@ class CouponsController extends Controller
         } else { // if the $id is passed in the route/URL parameters (Optional Parameters {id?}), this means 'Edit/Update the Coupon'
             // Edit/Update the Coupon
             $title = 'Edit Coupon';
-            $coupon = \App\Models\Coupon::find($id);
+            $coupon = Coupon::find($id);
             // dd($coupon);
 
             $selCats   = explode(',', $coupon['categories']); // selected categories

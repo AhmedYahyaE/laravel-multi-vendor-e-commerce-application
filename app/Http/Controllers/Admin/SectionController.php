@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
+use App\Models\Section;
+
 class SectionController extends Controller
 {
     public function sections() {
@@ -13,8 +15,8 @@ class SectionController extends Controller
         Session::put('page', 'sections');
 
 
-        // $sections = \App\Models\Section::get(); // Eloquent Collection
-        $sections = \App\Models\Section::get()->toArray(); // Plain PHP array
+        // $sections = Section::get(); // Eloquent Collection
+        $sections = Section::get()->toArray(); // Plain PHP array
         // dd($sections);
 
         return view('admin.sections.sections')->with(compact('sections'));
@@ -32,7 +34,7 @@ class SectionController extends Controller
             }
 
 
-            \App\Models\Section::where('id', $data['section_id'])->update(['status' => $status]); // $data['section_id'] comes from the 'data' object inside the $.ajax() method
+            Section::where('id', $data['section_id'])->update(['status' => $status]); // $data['section_id'] comes from the 'data' object inside the $.ajax() method
             // echo '<pre>', var_dump($data), '</pre>';
 
             return response()->json([ // JSON Responses: https://laravel.com/docs/9.x/responses#json-responses
@@ -43,7 +45,7 @@ class SectionController extends Controller
     }
 
     public function deleteSection($id) { 
-        \App\Models\Section::where('id', $id)->delete();
+        Section::where('id', $id)->delete();
         
         $message = 'Section has been deleted successfully!';
         
@@ -57,12 +59,12 @@ class SectionController extends Controller
 
         if ($id == '') { // if there's no $id is passed in the route/URL parameters, this means Add a new section
             $title = 'Add Section';
-            $section = new \App\Models\Section();
+            $section = new Section();
             // dd($section);
             $message = 'Section added successfully!';
         } else { // if the $id is passed in the route/URL parameters, this means Edit the Section
             $title = 'Edit Section';
-            $section = \App\Models\Section::find($id);
+            $section = Section::find($id);
             // dd($section);
             $message = 'Section updated successfully!';
         }

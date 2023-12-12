@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
+use App\Models\ProductsFilter;
+use App\Models\ProductsFiltersValue;
+
 class FilterController extends Controller
 {
     // Dynamic Filters in the Admin Panel (of products)    
@@ -17,7 +20,7 @@ class FilterController extends Controller
         Session::put('page', 'filters');
 
 
-        $filters = \App\Models\ProductsFilter::get()->toArray();
+        $filters = ProductsFilter::get()->toArray();
         // dd($filters);
 
 
@@ -36,7 +39,7 @@ class FilterController extends Controller
             }
 
 
-            \App\Models\ProductsFilter::where('id', $data['filter_id'])->update(['status' => $status]); // $data['filter_id'] comes from the 'data' object inside the $.ajax() method
+            ProductsFilter::where('id', $data['filter_id'])->update(['status' => $status]); // $data['filter_id'] comes from the 'data' object inside the $.ajax() method
             // echo '<pre>', var_dump($data), '</pre>';
 
             return response()->json([ // JSON Responses: https://laravel.com/docs/9.x/responses#json-responses
@@ -58,7 +61,7 @@ class FilterController extends Controller
             }
 
 
-            \App\Models\ProductsFiltersValue::where('id', $data['filter_id'])->update(['status' => $status]); // $data['filter_id'] comes from the 'data' object inside the $.ajax() method
+            ProductsFiltersValue::where('id', $data['filter_id'])->update(['status' => $status]); // $data['filter_id'] comes from the 'data' object inside the $.ajax() method
             // echo '<pre>', var_dump($data), '</pre>';
 
             return response()->json([ // JSON Responses: https://laravel.com/docs/9.x/responses#json-responses 
@@ -73,7 +76,7 @@ class FilterController extends Controller
         Session::put('page', 'filters');
 
 
-        $filters_values = \App\Models\ProductsFiltersValue::get()->toArray();
+        $filters_values = ProductsFiltersValue::get()->toArray();
         // dd($filters);
 
 
@@ -88,11 +91,11 @@ class FilterController extends Controller
         // FIRSTLY, IF THE REQUEST METHOS IS 'GET', THEN RENDER THE add_edit_filter.blade.php PAGE:
         if ($id == '') { // if there's no $id passed in the route/URL parameters, this means 'Add a new Filter'
             $title   = 'Add Filter Columns';
-            $filter  = new \App\Models\ProductsFilter;
+            $filter  = new ProductsFilter;
             $message = 'Filter added successfully!';
         } else { // if the $id is passed in the route/URL parameter, this means Edit (Update) the Filter
             $title   = 'Edit Filter Columns';
-            $filter  = \App\Models\ProductsFilter::find($id);
+            $filter  = ProductsFilter::find($id);
             $message = 'Filter updated successfully!';
         }
 
@@ -140,11 +143,11 @@ class FilterController extends Controller
         // FIRSTLY, IF THE REQUEST METHOS IS 'GET', THEN RENDER THE add_edit_filter_value.blade.php PAGE:
         if ($id == '') { // if there's no $id passed in the route/URL parameters, this means 'Add a new Filter'
             $title   = 'Add Filter Value';
-            $filter  = new \App\Models\ProductsFiltersValue;
+            $filter  = new ProductsFiltersValue;
             $message = 'Filter Value added successfully!';
         } else { // if the $id is passed in the route/URL parameter, this means Edit (Update) the Filter
             $title   = 'Edit Filter Value';
-            $filter  = \App\Models\ProductsFiltersValue::find($id);
+            $filter  = ProductsFiltersValue::find($id);
             $message = 'Filter Value updated successfully!';
         }
 
@@ -168,7 +171,7 @@ class FilterController extends Controller
 
 
         // Get ALL the enabled (active) filters (from `products_filters` table)
-        $filters = \App\Models\ProductsFilter::where('status', 1)->get()->toArray();
+        $filters = ProductsFilter::where('status', 1)->get()->toArray();
         // dd($filters);
 
 

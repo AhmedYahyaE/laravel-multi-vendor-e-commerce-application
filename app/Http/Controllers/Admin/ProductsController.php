@@ -8,6 +8,11 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Auth;
 use Intervention\Image\Facades\Image;
 
+use App\Models\Product;
+use App\Models\ProductsImage;
+use App\Models\ProductsFilter;
+use App\Models\ProductsAttribute;
+
 
 class ProductsController extends Controller
 {
@@ -27,7 +32,7 @@ class ProductsController extends Controller
         }
 
         // Get ALL products ($products)
-        $products = \App\Models\Product::with([ // Constraining Eager Loads: https://laravel.com/docs/9.x/eloquent-relationships#constraining-eager-loads    // Subquery Where Clauses: https://laravel.com/docs/9.x/queries#subquery-where-clauses    // Advanced Subqueries: https://laravel.com/docs/9.x/eloquent#advanced-subqueries
+        $products = Product::with([ // Constraining Eager Loads: https://laravel.com/docs/9.x/eloquent-relationships#constraining-eager-loads    // Subquery Where Clauses: https://laravel.com/docs/9.x/queries#subquery-where-clauses    // Advanced Subqueries: https://laravel.com/docs/9.x/eloquent#advanced-subqueries
             'section' => function($query) { // the 'section' relationship method in Product.php Model
                 $query->select('id', 'name'); // Important Note: It's a MUST to select 'id' even if you don't need it, because the relationship Foreign Key `product_id` depends on it, or else the `product` relationship would give you 'null'!
             },
@@ -60,7 +65,7 @@ class ProductsController extends Controller
             }
 
 
-            \App\Models\Product::where('id', $data['product_id'])->update(['status' => $status]); // $data['product_id'] comes from the 'data' object inside the $.ajax() method
+            Product::where('id', $data['product_id'])->update(['status' => $status]); // $data['product_id'] comes from the 'data' object inside the $.ajax() method
             // echo '<pre>', var_dump($data), '</pre>';
 
             return response()->json([ // JSON Responses: https://laravel.com/docs/9.x/responses#json-responses
@@ -71,7 +76,7 @@ class ProductsController extends Controller
     }
 
     public function deleteProduct($id) {
-        \App\Models\Product::where('id', $id)->delete();
+        Product::where('id', $id)->delete();
         
         $message = 'Product has been deleted successfully!';
         
@@ -90,7 +95,7 @@ class ProductsController extends Controller
             $message = 'Product added successfully!';
         } else { // if the $id is passed in the route/URL parameters, this means Edit the Product
             $title = 'Edit Product';
-            $product = \App\Models\Product::find($id);
+            $product = Product::find($id);
             // dd($product);
             $message = 'Product updated successfully!';
         }
@@ -188,12 +193,12 @@ class ProductsController extends Controller
 
             
             // Saving the seleted filter for a product
-            $productFilters = \App\Models\ProductsFilter::productFilters(); // Get ALL the (enabled/active) Filters
+            $productFilters = ProductsFilter::productFilters(); // Get ALL the (enabled/active) Filters
             foreach ($productFilters as $filter) { // get ALL the filters, then check if every filter's `filter_column` is submitted by the category_filters.blade.php page
                 // dd($filter);
 
                 // Firstly, for every filter in the `products_filters` table, Get the filter's (from the foreach loop) `cat_ids` using filterAvailable() method, then check if the current category_id exists in the filter cat_ids, then show the filter, if not, then don't show the filter
-                $filterAvailable = \App\Models\ProductsFilter::filterAvailable($filter['id'], $data['category_id']);
+                $filterAvailable = ProductsFilter::filterAvailable($filter['id'], $data['category_id']);
                 if ($filterAvailable == 'Yes') {
                     if (isset($filter['filter_column']) && $data[$filter['filter_column']]) { // check if every filter's `filter_column` is submitted by the category_filters.blade.php page
                         // Save the product filter in the `products` table
@@ -285,7 +290,7 @@ class ProductsController extends Controller
 
     public function deleteProductImage($id) { // AJAX call from admin/js/custom.js    // Delete the product image from BOTH SERVER (FILESYSTEM) & DATABASE    // $id is passed as a Route Parameter    
         // Get the product image record stored in the database
-        $productImage = \App\Models\Product::select('product_image')->where('id', $id)->first();
+        $productImage = Product::select('product_image')->where('id', $id)->first();
         // dd($productImage);
         
         // Get the product image three paths on the server (filesystem) ('small', 'medium' and 'large' folders)
@@ -311,7 +316,7 @@ class ProductsController extends Controller
 
 
         // Delete the product image name (record) from the `products` database table (Note: We won't use delete() method because we're not deleting a complete record (entry) (we're just deleting a one column `product_image` value), we will just use update() method to update the `product_image` name to an empty string value '')
-        \App\Models\Product::where('id', $id)->update(['product_image' => '']);
+        Product::where('id', $id)->update(['product_image' => '']);
 
         $message = 'Product Image has been deleted successfully!';
 
@@ -321,7 +326,7 @@ class ProductsController extends Controller
 
     public function deleteProductVideo($id) { // AJAX call from admin/js/custom.js    // Delete the product video from BOTH SERVER (FILESYSTEM) & DATABASE    // $id is passed as a Route Parameter    
         // Get the product video record stored in the database
-        $productVideo = \App\Models\Product::select('product_video')->where('id', $id)->first();
+        $productVideo = Product::select('product_video')->where('id', $id)->first();
         // dd($productVideo);
         
         // Get the product video path on the server (filesystem)
@@ -333,7 +338,7 @@ class ProductsController extends Controller
         }
 
         // Delete the product video name (record) from the `products` database table (Note: We won't use delete() method because we're not deleting a complete record (entry) (we're just deleting a one column `product_video` value), we will just use update() method to update the `product_video` name to an empty string value '')
-        \App\Models\Product::where('id', $id)->update(['product_video' => '']);
+        Product::where('id', $id)->update(['product_video' => '']);
 
         $message = 'Product Video has been deleted successfully!';
 
@@ -343,7 +348,7 @@ class ProductsController extends Controller
     public function addAttributes(Request $request, $id) { // Add/Edit Attributes function    
         Session::put('page', 'products');
 
-        $product = \App\Models\Product::select('id', 'product_name', 'product_code', 'product_color', 'product_price', 'product_image')->with('attributes')->find($id); // with('attributes') is the relationship method name in the Product.php model
+        $product = Product::select('id', 'product_name', 'product_code', 'product_color', 'product_price', 'product_image')->with('attributes')->find($id); // with('attributes') is the relationship method name in the Product.php model
 
         if ($request->isMethod('post')) { // When the <form> is submitted
             $data = $request->all();
@@ -356,19 +361,19 @@ class ProductsController extends Controller
                 if (!empty($value)) {
                     // Validation:
                     // SKU duplicate check (Prevent duplicate SKU) because SKU is UNIQUE for every product
-                    $skuCount = \App\Models\ProductsAttribute::where('sku', $value)->count();
+                    $skuCount = ProductsAttribute::where('sku', $value)->count();
                     if ($skuCount > 0) { // if there's an SKU for the product ALREADY EXISTING
                         return redirect()->back()->with('error_message', 'SKU already exists! Please add another SKU!');
                     }
 
                     // Size duplicate check (Prevent duplicate Size) because Size is UNIQUE for every product
-                    $sizeCount = \App\Models\ProductsAttribute::where(['product_id' => $id, 'size' => $data['size'][$key]])->count();
+                    $sizeCount = ProductsAttribute::where(['product_id' => $id, 'size' => $data['size'][$key]])->count();
                     if ($sizeCount > 0) { // if there's an SKU for the product ALREADY EXISTING
                         return redirect()->back()->with('error_message', 'Size already exists! Please add another Size!');
                     }
 
 
-                    $attribute = new \App\Models\ProductsAttribute;
+                    $attribute = new ProductsAttribute;
 
                     $attribute->product_id = $id; // $id is passed in up there to the addAttributes() method
                     $attribute->sku        = $value;
@@ -399,7 +404,7 @@ class ProductsController extends Controller
             }
 
 
-            \App\Models\ProductsAttribute::where('id', $data['attribute_id'])->update(['status' => $status]); // $data['attribute_id'] comes from the 'data' object inside the $.ajax() method
+            ProductsAttribute::where('id', $data['attribute_id'])->update(['status' => $status]); // $data['attribute_id'] comes from the 'data' object inside the $.ajax() method
 
             return response()->json([ // JSON Responses: https://laravel.com/docs/9.x/responses#json-responses
                 'status'       => $status,
@@ -417,7 +422,7 @@ class ProductsController extends Controller
 
             foreach ($data['attributeId'] as $key => $attribute) {
                 if (!empty($attribute)) {
-                    \App\Models\ProductsAttribute::where([
+                    ProductsAttribute::where([
                         'id' => $data['attributeId'][$key]
                     ])->update([
                         'price' => $data['price'][$key],
@@ -433,7 +438,7 @@ class ProductsController extends Controller
     public function addImages(Request $request, $id) { // $id is the URL Paramter (slug) passed from the URL
         Session::put('page', 'products');
 
-        $product = \App\Models\Product::select('id', 'product_name', 'product_code', 'product_color', 'product_price', 'product_image')->with('images')->find($id); // with('images') is the relationship method name in the Product.php model
+        $product = Product::select('id', 'product_name', 'product_code', 'product_color', 'product_price', 'product_image')->with('images')->find($id); // with('images') is the relationship method name in the Product.php model
 
 
         if ($request->isMethod('post')) { // if the <form> is submitted
@@ -471,7 +476,7 @@ class ProductsController extends Controller
                     Image::make($image_tmp)->resize(250,   250)->save($smallImagePath);  // resize the 'small'  image size then store it in the 'small'  folder
                 
                     // Insert the image name in the database table `products_images`
-                    $image = new \App\Models\ProductsImage;
+                    $image = new ProductsImage;
 
                     $image->image      = $imageName;
                     $image->product_id = $id;
@@ -500,7 +505,7 @@ class ProductsController extends Controller
             }
 
 
-            \App\Models\ProductsImage::where('id', $data['image_id'])->update(['status' => $status]); // $data['image_id'] comes from the 'data' object inside the $.ajax() method
+            ProductsImage::where('id', $data['image_id'])->update(['status' => $status]); // $data['image_id'] comes from the 'data' object inside the $.ajax() method
 
             return response()->json([ // JSON Responses: https://laravel.com/docs/9.x/responses#json-responses
                 'status'   => $status,
@@ -511,7 +516,7 @@ class ProductsController extends Controller
 
     public function deleteImage($id) { // AJAX call from admin/js/custom.js    // Delete the product image from BOTH SERVER (FILESYSTEM) & DATABASE    // $id is passed as a Route Parameter    
         // Get the product image record stored in the database
-        $productImage = \App\Models\ProductsImage::select('image')->where('id', $id)->first();
+        $productImage = ProductsImage::select('image')->where('id', $id)->first();
         // dd($productImage);
         
         // Get the product image three paths on the server (filesystem) ('small', 'medium' and 'large' folders)
@@ -537,7 +542,7 @@ class ProductsController extends Controller
 
 
         // Delete the product image name (record) from the `products_images` database table
-        \App\Models\ProductsImage::where('id', $id)->delete();
+        ProductsImage::where('id', $id)->delete();
 
         $message = 'Product Image has been deleted successfully!';
 

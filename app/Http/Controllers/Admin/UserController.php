@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
+use App\Models\User;
+
 class UserController extends Controller
 {
     // Render admin/users/users.blade.php page in the Admin Panel    
@@ -14,7 +16,7 @@ class UserController extends Controller
         Session::put('page', 'users');
 
 
-        $users = \App\Models\User::get()->toArray();
+        $users = User::get()->toArray();
         // dd($users);
 
 
@@ -35,7 +37,7 @@ class UserController extends Controller
                 $status = 1;
             }
 
-            \App\Models\User::where('id', $data['user_id'])->update(['status' => $status]); // $data['user_id'] comes from the 'data' object inside the $.ajax() method
+            User::where('id', $data['user_id'])->update(['status' => $status]); // $data['user_id'] comes from the 'data' object inside the $.ajax() method
 
             return response()->json([ // JSON Responses: https://laravel.com/docs/9.x/responses#json-responses
                 'status'  => $status,

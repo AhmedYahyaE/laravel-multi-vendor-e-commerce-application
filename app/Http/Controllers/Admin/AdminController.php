@@ -11,6 +11,20 @@ use Illuminate\Support\Facades\Session;
 use Intervention\Image\Facades\Image;
 use Symfony\Component\VarDumper\VarDumper;
 
+use App\Models\Admin;
+use App\Models\Section;
+use App\Models\Category;
+use App\Models\Product;
+use App\Models\Order;
+use App\Models\Coupon;
+use App\Models\Brand;
+use App\Models\User;
+use App\Models\Vendor;
+use App\Models\VendorsBusinessDetail;
+use App\Models\VendorsBankDetail;
+use App\Models\Country;
+use Illuminate\Support\Facades\Hash;
+
 class AdminController extends Controller
 {
     public function dashboard() {
@@ -18,13 +32,13 @@ class AdminController extends Controller
         Session::put('page', 'dashboard');
 
 
-        $sectionsCount   = \App\Models\Section::count();
-        $categoriesCount = \App\Models\Category::count();
-        $productsCount   = \App\Models\Product::count();
-        $ordersCount     = \App\Models\Order::count();
-        $couponsCount    = \App\Models\Coupon::count();
-        $brandsCount     = \App\Models\Brand::count();
-        $usersCount      = \App\Models\User::count();
+        $sectionsCount   = Section::count();
+        $categoriesCount = Category::count();
+        $productsCount   = Product::count();
+        $ordersCount     = Order::count();
+        $couponsCount    = Coupon::count();
+        $brandsCount     = Brand::count();
+        $usersCount      = User::count();
 
 
         return view('admin/dashboard')->with(compact('sectionsCount', 'categoriesCount', 'productsCount', 'ordersCount', 'couponsCount', 'brandsCount', 'usersCount')); // is the same as:    return view('admin.dashboard');
@@ -88,10 +102,10 @@ class AdminController extends Controller
 
 
             // Check first if the entered admin current password is corret
-            if (\Illuminate\Support\Facades\Hash::check($data['current_password'], Auth::guard('admin')->user()->password)) { // ['current_password'] comes from the AJAX call in admin/js/custom.js page from the 'data' object inside $.ajax() method    // Accessing Specific Guard Instances: https://laravel.com/docs/9.x/authentication#accessing-specific-guard-instances
+            if (Hash::check($data['current_password'], Auth::guard('admin')->user()->password)) { // ['current_password'] comes from the AJAX call in admin/js/custom.js page from the 'data' object inside $.ajax() method    // Accessing Specific Guard Instances: https://laravel.com/docs/9.x/authentication#accessing-specific-guard-instances
                 // Check if the new password is matching with confirm password
                 if ($data['confirm_password'] == $data['new_password']) {
-                    \App\Models\Admin::where('id', Auth::guard('admin')->user()->id)->update([ // Accessing Specific Guard Instances: https://laravel.com/docs/9.x/authentication#accessing-specific-guard-instances
+                    Admin::where('id', Auth::guard('admin')->user()->id)->update([ // Accessing Specific Guard Instances: https://laravel.com/docs/9.x/authentication#accessing-specific-guard-instances
                         'password' => bcrypt($data['new_password'])
                     ]); // we persist (update) the hashed password (not the password itself)
 
@@ -106,19 +120,19 @@ class AdminController extends Controller
         }
 
 
-        $adminDetails = \App\Models\Admin::where('email', Auth::guard('admin')->user()->email)->first()->toArray(); // 'Admin' is the Admin.php model    // Auth::guard('admin') is the authenticated user using the 'admin' guard we created in auth.php    // https://laravel.com/docs/9.x/eloquent#retrieving-models    // Accessing Specific Guard Instances: https://laravel.com/docs/9.x/authentication#accessing-specific-guard-instances
+        $adminDetails = Admin::where('email', Auth::guard('admin')->user()->email)->first()->toArray(); // 'Admin' is the Admin.php model    // Auth::guard('admin') is the authenticated user using the 'admin' guard we created in auth.php    // https://laravel.com/docs/9.x/eloquent#retrieving-models    // Accessing Specific Guard Instances: https://laravel.com/docs/9.x/authentication#accessing-specific-guard-instances
 
 
-        return view('admin/settings/update_admin_password')->with(compact('adminDetails')); 
+        return view('admin/settings/update_admin_password')->with(compact('adminDetails'));
     }
 
-    public function checkAdminPassword(Request $request) { // This method is called from the AJAX call in admin/js/custom.js page    
+    public function checkAdminPassword(Request $request) { // This method is called from the AJAX call in admin/js/custom.js page
         $data = $request->all();
-        // dd($data); 
+        // dd($data);
 
 
         // Hashing Passwords: https://laravel.com/docs/9.x/hashing#hashing-passwords
-        if (\Illuminate\Support\Facades\Hash::check($data['current_password'], Auth::guard('admin')->user()->password)) { // ['current_password'] comes from the AJAX call in admin/js/custom.js page from the 'data' object inside $.ajax() method    // Accessing Specific Guard Instances: https://laravel.com/docs/9.x/authentication#accessing-specific-guard-instances
+        if (Hash::check($data['current_password'], Auth::guard('admin')->user()->password)) { // ['current_password'] comes from the AJAX call in admin/js/custom.js page from the 'data' object inside $.ajax() method    // Accessing Specific Guard Instances: https://laravel.com/docs/9.x/authentication#accessing-specific-guard-instances
             return 'true';
         } else {
             return 'false';
@@ -179,7 +193,7 @@ class AdminController extends Controller
 
 
             // Update Admin Details
-            \App\Models\Admin::where('id', Auth::guard('admin')->user()->id)->update([ // Accessing Specific Guard Instances: https://laravel.com/docs/9.x/authentication#accessing-specific-guard-instances
+            Admin::where('id', Auth::guard('admin')->user()->id)->update([ // Accessing Specific Guard Instances: https://laravel.com/docs/9.x/authentication#accessing-specific-guard-instances
                 'name'   => $data['admin_name'],
                 'mobile' => $data['admin_mobile'],
                 'image'  => $imageName
@@ -188,11 +202,11 @@ class AdminController extends Controller
             return redirect()->back()->with('success_message', 'Admin details updated successfully!');
         }
 
-        
+
         return view('admin/settings/update_admin_details');
     }
 
-    public function updateVendorDetails($slug, Request $request) { // $slug can only be: 'personal', 'business' or 'bank'    
+    public function updateVendorDetails($slug, Request $request) { // $slug can only be: 'personal', 'business' or 'bank'
         if ($slug == 'personal') {
             // Correcting issues in the Skydash Admin Panel Sidebar using Session
             Session::put('page', 'update_personal_details');
@@ -223,7 +237,7 @@ class AdminController extends Controller
 
 
                 // Uploading Admin Photo
-                
+
                 // Using the Intervention package for uploading images
                 if ($request->hasFile('vendor_image')) { // the HTML name attribute    name="admin_name"    in update_admin_details.blade.php
                     $image_tmp = $request->file('vendor_image');
@@ -251,14 +265,14 @@ class AdminController extends Controller
 
                 // Vendor details need to be updated in BOTH `admins` and `vendors` tables:
                 // Update Vendor Details in 'admins' table
-                \App\Models\Admin::where('id', Auth::guard('admin')->user()->id)->update([ // Accessing Specific Guard Instances: https://laravel.com/docs/9.x/authentication#accessing-specific-guard-instances
+                Admin::where('id', Auth::guard('admin')->user()->id)->update([ // Accessing Specific Guard Instances: https://laravel.com/docs/9.x/authentication#accessing-specific-guard-instances
                     'name'   => $data['vendor_name'],
                     'mobile' => $data['vendor_mobile'],
                     'image'  => $imageName
                 ]); // Note that the image name is the random image name that we generated
 
                 // Update Vendor Details in 'vendors' table
-                \App\Models\Vendor::where('id', Auth::guard('admin')->user()->vendor_id)->update([ // Accessing Specific Guard Instances: https://laravel.com/docs/9.x/authentication#accessing-specific-guard-instances
+                Vendor::where('id', Auth::guard('admin')->user()->vendor_id)->update([ // Accessing Specific Guard Instances: https://laravel.com/docs/9.x/authentication#accessing-specific-guard-instances
                     'name'    => $data['vendor_name'],
                     'mobile'  => $data['vendor_mobile'],
                     'address' => $data['vendor_address'],
@@ -273,7 +287,7 @@ class AdminController extends Controller
             }
 
 
-            $vendorDetails = \App\Models\Vendor::where('id', Auth::guard('admin')->user()->vendor_id)->first()->toArray(); // Accessing Specific Guard Instances: https://laravel.com/docs/9.x/authentication#accessing-specific-guard-instances
+            $vendorDetails = Vendor::where('id', Auth::guard('admin')->user()->vendor_id)->first()->toArray(); // Accessing Specific Guard Instances: https://laravel.com/docs/9.x/authentication#accessing-specific-guard-instances
 
         } else if ($slug == 'business') {
             // Correcting issues in the Skydash Admin Panel Sidebar using Session
@@ -329,10 +343,10 @@ class AdminController extends Controller
                 }
 
 
-                $vendorCount = \App\Models\VendorsBusinessDetail::where('vendor_id', Auth::guard('admin')->user()->vendor_id)->count(); // Accessing Specific Guard Instances: https://laravel.com/docs/9.x/authentication#accessing-specific-guard-instances
+                $vendorCount = VendorsBusinessDetail::where('vendor_id', Auth::guard('admin')->user()->vendor_id)->count(); // Accessing Specific Guard Instances: https://laravel.com/docs/9.x/authentication#accessing-specific-guard-instances
                 if ($vendorCount > 0) { // if there's a vendor already existing, them UPDATE
                     // UPDATE `vendors_business_details` table
-                    \App\Models\VendorsBusinessDetail::where('vendor_id', Auth::guard('admin')->user()->vendor_id)->update([ // Accessing Specific Guard Instances: https://laravel.com/docs/9.x/authentication#accessing-specific-guard-instances
+                    VendorsBusinessDetail::where('vendor_id', Auth::guard('admin')->user()->vendor_id)->update([ // Accessing Specific Guard Instances: https://laravel.com/docs/9.x/authentication#accessing-specific-guard-instances
                         'shop_name'               => $data['shop_name'],
                         'shop_mobile'             => $data['shop_mobile'],
                         'shop_website'            => $data['shop_website'],
@@ -350,7 +364,7 @@ class AdminController extends Controller
 
                 } else { // if there's no vendor already existing, then INSERT
                     // INSERT INTO `vendors_business_details` table
-                    \App\Models\VendorsBusinessDetail::insert([
+                    VendorsBusinessDetail::insert([
                         'vendor_id'               => Auth::guard('admin')->user()->vendor_id, // Accessing Specific Guard Instances: https://laravel.com/docs/9.x/authentication#accessing-specific-guard-instances
                         'shop_name'               => $data['shop_name'],
                         'shop_mobile'             => $data['shop_mobile'],
@@ -373,10 +387,10 @@ class AdminController extends Controller
             }
 
 
-            $vendorCount = \App\Models\VendorsBusinessDetail::where('vendor_id', Auth::guard('admin')->user()->vendor_id)->count(); // Accessing Specific Guard Instances: https://laravel.com/docs/9.x/authentication#accessing-specific-guard-instances
+            $vendorCount = VendorsBusinessDetail::where('vendor_id', Auth::guard('admin')->user()->vendor_id)->count(); // Accessing Specific Guard Instances: https://laravel.com/docs/9.x/authentication#accessing-specific-guard-instances
 
             if ($vendorCount > 0) {
-                $vendorDetails = \App\Models\VendorsBusinessDetail::where('vendor_id', Auth::guard('admin')->user()->vendor_id)->first()->toArray(); // Accessing Specific Guard Instances: https://laravel.com/docs/9.x/authentication#accessing-specific-guard-instances
+                $vendorDetails = VendorsBusinessDetail::where('vendor_id', Auth::guard('admin')->user()->vendor_id)->first()->toArray(); // Accessing Specific Guard Instances: https://laravel.com/docs/9.x/authentication#accessing-specific-guard-instances
             } else {
                 $vendorDetails = array();
             }
@@ -410,10 +424,10 @@ class AdminController extends Controller
                 $this->validate($request, $rules, $customMessages);
 
 
-                $vendorCount = \App\Models\VendorsBankDetail::where('vendor_id', Auth::guard('admin')->user()->vendor_id)->count(); // Accessing Specific Guard Instances: https://laravel.com/docs/9.x/authentication#accessing-specific-guard-instances
+                $vendorCount = VendorsBankDetail::where('vendor_id', Auth::guard('admin')->user()->vendor_id)->count(); // Accessing Specific Guard Instances: https://laravel.com/docs/9.x/authentication#accessing-specific-guard-instances
                 if ($vendorCount > 0) { // if there's a vendor already existing, them UPDATE
                     // UPDATE `vendors_bank_details` table
-                    \App\Models\VendorsBankDetail::where('vendor_id', Auth::guard('admin')->user()->vendor_id)->update([ // Accessing Specific Guard Instances: https://laravel.com/docs/9.x/authentication#accessing-specific-guard-instances
+                    VendorsBankDetail::where('vendor_id', Auth::guard('admin')->user()->vendor_id)->update([ // Accessing Specific Guard Instances: https://laravel.com/docs/9.x/authentication#accessing-specific-guard-instances
                         'account_holder_name' => $data['account_holder_name'],
                         'bank_name'           => $data['bank_name'],
                         'account_number'      => $data['account_number'],
@@ -422,7 +436,7 @@ class AdminController extends Controller
 
                 } else { // if there's no vendor already existing, then INSERT
                     // INSERT INTO `vendors_bank_details` table
-                    \App\Models\VendorsBankDetail::insert([
+                    VendorsBankDetail::insert([
                         'vendor_id'           => Auth::guard('admin')->user()->vendor_id, // Accessing Specific Guard Instances: https://laravel.com/docs/9.x/authentication#accessing-specific-guard-instances
                         'account_holder_name' => $data['account_holder_name'],
                         'bank_name'           => $data['bank_name'],
@@ -436,9 +450,9 @@ class AdminController extends Controller
             }
 
 
-            $vendorCount = \App\Models\VendorsBankDetail::where('vendor_id', Auth::guard('admin')->user()->vendor_id)->count(); 
+            $vendorCount = VendorsBankDetail::where('vendor_id', Auth::guard('admin')->user()->vendor_id)->count();
             if ($vendorCount > 0) {
-                $vendorDetails = \App\Models\VendorsBankDetail::where('vendor_id', Auth::guard('admin')->user()->vendor_id)->first()->toArray(); 
+                $vendorDetails = VendorsBankDetail::where('vendor_id', Auth::guard('admin')->user()->vendor_id)->first()->toArray();
             } else {
                 $vendorDetails = array();
             }
@@ -447,7 +461,7 @@ class AdminController extends Controller
 
 
         // Fetch all of the world countries from the database table `countries`
-        $countries = \App\Models\Country::where('status', 1)->get()->toArray(); // get the countries which have `status` = 1 (to ignore the blacklisted countries, in case)
+        $countries = Country::where('status', 1)->get()->toArray(); // get the countries which have `status` = 1 (to ignore the blacklisted countries, in case)
         // dd($countries);
 
 
@@ -463,7 +477,7 @@ class AdminController extends Controller
             // dd($data);
 
             // UPDATE the `vendors` table with the `commission` percentage requested by the admin from the vendor
-            \App\Models\Vendor::where('id', $data['vendor_id'])->update(['commission' => $data['commission']]);
+            Vendor::where('id', $data['vendor_id'])->update(['commission' => $data['commission']]);
 
 
             return redirect()->back()->with('success_message', 'Vendor commission updated successfully!');
@@ -471,7 +485,7 @@ class AdminController extends Controller
     }
 
     public function admins($type = null) { // $type is the `type` column in the `admins` which can only be: superadmin, admin, subadmin or vendor    // A default value of null (to allow not passing a {type} slug, and in this case, the page will view ALL of the superadmin, admins, subadmins and vendors at the same time)
-        $admins = \App\Models\Admin::query();
+        $admins = Admin::query();
         // dd($admins);
 
         if (!empty($type)) { // in this case, $type can be: superadmin, admin, subadmin or vendor
@@ -495,7 +509,7 @@ class AdminController extends Controller
     }
 
     public function viewVendorDetails($id) { // View further 'vendor' details inside Admin Management table (if the authenticated user is superadmin, admin or subadmin)
-        $vendorDetails = \App\Models\Admin::with('vendorPersonal', 'vendorBusiness','vendorBank')->where('id', $id)->first(); // Using the relationship defined in the Admin.php model to be able to get data from `vendors`, `vendors_business_details` and `vendors_bank_details` tables
+        $vendorDetails = Admin::with('vendorPersonal', 'vendorBusiness','vendorBank')->where('id', $id)->first(); // Using the relationship defined in the Admin.php model to be able to get data from `vendors`, `vendors_business_details` and `vendors_bank_details` tables
         $vendorDetails = json_decode(json_encode($vendorDetails), true); // We used json_decode(json_encode($variable), true) to convert $vendorDetails to an array instead of Laravel's toArray() method
         // dd($vendorDetails);
 
@@ -518,15 +532,15 @@ class AdminController extends Controller
             // Note: Vendor receives THREE emails: the first one when they register (please click on the confirmation link mail (in emails/vendor_confirmation.blade.php)), the second one when they click on the confirmation link sent in the first email (telling them that they have been confirmed and asking them to complete filling in their personal, business and bank details to get ACTIVATED/APPROVED (`status gets 1) (in emails/vendor_confirmed.blade.php)), the third email when the 'admin' or 'superadmin' manually activates (`status` becomes 1) the vendor from the Admin Panel from 'Admin Management' tab, then clicks Status (the email tells them they have been approved (activated and `status` became 1) and asks them to add their products on the website (in emails/vendor_approved.blade.php))
 
             // (!! Database Transaction !!) UPDATE the `status` columns in BOTH `admins` and `vendors` tables (I did the code of `vendors` myself!) (!! Database Transaction !!)
-            \App\Models\Admin::where('id', $data['admin_id'])->update(['status' => $status]); // $data['admin_id'] comes from the 'data' object inside the $.ajax() method
+            Admin::where('id', $data['admin_id'])->update(['status' => $status]); // $data['admin_id'] comes from the 'data' object inside the $.ajax() method
             // echo '<pre>', var_dump($data), '</pre>';
 
             // Send a THIRD Approval Email to the vendor when the superadmin or admin approves their account (`status` column in the `admins` table becomes 1 instead of 0) so that they can add their products on the website now
-            $adminDetails = \App\Models\Admin::where('id', $data['admin_id'])->first()->toArray(); // get the admin that his `status` has been approved
+            $adminDetails = Admin::where('id', $data['admin_id'])->first()->toArray(); // get the admin that his `status` has been approved
 
 
             if ($adminDetails['type'] == 'vendor' && $status == 1) { // if the `type` column value (in `admins` table) is 'vendor', and their `status` became 1 (got approved), send them a THIRD confirmation mail
-                \App\Models\Vendor::where('id', $adminDetails['vendor_id'])->update(['status' => $status]); // update the `status` of the vendor in `vendors` table
+                Vendor::where('id', $adminDetails['vendor_id'])->update(['status' => $status]); // update the `status` of the vendor in `vendors` table
 
                 // Note: Vendor CONFIRMATION occurs automatically through vendor clicking on the confirmation link sent in the email, but vendor ACTIVATION (active/inactive/disabled) occurs manually where 'superadmin' or 'admin' activates the `status` from the Admin Panel in 'Admin Management' tab, then clicks Status. Also, Vendor CONFIRMATION is related to the `confirm` columns in BOTH `admins` and `vendors` tables, but vendor ACTIVATION (active/inactive/disabled) is related to the `status` columns in BOTH `admins` and `vendors` tables!
                 // Note: Vendor receives THREE emails: the first one when they register (please click on the confirmation link mail (in emails/vendor_confirmation.blade.php)), the second one when they click on the confirmation link sent in the first email (telling them that they have been confirmed and asking them to complete filling in their personal, business and bank details to get ACTIVATED/APPROVED (`status gets 1) (in emails/vendor_confirmed.blade.php)), the third email when the 'admin' or 'superadmin' manually activates (`status` becomes 1) the vendor from the Admin Panel from 'Admin Management' tab, then clicks Status (the email tells them they have been approved (activated and `status` became 1) and asks them to add their products on the website (in emails/vendor_approved.blade.php))

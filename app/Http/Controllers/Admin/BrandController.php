@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
+use App\Models\Brand;
+
 
 class BrandController extends Controller
 {
@@ -14,7 +16,7 @@ class BrandController extends Controller
         Session::put('page', 'brands');
 
 
-        $brands = \App\Models\Brand::get()->toArray(); // Plain PHP array
+        $brands = Brand::get()->toArray(); // Plain PHP array
         // dd($brands);
 
         return view('admin.brands.brands')->with(compact('brands'));
@@ -32,7 +34,7 @@ class BrandController extends Controller
             }
 
 
-            \App\Models\Brand::where('id', $data['brand_id'])->update(['status' => $status]); // $data['brand_id'] comes from the 'data' object inside the $.ajax() method
+            Brand::where('id', $data['brand_id'])->update(['status' => $status]); // $data['brand_id'] comes from the 'data' object inside the $.ajax() method
             // echo '<pre>', var_dump($data), '</pre>';
 
             return response()->json([ // JSON Responses: https://laravel.com/docs/9.x/responses#json-responses
@@ -44,7 +46,7 @@ class BrandController extends Controller
 
     
     public function deleteBrand($id) {
-        \App\Models\Brand::where('id', $id)->delete();
+        Brand::where('id', $id)->delete();
         
         $message = 'Brand has been deleted successfully!';
         
@@ -58,12 +60,12 @@ class BrandController extends Controller
 
         if ($id == '') { // if there's no $id is passed in the route/URL parameters, this means Add a new brand
             $title = 'Add Brand';
-            $brand = new \App\Models\Brand();
+            $brand = new Brand();
             // dd($brand);
             $message = 'Brand added successfully!';
         } else { // if the $id is passed in the route/URL parameters, this means Edit the Brand
             $title = 'Edit Brand';
-            $brand = \App\Models\Brand::find($id);
+            $brand = Brand::find($id);
             // dd($brand);
             $message = 'Brand updated successfully!';
         }

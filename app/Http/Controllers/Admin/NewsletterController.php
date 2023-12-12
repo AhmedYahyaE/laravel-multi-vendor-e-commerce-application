@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use App\Models\NewsletterSubscriber;
 
 class NewsletterController extends Controller
 {
@@ -14,7 +15,7 @@ class NewsletterController extends Controller
         Session::put('page', 'subscribers');
 
 
-        $subscribers = \App\Models\NewsletterSubscriber::get()->toArray();
+        $subscribers = NewsletterSubscriber::get()->toArray();
         // dd($subscribers);
 
 
@@ -34,7 +35,7 @@ class NewsletterController extends Controller
             }
 
 
-            \App\Models\NewsletterSubscriber::where('id', $data['subscriber_id'])->update(['status' => $status]); // $data['subscriber_id'] comes from the 'data' object inside the $.ajax() method
+            NewsletterSubscriber::where('id', $data['subscriber_id'])->update(['status' => $status]); // $data['subscriber_id'] comes from the 'data' object inside the $.ajax() method
             // echo '<pre>', var_dump($data), '</pre>';
 
             return response()->json([ // JSON Responses: https://laravel.com/docs/9.x/responses#json-responses
@@ -46,7 +47,7 @@ class NewsletterController extends Controller
 
     // Delete a Subscriber via AJAX in admin/subscribers/subscribers.blade.php, check admin/js/custom.js    
     public function deleteSubscriber($id) { // Route Parameters: Required Parameters: https://laravel.com/docs/9.x/routing#required-parameters
-        \App\Models\NewsletterSubscriber::where('id', $id)->delete();
+        NewsletterSubscriber::where('id', $id)->delete();
 
         $message = 'Subscriber has been deleted successfully!';
         

@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
+use App\Models\ShippingCharge;
+
 class ShippingController extends Controller
 {
     // We got two Shipping Charges modules: Simple one (every country has its own shipping rate (price/cost/charges) based on the Delivery Address in the Checkout page) and Advanced one (every country has its own shipping rate based on the Delivery Address in the Checkout page, plus, other charges are calculated based on shipment weight). We created the `shipping_charges` database table for that matter. Also, the Shipping Charge module will be available in the Admin Panel for 'admin'-s only, not for 'vendor'-s
@@ -17,7 +19,7 @@ class ShippingController extends Controller
         // Highlight the 'Shipping Charges' module in the Sidebar on the left in the Admin Panel. Correcting issues in the Skydash Admin Panel Sidebar using Session
         Session::put('page', 'shipping');
 
-        $shippingCharges = \App\Models\ShippingCharge::get()->toArray();
+        $shippingCharges = ShippingCharge::get()->toArray();
 
 
         return view('admin.shipping.shipping_charges')->with(compact('shippingCharges'));
@@ -36,7 +38,7 @@ class ShippingController extends Controller
             }
 
 
-            \App\Models\ShippingCharge::where('id', $data['shipping_id'])->update(['status' => $status]); // $data['shipping_id'] comes from the 'data' object inside the $.ajax() method
+            ShippingCharge::where('id', $data['shipping_id'])->update(['status' => $status]); // $data['shipping_id'] comes from the 'data' object inside the $.ajax() method
             // echo '<pre>', var_dump($data), '</pre>';
 
             return response()->json([ // JSON Responses: https://laravel.com/docs/9.x/responses#json-responses
@@ -55,7 +57,7 @@ class ShippingController extends Controller
             $data = $request->all();
             // dd($data);
 
-            \App\Models\ShippingCharge::where('id', $id)->update([
+            ShippingCharge::where('id', $id)->update([
                 '0_500g'      => $data['0_500g'],
                 '501g_1000g'  => $data['501g_1000g'],
                 '1001_2000g'  => $data['1001_2000g'],
@@ -68,7 +70,7 @@ class ShippingController extends Controller
             return redirect()->back()->with('success_message', $message);
         }
 
-        $shippingDetails = \App\Models\ShippingCharge::where('id', $id)->first();
+        $shippingDetails = ShippingCharge::where('id', $id)->first();
         $title = 'Edit Shipping Charges';
 
 

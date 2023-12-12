@@ -97,7 +97,7 @@
 
 
 
-                                <div id="appendCategoriesLevel"> {{-- We create this <div> in a separate file in order for the appendCategoryLevel() method inside the CategoryController to be able to return the whole file as a response to the AJAX call in admin/js/custom.js to show the proper/relevant categories <select> box <option> depending on the choosed Section --}}
+                                <div id="appendCategoriesLevel"> {{-- We create this <div> in a separate file in order for the appendCategoryLevel() method inside the CategoryController to be able to return the whole file as a response to the AJAX call in admin/js/custom.js to show the proper/relevant categories <select> box <option> depending on the chosen Section --}}
                                     @include('admin.categories.append_categories_level')
                                 </div>
 
