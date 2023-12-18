@@ -31,7 +31,7 @@ class Category extends Model
 
     // Get the parent category & its subcategories (child categories) of a URL
     public static function categoryDetails($url) { // this method is used inside ProductsController.php to be used in listing.blade.php page    // Note: if the URL is a 'category', we need to fetch its related products as well as its subcategories related products, but if the url is a subcategory, we need to fetch the subcategory related products only    
-        $categoryDetails = \App\Models\Category::select('id', 'parent_id', 'category_name', 'url', 'description', 'meta_title', 'meta_description', 'meta_keywords')->with([ // Constraining Eager Loads: https://laravel.com/docs/9.x/eloquent-relationships#constraining-eager-loads    // Subquery Where Clauses: https://laravel.com/docs/9.x/queries#subquery-where-clauses    // Advanced Subqueries: https://laravel.com/docs/9.x/eloquent#advanced-subqueries
+        $categoryDetails = Category::select('id', 'parent_id', 'category_name', 'url', 'description', 'meta_title', 'meta_description', 'meta_keywords')->with([ // Constraining Eager Loads: https://laravel.com/docs/9.x/eloquent-relationships#constraining-eager-loads    // Subquery Where Clauses: https://laravel.com/docs/9.x/queries#subquery-where-clauses    // Advanced Subqueries: https://laravel.com/docs/9.x/eloquent#advanced-subqueries
             'subCategories' => function($query) { // the 'subCategories' relationship method in Category.php model (this model)
                 $query->select('id', 'parent_id', 'category_name', 'url', 'description', 'meta_title', 'meta_description', 'meta_keywords'); // Important Note: It's a MUST to select 'id' even if you don't need it, because the relationship Foreign Key `product_id` depends on it, or else the `product` relationship would give you 'null'!
             }
@@ -50,7 +50,7 @@ class Category extends Model
             ';
         } else { // if the category is SUBcategory category (not PARENT category)
             // Show BOTH main (parent) category AND subcategory in the Breadcrumb
-            $parentCategory = \App\Models\Category::select('category_name', 'url')->where('id', $categoryDetails['parent_id'])->first()->toArray();
+            $parentCategory = Category::select('category_name', 'url')->where('id', $categoryDetails['parent_id'])->first()->toArray();
             $breadcrumbs = '
                 <li class="has-separator"><a href="' . url($parentCategory['url'])  .'">' . $parentCategory['category_name']  . '</a></li>
                 <li class="is-marked"><a href="'     . url($categoryDetails['url']) .'">' . $categoryDetails['category_name'] . '</a></li>
@@ -78,7 +78,7 @@ class Category extends Model
 
     // this method is called in admin\filters\filters.blade.php to be able to translate the filter cat_ids column to category names to show them in the table in filters.blade.php in the Admin Panel    
     public static function getCategoryName($category_id) {
-        $getCategoryName = \App\Models\Category::select('category_name')->where('id', $category_id)->first();
+        $getCategoryName = Category::select('category_name')->where('id', $category_id)->first();
 
 
         return $getCategoryName->category_name;

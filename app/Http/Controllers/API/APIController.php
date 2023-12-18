@@ -5,6 +5,9 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
+use App\Models\User;
+use App\Models\ProductsAttribute;
+
 class APIController extends Controller
 {
     // Shiprocket API Integration
@@ -52,9 +55,9 @@ class APIController extends Controller
 
 
             if (empty($id)) { // if the {id?} Optional Paramter is not specified in the API Endpoint URL, get ALL users
-                $users = \App\Models\User::get();
+                $users = User::get();
             } else {  // if the {id?} Optional Paramter is specified in the API Endpoint URL, get a SINGLE user
-                $users = \App\Models\User::find($id);
+                $users = User::find($id);
             }
 
 
@@ -107,7 +110,7 @@ class APIController extends Controller
 
 
             // Add/Save the submitted new user data in `users` table ('name', 'email', 'password' fields must be submitted in Postman!)
-            $user = new \App\Models\User;
+            $user = new User;
             $user->name     = $userData['name'];
             $user->email    = $userData['email'];
             $user->password = bcrypt($userData['password']); // Hash the password before storing it in the database table
@@ -171,7 +174,7 @@ class APIController extends Controller
             // Use a foreach loop because there are multiple JSON data/objects submitted in one go in the request    // Note: In Postman, JSON data are submitted using Curly Braces {} and a "users" Wrapping Object and Square Brackets [])
             foreach ($userData['users'] as $key => $value) {
                 // Add/Save the submitted new user data in `users` table ('name', 'email', 'password' fields must be submitted in Postman!)
-                $user = new \App\Models\User;
+                $user = new User;
                 $user->name     = $value['name'];
                 $user->email    = $value['email'];
                 $user->password = bcrypt($value['password']); // Hash the password before storing it in the database table
@@ -227,7 +230,7 @@ class APIController extends Controller
 
 
             // Update submitted user details in `users` table
-            \App\Models\User::where('id', isset($id) ? $id : $userData['id'])->update([ // if the id is sent as a URL Query String Parameter, take its value as is, or else, take its value from the JSON "Body"
+            User::where('id', isset($id) ? $id : $userData['id'])->update([ // if the id is sent as a URL Query String Parameter, take its value as is, or else, take its value from the JSON "Body"
                 'name'     => $userData['name'],
                 'email'    => $userData['email'],
                 'password' => bcrypt($userData['password'])
@@ -274,7 +277,7 @@ class APIController extends Controller
             }
 
             // Update the `name` column of the submitted user 'id' and 'name' in `users` table
-            \App\Models\User::where('id', isset($id) ? $id : $userData['id'])->update(['name' => $userData['name']]); // if the id is sent as a URL Query String Parameter, take its value as is, or else, take its value from the JSON "Body"
+            User::where('id', isset($id) ? $id : $userData['id'])->update(['name' => $userData['name']]); // if the id is sent as a URL Query String Parameter, take its value as is, or else, take its value from the JSON "Body"
 
             // Send back the newly submitted user data of the successful operation to the user again! (Note: This a well-known convention of APIs to send back the successful accepted data!)    
             return response()->json([ // Note: $user is AUTOMATICALLY converted from Laravel/PHP object to JSON! But we'll manually convert it to JSON using    return response()->json()    to show the "users" JSON property key/name in the response! Try the TWO cases and check the difference in Postman in "Pretty" tab!    // JSON Responses: https://laravel.com/docs/9.x/responses#json-responses
@@ -298,7 +301,7 @@ class APIController extends Controller
             $userData = $request->input();
 
             // Delete the submitted user 'id' from the `users` table
-            \App\Models\User::where('id', isset($id) ? $id : $userData['id'])->delete(); // if the id is sent as a URL Query String Parameter, take its value as is, or else, take its value from the JSON "Body"
+            User::where('id', isset($id) ? $id : $userData['id'])->delete(); // if the id is sent as a URL Query String Parameter, take its value as is, or else, take its value from the JSON "Body"
 
 
             // Send back the newly submitted user data of the successful operation to the user again! (Note: This a well-known convention of APIs to send back the successful accepted data!)    
@@ -326,7 +329,7 @@ class APIController extends Controller
                 // dd($ids);
 
                 // Delete the submitted users 'id's from the `users` table
-                \App\Models\User::whereIn('id', $ids)->delete(); // Used whereIn() method instead of where() because we are getting (to delete) an ARRAY of ids
+                User::whereIn('id', $ids)->delete(); // Used whereIn() method instead of where() because we are getting (to delete) an ARRAY of ids
 
                 // Send back the newly submitted user data of the successful operation to the user again! (Note: This a well-known convention of APIs to send back the successful accepted data!)    
                 return response()->json([ // Note: $user is AUTOMATICALLY converted from Laravel/PHP object to JSON! But we'll manually convert it to JSON using    return response()->json()    to show the "users" JSON property key/name in the response! Try the TWO cases and check the difference in Postman in "Pretty" tab!    // JSON Responses: https://laravel.com/docs/9.x/responses#json-responses
@@ -336,7 +339,7 @@ class APIController extends Controller
             } else { // if the ids are not sent as a URL Query String Parameter, but else, sent in the "Body" tab in Postman as JSON data
 
                 // Delete the submitted users 'id's from the `users` table
-                \App\Models\User::whereIn('id', $userData['ids'])->delete(); // Submitted/Sent JSON data are bulk/multiple JSON data/objects which are wrapped in an "ids" Wrapping Object, and Curly Braces {} and Square Brackets [] are used    // Used whereIn() method instead of where() because we are getting (to delete) an ARRAY of ids
+                User::whereIn('id', $userData['ids'])->delete(); // Submitted/Sent JSON data are bulk/multiple JSON data/objects which are wrapped in an "ids" Wrapping Object, and Curly Braces {} and Square Brackets [] are used    // Used whereIn() method instead of where() because we are getting (to delete) an ARRAY of ids
 
                 // Send back the newly submitted user data of the successful operation to the user again! (Note: This a well-known convention of APIs to send back the successful accepted data!)    
                 return response()->json([ // Note: $user is AUTOMATICALLY converted from Laravel/PHP object to JSON! But we'll manually convert it to JSON using    return response()->json()    to show the "users" JSON property key/name in the response! Try the TWO cases and check the difference in Postman in "Pretty" tab!    // JSON Responses: https://laravel.com/docs/9.x/responses#json-responses
@@ -390,7 +393,7 @@ class APIController extends Controller
             $accessToken = \Illuminate\Support\Str::random(60); // Str::random(): https://laravel.com/docs/9.x/helpers#method-str-random
 
             // Register the new user i.e. Save the submitted user data (name, email and password) along with the newly generated API Access Token in `users` table
-            $user = new \App\Models\User;
+            $user = new User;
 
             $user->name     = $userData['name'];
             $user->email    = $userData['email'];
@@ -450,7 +453,7 @@ class APIController extends Controller
             }
 
             // Fetch/Get the submitted user record (their `users` table row) from `users` table based on the submitted `email` in order to verify the submitted `password`
-            $userDetails = \App\Models\User::where('email', $userData['email'])->first();
+            $userDetails = User::where('email', $userData['email'])->first();
 
             // Verify the submitted Password (compare the submitted password (N.B. It gets hashed before comparing by password_verify() function) with the "hashed" `password` in `users` table). If both the submitted password and the user's password in the database table match, we generate a new Access Token for the user to use and send it with all their subsequent HTTP Requests, and update `access_token` column in `users` table with that new Access Token (we replace the old one with the new one)
             if (password_verify($userData['password'], $userDetails->password)) {
@@ -458,7 +461,7 @@ class APIController extends Controller
                 $accessToken = \Illuminate\Support\Str::random(60); // Str::random(): https://laravel.com/docs/9.x/helpers#method-str-random
 
                 // Update `access_token` column in `users` table with the new Access Token (We replace the old one with the new one)
-                \App\Models\User::where('email', $userData['email'])->update(['access_token' => $accessToken]);
+                User::where('email', $userData['email'])->update(['access_token' => $accessToken]);
 
 
                 // Send back the newly submitted user data of the successful operation to the user again! (Note: This a well-known convention of APIs to send back the successful accepted data!)    
@@ -506,10 +509,10 @@ class APIController extends Controller
                 $api_token = str_replace('Bearer ', '', $api_token);    // using str_replace() function
                 // dd($api_token);
 
-                $api_token_count = \App\Models\User::where('access_token', $api_token)->count();
+                $api_token_count = User::where('access_token', $api_token)->count();
                 // dd($api_token_Count);
                 if ($api_token_count > 0) { // if the submitted 'Authorization' HTTP Header value (i.e. the Bearer Access Token) exists in the `access_token` column in `users` database table, delete (not delete exactly!, just UPDATE the column value to 'null') it to expire the Access Token, so that the user can no longer use it to access their account
-                    \App\Models\User::where('access_token', $api_token)->update(['access_token' => null]);
+                    User::where('access_token', $api_token)->update(['access_token' => null]);
 
                     // Send back the newly submitted user data of the successful operation to the user again! (Note: This a well-known convention of APIs to send back the successful accepted data!)    
                     return response()->json([ // Note: $user is AUTOMATICALLY converted from Laravel/PHP object to JSON! But we'll manually convert it to JSON using    return response()->json()    to show the "users" JSON property key/name in the response! Try the TWO cases and check the difference in Postman in "Pretty" tab!    // JSON Responses: https://laravel.com/docs/9.x/responses#json-responses
@@ -580,7 +583,7 @@ class APIController extends Controller
             
 
             // Register the new user i.e. Save the submitted user data (name, email and password) along with the newly generated API Access Token in `users` table
-            $user = new \App\Models\User;
+            $user = new User;
 
             $user->name     = $userData['name'];
             $user->email    = $userData['email'];
@@ -595,7 +598,7 @@ class APIController extends Controller
 
             // Authenticate the user / log in the user / log the user in    // Manually Authenticating Users: https://laravel.com/docs/9.x/authentication#authenticating-users
             if (\Illuminate\Support\Facades\Auth::attempt(['email' => $userData['email'], 'password' => $userData['password']])) {
-                $user = \App\Models\User::where('email', $userData['email'])->first();
+                $user = User::where('email', $userData['email'])->first();
                 // dd($user);
 
                 // Generate a new Access Token using "Laravel Passport" Package for the newly registered user, and save it in the `access_token` column in `users` table (and overwrite/override/replace the old Access Token in `access_token` column if there is any!)
@@ -603,7 +606,7 @@ class APIController extends Controller
                 // dd($accessToken);
 
                 // UPDATE the `access_token` column in `users` table with the new $accessToken value (which is generated using "Laravel Passport" package)
-                \App\Models\User::where('email', $userData['email'])->update(['access_token' => $accessToken]);
+                User::where('email', $userData['email'])->update(['access_token' => $accessToken]);
 
                 // Send back the newly submitted user data of the successful operation to the user again! (Note: This a well-known convention of APIs to send back the successful accepted data!)    
                 return response()->json([ // Note: $user is AUTOMATICALLY converted from Laravel/PHP object to JSON! But we'll manually convert it to JSON using    return response()->json()    to show the "users" JSON property key/name in the response! Try the TWO cases and check the difference in Postman in "Pretty" tab!    // JSON Responses: https://laravel.com/docs/9.x/responses#json-responses
@@ -662,7 +665,7 @@ class APIController extends Controller
 
             // Authenticate the user / log in the user / log the user in    // Manually Authenticating Users: https://laravel.com/docs/9.x/authentication#authenticating-users
             if (\Illuminate\Support\Facades\Auth::attempt(['email' => $userData['email'], 'password' => $userData['password']])) {
-                $user = \App\Models\User::where('email', $userData['email'])->first();
+                $user = User::where('email', $userData['email'])->first();
                 // dd($user);
 
 
@@ -671,7 +674,7 @@ class APIController extends Controller
                 // dd($accessToken);
 
                 // UPDATE the `access_token` column in `users` table with the new $accessToken value (which is generated using "Laravel Passport" package)
-                \App\Models\User::where('email', $userData['email'])->update(['access_token' => $accessToken]);
+                User::where('email', $userData['email'])->update(['access_token' => $accessToken]);
 
 
                 // Send back the newly submitted user data of the successful operation to the user again! (Note: This a well-known convention of APIs to send back the successful accepted data!)    
@@ -740,7 +743,7 @@ class APIController extends Controller
                     if (isset($data['items'])) { // if    $data['items']    has returned from the server HTTP Response
                         foreach ($data['items'] as $key => $value) {
                             // Update the `stock` column in our `products_attributes` database table
-                            \App\Models\ProductsAttribute::where('sku', $value['sku'])->update([ 'stock' => $value['stock'] ]);
+                            ProductsAttribute::where('sku', $value['sku'])->update([ 'stock' => $value['stock'] ]);
                         }
 
                         // Send a stock update success/confirmation JSON HTTP Response
@@ -798,7 +801,7 @@ class APIController extends Controller
                     if (isset($data['items'])) { // if    $data['items']    has returned from the server HTTP Response
                         foreach ($data['items'] as $key => $value) {
                             // Update the `stock` column in our `products_attributes` database table
-                            \App\Models\ProductsAttribute::where('sku', $value['sku'])->update([ 'stock' => $value['stock'] ]);
+                            ProductsAttribute::where('sku', $value['sku'])->update([ 'stock' => $value['stock'] ]);
                         }
 
                         // Send a stock update success/confirmation JSON HTTP Response

@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
+use App\Models\Vendor;
+use App\Models\Admin;
 
 class VendorController extends Controller
 {
@@ -51,7 +53,7 @@ class VendorController extends Controller
             DB::beginTransaction();
 
             
-            $vendor = new \App\Models\Vendor; // Vendor.php model which models (represents) the `vendors` database table
+            $vendor = new Vendor; // Vendor.php model which models (represents) the `vendors` database table
 
             $vendor->name   = $data['name'];
             $vendor->mobile = $data['mobile'];
@@ -69,7 +71,7 @@ class VendorController extends Controller
             $vendor_id = DB::getPdo()->lastInsertId(); // get the vendor `id` of the `vendors` table (which has just been inserted) to insert it in the `vendor_id` column of the `admins` table    
 
             // Secondly, use the vendor `id` of the `vendors` table to serve a value of the `vendor_id` column in the `admins` table and save the new vendor in the `admins` table
-            $admin = new \App\Models\Admin; // Admin.php model which models (represents) the `admins` database table
+            $admin = new Admin; // Admin.php model which models (represents) the `admins` database table
 
             $admin->type      = 'vendor';
             $admin->vendor_id = $vendor_id; // take the generated `id` of the `vendors` table to store it a `vendor_id` in the `admins` table
@@ -118,10 +120,10 @@ class VendorController extends Controller
         $email = base64_decode($email); // we use the opposite (decode()) of what we used in the vendorRegister() (encode) 
 
         // For Security Reasons, check if the vendor email exists first (after the vendor has entered their mail while registering)
-        $vendorCount = \App\Models\Vendor::where('email', $email)->count();
+        $vendorCount = Vendor::where('email', $email)->count();
         if ($vendorCount > 0) { // if the vendor email exists
             // Check if the vendor is alreay active
-            $vendorDetails = \App\Models\Vendor::where('email', $email)->first();
+            $vendorDetails = Vendor::where('email', $email)->first();
             if ($vendorDetails->confirm == 'Yes') { // if the vendor is already confirmed
 
                 // Redirect vendor to vendor Login/Register page with an 'error' message
@@ -132,8 +134,8 @@ class VendorController extends Controller
                 // Note: Vendor CONFIRMATION occurs automatically through vendor clicking on the confirmation link sent in the email, but vendor ACTIVATION (active/inactive/disabled) occurs manually where 'superadmin' or 'admin' activates the `status` from the Admin Panel in 'Admin Management' tab, then clicks Status. Also, Vendor CONFIRMATION is related to the `confirm` columns in BOTH `admins` and `vendors` tables, but vendor ACTIVATION (active/inactive/disabled) is related to the `status` columns in BOTH `admins` and `vendors` tables!
                 // Note: Vendor receives THREE emails: the first one when they register (please click on the confirmation link mail (in emails/vendor_confirmation.blade.php)), the second one when they click on the confirmation link sent in the first email (telling them that they have been confirmed and asking them to complete filling in their personal, business and bank details to get ACTIVATED/APPROVED (`status gets 1) (in emails/vendor_confirmed.blade.php)), the third email when the 'admin' or 'superadmin' manually activates (`status` becomes 1) the vendor from the Admin Panel from 'Admin Management' tab, then clicks Status (the email tells them they have been approved (activated and `status` became 1) and asks them to add their products on the website (in emails/vendor_approved.blade.php))
 
-                \App\Models\Admin::where( 'email', $email)->update(['confirm' => 'Yes']);
-                \App\Models\Vendor::where('email', $email)->update(['confirm' => 'Yes']);
+                Admin::where( 'email', $email)->update(['confirm' => 'Yes']);
+                Vendor::where('email', $email)->update(['confirm' => 'Yes']);
 
 
                 // Send ANOTHER email to the vendor (The Registration Success email)

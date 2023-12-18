@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
+use App\Models\DeliveryAddress;
+use App\Models\Country;
 
 
 class AddressController extends Controller
@@ -22,7 +24,7 @@ class AddressController extends Controller
 
 
             // Get the Delivery Address of the currently authenticated/logged-in user
-            $deliveryAddress = \App\Models\DeliveryAddress::where('id', $data['addressid'])->first()->toArray(); // Get all the delivery addresses of the currently authenticated/logged-in user    
+            $deliveryAddress = DeliveryAddress::where('id', $data['addressid'])->first()->toArray(); // Get all the delivery addresses of the currently authenticated/logged-in user    
 
 
             return response()->json([ // JSON Responses: https://laravel.com/docs/9.x/responses#json-responses
@@ -66,20 +68,20 @@ class AddressController extends Controller
                 // EDIT delivery address (UPDATE the `delivery_addresses` database table)
                 if (!empty($data['delivery_id'])) { // if there's a delivery address id submitted from the HTML Form via AJAX, this means it's Edit Delivery Address (not Add a new delivery address) i.e.  (UPDATE the `delivery_addresses` database table)    // $data['delivery_id'] comes from the 'data' object inside the $.ajax() method. Check front/js/custom.js
                     // UPDATE the `delivery_addresses` database table
-                    \App\Models\DeliveryAddress::where('id', $data['delivery_id'])->update($address); // $data['delivery_id'] comes from the 'data' object inside the $.ajax() method. Check front/js/custom.js
+                    DeliveryAddress::where('id', $data['delivery_id'])->update($address); // $data['delivery_id'] comes from the 'data' object inside the $.ajax() method. Check front/js/custom.js
     
                 // ADD a new delivery address (INSERT INTO the `delivery_addresses` database table)
                 } else { // if there's no delivery address id submitted from the HTML Form via AJAX, this means it's Add a new Delivery Address (not Edit delivery address) i.e. (INSERT INTO the `delivery_addresses` database table)    // $data['delivery_id'] comes from the 'data' object inside the $.ajax() method. Check front/js/custom.js                        
                     // INSERT INTO the `delivery_addresses` database table
-                    \App\Models\DeliveryAddress::create($address); // Check the DeliveryAddress.php model for Mass Assignment: https://laravel.com/docs/10.x/eloquent#mass-assignment    // Check 5:56 in 
+                    DeliveryAddress::create($address); // Check the DeliveryAddress.php model for Mass Assignment: https://laravel.com/docs/10.x/eloquent#mass-assignment    // Check 5:56 in 
                 }
     
     
                 // Note: You must pass in to view the SAME variables ($deliveryAddresses and $countries) that were passed in to it in checkout() method in Front/ProductsController.php
-                $deliveryAddresses = \App\Models\DeliveryAddress::deliveryAddresses(); // Get all the delivery addresses of the currently authenticated/logged-in user    
+                $deliveryAddresses = DeliveryAddress::deliveryAddresses(); // Get all the delivery addresses of the currently authenticated/logged-in user    
 
                 // Fetch all of the world countries from the database table `countries`
-                $countries = \App\Models\Country::where('status', 1)->get()->toArray(); // get the countries which have status = 1 (to ignore the blacklisted countries, in case)
+                $countries = Country::where('status', 1)->get()->toArray(); // get the countries which have status = 1 (to ignore the blacklisted countries, in case)
                 // dd($countries);
     
     
@@ -107,15 +109,15 @@ class AddressController extends Controller
 
 
             // DELETE the delivery address from the `delivery_addresses` database table
-            \App\Models\DeliveryAddress::where('id', $data['addressid'])->delete(); // $data['addressid'] comes from the 'data' object inside the $.ajax() method. Check front/js/custom.js
+            DeliveryAddress::where('id', $data['addressid'])->delete(); // $data['addressid'] comes from the 'data' object inside the $.ajax() method. Check front/js/custom.js
             // exit;
 
 
             // Note: You must pass in to view the SAME variables ($deliveryAddresses and $countries) that were passed in to it in checkout() method in Front/ProductsController.php
-            $deliveryAddresses = \App\Models\DeliveryAddress::deliveryAddresses(); // Get all the delivery addresses of the currently authenticated/logged-in user   
+            $deliveryAddresses = DeliveryAddress::deliveryAddresses(); // Get all the delivery addresses of the currently authenticated/logged-in user   
 
             // Fetch all of the world countries from the database table `countries`
-            $countries = \App\Models\Country::where('status', 1)->get()->toArray(); // get the countries which have status = 1 (to ignore the blacklisted countries, in case)
+            $countries = Country::where('status', 1)->get()->toArray(); // get the countries which have status = 1 (to ignore the blacklisted countries, in case)
             // dd($countries);
 
 

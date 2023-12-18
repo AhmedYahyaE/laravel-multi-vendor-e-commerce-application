@@ -8,6 +8,9 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
+use App\Models\User;
+use App\Models\Cart;
+
 
 
 class UserController extends Controller
@@ -45,7 +48,7 @@ class UserController extends Controller
 
             if ($validator->passes()) { // if validation passes (is successful), register (INSERT) the new user into the database `users` table, and log the user in IMMEDIATELY and AUTOMATICALLY and DIRECTLY, and redirect them to the Cart cart.blade.php page
                 // Register the new user
-                $user = new \App\Models\User;
+                $user = new User;
 
                 $user->name     = $data['name'];   // $data['name']   comes from the 'data' object sent from inside the $.ajax() method in front/js/custom.js file
                 $user->mobile   = $data['mobile']; // $data['mobile'] comes from the 'data' object sent from inside the $.ajax() method in front/js/custom.js file
@@ -142,7 +145,7 @@ class UserController extends Controller
                         $user_id    = Auth::user()->id;
                         $session_id = Session::get('session_id');
 
-                        \App\Models\Cart::where('session_id', $session_id)->update(['user_id' => $user_id]);
+                        Cart::where('session_id', $session_id)->update(['user_id' => $user_id]);
                     }
 
  
@@ -193,15 +196,15 @@ class UserController extends Controller
         // dd($email);
 
         // For Security Reasons, check if that decoded user's $email exists in the `users` database table
-        $userCount = \App\models\User::where('email', $email)->count();
+        $userCount = User::where('email', $email)->count();
         if ($userCount > 0) { // if the user's email exists in `users` table
             // Check if the user is alreay active
-            $userDetails = \App\Models\User::where('email', $email)->first();
+            $userDetails = User::where('email', $email)->first();
             if ($userDetails->status == 1) { // if the user's account is already activated
                 // Redirect the user to the User Login/Register page with an 'error' message
                 return redirect('user/login-register')->with('error_message', 'Your account is already activated. You can login now.');
             } else { // if the user's account is not yet activated, activate it (update `status` to 1) and send a 'Welcome' Email
-                \App\Models\User::where('email', $email)->update([
+                User::where('email', $email)->update([
                     'status' => 1
                 ]);
 
@@ -255,12 +258,12 @@ class UserController extends Controller
 
                 // Generate a new password
                 // Change the current password immediately as the user forgot it, update it to a new random password, untill the user updates it by themselves
-                \App\Models\User::where('email', $data['email'])->update([
+                User::where('email', $data['email'])->update([
                     'password' => bcrypt($new_password) // storing the HASH-ed password (not the original password) in the database    // bcrypt(): https://laravel.com/docs/9.x/helpers#method-bcrypt
                 ]);
 
                 // Get user details
-                $userDetails = \App\Models\User::where('email', $data['email'])->first()->toArray();
+                $userDetails = User::where('email', $data['email'])->first()->toArray();
 
                 // Send an email to the user to get the new password (reset their password)    // HELO / Mailtrap / MailHog: https://laravel.com/docs/9.x/mail#mailtrap    
                 $email = $data['email']; // the user's email that they entered while submitting the registration form
@@ -330,7 +333,7 @@ class UserController extends Controller
 
             if ($validator->passes()) { // if validation passes (is successful), register (INSERT) the new user into the database `users` table, and log the user in IMMEDIATELY and AUTOMATICALLY and DIRECTLY, and redirect them to the Cart cart.blade.php page
                 // Update user details in `users` table
-                \App\Models\User::where('id', Auth::user()->id)->update([ // Retrieving The Authenticated User: https://laravel.com/docs/9.x/authentication#retrieving-the-authenticated-user
+                User::where('id', Auth::user()->id)->update([ // Retrieving The Authenticated User: https://laravel.com/docs/9.x/authentication#retrieving-the-authenticated-user
                     'name'    => $data['name'],    // $data['name']       comes from the 'data' object sent from inside the $.ajax() method in front/js/custom.js file
                     'mobile'  => $data['mobile'],  // $data['mobile']     comes from the 'data' object sent from inside the $.ajax() method in front/js/custom.js file
                     'city'    => $data['city'],    // $data['city']       comes from the 'data' object sent from inside the $.ajax() method in front/js/custom.js file
@@ -393,11 +396,11 @@ class UserController extends Controller
 
             if ($validator->passes()) { // if validation passes (is successful), update the user's current password
                 $current_password = $data['current_password']; // $data['current_password']    comes from the 'data' object sent from inside the $.ajax() method in front/js/custom.js file
-                $checkPassword    = \App\Models\User::where('id', Auth::user()->id)->first();
+                $checkPassword    = User::where('id', Auth::user()->id)->first();
 
                 if (Hash::check($current_password, $checkPassword->password)) { // if the entered current password is correct, update the current password    // Confirming The Password: https://laravel.com/docs/9.x/authentication#confirming-the-password
                     // Update the user's current password to the new password
-                    $user = \App\Models\User::find(Auth::user()->id);
+                    $user = User::find(Auth::user()->id);
                     $user->password = bcrypt($data['new_password']); // $data['new_password']    comes from the 'data' object sent from inside the $.ajax() method in front/js/custom.js file
                     $user->save();
 

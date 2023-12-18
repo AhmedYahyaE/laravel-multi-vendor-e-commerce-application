@@ -8,7 +8,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Auth;
 
-
+use App\Models\Order;
+use App\Models\ProductsAttribute;
 
 use Omnipay\Omnipay;
 
@@ -98,11 +99,11 @@ class PaypalController extends Controller
 
                 // Update the `order_status` column in `orders` table with 'Paid'    
                 $order_id = Session::get('order_id'); // Interacting With The Session: Retrieving Data: https://laravel.com/docs/9.x/session#retrieving-data
-                \App\Models\Order::where('id', $order_id)->update(['order_status' => 'Paid']);
+                Order::where('id', $order_id)->update(['order_status' => 'Paid']);
 
 
                 // Send making the order PayPal payment confirmation email to the user    
-                $orderDetails = \App\Models\Order::with('orders_products')->where('id', $order_id)->first()->toArray(); // Eager Loading: https://laravel.com/docs/9.x/eloquent-relationships#eager-loading    // 'orders_products' is the relationship method name in Order.php model
+                $orderDetails = Order::with('orders_products')->where('id', $order_id)->first()->toArray(); // Eager Loading: https://laravel.com/docs/9.x/eloquent-relationships#eager-loading    // 'orders_products' is the relationship method name in Order.php model
                 $email = Auth::user()->email; // Retrieving The Authenticated User: https://laravel.com/docs/9.x/authentication#retrieving-the-authenticated-user
 
                 // The email message data/variables that will be passed in to the email view
@@ -121,11 +122,11 @@ class PaypalController extends Controller
                 // Inventory Management - Reduce inventory/stock when an order gets placed
                 // We wrote the Inventory/Stock Management script in TWO places: in the checkout() method in Front/ProductsController.php and in the success() method in Front/PaypalController.php
                 foreach ($orderDetails['orders_products'] as $key => $order) {
-                    $getProductStock = \App\Models\ProductsAttribute::getProductStock($order['product_id'], $order['product_size']); // Get the `stock` of that product `product_id` with that specific `size` from `products_attributes` table
+                    $getProductStock = ProductsAttribute::getProductStock($order['product_id'], $order['product_size']); // Get the `stock` of that product `product_id` with that specific `size` from `products_attributes` table
 
                     $newStock = $getProductStock - $order['product_qty']; // The new product `stock` is the original stock reduced by the order `quantity`
 
-                    \App\Models\ProductsAttribute::where([ // Update the new `quantity` in the `products_attributes` table
+                    ProductsAttribute::where([ // Update the new `quantity` in the `products_attributes` table
                         'product_id' => $order['product_id'],
                         'size'       => $order['product_size']
                     ])->update(['stock' => $newStock]);

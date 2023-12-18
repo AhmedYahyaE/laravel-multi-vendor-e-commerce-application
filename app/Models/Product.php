@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+use App\Models\Category;
+
 class Product extends Model
 {
     use HasFactory;
@@ -46,11 +48,11 @@ class Product extends Model
     // A static method (to be able to be called directly without instantiating an object in index.blade.php) to determine the final price of a product because a product can have a discount from TWO things: either a `CATEGORY` discount or `PRODUCT` discout    
     public static function getDiscountPrice($product_id) { // this method is called in front/index.blade.php
         // Get the product PRICE, DISCOUNT and CATEGORY ID
-        $productDetails = \App\Models\Product::select('product_price', 'product_discount', 'category_id')->where('id', $product_id)->first();
+        $productDetails = Product::select('product_price', 'product_discount', 'category_id')->where('id', $product_id)->first();
         $productDetails = json_decode(json_encode($productDetails), true); // convert the object to an array    
 
         // Get the product category discount `category_discount` from `categories` table using its `category_id` in `products` table
-        $categoryDetails = \App\Models\Category::select('category_discount')->where('id', $productDetails['category_id'])->first();
+        $categoryDetails = Category::select('category_discount')->where('id', $productDetails['category_id'])->first();
         $categoryDetails = json_decode(json_encode($categoryDetails), true); // convert the object to an array    
 
         
@@ -78,11 +80,11 @@ class Product extends Model
         ])->first()->toArray();
 
         // Get the product DISCOUNT and CATEGORY ID of that product
-        $proDetails = \App\Models\Product::select('product_discount', 'category_id')->where('id', $product_id)->first();
+        $proDetails = Product::select('product_discount', 'category_id')->where('id', $product_id)->first();
         $proDetails = json_decode(json_encode($proDetails), true); // convert the object to an array    
 
         // Get the product category discount `category_discount` from `categories` table using its `category_id` in `products` table
-        $catDetails = \App\Models\Category::select('category_discount')->where('id', $proDetails['category_id'])->first();
+        $catDetails = Category::select('category_discount')->where('id', $proDetails['category_id'])->first();
         $catDetails = json_decode(json_encode($catDetails), true); // convert the object to an array    
 
         if ($proDetails['product_discount'] > 0) { // if there's a 'product_discount' (in `products` table) (i.e. discount is not zero 0)
@@ -113,7 +115,7 @@ class Product extends Model
 
     public static function isProductNew($product_id) { 
         // Get the last (latest) three 3 added products ids
-        $productIds = \App\Models\Product::select('id')->where('status', 1)->orderBy('id', 'Desc')->limit(3)->pluck('id');
+        $productIds = Product::select('id')->where('status', 1)->orderBy('id', 'Desc')->limit(3)->pluck('id');
         $productIds = json_decode(json_encode($productIds, true));
 
         if (in_array($product_id, $productIds)) { // if the passed in $product_id is in the array of the last (latest) 3 added products ids
@@ -130,7 +132,7 @@ class Product extends Model
 
     
     public static function getProductImage($product_id) { // this method is used in front/orders/order_details.blade.php
-        $getProductImage = \App\Models\Product::select('product_image')->where('id', $product_id)->first()->toArray();
+        $getProductImage = Product::select('product_image')->where('id', $product_id)->first()->toArray();
 
 
         return $getProductImage['product_image'];

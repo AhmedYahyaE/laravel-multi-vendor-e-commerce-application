@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
+use App\Models\Rating;
+
 
 class RatingController extends Controller
 {
@@ -22,7 +24,7 @@ class RatingController extends Controller
 
             // Check if the user has already rated this product before
             $user_id = Auth::user()->id; // Get/Retrive the id of the authenticated/logged-in user    // Retrieving The Authenticated User: https://laravel.com/docs/9.x/authentication#retrieving-the-authenticated-user
-            $ratingCount = \App\Models\Rating::where([
+            $ratingCount = Rating::where([
                 'user_id'    => $user_id,
                 'product_id' => $data['product_id']
             ])->count();
@@ -40,7 +42,7 @@ class RatingController extends Controller
                     return redirect()->back()->with('error_message', $message);
                 } else {
 
-                    $rating = new \App\Models\Rating();
+                    $rating = new Rating();
 
                     $rating->user_id    = $user_id;
                     $rating->product_id = $data['product_id'];
