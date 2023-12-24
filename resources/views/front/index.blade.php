@@ -1092,6 +1092,10 @@
             </div>
 
             <!-- Product list -->
+            @foreach ($newProducts as $product)
+            @php
+                $product_image_path = 'front/images/product_images/small/' . $product['product_image'];
+            @endphp
             <div
                 class="elementor-element elementor-element-977d0d9 e-con-full e-flex elementor-invisible e-con e-child"
                 data-id="977d0d9"
@@ -1106,17 +1110,31 @@
                 >
                     <div class="elementor-widget-container">
                         <a href="#">
+                            @if (!empty($product['product_image']) && file_exists($product_image_path)) {{-- if the product image exists in BOTH database table AND filesystem (on server) --}}
                             <img
                                 loading="lazy"
                                 decoding="async"
                                 width="800"
                                 height="968"
-                                src="./images/2023-12-features-for-Accounting-Software-1-846x1024.png"
+                                src="{{ asset($product_image_path) }}"
                                 class="attachment-large size-large wp-image-422"
                                 alt=""
-                                srcset="./images/2023-12-features-for-Accounting-Software-1-846x1024.png 846w, ./images/2023-12-features-for-Accounting-Software-1-248x300.png 248w, ./images/2023-12-features-for-Accounting-Software-1-768x930.png 768w, ./images/2023-12-features-for-Accounting-Software-1.png 879w"
+                                srcset="{{ asset($product_image_path) }} 846w, {{ asset($product_image_path) }} 248w, {{ asset($product_image_path) }} 768w, {{ asset($product_image_path) }} 879w"
                                 sizes="(max-width: 800px) 100vw, 800px"
                             >
+                            @else {{-- show the dummy image --}}
+                            <img
+                                loading="lazy"
+                                decoding="async"
+                                width="800"
+                                height="968"
+                                src="{{ asset('front/images/product/2023-12-features-for-Accounting-Software-1-846x1024.png')}}"
+                                class="attachment-large size-large wp-image-422"
+                                alt=""
+                                srcset="{{ asset('front/images/product/2023-12-features-for-Accounting-Software-1-846x1024.png') }} 846w, {{ asset('front/images/product/2023-12-features-for-Accounting-Software-1-248x300.png') }} 248w, {{ asset('front/images/product/2023-12-features-for-Accounting-Software-1-768x930.png') }} 768w, {{ asset('front/images/product/2023-12-features-for-Accounting-Software-1.png') }} 879w"
+                                sizes="(max-width: 800px) 100vw, 800px"
+                            >
+                            @endif
                         </a>
                     </div>
                 </div>
@@ -1140,6 +1158,7 @@
                         <p> ₱599.99</p>
                     </div>
                 </div>
+                @if ($product['status'] == 3)
                 <div
                     class="elementor-element elementor-element-fa07c3b elementor-widget elementor-widget-text-editor"
                     data-id="fa07c3b"
@@ -1150,6 +1169,7 @@
                         <em style="text-decoration: line-through;">₱599.99</em>
                     </div>
                 </div>
+                @endif
                 <div
                     class="elementor-element elementor-element-31614b3 e-flex e-con-boxed e-con e-child"
                     data-id="31614b3"
@@ -1175,10 +1195,10 @@
                                         decoding="async"
                                         width="300"
                                         height="300"
-                                        src="./images/2023-12-user.png"
+                                        src="{{ asset('front/images/brand-logos/2023-12-user.png') }}"
                                         class="attachment-large size-large wp-image-423"
                                         alt=""
-                                        srcset="./images/2023-12-user.png 300w, ./images/2023-12-user-150x150.png 150w"
+                                        srcset="{{ asset('front/images/brand-logos/2023-12-user.png') }} 300w, {{ asset('front//images/brand-logos/2023-12-user-150x150.png') }} 150w"
                                         sizes="(max-width: 300px) 100vw, 300px"
                                     >
                                 </div>
@@ -1194,6 +1214,7 @@
                                 </div>
                             </div>
                         </div>
+                        <!-- Product Rating Container -->
                         <div
                             class="elementor-element elementor-element-30c6e46 elementor-widget elementor-widget-rating"
                             data-id="30c6e46"
@@ -1217,8 +1238,12 @@
                                         role="img"
                                         aria-label="Rated 4 out of 5"
                                     >
+                                        @for ($x = 0; $x < 5; $x++)
+                                        @php
+                                            $marked = $product['product_ratings'];
+                                        @endphp
                                         <div class="e-icon">
-                                            <div class="e-icon-wrapper e-icon-marked">
+                                            <div class="e-icon-wrapper e-icon-marked" style="{{ ($x <= $marked && $marked > 0) ? '':'--e-rating-icon-marked-width: 0%;' }}">
                                                 <svg
                                                     aria-hidden="true"
                                                     class="e-font-icon-svg e-eicon-star"
@@ -1239,94 +1264,7 @@
                                                 </svg>
                                             </div>
                                         </div>
-                                        <div class="e-icon">
-                                            <div class="e-icon-wrapper e-icon-marked">
-                                                <svg
-                                                    aria-hidden="true"
-                                                    class="e-font-icon-svg e-eicon-star"
-                                                    viewbox="0 0 1000 1000"
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                >
-                                                    <path d="M450 75L338 312 88 350C46 354 25 417 58 450L238 633 196 896C188 942 238 975 275 954L500 837 725 954C767 975 813 942 804 896L763 633 942 450C975 417 954 358 913 350L663 312 550 75C529 33 471 33 450 75Z"></path>
-                                                </svg>
-                                            </div>
-                                            <div class="e-icon-wrapper e-icon-unmarked">
-                                                <svg
-                                                    aria-hidden="true"
-                                                    class="e-font-icon-svg e-eicon-star"
-                                                    viewbox="0 0 1000 1000"
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                >
-                                                    <path d="M450 75L338 312 88 350C46 354 25 417 58 450L238 633 196 896C188 942 238 975 275 954L500 837 725 954C767 975 813 942 804 896L763 633 942 450C975 417 954 358 913 350L663 312 550 75C529 33 471 33 450 75Z"></path>
-                                                </svg>
-                                            </div>
-                                        </div>
-                                        <div class="e-icon">
-                                            <div class="e-icon-wrapper e-icon-marked">
-                                                <svg
-                                                    aria-hidden="true"
-                                                    class="e-font-icon-svg e-eicon-star"
-                                                    viewbox="0 0 1000 1000"
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                >
-                                                    <path d="M450 75L338 312 88 350C46 354 25 417 58 450L238 633 196 896C188 942 238 975 275 954L500 837 725 954C767 975 813 942 804 896L763 633 942 450C975 417 954 358 913 350L663 312 550 75C529 33 471 33 450 75Z"></path>
-                                                </svg>
-                                            </div>
-                                            <div class="e-icon-wrapper e-icon-unmarked">
-                                                <svg
-                                                    aria-hidden="true"
-                                                    class="e-font-icon-svg e-eicon-star"
-                                                    viewbox="0 0 1000 1000"
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                >
-                                                    <path d="M450 75L338 312 88 350C46 354 25 417 58 450L238 633 196 896C188 942 238 975 275 954L500 837 725 954C767 975 813 942 804 896L763 633 942 450C975 417 954 358 913 350L663 312 550 75C529 33 471 33 450 75Z"></path>
-                                                </svg>
-                                            </div>
-                                        </div>
-                                        <div class="e-icon">
-                                            <div class="e-icon-wrapper e-icon-marked">
-                                                <svg
-                                                    aria-hidden="true"
-                                                    class="e-font-icon-svg e-eicon-star"
-                                                    viewbox="0 0 1000 1000"
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                >
-                                                    <path d="M450 75L338 312 88 350C46 354 25 417 58 450L238 633 196 896C188 942 238 975 275 954L500 837 725 954C767 975 813 942 804 896L763 633 942 450C975 417 954 358 913 350L663 312 550 75C529 33 471 33 450 75Z"></path>
-                                                </svg>
-                                            </div>
-                                            <div class="e-icon-wrapper e-icon-unmarked">
-                                                <svg
-                                                    aria-hidden="true"
-                                                    class="e-font-icon-svg e-eicon-star"
-                                                    viewbox="0 0 1000 1000"
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                >
-                                                    <path d="M450 75L338 312 88 350C46 354 25 417 58 450L238 633 196 896C188 942 238 975 275 954L500 837 725 954C767 975 813 942 804 896L763 633 942 450C975 417 954 358 913 350L663 312 550 75C529 33 471 33 450 75Z"></path>
-                                                </svg>
-                                            </div>
-                                        </div>
-                                        <div class="e-icon">
-                                            <div class="e-icon-wrapper e-icon-marked" style="--e-rating-icon-marked-width: 0%;">
-                                                <svg
-                                                    aria-hidden="true"
-                                                    class="e-font-icon-svg e-eicon-star"
-                                                    viewbox="0 0 1000 1000"
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                >
-                                                    <path d="M450 75L338 312 88 350C46 354 25 417 58 450L238 633 196 896C188 942 238 975 275 954L500 837 725 954C767 975 813 942 804 896L763 633 942 450C975 417 954 358 913 350L663 312 550 75C529 33 471 33 450 75Z"></path>
-                                                </svg>
-                                            </div>
-                                            <div class="e-icon-wrapper e-icon-unmarked">
-                                                <svg
-                                                    aria-hidden="true"
-                                                    class="e-font-icon-svg e-eicon-star"
-                                                    viewbox="0 0 1000 1000"
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                >
-                                                    <path d="M450 75L338 312 88 350C46 354 25 417 58 450L238 633 196 896C188 942 238 975 275 954L500 837 725 954C767 975 813 942 804 896L763 633 942 450C975 417 954 358 913 350L663 312 550 75C529 33 471 33 450 75Z"></path>
-                                                </svg>
-                                            </div>
-                                        </div>
+                                        @endfor
                                     </div>
                                 </div>
                             </div>
@@ -1334,8 +1272,8 @@
                     </div>
                 </div>
             </div>
+            @endforeach
             <!-- Product list /- -->
-
 
         </div>
     </div>
