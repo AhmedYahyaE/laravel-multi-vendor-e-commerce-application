@@ -12,6 +12,7 @@ class IndexController extends Controller
 
         $sliderBanners = \App\Models\Banner::where('type', 'Slider')->where('status', 1)->get()->toArray(); 
         $fixBanners    = \App\Models\Banner::where('type', 'Fix')->where('status', 1)->get()->toArray(); 
+        $categories    = \App\Models\Category::where('status', 1)->get()->toArray();
         $newProducts   = \App\Models\Product::orderBy('id', 'Desc')->where('status', 1)->limit(8)->get()->toArray(); // show the LATEST (DESCendingly) 8 added products (to show the 'New Arrivals' at the home page)    // Ordering, Grouping, Limit & Offset: https://laravel.com/docs/9.x/queries#ordering-grouping-limit-and-offset    
         $bestSellers   = \App\Models\Product::where([
             'is_bestseller' => 'Yes',
@@ -30,6 +31,6 @@ class IndexController extends Controller
         $meta_keywords    = 'eshop website, online shopping, multi vendor e-commerce';
 
 
-        return view('front.index')->with(compact('sliderBanners', 'fixBanners', 'newProducts', 'bestSellers', 'discountedProducts', 'featuredProducts', 'meta_title', 'meta_description', 'meta_keywords')); // this is the same as:    return view('front/index');
+        return view('front.index')->with(compact('sliderBanners', 'fixBanners', 'newProducts', 'bestSellers', 'discountedProducts', 'featuredProducts', 'meta_title', 'meta_description', 'meta_keywords', 'categories')); // this is the same as:    return view('front/index');
     }
 }

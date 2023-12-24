@@ -387,12 +387,13 @@
                 <div class="elementor-widget-container">
                     <div class="e-n-carousel swiper" dir="ltr">
                         <div class="swiper-wrapper" aria-live="off">
+                            @foreach ($categories as $category)
                             <div
                                 class="swiper-slide"
-                                data-slide="1"
+                                data-slide="{{ $category['id'] }}"
                                 role="group"
                                 aria-roledescription="slide"
-                                aria-label="1 of 6"
+                                aria-label="{{ $category['id'] }} of {{ count($categories) }}"
                             >
                                 <div
                                     class="elementor-element elementor-element-57bcf2d e-flex e-con-boxed e-con e-child"
@@ -416,7 +417,7 @@
                                                     data-widget_type="heading.default"
                                                 >
                                                     <div class="elementor-widget-container">
-                                                        <h2 class="elementor-heading-title elementor-size-default">ELECTRONICS</h2>
+                                                        <h2 class="elementor-heading-title elementor-size-default">{{$category['category_name']}}</h2>
                                                     </div>
                                                 </div>
                                             </div>
@@ -424,191 +425,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div
-                                class="swiper-slide"
-                                data-slide="2"
-                                role="group"
-                                aria-roledescription="slide"
-                                aria-label="2 of 6"
-                            >
-                                <div
-                                    class="elementor-element elementor-element-16c2559 e-flex e-con-boxed e-con e-child"
-                                    data-id="16c2559"
-                                    data-element_type="container"
-                                    data-settings="{&quot;container_type&quot;:&quot;flex&quot;,&quot;content_width&quot;:&quot;boxed&quot;}"
-                                >
-                                    <div class="e-con-inner">
-                                        <a
-                                            class="elementor-element elementor-element-c6b0af9 e-flex e-con-boxed e-con e-child"
-                                            data-id="c6b0af9"
-                                            data-element_type="container"
-                                            data-settings="{&quot;container_type&quot;:&quot;flex&quot;,&quot;content_width&quot;:&quot;boxed&quot;}"
-                                            href="#"
-                                        >
-                                            <div class="e-con-inner">
-                                                <div
-                                                    class="elementor-element elementor-element-9a80ae9 elementor-widget__width-inherit elementor-widget elementor-widget-heading"
-                                                    data-id="9a80ae9"
-                                                    data-element_type="widget"
-                                                    data-widget_type="heading.default"
-                                                >
-                                                    <div class="elementor-widget-container">
-                                                        <h2 class="elementor-heading-title elementor-size-default">FASHION</h2>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div
-                                class="swiper-slide"
-                                data-slide="3"
-                                role="group"
-                                aria-roledescription="slide"
-                                aria-label="3 of 6"
-                            >
-                                <div
-                                    class="elementor-element elementor-element-795602c e-flex e-con-boxed e-con e-child"
-                                    data-id="795602c"
-                                    data-element_type="container"
-                                    data-settings="{&quot;container_type&quot;:&quot;flex&quot;,&quot;content_width&quot;:&quot;boxed&quot;}"
-                                >
-                                    <div class="e-con-inner">
-                                        <a
-                                            class="elementor-element elementor-element-71491c1 e-flex e-con-boxed e-con e-child"
-                                            data-id="71491c1"
-                                            data-element_type="container"
-                                            data-settings="{&quot;container_type&quot;:&quot;flex&quot;,&quot;content_width&quot;:&quot;boxed&quot;}"
-                                            href="#"
-                                        >
-                                            <div class="e-con-inner">
-                                                <div
-                                                    class="elementor-element elementor-element-80a218c elementor-widget__width-inherit elementor-widget elementor-widget-heading"
-                                                    data-id="80a218c"
-                                                    data-element_type="widget"
-                                                    data-widget_type="heading.default"
-                                                >
-                                                    <div class="elementor-widget-container">
-                                                        <h2 class="elementor-heading-title elementor-size-default">HOME &amp; LIVING</h2>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div
-                                class="swiper-slide"
-                                data-slide="4"
-                                role="group"
-                                aria-roledescription="slide"
-                                aria-label="4 of 6"
-                            >
-                                <div
-                                    class="elementor-element elementor-element-6bad4c4 e-flex e-con-boxed e-con e-child"
-                                    data-id="6bad4c4"
-                                    data-element_type="container"
-                                    data-settings="{&quot;container_type&quot;:&quot;flex&quot;,&quot;content_width&quot;:&quot;boxed&quot;}"
-                                >
-                                    <div class="e-con-inner">
-                                        <a
-                                            class="elementor-element elementor-element-ebe1041 e-flex e-con-boxed e-con e-child"
-                                            data-id="ebe1041"
-                                            data-element_type="container"
-                                            data-settings="{&quot;container_type&quot;:&quot;flex&quot;,&quot;content_width&quot;:&quot;boxed&quot;}"
-                                            href="#"
-                                        >
-                                            <div class="e-con-inner">
-                                                <div
-                                                    class="elementor-element elementor-element-05379a5 elementor-widget__width-inherit elementor-widget elementor-widget-heading"
-                                                    data-id="05379a5"
-                                                    data-element_type="widget"
-                                                    data-widget_type="heading.default"
-                                                >
-                                                    <div class="elementor-widget-container">
-                                                        <h2 class="elementor-heading-title elementor-size-default">BEAUTY</h2>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div
-                                class="swiper-slide"
-                                data-slide="5"
-                                role="group"
-                                aria-roledescription="slide"
-                                aria-label="5 of 6"
-                            >
-                                <div
-                                    class="elementor-element elementor-element-086f872 e-flex e-con-boxed e-con e-child"
-                                    data-id="086f872"
-                                    data-element_type="container"
-                                    data-settings="{&quot;container_type&quot;:&quot;flex&quot;,&quot;content_width&quot;:&quot;boxed&quot;}"
-                                >
-                                    <div class="e-con-inner">
-                                        <a
-                                            class="elementor-element elementor-element-2b55930 e-flex e-con-boxed e-con e-child"
-                                            data-id="2b55930"
-                                            data-element_type="container"
-                                            data-settings="{&quot;container_type&quot;:&quot;flex&quot;,&quot;content_width&quot;:&quot;boxed&quot;}"
-                                            href="#"
-                                        >
-                                            <div class="e-con-inner">
-                                                <div
-                                                    class="elementor-element elementor-element-0f03145 elementor-widget__width-inherit elementor-widget elementor-widget-heading"
-                                                    data-id="0f03145"
-                                                    data-element_type="widget"
-                                                    data-widget_type="heading.default"
-                                                >
-                                                    <div class="elementor-widget-container">
-                                                        <h2 class="elementor-heading-title elementor-size-default">FOOD</h2>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div
-                                class="swiper-slide"
-                                data-slide="6"
-                                role="group"
-                                aria-roledescription="slide"
-                                aria-label="6 of 6"
-                            >
-                                <div
-                                    class="elementor-element elementor-element-2e93cd8 e-flex e-con-boxed e-con e-child"
-                                    data-id="2e93cd8"
-                                    data-element_type="container"
-                                    data-settings="{&quot;container_type&quot;:&quot;flex&quot;,&quot;content_width&quot;:&quot;boxed&quot;}"
-                                >
-                                    <div class="e-con-inner">
-                                        <a
-                                            class="elementor-element elementor-element-414864c e-flex e-con-boxed e-con e-child"
-                                            data-id="414864c"
-                                            data-element_type="container"
-                                            data-settings="{&quot;container_type&quot;:&quot;flex&quot;,&quot;content_width&quot;:&quot;boxed&quot;}"
-                                            href="#"
-                                        >
-                                            <div class="e-con-inner">
-                                                <div
-                                                    class="elementor-element elementor-element-1b376ae elementor-widget__width-inherit elementor-widget elementor-widget-heading"
-                                                    data-id="1b376ae"
-                                                    data-element_type="widget"
-                                                    data-widget_type="heading.default"
-                                                >
-                                                    <div class="elementor-widget-container">
-                                                        <h2 class="elementor-heading-title elementor-size-default">TRAVEL</h2>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
+                            @endforeach
                         </div>
                     </div>
                     <div class="elementor-swiper-button elementor-swiper-button-prev" role="button" tabindex="0">
