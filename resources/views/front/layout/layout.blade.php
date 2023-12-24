@@ -219,7 +219,11 @@ window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/14
 
 
             {{-- Middle Content (varies from a page to another) --}}
-            @yield('content')
+            <main id="content" class="site-main post-15 page type-page status-publish hentry">
+                <div class="page-content">
+                    @yield('content')
+                </div>
+            </main>
 
 
             {{-- Footer partial --}}
