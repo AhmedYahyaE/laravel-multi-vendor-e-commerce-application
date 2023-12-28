@@ -128,30 +128,51 @@ window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/14
             href="{{ url('front/css/elementor-css/elementor-css-global.css') }}"
             media="all"
         >
-        <link
-            rel="stylesheet"
-            id="elementor-post-15-css"
-            href="{{ url('front/css/elementor-css/elementor-css-post-15.css') }}"
-            media="all"
-        >
-        <link
-            rel="stylesheet"
-            id="elementor-post-34-css"
-            href="{{ url('front/css/elementor-css/elementor-css-post-34.css') }}"
-            media="all"
-        >
-        <link
-            rel="stylesheet"
-            id="elementor-post-444-css"
-            href="{{ url('front/css/elementor-css/elementor-css-post-444.css') }}"
-            media="all"
-        >
-        <link
-            rel="stylesheet"
-            id="elementor-post-491-css"
-            href="{{ url('front/css/elementor-css/elementor-css-post-491.css') }}"
-            media="all"
-        >
+
+        @php
+            $currentRoute = request()->route()->getName();
+
+            $css_headers = [
+                'elementor-post-644-css' => [
+                    'url' => 'user/reset-password',
+                    'href' => 'front/css/elementor-css/elementor-css-post-644.css'
+                ],
+                'elementor-post-656-css' => [
+                    'url' => 'user/register',
+                    'href' => 'front/css/elementor-css/elementor-css-post-656.css'
+                ],
+                'elementor-post-611-css' => [
+                    'url' => 'login',
+                    'href' => 'front/css/elementor-css/elementor-css-post-611.css'
+                ],
+                'elementor-post-491-css' => [
+                    'url' => 'product_detail.show',
+                    'href' => 'front/css/elementor-css/elementor-css-post-491.css'
+                ],
+                'elementor-post-15-css' => [
+                    'url' => 'home',
+                    'href' => 'front/css/elementor-css/elementor-css-post-15.css'
+                ],
+                'elementor-post-34-css' => [
+                    'url' => 'any',
+                    'href' => 'front/css/elementor-css/elementor-css-post-34.css'
+                ],
+                'elementor-post-444-css' => [
+                    'url' => 'any',
+                    'href' => 'front/css/elementor-css/elementor-css-post-444.css'
+                ],
+            ];
+        @endphp
+        @foreach ($css_headers as $css_header_id => $css_header)
+            @if ($currentRoute == $css_header['url'] || $css_header['url'] == 'any')
+            <link
+                rel="stylesheet"
+                id="{{$css_header_id}}"
+                href="{{ url($css_header['href']) }}"
+                media="all"
+            >
+            @endif
+        @endforeach
         <link
             rel="stylesheet"
             id="google-fonts-1-css"
@@ -163,7 +184,7 @@ window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/14
             /* <![CDATA[ */
             var rcewpp = {
                 "ajax_url":"https://kapiton.seikodesigns.com/wp-admin/admin-ajax.php",
-                "nonce": "0fd157bebb",
+                "nonce": "b1e27b8502",
                 "home_url": "https://kapiton.seikodesigns.com/",
                 "settings_icon": 'https://kapiton.seikodesigns.com/wp-content/plugins/export-wp-page-to-static-html/admin/images/settings.png',
                 "settings_hover_icon": 'https://kapiton.seikodesigns.com/wp-content/plugins/export-wp-page-to-static-html/admin/images/settings_hover.png'
@@ -225,7 +246,7 @@ window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/14
 
 
             {{-- Middle Content (varies from a page to another) --}}
-            <main id="content" class="site-main post-15 page type-page status-publish hentry">
+            <main id="content" class="site-main post-611 page type-page status-publish hentry">
                 <div class="page-content">
                     @yield('content')
                 </div>
@@ -380,13 +401,13 @@ window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/14
 wp.i18n.setLocaleData( { 'text direction\u0004ltr': [ 'ltr' ] } );
         </script>
         <script id="elementor-pro-frontend-js-before">
-var ElementorProFrontendConfig = {"ajaxurl":"./wp-admin\/admin-ajax.php","nonce":"0b0862e1c3","urls":{"assets":"./front\/wp-content\/plugins\/elementor-pro\/assets\/","rest":"./wp-json\/"},"shareButtonsNetworks":{"facebook":{"title":"Facebook","has_counter":true},"twitter":{"title":"Twitter"},"linkedin":{"title":"LinkedIn","has_counter":true},"pinterest":{"title":"Pinterest","has_counter":true},"reddit":{"title":"Reddit","has_counter":true},"vk":{"title":"VK","has_counter":true},"odnoklassniki":{"title":"OK","has_counter":true},"tumblr":{"title":"Tumblr"},"digg":{"title":"Digg"},"skype":{"title":"Skype"},"stumbleupon":{"title":"StumbleUpon","has_counter":true},"mix":{"title":"Mix"},"telegram":{"title":"Telegram"},"pocket":{"title":"Pocket","has_counter":true},"xing":{"title":"XING","has_counter":true},"whatsapp":{"title":"WhatsApp"},"email":{"title":"Email"},"print":{"title":"Print"}},"facebook_sdk":{"lang":"en_US","app_id":""},"lottie":{"defaultAnimationUrl":"./front\/wp-content\/plugins/elementor-pro/modules/lottie/assets/animations/default.json"}};
+var ElementorProFrontendConfig = {"ajaxurl":"./wp-admin\/admin-ajax.php","nonce":"9b6b08724d","urls":{"assets":"\/front/wp-content/plugins/elementor-pro/assets\/","rest":"./wp-json\/"},"shareButtonsNetworks":{"facebook":{"title":"Facebook","has_counter":true},"twitter":{"title":"Twitter"},"linkedin":{"title":"LinkedIn","has_counter":true},"pinterest":{"title":"Pinterest","has_counter":true},"reddit":{"title":"Reddit","has_counter":true},"vk":{"title":"VK","has_counter":true},"odnoklassniki":{"title":"OK","has_counter":true},"tumblr":{"title":"Tumblr"},"digg":{"title":"Digg"},"skype":{"title":"Skype"},"stumbleupon":{"title":"StumbleUpon","has_counter":true},"mix":{"title":"Mix"},"telegram":{"title":"Telegram"},"pocket":{"title":"Pocket","has_counter":true},"xing":{"title":"XING","has_counter":true},"whatsapp":{"title":"WhatsApp"},"email":{"title":"Email"},"print":{"title":"Print"}},"facebook_sdk":{"lang":"en_US","app_id":""},"lottie":{"defaultAnimationUrl":"\/front/wp-content/plugins/elementor-pro/modules/lottie/assets/animations/default.json"}};
         </script>
         <script src="{{ url('front/js/elementor-js/elementor-pro-assets-js-frontend.min.js') }}" id="elementor-pro-frontend-js"></script>
         <script src="{{ url('front/js/elementor-js/elementor-assets-lib-waypoints-waypoints.min.js') }}" id="elementor-waypoints-js"></script>
         <script src="{{ url('front/js/elementor-js/jquery-ui-core.min.js') }}" id="jquery-ui-core-js"></script>
         <script id="elementor-frontend-js-before">
-var elementorFrontendConfig = {"environmentMode":{"edit":false,"wpPreview":false,"isScriptDebug":false},"i18n":{"shareOnFacebook":"Share on Facebook","shareOnTwitter":"Share on Twitter","pinIt":"Pin it","download":"Download","downloadImage":"Download image","fullscreen":"Fullscreen","zoom":"Zoom","share":"Share","playVideo":"Play Video","previous":"Previous","next":"Next","close":"Close","a11yCarouselWrapperAriaLabel":"Carousel | Horizontal scrolling: Arrow Left & Right","a11yCarouselPrevSlideMessage":"Previous slide","a11yCarouselNextSlideMessage":"Next slide","a11yCarouselFirstSlideMessage":"This is the first slide","a11yCarouselLastSlideMessage":"This is the last slide","a11yCarouselPaginationBulletMessage":"Go to slide"},"is_rtl":false,"breakpoints":{"xs":0,"sm":480,"md":768,"lg":1025,"xl":1440,"xxl":1600},"responsive":{"breakpoints":{"mobile":{"label":"Mobile Portrait","value":767,"default_value":767,"direction":"max","is_enabled":true},"mobile_extra":{"label":"Mobile Landscape","value":880,"default_value":880,"direction":"max","is_enabled":false},"tablet":{"label":"Tablet Portrait","value":1024,"default_value":1024,"direction":"max","is_enabled":true},"tablet_extra":{"label":"Tablet Landscape","value":1200,"default_value":1200,"direction":"max","is_enabled":false},"laptop":{"label":"Laptop","value":1366,"default_value":1366,"direction":"max","is_enabled":false},"widescreen":{"label":"Widescreen","value":2400,"default_value":2400,"direction":"min","is_enabled":false}}},"version":"3.18.2","is_static":false,"experimentalFeatures":{"e_dom_optimization":true,"e_optimized_assets_loading":true,"e_optimized_css_loading":true,"e_font_icon_svg":true,"additional_custom_breakpoints":true,"container":true,"e_swiper_latest":true,"container_grid":true,"theme_builder_v2":true,"hello-theme-header-footer":true,"editor_v2":true,"block_editor_assets_optimize":true,"landing-pages":true,"nested-elements":true,"e_image_loading_optimization":true,"e_global_styleguide":true,"page-transitions":true,"notes":true,"form-submissions":true,"e_scroll_snap":true},"urls":{"assets":"./front\/wp-content\/plugins\/elementor/assets\/"},"swiperClass":"swiper","settings":{"page":[],"editorPreferences":[]},"kit":{"active_breakpoints":["viewport_mobile","viewport_tablet"],"global_image_lightbox":"yes","lightbox_enable_counter":"yes","lightbox_enable_fullscreen":"yes","lightbox_enable_zoom":"yes","lightbox_enable_share":"yes","lightbox_title_src":"title","lightbox_description_src":"description","hello_header_logo_type":"logo","hello_header_menu_layout":"horizontal","hello_footer_logo_type":"logo"},"post":{"id":15,"title":"Kapiton%20%E2%80%93%20Philippines","excerpt":"","featuredImage":false}};
+var elementorFrontendConfig = {"environmentMode":{"edit":false,"wpPreview":false,"isScriptDebug":false},"i18n":{"shareOnFacebook":"Share on Facebook","shareOnTwitter":"Share on Twitter","pinIt":"Pin it","download":"Download","downloadImage":"Download image","fullscreen":"Fullscreen","zoom":"Zoom","share":"Share","playVideo":"Play Video","previous":"Previous","next":"Next","close":"Close","a11yCarouselWrapperAriaLabel":"Carousel | Horizontal scrolling: Arrow Left & Right","a11yCarouselPrevSlideMessage":"Previous slide","a11yCarouselNextSlideMessage":"Next slide","a11yCarouselFirstSlideMessage":"This is the first slide","a11yCarouselLastSlideMessage":"This is the last slide","a11yCarouselPaginationBulletMessage":"Go to slide"},"is_rtl":false,"breakpoints":{"xs":0,"sm":480,"md":768,"lg":1025,"xl":1440,"xxl":1600},"responsive":{"breakpoints":{"mobile":{"label":"Mobile Portrait","value":767,"default_value":767,"direction":"max","is_enabled":true},"mobile_extra":{"label":"Mobile Landscape","value":880,"default_value":880,"direction":"max","is_enabled":false},"tablet":{"label":"Tablet Portrait","value":1024,"default_value":1024,"direction":"max","is_enabled":true},"tablet_extra":{"label":"Tablet Landscape","value":1200,"default_value":1200,"direction":"max","is_enabled":false},"laptop":{"label":"Laptop","value":1366,"default_value":1366,"direction":"max","is_enabled":false},"widescreen":{"label":"Widescreen","value":2400,"default_value":2400,"direction":"min","is_enabled":false}}},"version":"3.18.2","is_static":false,"experimentalFeatures":{"e_dom_optimization":true,"e_optimized_assets_loading":true,"e_optimized_css_loading":true,"e_font_icon_svg":true,"additional_custom_breakpoints":true,"container":true,"e_swiper_latest":true,"container_grid":true,"theme_builder_v2":true,"hello-theme-header-footer":true,"editor_v2":true,"block_editor_assets_optimize":true,"landing-pages":true,"nested-elements":true,"e_image_loading_optimization":true,"e_global_styleguide":true,"page-transitions":true,"notes":true,"form-submissions":true,"e_scroll_snap":true},"urls":{"assets":"\/front/wp-content/plugins/elementor/assets\/"},"swiperClass":"swiper","settings":{"page":[],"editorPreferences":[]},"kit":{"active_breakpoints":["viewport_mobile","viewport_tablet"],"global_image_lightbox":"yes","lightbox_enable_counter":"yes","lightbox_enable_fullscreen":"yes","lightbox_enable_zoom":"yes","lightbox_enable_share":"yes","lightbox_title_src":"title","lightbox_description_src":"description","hello_header_logo_type":"logo","hello_header_menu_layout":"horizontal","hello_footer_logo_type":"logo"},"post":{"id":15,"title":"Kapiton%20%E2%80%93%20Philippines","excerpt":"","featuredImage":false}};
         </script>
         <script src="{{ url('front/js/elementor-js/elementor-assets-js-frontend.min.js') }}" id="elementor-frontend-js"></script>
         <script src="{{ url('front/js/elementor-js/elementor-pro-assets-js-elements-handlers.min.js') }}" id="pro-elements-handlers-js"></script>
