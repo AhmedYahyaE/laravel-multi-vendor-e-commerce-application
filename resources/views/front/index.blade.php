@@ -1112,7 +1112,5 @@
         </div>
     </div>
     <!-- Recently added /- -->
-    
-    @include('front.layout.become_a_merchant')
 </div>
 @endsection

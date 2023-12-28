@@ -41,64 +41,294 @@
                 data-element_type="container"
                 data-settings="{&quot;content_width&quot;:&quot;full&quot;,&quot;animation&quot;:&quot;fadeInLeft&quot;,&quot;container_type&quot;:&quot;flex&quot;}"
             >
-            
                 <div
-                    class="elementor-element elementor-element-14f2792 elementor-pagination-type-progressbar elementor-arrows-position-inside elementor-widget elementor-widget-n-carousel"
-                    data-id="14f2792"
-                    data-element_type="widget"
-                    data-settings="{&quot;carousel_items&quot;:[{&quot;slide_title&quot;:&quot;Slide #1&quot;,&quot;_id&quot;:&quot;9df787b&quot;},{&quot;slide_title&quot;:&quot;Slide #1&quot;,&quot;_id&quot;:&quot;9a06489&quot;},{&quot;slide_title&quot;:&quot;Slide #1&quot;,&quot;_id&quot;:&quot;a96bbe5&quot;},{&quot;slide_title&quot;:&quot;Slide #1&quot;,&quot;_id&quot;:&quot;96cff8d&quot;},{&quot;slide_title&quot;:&quot;Slide #1&quot;,&quot;_id&quot;:&quot;8586e44&quot;},{&quot;slide_title&quot;:&quot;Slide #1&quot;,&quot;_id&quot;:&quot;1f406b6&quot;}],&quot;slides_to_show&quot;:&quot;1&quot;,&quot;pagination&quot;:&quot;progressbar&quot;,&quot;slides_to_show_tablet&quot;:&quot;1&quot;,&quot;slides_to_show_mobile&quot;:&quot;1&quot;,&quot;autoplay&quot;:&quot;yes&quot;,&quot;autoplay_speed&quot;:5000,&quot;pause_on_hover&quot;:&quot;yes&quot;,&quot;pause_on_interaction&quot;:&quot;yes&quot;,&quot;infinite&quot;:&quot;yes&quot;,&quot;speed&quot;:500,&quot;offset_sides&quot;:&quot;none&quot;,&quot;arrows&quot;:&quot;yes&quot;,&quot;image_spacing_custom&quot;:{&quot;unit&quot;:&quot;px&quot;,&quot;size&quot;:10,&quot;sizes&quot;:[]},&quot;image_spacing_custom_tablet&quot;:{&quot;unit&quot;:&quot;px&quot;,&quot;size&quot;:&quot;&quot;,&quot;sizes&quot;:[]},&quot;image_spacing_custom_mobile&quot;:{&quot;unit&quot;:&quot;px&quot;,&quot;size&quot;:&quot;&quot;,&quot;sizes&quot;:[]}}"
-                    data-widget_type="nested-carousel.default"
+                    class="elementor-element elementor-element-7e93cf1 e-flex e-con-boxed e-con e-child"
+                    data-id="7e93cf1"
+                    data-element_type="container"
+                    data-settings="{&quot;container_type&quot;:&quot;flex&quot;,&quot;content_width&quot;:&quot;boxed&quot;}"
                 >
-                    <div class="elementor-widget-container">
-                        <link rel="stylesheet" href="{{ url('front/css/elementor-css/elementor-pro-assets-css-widget-nested-carousel.min.css') }}">
-                        <div class="e-n-carousel swiper" dir="ltr">
-                            <div class="swiper-wrapper" aria-live="off">
-                                <div
-                                    class="swiper-slide"
-                                    data-slide="1"
-                                    role="group"
-                                    aria-roledescription="slide"
-                                    aria-label="1 of 6"
-                                >
-                                    <div
-                                        class="elementor-element elementor-element-09d9b51 e-flex e-con-boxed e-con e-child"
-                                        data-id="09d9b51"
-                                        data-element_type="container"
-                                        data-settings="{&quot;container_type&quot;:&quot;flex&quot;,&quot;content_width&quot;:&quot;boxed&quot;}"
-                                    >
-                                        <div class="e-con-inner">
+                    <div class="e-con-inner">
+                        <div
+                            class="elementor-element elementor-element-14f2792 elementor-pagination-type-progressbar elementor-arrows-position-inside elementor-widget elementor-widget-n-carousel"
+                            data-id="14f2792"
+                            data-element_type="widget"
+                            data-settings="{&quot;carousel_items&quot;:[{&quot;slide_title&quot;:&quot;Slide #1&quot;,&quot;_id&quot;:&quot;9df787b&quot;},{&quot;slide_title&quot;:&quot;Slide #1&quot;,&quot;_id&quot;:&quot;9a06489&quot;},{&quot;slide_title&quot;:&quot;Slide #1&quot;,&quot;_id&quot;:&quot;a96bbe5&quot;},{&quot;slide_title&quot;:&quot;Slide #1&quot;,&quot;_id&quot;:&quot;96cff8d&quot;},{&quot;slide_title&quot;:&quot;Slide #1&quot;,&quot;_id&quot;:&quot;8586e44&quot;},{&quot;slide_title&quot;:&quot;Slide #1&quot;,&quot;_id&quot;:&quot;1f406b6&quot;}],&quot;slides_to_show&quot;:&quot;1&quot;,&quot;pagination&quot;:&quot;progressbar&quot;,&quot;slides_to_show_tablet&quot;:&quot;1&quot;,&quot;slides_to_show_mobile&quot;:&quot;1&quot;,&quot;autoplay&quot;:&quot;yes&quot;,&quot;autoplay_speed&quot;:5000,&quot;pause_on_hover&quot;:&quot;yes&quot;,&quot;pause_on_interaction&quot;:&quot;yes&quot;,&quot;infinite&quot;:&quot;yes&quot;,&quot;speed&quot;:500,&quot;offset_sides&quot;:&quot;none&quot;,&quot;arrows&quot;:&quot;yes&quot;,&quot;image_spacing_custom&quot;:{&quot;unit&quot;:&quot;px&quot;,&quot;size&quot;:10,&quot;sizes&quot;:[]},&quot;image_spacing_custom_tablet&quot;:{&quot;unit&quot;:&quot;px&quot;,&quot;size&quot;:&quot;&quot;,&quot;sizes&quot;:[]},&quot;image_spacing_custom_mobile&quot;:{&quot;unit&quot;:&quot;px&quot;,&quot;size&quot;:&quot;&quot;,&quot;sizes&quot;:[]}}"
+                            data-widget_type="nested-carousel.default"
+                        >
+                            <div class="elementor-widget-container">
+                                <link rel="stylesheet" href="{{ url('front/css/elementor-css/elementor-pro-assets-css-widget-nested-carousel.min.css') }}">
+                                <div class="e-n-carousel swiper" dir="ltr">
+                                    <div class="swiper-wrapper" aria-live="off">
+                                        <div
+                                            class="swiper-slide"
+                                            data-slide="1"
+                                            role="group"
+                                            aria-roledescription="slide"
+                                            aria-label="1 of 6"
+                                        >
                                             <div
-                                                class="elementor-element elementor-element-7496269 e-flex e-con-boxed e-con e-child"
-                                                data-id="7496269"
+                                                class="elementor-element elementor-element-09d9b51 e-flex e-con-boxed e-con e-child"
+                                                data-id="09d9b51"
                                                 data-element_type="container"
                                                 data-settings="{&quot;container_type&quot;:&quot;flex&quot;,&quot;content_width&quot;:&quot;boxed&quot;}"
                                             >
                                                 <div class="e-con-inner">
                                                     <div
-                                                        class="elementor-element elementor-element-9905f7b elementor-widget elementor-widget-image"
-                                                        data-id="9905f7b"
-                                                        data-element_type="widget"
-                                                        data-widget_type="image.default"
+                                                        class="elementor-element elementor-element-7496269 e-flex e-con-boxed e-con e-child"
+                                                        data-id="7496269"
+                                                        data-element_type="container"
+                                                        data-settings="{&quot;container_type&quot;:&quot;flex&quot;,&quot;content_width&quot;:&quot;boxed&quot;}"
                                                     >
-                                                        <div class="elementor-widget-container">
-                                                            <a
-                                                                href="./images/2023-12-cc1.jpg"
-                                                                data-elementor-open-lightbox="yes"
-                                                                data-elementor-lightbox-title="cc1"
-                                                                data-e-action-hash="#elementor-action%3Aaction%3Dlightbox%26settings%3DeyJpZCI6NTAzLCJ1cmwiOiJodHRwczpcL1wva2FwaXRvbi5zZWlrb2Rlc2lnbnMuY29tXC93cC1jb250ZW50XC91cGxvYWRzXC8yMDIzXC8xMlwvY2MxLmpwZyJ9"
+                                                        <div class="e-con-inner">
+                                                            <div
+                                                                class="elementor-element elementor-element-9905f7b elementor-widget elementor-widget-image"
+                                                                data-id="9905f7b"
+                                                                data-element_type="widget"
+                                                                data-widget_type="image.default"
                                                             >
-                                                                <img
-                                                                    fetchpriority="high"
-                                                                    decoding="async"
-                                                                    width="522"
-                                                                    height="522"
-                                                                    src="./images/2023-12-cc1.jpg"
-                                                                    class="attachment-large size-large wp-image-503"
-                                                                    alt=""
-                                                                    srcset="./images/2023-12-cc1.jpg 522w, ./images/2023-12-cc1-300x300.jpg 300w, ./images/2023-12-cc1-150x150.jpg 150w"
-                                                                    sizes="(max-width: 522px) 100vw, 522px"
-                                                                >
-                                                            </a>
+                                                                <div class="elementor-widget-container">
+                                                                    <img
+                                                                        fetchpriority="high"
+                                                                        decoding="async"
+                                                                        width="522"
+                                                                        height="522"
+                                                                        src="./images/2023-12-cc1.jpg"
+                                                                        class="attachment-large size-large wp-image-503"
+                                                                        alt=""
+                                                                        srcset="./images/2023-12-cc1.jpg 522w, ./images/2023-12-cc1-300x300.jpg 300w, ./images/2023-12-cc1-150x150.jpg 150w"
+                                                                        sizes="(max-width: 522px) 100vw, 522px"
+                                                                    >
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div
+                                            class="swiper-slide"
+                                            data-slide="2"
+                                            role="group"
+                                            aria-roledescription="slide"
+                                            aria-label="2 of 6"
+                                        >
+                                            <div
+                                                class="elementor-element elementor-element-f1c6ecd e-flex e-con-boxed e-con e-child"
+                                                data-id="f1c6ecd"
+                                                data-element_type="container"
+                                                data-settings="{&quot;container_type&quot;:&quot;flex&quot;,&quot;content_width&quot;:&quot;boxed&quot;}"
+                                            >
+                                                <div class="e-con-inner">
+                                                    <div
+                                                        class="elementor-element elementor-element-7ebc911 e-flex e-con-boxed e-con e-child"
+                                                        data-id="7ebc911"
+                                                        data-element_type="container"
+                                                        data-settings="{&quot;container_type&quot;:&quot;flex&quot;,&quot;content_width&quot;:&quot;boxed&quot;}"
+                                                    >
+                                                        <div class="e-con-inner">
+                                                            <div
+                                                                class="elementor-element elementor-element-faf2dee elementor-widget elementor-widget-image"
+                                                                data-id="faf2dee"
+                                                                data-element_type="widget"
+                                                                data-widget_type="image.default"
+                                                            >
+                                                                <div class="elementor-widget-container">
+                                                                    <img
+                                                                        decoding="async"
+                                                                        width="522"
+                                                                        height="522"
+                                                                        src="./images/2023-12-cc2.jpg"
+                                                                        class="attachment-large size-large wp-image-502"
+                                                                        alt=""
+                                                                        srcset="./images/2023-12-cc2.jpg 522w, ./images/2023-12-cc2-300x300.jpg 300w, ./images/2023-12-cc2-150x150.jpg 150w"
+                                                                        sizes="(max-width: 522px) 100vw, 522px"
+                                                                    >
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div
+                                            class="swiper-slide"
+                                            data-slide="3"
+                                            role="group"
+                                            aria-roledescription="slide"
+                                            aria-label="3 of 6"
+                                        >
+                                            <div
+                                                class="elementor-element elementor-element-de7bf40 e-flex e-con-boxed e-con e-child"
+                                                data-id="de7bf40"
+                                                data-element_type="container"
+                                                data-settings="{&quot;container_type&quot;:&quot;flex&quot;,&quot;content_width&quot;:&quot;boxed&quot;}"
+                                            >
+                                                <div class="e-con-inner">
+                                                    <div
+                                                        class="elementor-element elementor-element-aa55d80 e-flex e-con-boxed e-con e-child"
+                                                        data-id="aa55d80"
+                                                        data-element_type="container"
+                                                        data-settings="{&quot;container_type&quot;:&quot;flex&quot;,&quot;content_width&quot;:&quot;boxed&quot;}"
+                                                    >
+                                                        <div class="e-con-inner">
+                                                            <div
+                                                                class="elementor-element elementor-element-6dedfe3 elementor-widget elementor-widget-image"
+                                                                data-id="6dedfe3"
+                                                                data-element_type="widget"
+                                                                data-widget_type="image.default"
+                                                            >
+                                                                <div class="elementor-widget-container">
+                                                                    <img
+                                                                        loading="lazy"
+                                                                        decoding="async"
+                                                                        width="522"
+                                                                        height="522"
+                                                                        src="./images/2023-12-cc3.jpg"
+                                                                        class="attachment-large size-large wp-image-501"
+                                                                        alt=""
+                                                                        srcset="./images/2023-12-cc3.jpg 522w, ./images/2023-12-cc3-300x300.jpg 300w, ./images/2023-12-cc3-150x150.jpg 150w"
+                                                                        sizes="(max-width: 522px) 100vw, 522px"
+                                                                    >
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div
+                                            class="swiper-slide"
+                                            data-slide="4"
+                                            role="group"
+                                            aria-roledescription="slide"
+                                            aria-label="4 of 6"
+                                        >
+                                            <div
+                                                class="elementor-element elementor-element-49c5283 e-flex e-con-boxed e-con e-child"
+                                                data-id="49c5283"
+                                                data-element_type="container"
+                                                data-settings="{&quot;container_type&quot;:&quot;flex&quot;,&quot;content_width&quot;:&quot;boxed&quot;}"
+                                            >
+                                                <div class="e-con-inner">
+                                                    <div
+                                                        class="elementor-element elementor-element-334f1b7 e-flex e-con-boxed e-con e-child"
+                                                        data-id="334f1b7"
+                                                        data-element_type="container"
+                                                        data-settings="{&quot;container_type&quot;:&quot;flex&quot;,&quot;content_width&quot;:&quot;boxed&quot;}"
+                                                    >
+                                                        <div class="e-con-inner">
+                                                            <div
+                                                                class="elementor-element elementor-element-901aa1d elementor-widget elementor-widget-image"
+                                                                data-id="901aa1d"
+                                                                data-element_type="widget"
+                                                                data-widget_type="image.default"
+                                                            >
+                                                                <div class="elementor-widget-container">
+                                                                    <img
+                                                                        loading="lazy"
+                                                                        decoding="async"
+                                                                        width="522"
+                                                                        height="522"
+                                                                        src="./images/2023-12-cc4.jpg"
+                                                                        class="attachment-large size-large wp-image-500"
+                                                                        alt=""
+                                                                        srcset="./images/2023-12-cc4.jpg 522w, ./images/2023-12-cc4-300x300.jpg 300w, ./images/2023-12-cc4-150x150.jpg 150w"
+                                                                        sizes="(max-width: 522px) 100vw, 522px"
+                                                                    >
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div
+                                            class="swiper-slide"
+                                            data-slide="5"
+                                            role="group"
+                                            aria-roledescription="slide"
+                                            aria-label="5 of 6"
+                                        >
+                                            <div
+                                                class="elementor-element elementor-element-d7c9ae3 e-flex e-con-boxed e-con e-child"
+                                                data-id="d7c9ae3"
+                                                data-element_type="container"
+                                                data-settings="{&quot;container_type&quot;:&quot;flex&quot;,&quot;content_width&quot;:&quot;boxed&quot;}"
+                                            >
+                                                <div class="e-con-inner">
+                                                    <div
+                                                        class="elementor-element elementor-element-925a9e1 e-flex e-con-boxed e-con e-child"
+                                                        data-id="925a9e1"
+                                                        data-element_type="container"
+                                                        data-settings="{&quot;container_type&quot;:&quot;flex&quot;,&quot;content_width&quot;:&quot;boxed&quot;}"
+                                                    >
+                                                        <div class="e-con-inner">
+                                                            <div
+                                                                class="elementor-element elementor-element-3c78e2f elementor-widget elementor-widget-image"
+                                                                data-id="3c78e2f"
+                                                                data-element_type="widget"
+                                                                data-widget_type="image.default"
+                                                            >
+                                                                <div class="elementor-widget-container">
+                                                                    <img
+                                                                        loading="lazy"
+                                                                        decoding="async"
+                                                                        width="522"
+                                                                        height="522"
+                                                                        src="./images/2023-12-cc5.jpg"
+                                                                        class="attachment-large size-large wp-image-499"
+                                                                        alt=""
+                                                                        srcset="./images/2023-12-cc5.jpg 522w, ./images/2023-12-cc5-300x300.jpg 300w, ./images/2023-12-cc5-150x150.jpg 150w"
+                                                                        sizes="(max-width: 522px) 100vw, 522px"
+                                                                    >
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div
+                                            class="swiper-slide"
+                                            data-slide="6"
+                                            role="group"
+                                            aria-roledescription="slide"
+                                            aria-label="6 of 6"
+                                        >
+                                            <div
+                                                class="elementor-element elementor-element-38cceb6 e-flex e-con-boxed e-con e-child"
+                                                data-id="38cceb6"
+                                                data-element_type="container"
+                                                data-settings="{&quot;container_type&quot;:&quot;flex&quot;,&quot;content_width&quot;:&quot;boxed&quot;}"
+                                            >
+                                                <div class="e-con-inner">
+                                                    <div
+                                                        class="elementor-element elementor-element-09c7f14 e-flex e-con-boxed e-con e-child"
+                                                        data-id="09c7f14"
+                                                        data-element_type="container"
+                                                        data-settings="{&quot;container_type&quot;:&quot;flex&quot;,&quot;content_width&quot;:&quot;boxed&quot;}"
+                                                    >
+                                                        <div class="e-con-inner">
+                                                            <div
+                                                                class="elementor-element elementor-element-cc6adff elementor-widget elementor-widget-image"
+                                                                data-id="cc6adff"
+                                                                data-element_type="widget"
+                                                                data-widget_type="image.default"
+                                                            >
+                                                                <div class="elementor-widget-container">
+                                                                    <img
+                                                                        loading="lazy"
+                                                                        decoding="async"
+                                                                        width="522"
+                                                                        height="522"
+                                                                        src="./images/2023-12-cc6.jpg"
+                                                                        class="attachment-large size-large wp-image-498"
+                                                                        alt=""
+                                                                        srcset="./images/2023-12-cc6.jpg 522w, ./images/2023-12-cc6-300x300.jpg 300w, ./images/2023-12-cc6-150x150.jpg 150w"
+                                                                        sizes="(max-width: 522px) 100vw, 522px"
+                                                                    >
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -106,293 +336,29 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div
-                                    class="swiper-slide"
-                                    data-slide="2"
-                                    role="group"
-                                    aria-roledescription="slide"
-                                    aria-label="2 of 6"
-                                >
-                                    <div
-                                        class="elementor-element elementor-element-f1c6ecd e-flex e-con-boxed e-con e-child"
-                                        data-id="f1c6ecd"
-                                        data-element_type="container"
-                                        data-settings="{&quot;container_type&quot;:&quot;flex&quot;,&quot;content_width&quot;:&quot;boxed&quot;}"
+                                <div class="elementor-swiper-button elementor-swiper-button-prev" role="button" tabindex="0">
+                                    <svg
+                                        aria-hidden="true"
+                                        class="e-font-icon-svg e-eicon-chevron-left"
+                                        viewbox="0 0 1000 1000"
+                                        xmlns="http://www.w3.org/2000/svg"
                                     >
-                                        <div class="e-con-inner">
-                                            <div
-                                                class="elementor-element elementor-element-7ebc911 e-flex e-con-boxed e-con e-child"
-                                                data-id="7ebc911"
-                                                data-element_type="container"
-                                                data-settings="{&quot;container_type&quot;:&quot;flex&quot;,&quot;content_width&quot;:&quot;boxed&quot;}"
-                                            >
-                                                <div class="e-con-inner">
-                                                    <div
-                                                        class="elementor-element elementor-element-faf2dee elementor-widget elementor-widget-image"
-                                                        data-id="faf2dee"
-                                                        data-element_type="widget"
-                                                        data-widget_type="image.default"
-                                                    >
-                                                        <div class="elementor-widget-container">
-                                                            <a
-                                                                href="./images/2023-12-cc2.jpg"
-                                                                data-elementor-open-lightbox="yes"
-                                                                data-elementor-lightbox-title="cc2"
-                                                                data-e-action-hash="#elementor-action%3Aaction%3Dlightbox%26settings%3DeyJpZCI6NTAyLCJ1cmwiOiJodHRwczpcL1wva2FwaXRvbi5zZWlrb2Rlc2lnbnMuY29tXC93cC1jb250ZW50XC91cGxvYWRzXC8yMDIzXC8xMlwvY2MyLmpwZyJ9"
-                                                            >
-                                                                <img
-                                                                    decoding="async"
-                                                                    width="522"
-                                                                    height="522"
-                                                                    src="./images/2023-12-cc2.jpg"
-                                                                    class="attachment-large size-large wp-image-502"
-                                                                    alt=""
-                                                                    srcset="./images/2023-12-cc2.jpg 522w, ./images/2023-12-cc2-300x300.jpg 300w, ./images/2023-12-cc2-150x150.jpg 150w"
-                                                                    sizes="(max-width: 522px) 100vw, 522px"
-                                                                >
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                        <path d="M646 125C629 125 613 133 604 142L308 442C296 454 292 471 292 487 292 504 296 521 308 533L604 854C617 867 629 875 646 875 663 875 679 871 692 858 704 846 713 829 713 812 713 796 708 779 692 767L438 487 692 225C700 217 708 204 708 187 708 171 704 154 692 142 675 129 663 125 646 125Z"></path>
+                                    </svg>
                                 </div>
-                                <div
-                                    class="swiper-slide"
-                                    data-slide="3"
-                                    role="group"
-                                    aria-roledescription="slide"
-                                    aria-label="3 of 6"
-                                >
-                                    <div
-                                        class="elementor-element elementor-element-de7bf40 e-flex e-con-boxed e-con e-child"
-                                        data-id="de7bf40"
-                                        data-element_type="container"
-                                        data-settings="{&quot;container_type&quot;:&quot;flex&quot;,&quot;content_width&quot;:&quot;boxed&quot;}"
+                                <div class="elementor-swiper-button elementor-swiper-button-next" role="button" tabindex="0">
+                                    <svg
+                                        aria-hidden="true"
+                                        class="e-font-icon-svg e-eicon-chevron-right"
+                                        viewbox="0 0 1000 1000"
+                                        xmlns="http://www.w3.org/2000/svg"
                                     >
-                                        <div class="e-con-inner">
-                                            <div
-                                                class="elementor-element elementor-element-aa55d80 e-flex e-con-boxed e-con e-child"
-                                                data-id="aa55d80"
-                                                data-element_type="container"
-                                                data-settings="{&quot;container_type&quot;:&quot;flex&quot;,&quot;content_width&quot;:&quot;boxed&quot;}"
-                                            >
-                                                <div class="e-con-inner">
-                                                    <div
-                                                        class="elementor-element elementor-element-6dedfe3 elementor-widget elementor-widget-image"
-                                                        data-id="6dedfe3"
-                                                        data-element_type="widget"
-                                                        data-widget_type="image.default"
-                                                    >
-                                                        <div class="elementor-widget-container">
-                                                            <a
-                                                                href="./images/2023-12-cc3.jpg"
-                                                                data-elementor-open-lightbox="yes"
-                                                                data-elementor-lightbox-title="cc3"
-                                                                data-e-action-hash="#elementor-action%3Aaction%3Dlightbox%26settings%3DeyJpZCI6NTAxLCJ1cmwiOiJodHRwczpcL1wva2FwaXRvbi5zZWlrb2Rlc2lnbnMuY29tXC93cC1jb250ZW50XC91cGxvYWRzXC8yMDIzXC8xMlwvY2MzLmpwZyJ9"
-                                                            >
-                                                                <img
-                                                                    loading="lazy"
-                                                                    decoding="async"
-                                                                    width="522"
-                                                                    height="522"
-                                                                    src="./images/2023-12-cc3.jpg"
-                                                                    class="attachment-large size-large wp-image-501"
-                                                                    alt=""
-                                                                    srcset="./images/2023-12-cc3.jpg 522w, ./images/2023-12-cc3-300x300.jpg 300w, ./images/2023-12-cc3-150x150.jpg 150w"
-                                                                    sizes="(max-width: 522px) 100vw, 522px"
-                                                                >
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                        <path d="M696 533C708 521 713 504 713 487 713 471 708 454 696 446L400 146C388 133 375 125 354 125 338 125 325 129 313 142 300 154 292 171 292 187 292 204 296 221 308 233L563 492 304 771C292 783 288 800 288 817 288 833 296 850 308 863 321 871 338 875 354 875 371 875 388 867 400 854L696 533Z"></path>
+                                    </svg>
                                 </div>
-                                <div
-                                    class="swiper-slide"
-                                    data-slide="4"
-                                    role="group"
-                                    aria-roledescription="slide"
-                                    aria-label="4 of 6"
-                                >
-                                    <div
-                                        class="elementor-element elementor-element-49c5283 e-flex e-con-boxed e-con e-child"
-                                        data-id="49c5283"
-                                        data-element_type="container"
-                                        data-settings="{&quot;container_type&quot;:&quot;flex&quot;,&quot;content_width&quot;:&quot;boxed&quot;}"
-                                    >
-                                        <div class="e-con-inner">
-                                            <div
-                                                class="elementor-element elementor-element-334f1b7 e-flex e-con-boxed e-con e-child"
-                                                data-id="334f1b7"
-                                                data-element_type="container"
-                                                data-settings="{&quot;container_type&quot;:&quot;flex&quot;,&quot;content_width&quot;:&quot;boxed&quot;}"
-                                            >
-                                                <div class="e-con-inner">
-                                                    <div
-                                                        class="elementor-element elementor-element-901aa1d elementor-widget elementor-widget-image"
-                                                        data-id="901aa1d"
-                                                        data-element_type="widget"
-                                                        data-widget_type="image.default"
-                                                    >
-                                                        <div class="elementor-widget-container">
-                                                            <a
-                                                                href="./images/2023-12-cc4.jpg"
-                                                                data-elementor-open-lightbox="yes"
-                                                                data-elementor-lightbox-title="cc4"
-                                                                data-e-action-hash="#elementor-action%3Aaction%3Dlightbox%26settings%3DeyJpZCI6NTAwLCJ1cmwiOiJodHRwczpcL1wva2FwaXRvbi5zZWlrb2Rlc2lnbnMuY29tXC93cC1jb250ZW50XC91cGxvYWRzXC8yMDIzXC8xMlwvY2M0LmpwZyJ9"
-                                                            >
-                                                                <img
-                                                                    loading="lazy"
-                                                                    decoding="async"
-                                                                    width="522"
-                                                                    height="522"
-                                                                    src="./images/2023-12-cc4.jpg"
-                                                                    class="attachment-large size-large wp-image-500"
-                                                                    alt=""
-                                                                    srcset="./images/2023-12-cc4.jpg 522w, ./images/2023-12-cc4-300x300.jpg 300w, ./images/2023-12-cc4-150x150.jpg 150w"
-                                                                    sizes="(max-width: 522px) 100vw, 522px"
-                                                                >
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div
-                                    class="swiper-slide"
-                                    data-slide="5"
-                                    role="group"
-                                    aria-roledescription="slide"
-                                    aria-label="5 of 6"
-                                >
-                                    <div
-                                        class="elementor-element elementor-element-d7c9ae3 e-flex e-con-boxed e-con e-child"
-                                        data-id="d7c9ae3"
-                                        data-element_type="container"
-                                        data-settings="{&quot;container_type&quot;:&quot;flex&quot;,&quot;content_width&quot;:&quot;boxed&quot;}"
-                                    >
-                                        <div class="e-con-inner">
-                                            <div
-                                                class="elementor-element elementor-element-925a9e1 e-flex e-con-boxed e-con e-child"
-                                                data-id="925a9e1"
-                                                data-element_type="container"
-                                                data-settings="{&quot;container_type&quot;:&quot;flex&quot;,&quot;content_width&quot;:&quot;boxed&quot;}"
-                                            >
-                                                <div class="e-con-inner">
-                                                    <div
-                                                        class="elementor-element elementor-element-3c78e2f elementor-widget elementor-widget-image"
-                                                        data-id="3c78e2f"
-                                                        data-element_type="widget"
-                                                        data-widget_type="image.default"
-                                                    >
-                                                        <div class="elementor-widget-container">
-                                                            <a
-                                                                href="./images/2023-12-cc5.jpg"
-                                                                data-elementor-open-lightbox="yes"
-                                                                data-elementor-lightbox-title="cc5"
-                                                                data-e-action-hash="#elementor-action%3Aaction%3Dlightbox%26settings%3DeyJpZCI6NDk5LCJ1cmwiOiJodHRwczpcL1wva2FwaXRvbi5zZWlrb2Rlc2lnbnMuY29tXC93cC1jb250ZW50XC91cGxvYWRzXC8yMDIzXC8xMlwvY2M1LmpwZyJ9"
-                                                            >
-                                                                <img
-                                                                    loading="lazy"
-                                                                    decoding="async"
-                                                                    width="522"
-                                                                    height="522"
-                                                                    src="./images/2023-12-cc5.jpg"
-                                                                    class="attachment-large size-large wp-image-499"
-                                                                    alt=""
-                                                                    srcset="./images/2023-12-cc5.jpg 522w, ./images/2023-12-cc5-300x300.jpg 300w, ./images/2023-12-cc5-150x150.jpg 150w"
-                                                                    sizes="(max-width: 522px) 100vw, 522px"
-                                                                >
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div
-                                    class="swiper-slide"
-                                    data-slide="6"
-                                    role="group"
-                                    aria-roledescription="slide"
-                                    aria-label="6 of 6"
-                                >
-                                    <div
-                                        class="elementor-element elementor-element-38cceb6 e-flex e-con-boxed e-con e-child"
-                                        data-id="38cceb6"
-                                        data-element_type="container"
-                                        data-settings="{&quot;container_type&quot;:&quot;flex&quot;,&quot;content_width&quot;:&quot;boxed&quot;}"
-                                    >
-                                        <div class="e-con-inner">
-                                            <div
-                                                class="elementor-element elementor-element-09c7f14 e-flex e-con-boxed e-con e-child"
-                                                data-id="09c7f14"
-                                                data-element_type="container"
-                                                data-settings="{&quot;container_type&quot;:&quot;flex&quot;,&quot;content_width&quot;:&quot;boxed&quot;}"
-                                            >
-                                                <div class="e-con-inner">
-                                                    <div
-                                                        class="elementor-element elementor-element-cc6adff elementor-widget elementor-widget-image"
-                                                        data-id="cc6adff"
-                                                        data-element_type="widget"
-                                                        data-widget_type="image.default"
-                                                    >
-                                                        <div class="elementor-widget-container">
-                                                            <a
-                                                                href="./images/2023-12-cc6.jpg"
-                                                                data-elementor-open-lightbox="yes"
-                                                                data-elementor-lightbox-title="cc6"
-                                                                data-e-action-hash="#elementor-action%3Aaction%3Dlightbox%26settings%3DeyJpZCI6NDk4LCJ1cmwiOiJodHRwczpcL1wva2FwaXRvbi5zZWlrb2Rlc2lnbnMuY29tXC93cC1jb250ZW50XC91cGxvYWRzXC8yMDIzXC8xMlwvY2M2LmpwZyJ9"
-                                                            >
-                                                                <img
-                                                                    loading="lazy"
-                                                                    decoding="async"
-                                                                    width="522"
-                                                                    height="522"
-                                                                    src="./images/2023-12-cc6.jpg"
-                                                                    class="attachment-large size-large wp-image-498"
-                                                                    alt=""
-                                                                    srcset="./images/2023-12-cc6.jpg 522w, ./images/2023-12-cc6-300x300.jpg 300w, ./images/2023-12-cc6-150x150.jpg 150w"
-                                                                    sizes="(max-width: 522px) 100vw, 522px"
-                                                                >
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                <div class="swiper-pagination"></div>
                             </div>
                         </div>
-                        <div class="elementor-swiper-button elementor-swiper-button-prev" role="button" tabindex="0">
-                            <svg
-                                aria-hidden="true"
-                                class="e-font-icon-svg e-eicon-chevron-left"
-                                viewbox="0 0 1000 1000"
-                                xmlns="http://www.w3.org/2000/svg"
-                            >
-                                <path d="M646 125C629 125 613 133 604 142L308 442C296 454 292 471 292 487 292 504 296 521 308 533L604 854C617 867 629 875 646 875 663 875 679 871 692 858 704 846 713 829 713 812 713 796 708 779 692 767L438 487 692 225C700 217 708 204 708 187 708 171 704 154 692 142 675 129 663 125 646 125Z"></path>
-                            </svg>
-                        </div>
-                        <div class="elementor-swiper-button elementor-swiper-button-next" role="button" tabindex="0">
-                            <svg
-                                aria-hidden="true"
-                                class="e-font-icon-svg e-eicon-chevron-right"
-                                viewbox="0 0 1000 1000"
-                                xmlns="http://www.w3.org/2000/svg"
-                            >
-                                <path d="M696 533C708 521 713 504 713 487 713 471 708 454 696 446L400 146C388 133 375 125 354 125 338 125 325 129 313 142 300 154 292 171 292 187 292 204 296 221 308 233L563 492 304 771C292 783 288 800 288 817 288 833 296 850 308 863 321 871 338 875 354 875 371 875 388 867 400 854L696 533Z"></path>
-                            </svg>
-                        </div>
-                        <div class="swiper-pagination"></div>
                     </div>
                 </div>
             </div>
@@ -642,7 +608,6 @@
     </div>
     
     @include('front.products.ajax_related_products_listings')
-    @include('front.layout.become_a_merchant')
 </div>
 <div class="post-tags"></div>
 @endsection
