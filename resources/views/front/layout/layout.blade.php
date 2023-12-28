@@ -148,6 +148,12 @@ window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/14
         >
         <link
             rel="stylesheet"
+            id="elementor-post-491-css"
+            href="{{ url('front/css/elementor-css/elementor-css-post-491.css') }}"
+            media="all"
+        >
+        <link
+            rel="stylesheet"
             id="google-fonts-1-css"
             href="https://fonts.googleapis.com/css?family=Lexend%3A100%2C100italic%2C200%2C200italic%2C300%2C300italic%2C400%2C400italic%2C500%2C500italic%2C600%2C600italic%2C700%2C700italic%2C800%2C800italic%2C900%2C900italic&#038;display=swap&#038;ver=6.4.2"
             media="all"
@@ -219,7 +225,11 @@ window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/14
 
 
             {{-- Middle Content (varies from a page to another) --}}
-            @yield('content')
+            <main id="content" class="site-main post-15 page type-page status-publish hentry">
+                <div class="page-content">
+                    @yield('content')
+                </div>
+            </main>
 
 
             {{-- Footer partial --}}
@@ -271,7 +281,7 @@ window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/14
             ga('create', 'UA-XXXXX-Y', 'auto');
             ga('send', 'pageview')
         </script>
-        <script src="https://www.google-analytics.com/analytics.js" async defer></script>
+        <!-- <script src="https://www.google-analytics.com/analytics.js" async defer></script> -->
         <!-- Modernizr-JS -->
         <script type="text/javascript" src="{{ url('front/js/vendor/modernizr-custom.min.js') }}"></script>
         <!-- NProgress -->

@@ -191,9 +191,9 @@ $sections = \App\Models\Section::sections();
                             <h6 class="elementor-heading-title elementor-size-default">
                                 {{-- If the user is authenticated/logged in, show 'My Account', if not, show 'Login/Register' --}} 
                                 @if (\Illuminate\Support\Facades\Auth::check()) {{-- Determining If The Current User Is Authenticated: https://laravel.com/docs/9.x/authentication#determining-if-the-current-user-is-authenticated --}}
-                                    My Account
+                                    <a href="#">My Account</a>
                                 @else
-                                    Login / Register
+                                    <a href="{{ url('user/login-register') }}">Login / Register</a>
                                 @endif
                             </h6>
                         </div>
@@ -234,7 +234,7 @@ $sections = \App\Models\Section::sections();
                                 <ul id="menu-1-ba4b160" class="elementor-nav-menu">
                                     @foreach ($sections as $section)
                                     <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-41">
-                                        <a href="/collection/electronics" class="elementor-item">{{ $section['name']}}</a>
+                                        <a href="{{ url('collection/' . strtolower($section['name'])) }}" class="elementor-item">{{ $section['name']}}</a>
                                     </li>
                                     @endforeach
                                 </ul>
@@ -243,7 +243,7 @@ $sections = \App\Models\Section::sections();
                                 <ul id="menu-2-ba4b160" class="elementor-nav-menu">
                                     @foreach ($sections as $section)
                                     <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-41">
-                                        <a href="/collection/electronics" class="elementor-item"
+                                        <a href="{{ url('collection/' . strtolower($section['name'])) }}" class="elementor-item"
                                             tabindex="-1">{{ $section['name'] }}</a>
                                     </li>
                                     @endforeach
