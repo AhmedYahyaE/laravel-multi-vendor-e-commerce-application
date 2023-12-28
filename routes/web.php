@@ -185,7 +185,7 @@ Route::get('orders/invoice/download/{id}', 'App\Http\Controllers\Admin\OrderCont
 
 // Second: FRONT section routes:
 Route::namespace('App\Http\Controllers\Front')->group(function() {
-    Route::get('/', 'IndexController@index');
+    Route::get('/', ['as' => 'home', 'uses' => 'IndexController@index']);
 
 
     // Dynamic Routes for the `url` column in the `categories` table using a foreach loop    // Listing/Categories Routes
@@ -208,7 +208,7 @@ Route::namespace('App\Http\Controllers\Front')->group(function() {
     Route::get('vendor/confirm/{code}', 'VendorController@confirmVendor'); // {code} is the base64 encoded vendor e-mail with which they have registered which is a Route Parameters/URL Paramters: https://laravel.com/docs/9.x/routing#required-parameters    // this route is requested (accessed/opened) from inside the mail sent to vendor (vendor_confirmation.blade.php)
 
     // Render Single Product Detail Page in front/products/detail.blade.php
-    Route::get('/product/{id}', 'ProductsController@detail');
+    Route::get('/product/{id}', ['as' => 'product_detail.show', 'uses' => 'ProductsController@detail']);
 
     // The AJAX call from front/js/custom.js file, to show the the correct related `price` and `stock` depending on the selected `size` (from the `products_attributes` table)) by clicking the size <select> box in front/products/detail.blade.php
     Route::post('get-product-price', 'ProductsController@getProductPrice');
