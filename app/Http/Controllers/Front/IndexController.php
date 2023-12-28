@@ -13,7 +13,7 @@ class IndexController extends Controller
         $sliderBanners = \App\Models\Banner::where('type', 'Slider')->where('status', 1)->get()->toArray(); 
         $fixBanners    = \App\Models\Banner::where('type', 'Fix')->where('status', 1)->get()->toArray(); 
         $categories    = \App\Models\Category::where('status', 1)->get()->toArray();
-        $newProducts   = \App\Models\Product::orderBy('id', 'Desc')->where('status', 1)->limit(8)->get()->toArray(); // show the LATEST (DESCendingly) 8 added products (to show the 'New Arrivals' at the home page)    // Ordering, Grouping, Limit & Offset: https://laravel.com/docs/9.x/queries#ordering-grouping-limit-and-offset    
+        $newProducts   = \App\Models\Product::orderBy('id', 'Desc')->where('status', 1)->with('vendor')->limit(8)->get()->toArray(); // show the LATEST (DESCendingly) 8 added products (to show the 'New Arrivals' at the home page)    // Ordering, Grouping, Limit & Offset: https://laravel.com/docs/9.x/queries#ordering-grouping-limit-and-offset    
         $bestSellers   = \App\Models\Product::where([
             'is_bestseller' => 'Yes',
             'status'        => 1 // product is enabled (active)

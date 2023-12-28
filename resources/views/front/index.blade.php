@@ -21,7 +21,7 @@
                 data-widget_type="nested-carousel.default"
             >
                 <div class="elementor-widget-container">
-                    <link rel="stylesheet" href="./css/elementor-pro-assets-css-widget-nested-carousel.min.css">
+                    <link rel="stylesheet" href="{{ url('front/css/elementor-css/elementor-pro-assets-css-widget-nested-carousel.min.css') }}">
                     <div class="e-n-carousel swiper" dir="ltr">
                         <div class="swiper-wrapper" aria-live="off">
                             <div
@@ -407,7 +407,7 @@
                                             data-id="778c4e0"
                                             data-element_type="container"
                                             data-settings="{&quot;container_type&quot;:&quot;flex&quot;,&quot;content_width&quot;:&quot;boxed&quot;}"
-                                            href="#"
+                                            href="{{$category['url']}}"
                                         >
                                             <div class="e-con-inner">
                                                 <div
@@ -926,7 +926,7 @@
                     data-widget_type="image.default"
                 >
                     <div class="elementor-widget-container">
-                        <a href="#">
+                        <a href="{{ url('product/' . $product['id']) }}">
                             @if (!empty($product['product_image']) && file_exists($product_image_path)) {{-- if the product image exists in BOTH database table AND filesystem (on server) --}}
                             <img
                                 loading="lazy"
@@ -962,9 +962,16 @@
                     data-widget_type="heading.default"
                 >
                     <div class="elementor-widget-container">
-                        <h2 class="elementor-heading-title elementor-size-default">Kreyon</h2>
+                        <h2 class="elementor-heading-title elementor-size-default">{{$product['product_name']}}</h2>
                     </div>
                 </div>
+
+                {{-- Call the static getDiscountPrice() method in the Product.php Model to determine the final price of a product because a product can have a discount from TWO things: either a `CATEGORY` discount or `PRODUCT` discout     --}}
+                @php
+                    $getDiscountPrice = \App\Models\Product::getDiscountPrice($product['id']);
+                @endphp
+
+                @if ($getDiscountPrice > 0) {{-- If there's a discount on the price, show the price before (the original price) and after (the new price) the discount --}}
                 <div
                     class="elementor-element elementor-element-1cd7c54 elementor-widget elementor-widget-text-editor"
                     data-id="1cd7c54"
@@ -972,10 +979,9 @@
                     data-widget_type="text-editor.default"
                 >
                     <div class="elementor-widget-container">
-                        <p> ₱599.99</p>
+                        <p> ₱{{$getDiscountPrice}}</p>
                     </div>
                 </div>
-                @if ($product['status'] == 3)
                 <div
                     class="elementor-element elementor-element-fa07c3b elementor-widget elementor-widget-text-editor"
                     data-id="fa07c3b"
@@ -983,7 +989,18 @@
                     data-widget_type="text-editor.default"
                 >
                     <div class="elementor-widget-container">
-                        <em style="text-decoration: line-through;">₱599.99</em>
+                        <em style="text-decoration: line-through;">₱{{$product['product_price']}}</em>
+                    </div>
+                </div>
+                @else
+                <div
+                    class="elementor-element elementor-element-1cd7c54 elementor-widget elementor-widget-text-editor"
+                    data-id="1cd7c54"
+                    data-element_type="widget"
+                    data-widget_type="text-editor.default"
+                >
+                    <div class="elementor-widget-container">
+                        <p> ₱{{$product['product_price']}}</p>
                     </div>
                 </div>
                 @endif
@@ -1027,7 +1044,7 @@
                                 data-widget_type="heading.default"
                             >
                                 <div class="elementor-widget-container">
-                                    <h5 class="elementor-heading-title elementor-size-default">Merchant ABC</h5>
+                                    <h5 class="elementor-heading-title elementor-size-default">{{(isset($product['vendor']['name']) ? $product['vendor']['name']:'')}}</h5>
                                 </div>
                             </div>
                         </div>
@@ -1095,98 +1112,7 @@
         </div>
     </div>
     <!-- Recently added /- -->
-
-    <!-- Become a Merchant -->
-    <div
-        class="elementor-element elementor-element-8e179cc e-flex e-con-boxed e-con e-parent"
-        data-id="8e179cc"
-        data-element_type="container"
-        data-settings="{&quot;background_background&quot;:&quot;classic&quot;,&quot;shape_divider_top&quot;:&quot;triangle&quot;,&quot;container_type&quot;:&quot;flex&quot;,&quot;content_width&quot;:&quot;boxed&quot;}"
-        data-core-v316-plus="true"
-    >
-        <div class="e-con-inner">
-            <div class="elementor-shape elementor-shape-top" data-negative="false">
-                <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 1000 100" preserveaspectratio="none">
-                    <path class="elementor-shape-fill" d="M500,98.9L0,6.1V0h1000v6.1L500,98.9z"/>
-                </svg>
-            </div>
-            <div
-                class="elementor-element elementor-element-3680591 e-con-full e-flex e-con e-child"
-                data-id="3680591"
-                data-element_type="container"
-                data-settings="{&quot;content_width&quot;:&quot;full&quot;,&quot;container_type&quot;:&quot;flex&quot;}"
-            >
-                <div
-                    class="elementor-element elementor-element-cdefdf7 elementor-widget__width-inherit elementor-invisible elementor-widget elementor-widget-heading"
-                    data-id="cdefdf7"
-                    data-element_type="widget"
-                    data-settings="{&quot;_animation&quot;:&quot;fadeInLeft&quot;}"
-                    data-widget_type="heading.default"
-                >
-                    <div class="elementor-widget-container">
-                        <h2 class="elementor-heading-title elementor-size-default">BECOME A MERCHANT</h2>
-                    </div>
-                </div>
-                <div
-                    class="elementor-element elementor-element-f324c91 elementor-widget__width-inherit elementor-invisible elementor-widget elementor-widget-text-editor"
-                    data-id="f324c91"
-                    data-element_type="widget"
-                    data-settings="{&quot;_animation&quot;:&quot;fadeInLeft&quot;}"
-                    data-widget_type="text-editor.default"
-                >
-                    <div class="elementor-widget-container">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ut quam iaculis, mattis elit nec, consectetur mi. Duis libero massa, dignissim sed eros et, tincidunt cursus lorem. Morbi non dolor quis libero sollicitudin volutpat non a massa. Nunc tellus lectus, pulvinar dapibus vehicula vel, feugiat sodales nunc. Curabitur quis velit ac turpis egestas ultricies.</p>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ut quam iaculis, mattis elit nec, consectetur mi.</p>
-                    </div>
-                </div>
-                <div
-                    class="elementor-element elementor-element-cd3f64b elementor-widget__width-auto elementor-invisible elementor-widget elementor-widget-button"
-                    data-id="cd3f64b"
-                    data-element_type="widget"
-                    data-settings="{&quot;_animation&quot;:&quot;fadeInLeft&quot;}"
-                    data-widget_type="button.default"
-                >
-                    <div class="elementor-widget-container">
-                        <div class="elementor-button-wrapper">
-                            <a class="elementor-button elementor-button-link elementor-size-sm" href="#">
-                                <span class="elementor-button-content-wrapper">
-                                    <span class="elementor-button-text">LEARN MORE</span>
-                                </span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div
-                class="elementor-element elementor-element-9f214bf e-con-full e-flex e-con e-child"
-                data-id="9f214bf"
-                data-element_type="container"
-                data-settings="{&quot;content_width&quot;:&quot;full&quot;,&quot;container_type&quot;:&quot;flex&quot;}"
-            >
-                <div
-                    class="elementor-element elementor-element-e6eb0df elementor-invisible elementor-widget elementor-widget-image"
-                    data-id="e6eb0df"
-                    data-element_type="widget"
-                    data-settings="{&quot;_animation&quot;:&quot;fadeInRight&quot;}"
-                    data-widget_type="image.default"
-                >
-                    <div class="elementor-widget-container">
-                        <img
-                            loading="lazy"
-                            decoding="async"
-                            width="692"
-                            height="1024"
-                            src="{{ asset('front/images/banner_images/2023-12-happy-asian-woman-holding-package-parcel-box-isolated-white-wall-delivery-courier-shipment-service-concept-PhotoRoom-3-1-692x1024.png') }}"
-                            class="attachment-large size-large wp-image-431"
-                            alt=""
-                            srcset="{{ asset('front/images/banner_images/2023-12-happy-asian-woman-holding-package-parcel-box-isolated-white-wall-delivery-courier-shipment-service-concept-PhotoRoom-3-1-692x1024.png') }} 692w, {{ asset('front/images/banner_images/2023-12-happy-asian-woman-holding-package-parcel-box-isolated-white-wall-delivery-courier-shipment-service-concept-PhotoRoom-3-1-203x300.png') }} 203w, {{ asset('front/images/banner_images/2023-12-happy-asian-woman-holding-package-parcel-box-isolated-white-wall-delivery-courier-shipment-service-concept-PhotoRoom-3-1.png') }} 716w"
-                            sizes="(max-width: 692px) 100vw, 692px"
-                        >
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Become a Merchant /- -->
+    
+    @include('front.layout.become_a_merchant')
 </div>
 @endsection

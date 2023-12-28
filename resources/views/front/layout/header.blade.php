@@ -234,7 +234,7 @@ $sections = \App\Models\Section::sections();
                                 <ul id="menu-1-ba4b160" class="elementor-nav-menu">
                                     @foreach ($sections as $section)
                                     <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-41">
-                                        <a href="/collection/electronics" class="elementor-item">{{ $section['name']}}</a>
+                                        <a href="{{ url('collection/' . strtolower($section['name'])) }}" class="elementor-item">{{ $section['name']}}</a>
                                     </li>
                                     @endforeach
                                 </ul>
@@ -243,7 +243,7 @@ $sections = \App\Models\Section::sections();
                                 <ul id="menu-2-ba4b160" class="elementor-nav-menu">
                                     @foreach ($sections as $section)
                                     <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-41">
-                                        <a href="/collection/electronics" class="elementor-item"
+                                        <a href="{{ url('collection/' . strtolower($section['name'])) }}" class="elementor-item"
                                             tabindex="-1">{{ $section['name'] }}</a>
                                     </li>
                                     @endforeach
