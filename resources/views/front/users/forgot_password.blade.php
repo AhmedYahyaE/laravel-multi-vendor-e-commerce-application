@@ -103,7 +103,7 @@
                             <div class="elementor-widget-container">
                                 <style>/*! elementor - v3.18.0 - 08-12-2023 */ .elementor-widget-text-editor.elementor-drop-cap-view-stacked .elementor-drop-cap{background-color:#69727d;color:#fff}.elementor-widget-text-editor.elementor-drop-cap-view-framed .elementor-drop-cap{color:#69727d;border:3px solid;background-color:transparent}.elementor-widget-text-editor:not(.elementor-drop-cap-view-default) .elementor-drop-cap{margin-top:8px}.elementor-widget-text-editor:not(.elementor-drop-cap-view-default) .elementor-drop-cap-letter{width:1em;height:1em}.elementor-widget-text-editor .elementor-drop-cap{float:left;text-align:center;line-height:1;font-size:50px}.elementor-widget-text-editor .elementor-drop-cap-letter{display:inline-block}</style>
                                 <p>
-                                    <a style="color: #1f1f22; text-decoration: underline;" href="#">Back to login</a>
+                                    <a style="color: #1f1f22; text-decoration: underline;" href="{{ url('user/login-register') }}">Back to login</a>
                                 </p>
                             </div>
                         </div>
