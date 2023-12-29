@@ -134,11 +134,11 @@ window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/14
 
             $css_headers = [
                 'elementor-post-644-css' => [
-                    'url' => 'user/reset-password',
+                    'url' => 'forgoat_password',
                     'href' => 'front/css/elementor-css/elementor-css-post-644.css'
                 ],
                 'elementor-post-656-css' => [
-                    'url' => 'user/register',
+                    'url' => 'user_register',
                     'href' => 'front/css/elementor-css/elementor-css-post-656.css'
                 ],
                 'elementor-post-611-css' => [
