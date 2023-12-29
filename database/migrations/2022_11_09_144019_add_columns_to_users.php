@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             // Here, we add some additional columns to the default Laravel's `users` table
-            $table->string('address')->after('name')->nullable();
+            $table->string('address')->after('last_name')->nullable();
             $table->string('city')->after('address')->nullable();
             $table->string('state')->after('city')->nullable();
             $table->string('country')->after('state')->nullable();
