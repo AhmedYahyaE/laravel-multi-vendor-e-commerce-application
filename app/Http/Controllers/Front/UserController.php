@@ -95,6 +95,8 @@ class UserController extends Controller
                     'errors' => $validator->messages() // we'll loop over the Validation Errors Messages array using jQuery to show them in the frontend (check front/js/custom.js)    // Working With Error Messages: https://laravel.com/docs/9.x/validation#working-with-error-messages    
                 ]);
             }
+        } else { // if the 'GET' request is coming from the <a> tag in front/users/login_register.blade.php, render the front/users/register.blade.php page
+            return view('front.users.register');
         }
     }
 
