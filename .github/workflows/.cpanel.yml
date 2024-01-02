@@ -1,0 +1,20 @@
+            - name: cPanel Deploy Action
+  # You may pin to the exact commit or the version.
+  # uses: pinkasey/cpanel-deploy-action@1f18599f58d17239fa1dc67253f20f2c4b3e1c81
+  uses: pinkasey/cpanel-deploy-action@v1.1.2
+  with:
+    # hostname of cPanel installation, including protocol. for instance: https://hostname.example.com
+    hostname: 
+    # Port of cPanel API. The default value is 2083 - don't change it unless you know what you're doing
+    cPanelApiPort: # optional, default is 2083
+    # cPanel API token, used for authorization. You should store this as a repository-secret.
+    cpanel_token: 
+    # cPanel username used for API calls. Must be the same username used to create the token. e.g: 'joe'
+    cpanel_username: 
+    # folder in which the repository is installed in the target cPanel account. must already exist. e.g: /home/your_account/repositories/your_repository
+    repository_root: 
+    # Whether or not to update the repository before triggering the deployment. If true - parameter 'branch' is required. defaults to 'true'.
+    updateRepository: # default is true
+    # branch to deploy. e.g: 'main' or 'master', or any other branch
+    branch: kapiton-uat
+          
