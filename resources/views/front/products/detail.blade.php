@@ -456,7 +456,7 @@
                                 >
                                     @for ($x = 0; $x < 5; $x++)
                                         @php
-                                            $marked = \App\Models\product_computed_ratings($productDetails['id']);
+                                            $marked = \App\Models\Product::product_computed_ratings($productDetails['id']);
                                         @endphp
                                     <!-- marked -->
                                     <div class="e-icon">
