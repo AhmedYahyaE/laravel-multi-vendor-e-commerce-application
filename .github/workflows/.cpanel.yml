@@ -1,4 +1,4 @@
-            - name: cPanel Deploy Action
+  name: cPanel Deploy Action
   # You may pin to the exact commit or the version.
   # uses: pinkasey/cpanel-deploy-action@1f18599f58d17239fa1dc67253f20f2c4b3e1c81
   uses: pinkasey/cpanel-deploy-action@v1.1.2
