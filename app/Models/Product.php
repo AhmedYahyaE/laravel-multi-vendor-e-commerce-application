@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Arr;
 
 class Product extends Model
 {
@@ -41,6 +42,14 @@ class Product extends Model
         return $this->belongsTo('App\Models\Vendor', 'vendor_id')->with('vendorbusinessdetails'); // 'vendor_id' is the Foreign Key of the Relationship    
     }
 
+    public static function product_computed_ratings ($product_id) {
+        $product_ratings = \App\Models\Rating::select('rating')->where('product_id', $product_id)->get()->toArray();
+        $cnt = count($product_ratings);
+        
+        $computed = array_sum(Arr::pluck($product_ratings, 'rating')) / $cnt;
+
+        return $computed;
+    }
 
 
     // A static method (to be able to be called directly without instantiating an object in index.blade.php) to determine the final price of a product because a product can have a discount from TWO things: either a `CATEGORY` discount or `PRODUCT` discout    

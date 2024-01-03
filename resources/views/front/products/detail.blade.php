@@ -456,11 +456,11 @@
                                 >
                                     @for ($x = 0; $x < 5; $x++)
                                         @php
-                                            $marked = $productDetails['product_ratings'];
+                                            $marked = \App\Models\product_computated_ratings($productDetails['id']);
                                         @endphp
                                     <!-- marked -->
                                     <div class="e-icon">
-                                        <div class="e-icon-wrapper e-icon-marked" style="{{ ($x <= $marked && $marked > 0) ? '':'--e-rating-icon-marked-width: 0%;' }}">
+                                        <div class="e-icon-wrapper e-icon-marked" style="{{ ($x < $marked && $marked > 0) ? '':'--e-rating-icon-marked-width: 0%;' }}">
                                             <svg
                                                 aria-hidden="true"
                                                 class="e-font-icon-svg e-eicon-star"
