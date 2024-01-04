@@ -263,6 +263,9 @@ Route::namespace('App\Http\Controllers\Front')->group(function() {
     // Add Rating & Review on a product in front/products/detail.blade.php
     Route::post('add-rating', 'RatingController@addRating');
 
+    // Collections
+    Route::get('collection/{collectionname}', 'SectionsController@index');
+
 
 
 
