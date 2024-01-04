@@ -264,7 +264,7 @@ Route::namespace('App\Http\Controllers\Front')->group(function() {
     Route::post('add-rating', 'RatingController@addRating');
 
     // Collections
-    Route::get('collection/{collectionname}', 'SectionsController@index');
+    Route::get('collection/{collectionname}', ['as' => 'shop_category', 'uses' => 'SectionsController@index']);
 
 
 
