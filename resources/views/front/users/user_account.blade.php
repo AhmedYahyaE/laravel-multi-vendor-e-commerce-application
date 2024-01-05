@@ -3,214 +3,394 @@
 
 
 @section('content')
-<div class="page-content">
+<div
+    data-elementor-type="wp-page"
+    data-elementor-id="743"
+    class="elementor elementor-743"
+    data-elementor-post-type="page"
+>
+    <div
+        class="elementor-element elementor-element-f854b76 e-flex e-con-boxed e-con e-parent"
+        data-id="f854b76"
+        data-element_type="container"
+        data-settings="{&quot;background_background&quot;:&quot;classic&quot;,&quot;container_type&quot;:&quot;flex&quot;,&quot;content_width&quot;:&quot;boxed&quot;}"
+        data-core-v316-plus="true"
+    >
+        <div class="e-con-inner">
+            <div
+                class="elementor-element elementor-element-e2653fa e-con-full e-flex e-con e-child"
+                data-id="e2653fa"
+                data-element_type="container"
+                data-settings="{&quot;content_width&quot;:&quot;full&quot;,&quot;container_type&quot;:&quot;flex&quot;}"
+            >
                 <div
-                    data-elementor-type="wp-page"
-                    data-elementor-id="743"
-                    class="elementor elementor-743"
-                    data-elementor-post-type="page"
+                    class="elementor-element elementor-element-af14eb6 elementor-widget__width-inherit elementor-invisible elementor-widget elementor-widget-heading"
+                    data-id="af14eb6"
+                    data-element_type="widget"
+                    data-settings="{&quot;_animation&quot;:&quot;fadeInUp&quot;}"
+                    data-widget_type="heading.default"
                 >
-                    <div
-                        class="elementor-element elementor-element-f854b76 e-flex e-con-boxed e-con e-parent"
-                        data-id="f854b76"
-                        data-element_type="container"
-                        data-settings="{&quot;background_background&quot;:&quot;classic&quot;,&quot;container_type&quot;:&quot;flex&quot;,&quot;content_width&quot;:&quot;boxed&quot;}"
-                        data-core-v316-plus="true"
-                    >
-                        <div class="e-con-inner">
+                    <div class="elementor-widget-container">
+                        <h1 class="elementor-heading-title elementor-size-default">MY ACCOUNT</h1>
+                    </div>
+                </div>
+                <div
+                    class="elementor-element elementor-element-5ff7960 e-flex e-con-boxed e-con e-child"
+                    data-id="5ff7960"
+                    data-element_type="container"
+                    data-settings="{&quot;container_type&quot;:&quot;flex&quot;,&quot;content_width&quot;:&quot;boxed&quot;}"
+                >
+                    <div class="e-con-inner">
+                        <div
+                            class="elementor-element elementor-element-96c8ec8 e-con-full e-flex e-con e-child"
+                            data-id="96c8ec8"
+                            data-element_type="container"
+                            data-settings="{&quot;content_width&quot;:&quot;full&quot;,&quot;container_type&quot;:&quot;flex&quot;}"
+                        >
                             <div
-                                class="elementor-element elementor-element-e2653fa e-con-full e-flex e-con e-child"
-                                data-id="e2653fa"
-                                data-element_type="container"
-                                data-settings="{&quot;content_width&quot;:&quot;full&quot;,&quot;container_type&quot;:&quot;flex&quot;}"
+                                class="elementor-element elementor-element-9a22a87 elementor-icon-list--layout-traditional elementor-list-item-link-full_width elementor-widget elementor-widget-icon-list"
+                                data-id="9a22a87"
+                                data-element_type="widget"
+                                data-widget_type="icon-list.default"
                             >
-                                <div
-                                    class="elementor-element elementor-element-af14eb6 elementor-widget__width-inherit elementor-invisible elementor-widget elementor-widget-heading"
-                                    data-id="af14eb6"
-                                    data-element_type="widget"
-                                    data-settings="{&quot;_animation&quot;:&quot;fadeInUp&quot;}"
-                                    data-widget_type="heading.default"
-                                >
-                                    <div class="elementor-widget-container">
-                                        <h1 class="elementor-heading-title elementor-size-default">MY ACCOUNT</h1>
-                                    </div>
+                                <div class="elementor-widget-container">
+                                    <ul class="elementor-icon-list-items">
+                                        <li class="elementor-icon-list-item">
+                                            <a href="#">
+                                                <span class="elementor-icon-list-icon">
+                                                    <svg
+                                                        aria-hidden="true"
+                                                        class="e-font-icon-svg e-fas-user-alt"
+                                                        viewbox="0 0 512 512"
+                                                        xmlns="http://www.w3.org/2000/svg"
+                                                    >
+                                                        <path d="M256 288c79.5 0 144-64.5 144-144S335.5 0 256 0 112 64.5 112 144s64.5 144 144 144zm128 32h-55.1c-22.2 10.2-46.9 16-72.9 16s-50.6-5.8-72.9-16H128C57.3 320 0 377.3 0 448v16c0 26.5 21.5 48 48 48h416c26.5 0 48-21.5 48-48v-16c0-70.7-57.3-128-128-128z"></path>
+                                                    </svg>
+                                                </span>
+                                                <span class="elementor-icon-list-text">Profile</span>
+                                            </a>
+                                        </li>
+                                        <li class="elementor-icon-list-item">
+                                            <a href="#">
+                                                <span class="elementor-icon-list-icon">
+                                                    <svg
+                                                        aria-hidden="true"
+                                                        class="e-font-icon-svg e-fas-cart-arrow-down"
+                                                        viewbox="0 0 576 512"
+                                                        xmlns="http://www.w3.org/2000/svg"
+                                                    >
+                                                        <path d="M504.717 320H211.572l6.545 32h268.418c15.401 0 26.816 14.301 23.403 29.319l-5.517 24.276C523.112 414.668 536 433.828 536 456c0 31.202-25.519 56.444-56.824 55.994-29.823-.429-54.35-24.631-55.155-54.447-.44-16.287 6.085-31.049 16.803-41.548H231.176C241.553 426.165 248 440.326 248 456c0 31.813-26.528 57.431-58.67 55.938-28.54-1.325-51.751-24.385-53.251-52.917-1.158-22.034 10.436-41.455 28.051-51.586L93.883 64H24C10.745 64 0 53.255 0 40V24C0 10.745 10.745 0 24 0h102.529c11.401 0 21.228 8.021 23.513 19.19L159.208 64H551.99c15.401 0 26.816 14.301 23.403 29.319l-47.273 208C525.637 312.246 515.923 320 504.717 320zM403.029 192H360v-60c0-6.627-5.373-12-12-12h-24c-6.627 0-12 5.373-12 12v60h-43.029c-10.691 0-16.045 12.926-8.485 20.485l67.029 67.029c4.686 4.686 12.284 4.686 16.971 0l67.029-67.029c7.559-7.559 2.205-20.485-8.486-20.485z"></path>
+                                                    </svg>
+                                                </span>
+                                                <span class="elementor-icon-list-text">Order List</span>
+                                            </a>
+                                        </li>
+                                        <li class="elementor-icon-list-item">
+                                            <a href="#">
+                                                <span class="elementor-icon-list-icon">
+                                                    <svg
+                                                        aria-hidden="true"
+                                                        class="e-font-icon-svg e-fas-sign-out-alt"
+                                                        viewbox="0 0 512 512"
+                                                        xmlns="http://www.w3.org/2000/svg"
+                                                    >
+                                                        <path d="M497 273L329 441c-15 15-41 4.5-41-17v-96H152c-13.3 0-24-10.7-24-24v-96c0-13.3 10.7-24 24-24h136V88c0-21.4 25.9-32 41-17l168 168c9.3 9.4 9.3 24.6 0 34zM192 436v-40c0-6.6-5.4-12-12-12H96c-17.7 0-32-14.3-32-32V160c0-17.7 14.3-32 32-32h84c6.6 0 12-5.4 12-12V76c0-6.6-5.4-12-12-12H96c-53 0-96 43-96 96v192c0 53 43 96 96 96h84c6.6 0 12-5.4 12-12z"></path>
+                                                    </svg>
+                                                </span>
+                                                <span class="elementor-icon-list-text">Logout</span>
+                                            </a>
+                                        </li>
+                                    </ul>
                                 </div>
-                                <div
-                                    class="elementor-element elementor-element-9f49861 elementor-icon-list--layout-traditional elementor-list-item-link-full_width elementor-invisible elementor-widget elementor-widget-icon-list"
-                                    data-id="9f49861"
-                                    data-element_type="widget"
-                                    data-settings="{&quot;_animation&quot;:&quot;fadeInUp&quot;}"
-                                    data-widget_type="icon-list.default"
-                                >
-                                    <div class="elementor-widget-container">
-                                        <ul class="elementor-icon-list-items">
-                                            <li class="elementor-icon-list-item">
-                                                <a href="#">
-                                                    <span class="elementor-icon-list-icon">
-                                                        <svg
-                                                            aria-hidden="true"
-                                                            class="e-font-icon-svg e-far-user"
-                                                            viewbox="0 0 448 512"
-                                                            xmlns="http://www.w3.org/2000/svg"
-                                                        >
-                                                            <path d="M313.6 304c-28.7 0-42.5 16-89.6 16-47.1 0-60.8-16-89.6-16C60.2 304 0 364.2 0 438.4V464c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48v-25.6c0-74.2-60.2-134.4-134.4-134.4zM400 464H48v-25.6c0-47.6 38.8-86.4 86.4-86.4 14.6 0 38.3 16 89.6 16 51.7 0 74.9-16 89.6-16 47.6 0 86.4 38.8 86.4 86.4V464zM224 288c79.5 0 144-64.5 144-144S303.5 0 224 0 80 64.5 80 144s64.5 144 144 144zm0-240c52.9 0 96 43.1 96 96s-43.1 96-96 96-96-43.1-96-96 43.1-96 96-96z"></path>
-                                                        </svg>
-                                                    </span>
-                                                    <span class="elementor-icon-list-text">Log out</span>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div
-                                    class="elementor-element elementor-element-5ff7960 e-flex e-con-boxed e-con e-child"
-                                    data-id="5ff7960"
-                                    data-element_type="container"
-                                    data-settings="{&quot;container_type&quot;:&quot;flex&quot;,&quot;content_width&quot;:&quot;boxed&quot;}"
-                                >
-                                    <div class="e-con-inner">
-                                        <div
-                                            class="elementor-element elementor-element-df7ebda e-con-full e-flex e-con e-child"
-                                            data-id="df7ebda"
-                                            data-element_type="container"
-                                            data-settings="{&quot;content_width&quot;:&quot;full&quot;,&quot;container_type&quot;:&quot;flex&quot;}"
-                                        >
+                            </div>
+                        </div>
+                        <div
+                            class="elementor-element elementor-element-df7ebda e-con-full e-flex e-con e-child"
+                            data-id="df7ebda"
+                            data-element_type="container"
+                            data-settings="{&quot;content_width&quot;:&quot;full&quot;,&quot;container_type&quot;:&quot;flex&quot;}"
+                        >
+                            <div
+                                class="elementor-element elementor-element-66eba68 e-grid e-con-boxed e-con e-child"
+                                data-id="66eba68"
+                                data-element_type="container"
+                                data-settings="{&quot;container_type&quot;:&quot;grid&quot;,&quot;grid_columns_grid_tablet&quot;:{&quot;unit&quot;:&quot;fr&quot;,&quot;size&quot;:2,&quot;sizes&quot;:[]},&quot;content_width&quot;:&quot;boxed&quot;,&quot;grid_outline&quot;:&quot;yes&quot;,&quot;grid_columns_grid&quot;:{&quot;unit&quot;:&quot;fr&quot;,&quot;size&quot;:3,&quot;sizes&quot;:[]},&quot;grid_columns_grid_mobile&quot;:{&quot;unit&quot;:&quot;fr&quot;,&quot;size&quot;:1,&quot;sizes&quot;:[]},&quot;grid_rows_grid&quot;:{&quot;unit&quot;:&quot;fr&quot;,&quot;size&quot;:2,&quot;sizes&quot;:[]},&quot;grid_rows_grid_tablet&quot;:{&quot;unit&quot;:&quot;fr&quot;,&quot;size&quot;:&quot;&quot;,&quot;sizes&quot;:[]},&quot;grid_rows_grid_mobile&quot;:{&quot;unit&quot;:&quot;fr&quot;,&quot;size&quot;:&quot;&quot;,&quot;sizes&quot;:[]},&quot;grid_auto_flow&quot;:&quot;row&quot;,&quot;grid_auto_flow_tablet&quot;:&quot;row&quot;,&quot;grid_auto_flow_mobile&quot;:&quot;row&quot;}"
+                            >
+                                <div class="e-con-inner">
+                                    <div
+                                        class="elementor-element elementor-element-8ef6cca e-flex e-con-boxed e-con e-child"
+                                        data-id="8ef6cca"
+                                        data-element_type="container"
+                                        data-settings="{&quot;background_background&quot;:&quot;classic&quot;,&quot;container_type&quot;:&quot;flex&quot;,&quot;content_width&quot;:&quot;boxed&quot;}"
+                                    >
+                                        <div class="e-con-inner">
                                             <div
-                                                class="elementor-element elementor-element-b4e63c6 elementor-invisible elementor-widget elementor-widget-heading"
-                                                data-id="b4e63c6"
+                                                class="elementor-element elementor-element-846d9e7 elementor-widget elementor-widget-heading"
+                                                data-id="846d9e7"
                                                 data-element_type="widget"
-                                                data-settings="{&quot;_animation&quot;:&quot;fadeInLeft&quot;}"
                                                 data-widget_type="heading.default"
                                             >
                                                 <div class="elementor-widget-container">
-                                                    <h2 class="elementor-heading-title elementor-size-default">Order history</h2>
+                                                    <h6 class="elementor-heading-title elementor-size-default">FIRST NAME</h6>
                                                 </div>
                                             </div>
                                             <div
-                                                class="elementor-element elementor-element-ce432df elementor-invisible elementor-widget elementor-widget-text-editor"
-                                                data-id="ce432df"
+                                                class="elementor-element elementor-element-fce3415 elementor-widget elementor-widget-heading"
+                                                data-id="fce3415"
                                                 data-element_type="widget"
-                                                data-settings="{&quot;_animation&quot;:&quot;fadeInUp&quot;}"
-                                                data-widget_type="text-editor.default"
+                                                data-widget_type="heading.default"
                                             >
                                                 <div class="elementor-widget-container">
-                                                    <style>/*! elementor - v3.18.0 - 08-12-2023 */ .elementor-widget-text-editor.elementor-drop-cap-view-stacked .elementor-drop-cap{background-color:#69727d;color:#fff}.elementor-widget-text-editor.elementor-drop-cap-view-framed .elementor-drop-cap{color:#69727d;border:3px solid;background-color:transparent}.elementor-widget-text-editor:not(.elementor-drop-cap-view-default) .elementor-drop-cap{margin-top:8px}.elementor-widget-text-editor:not(.elementor-drop-cap-view-default) .elementor-drop-cap-letter{width:1em;height:1em}.elementor-widget-text-editor .elementor-drop-cap{float:left;text-align:center;line-height:1;font-size:50px}.elementor-widget-text-editor .elementor-drop-cap-letter{display:inline-block}</style>
-                                                    <table>
-                                                        <tr>
-                                                            <th>ORDER</th>
-                                                            <th>DATE</th>
-                                                            <th>PAYMENT STATUS</th>
-                                                            <th>FULFILLMENT STATUS</th>
-                                                            <th>TOTAL</th>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>#001</td>
-                                                            <td>January 2, 2024</td>
-                                                            <td>Paid</td>
-                                                            <td>Shipping</td>
-                                                            <td>₱25,999.00</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>#001</td>
-                                                            <td>January 2, 2024</td>
-                                                            <td>Paid</td>
-                                                            <td>Shipping</td>
-                                                            <td>₱25,999.00</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>#001</td>
-                                                            <td>January 2, 2024</td>
-                                                            <td>Paid</td>
-                                                            <td>Shipping</td>
-                                                            <td>₱25,999.00</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>#001</td>
-                                                            <td>January 2, 2024</td>
-                                                            <td>Paid</td>
-                                                            <td>Shipping</td>
-                                                            <td>₱25,999.00</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>#001</td>
-                                                            <td>January 2, 2024</td>
-                                                            <td>Paid</td>
-                                                            <td>Shipping</td>
-                                                            <td>₱25,999.00</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>#001</td>
-                                                            <td>January 2, 2024</td>
-                                                            <td>Paid</td>
-                                                            <td>Shipping</td>
-                                                            <td>₱25,999.00</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>#001</td>
-                                                            <td>January 2, 2024</td>
-                                                            <td>Paid</td>
-                                                            <td>Shipping</td>
-                                                            <td>₱25,999.00</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>#001</td>
-                                                            <td>January 2, 2024</td>
-                                                            <td>Paid</td>
-                                                            <td>Shipping</td>
-                                                            <td>₱25,999.00</td>
-                                                        </tr>
-                                                    </table>
+                                                    <h5 class="elementor-heading-title elementor-size-default">Niño</h5>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div
-                                            class="elementor-element elementor-element-96c8ec8 e-con-full e-flex e-con e-child"
-                                            data-id="96c8ec8"
-                                            data-element_type="container"
-                                            data-settings="{&quot;content_width&quot;:&quot;full&quot;,&quot;container_type&quot;:&quot;flex&quot;}"
-                                        >
+                                    </div>
+                                    <div
+                                        class="elementor-element elementor-element-4c294d7 e-flex e-con-boxed e-con e-child"
+                                        data-id="4c294d7"
+                                        data-element_type="container"
+                                        data-settings="{&quot;background_background&quot;:&quot;classic&quot;,&quot;container_type&quot;:&quot;flex&quot;,&quot;content_width&quot;:&quot;boxed&quot;}"
+                                    >
+                                        <div class="e-con-inner">
                                             <div
-                                                class="elementor-element elementor-element-2c6b9e2 elementor-invisible elementor-widget elementor-widget-heading"
-                                                data-id="2c6b9e2"
+                                                class="elementor-element elementor-element-0954561 elementor-widget elementor-widget-heading"
+                                                data-id="0954561"
                                                 data-element_type="widget"
-                                                data-settings="{&quot;_animation&quot;:&quot;fadeInLeft&quot;}"
                                                 data-widget_type="heading.default"
                                             >
                                                 <div class="elementor-widget-container">
-                                                    <h2 class="elementor-heading-title elementor-size-default">Account details</h2>
+                                                    <h6 class="elementor-heading-title elementor-size-default">LAST NAME</h6>
                                                 </div>
                                             </div>
                                             <div
-                                                class="elementor-element elementor-element-0f934d4 elementor-invisible elementor-widget elementor-widget-text-editor"
-                                                data-id="0f934d4"
+                                                class="elementor-element elementor-element-30f458e elementor-widget elementor-widget-heading"
+                                                data-id="30f458e"
                                                 data-element_type="widget"
-                                                data-settings="{&quot;_animation&quot;:&quot;fadeInUp&quot;}"
-                                                data-widget_type="text-editor.default"
+                                                data-widget_type="heading.default"
                                             >
                                                 <div class="elementor-widget-container">
-                                                    <p>Feliciano, Niño
-                                                        <br>#407 Maligaya Street
-                                                        <br>3006 bustos, bulacan
-                                                        <br>Philippines
-                                                    </p>
+                                                    <h5 class="elementor-heading-title elementor-size-default">Feliciano</h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="elementor-element elementor-element-bd6cfb3 e-flex e-con-boxed e-con e-child"
+                                        data-id="bd6cfb3"
+                                        data-element_type="container"
+                                        data-settings="{&quot;background_background&quot;:&quot;classic&quot;,&quot;container_type&quot;:&quot;flex&quot;,&quot;content_width&quot;:&quot;boxed&quot;}"
+                                    >
+                                        <div class="e-con-inner">
+                                            <div
+                                                class="elementor-element elementor-element-3f22892 elementor-widget elementor-widget-heading"
+                                                data-id="3f22892"
+                                                data-element_type="widget"
+                                                data-widget_type="heading.default"
+                                            >
+                                                <div class="elementor-widget-container">
+                                                    <h6 class="elementor-heading-title elementor-size-default">Address 1</h6>
                                                 </div>
                                             </div>
                                             <div
-                                                class="elementor-element elementor-element-13412f1 elementor-invisible elementor-widget elementor-widget-button"
-                                                data-id="13412f1"
+                                                class="elementor-element elementor-element-f49bf8e elementor-widget elementor-widget-heading"
+                                                data-id="f49bf8e"
                                                 data-element_type="widget"
-                                                data-settings="{&quot;_animation&quot;:&quot;fadeInUp&quot;}"
-                                                data-widget_type="button.default"
+                                                data-widget_type="heading.default"
                                             >
                                                 <div class="elementor-widget-container">
-                                                    <div class="elementor-button-wrapper">
-                                                        <a class="elementor-button elementor-button-link elementor-size-sm" href="#elementor-action%3Aaction%3Dpopup%3Aopen%26settings%3DeyJpZCI6Ijc3MCIsInRvZ2dsZSI6ZmFsc2V9">
-                                                            <span class="elementor-button-content-wrapper">
-                                                                <span class="elementor-button-text">Click here</span>
-                                                            </span>
-                                                        </a>
-                                                    </div>
+                                                    <h5 class="elementor-heading-title elementor-size-default">#407 sesame street</h5>
                                                 </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="elementor-element elementor-element-00b548d e-flex e-con-boxed e-con e-child"
+                                        data-id="00b548d"
+                                        data-element_type="container"
+                                        data-settings="{&quot;background_background&quot;:&quot;classic&quot;,&quot;container_type&quot;:&quot;flex&quot;,&quot;content_width&quot;:&quot;boxed&quot;}"
+                                    >
+                                        <div class="e-con-inner">
+                                            <div
+                                                class="elementor-element elementor-element-27fbff6 elementor-widget elementor-widget-heading"
+                                                data-id="27fbff6"
+                                                data-element_type="widget"
+                                                data-widget_type="heading.default"
+                                            >
+                                                <div class="elementor-widget-container">
+                                                    <h6 class="elementor-heading-title elementor-size-default">CITY</h6>
+                                                </div>
+                                            </div>
+                                            <div
+                                                class="elementor-element elementor-element-6892f69 elementor-widget elementor-widget-heading"
+                                                data-id="6892f69"
+                                                data-element_type="widget"
+                                                data-widget_type="heading.default"
+                                            >
+                                                <div class="elementor-widget-container">
+                                                    <h5 class="elementor-heading-title elementor-size-default">bustos</h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="elementor-element elementor-element-b364a78 e-flex e-con-boxed e-con e-child"
+                                        data-id="b364a78"
+                                        data-element_type="container"
+                                        data-settings="{&quot;background_background&quot;:&quot;classic&quot;,&quot;container_type&quot;:&quot;flex&quot;,&quot;content_width&quot;:&quot;boxed&quot;}"
+                                    >
+                                        <div class="e-con-inner">
+                                            <div
+                                                class="elementor-element elementor-element-d3788cf elementor-widget elementor-widget-heading"
+                                                data-id="d3788cf"
+                                                data-element_type="widget"
+                                                data-widget_type="heading.default"
+                                            >
+                                                <div class="elementor-widget-container">
+                                                    <h6 class="elementor-heading-title elementor-size-default">STATE</h6>
+                                                </div>
+                                            </div>
+                                            <div
+                                                class="elementor-element elementor-element-72c84e2 elementor-widget elementor-widget-heading"
+                                                data-id="72c84e2"
+                                                data-element_type="widget"
+                                                data-widget_type="heading.default"
+                                            >
+                                                <div class="elementor-widget-container">
+                                                    <h5 class="elementor-heading-title elementor-size-default">bulacan</h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="elementor-element elementor-element-39ebcd7 e-flex e-con-boxed e-con e-child"
+                                        data-id="39ebcd7"
+                                        data-element_type="container"
+                                        data-settings="{&quot;background_background&quot;:&quot;classic&quot;,&quot;container_type&quot;:&quot;flex&quot;,&quot;content_width&quot;:&quot;boxed&quot;}"
+                                    >
+                                        <div class="e-con-inner">
+                                            <div
+                                                class="elementor-element elementor-element-735d997 elementor-widget elementor-widget-heading"
+                                                data-id="735d997"
+                                                data-element_type="widget"
+                                                data-widget_type="heading.default"
+                                            >
+                                                <div class="elementor-widget-container">
+                                                    <h6 class="elementor-heading-title elementor-size-default">COUNTRY</h6>
+                                                </div>
+                                            </div>
+                                            <div
+                                                class="elementor-element elementor-element-9f0221a elementor-widget elementor-widget-heading"
+                                                data-id="9f0221a"
+                                                data-element_type="widget"
+                                                data-widget_type="heading.default"
+                                            >
+                                                <div class="elementor-widget-container">
+                                                    <h5 class="elementor-heading-title elementor-size-default">philippines</h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="elementor-element elementor-element-e30bacf e-flex e-con-boxed e-con e-child"
+                                        data-id="e30bacf"
+                                        data-element_type="container"
+                                        data-settings="{&quot;background_background&quot;:&quot;classic&quot;,&quot;container_type&quot;:&quot;flex&quot;,&quot;content_width&quot;:&quot;boxed&quot;}"
+                                    >
+                                        <div class="e-con-inner">
+                                            <div
+                                                class="elementor-element elementor-element-5a654f7 elementor-widget elementor-widget-heading"
+                                                data-id="5a654f7"
+                                                data-element_type="widget"
+                                                data-widget_type="heading.default"
+                                            >
+                                                <div class="elementor-widget-container">
+                                                    <h6 class="elementor-heading-title elementor-size-default">ZIP CODE</h6>
+                                                </div>
+                                            </div>
+                                            <div
+                                                class="elementor-element elementor-element-cba44ce elementor-widget elementor-widget-heading"
+                                                data-id="cba44ce"
+                                                data-element_type="widget"
+                                                data-widget_type="heading.default"
+                                            >
+                                                <div class="elementor-widget-container">
+                                                    <h5 class="elementor-heading-title elementor-size-default">3007</h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="elementor-element elementor-element-647b37c e-flex e-con-boxed e-con e-child"
+                                        data-id="647b37c"
+                                        data-element_type="container"
+                                        data-settings="{&quot;background_background&quot;:&quot;classic&quot;,&quot;container_type&quot;:&quot;flex&quot;,&quot;content_width&quot;:&quot;boxed&quot;}"
+                                    >
+                                        <div class="e-con-inner">
+                                            <div
+                                                class="elementor-element elementor-element-fa1ec7a elementor-widget elementor-widget-heading"
+                                                data-id="fa1ec7a"
+                                                data-element_type="widget"
+                                                data-widget_type="heading.default"
+                                            >
+                                                <div class="elementor-widget-container">
+                                                    <h6 class="elementor-heading-title elementor-size-default">ZIP MOBILE</h6>
+                                                </div>
+                                            </div>
+                                            <div
+                                                class="elementor-element elementor-element-e51720f elementor-widget elementor-widget-heading"
+                                                data-id="e51720f"
+                                                data-element_type="widget"
+                                                data-widget_type="heading.default"
+                                            >
+                                                <div class="elementor-widget-container">
+                                                    <h5 class="elementor-heading-title elementor-size-default">09451621033</h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="elementor-element elementor-element-4ad3441 e-flex e-con-boxed e-con e-child"
+                                        data-id="4ad3441"
+                                        data-element_type="container"
+                                        data-settings="{&quot;background_background&quot;:&quot;classic&quot;,&quot;container_type&quot;:&quot;flex&quot;,&quot;content_width&quot;:&quot;boxed&quot;}"
+                                    >
+                                        <div class="e-con-inner">
+                                            <div
+                                                class="elementor-element elementor-element-3739a7b elementor-widget elementor-widget-heading"
+                                                data-id="3739a7b"
+                                                data-element_type="widget"
+                                                data-widget_type="heading.default"
+                                            >
+                                                <div class="elementor-widget-container">
+                                                    <h6 class="elementor-heading-title elementor-size-default">EMAIL</h6>
+                                                </div>
+                                            </div>
+                                            <div
+                                                class="elementor-element elementor-element-7bd22e0 elementor-widget elementor-widget-heading"
+                                                data-id="7bd22e0"
+                                                data-element_type="widget"
+                                                data-widget_type="heading.default"
+                                            >
+                                                <div class="elementor-widget-container">
+                                                    <h5 class="elementor-heading-title elementor-size-default">ninofeliciano9@gmail.com</h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="elementor-element elementor-element-1765a07 elementor-mobile-align-center elementor-widget elementor-widget-button"
+                                        data-id="1765a07"
+                                        data-element_type="widget"
+                                        data-widget_type="button.default"
+                                    >
+                                        <div class="elementor-widget-container">
+                                            <div class="elementor-button-wrapper">
+                                                <a class="elementor-button elementor-button-link elementor-size-sm" href="#elementor-action%3Aaction%3Dpopup%3Aopen%26settings%3DeyJpZCI6Ijc3MCIsInRvZ2dsZSI6ZmFsc2V9">
+                                                    <span class="elementor-button-content-wrapper">
+                                                        <span class="elementor-button-text">Edit information</span>
+                                                    </span>
+                                                </a>
                                             </div>
                                         </div>
                                     </div>
@@ -219,6 +399,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="post-tags"></div>
             </div>
+        </div>
+    </div>
+</div>
 @endsection
