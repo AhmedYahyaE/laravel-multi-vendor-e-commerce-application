@@ -191,11 +191,18 @@ $sections = \App\Models\Section::sections();
                             <h6 class="elementor-heading-title elementor-size-default">
                                 {{-- If the user is authenticated/logged in, show 'My Account', if not, show 'Login/Register' --}} 
                                 @if (\Illuminate\Support\Facades\Auth::check()) {{-- Determining If The Current User Is Authenticated: https://laravel.com/docs/9.x/authentication#determining-if-the-current-user-is-authenticated --}}
-                                    <a href="#">My Account</a>
-                                @else
+                                    
                                     <a href="{{ url('user/login-register') }}">Login / Register</a>
+                                @else
+                                    <a class="my-account-link" href="#">My Account</a>
+                                    <ul class="my-account-sub-menu">
+                                        <li><a href="#">Profile</a></li>
+                                        <li><a href="#">Order List</a></li>
+                                        <li><a href="#">Log out</a></li>
+                                    </ul>
                                 @endif
                             </h6>
+                           
                         </div>
                     </div>
                     <div class="elementor-element elementor-element-8e0493b elementor-view-default elementor-widget elementor-widget-icon"
@@ -252,41 +259,51 @@ $sections = \App\Models\Section::sections();
                         </div>
                     </div>
                 </div>
-                <div class="elementor-element elementor-element-c6d33de elementor-hidden-mobile e-flex e-con-boxed e-con e-child"
+                <div class="elementor-element elementor-element-c6d33de e-flex e-con-boxed e-con e-child"
                     data-id="c6d33de" data-element_type="container"
                     data-settings="{&quot;container_type&quot;:&quot;flex&quot;,&quot;content_width&quot;:&quot;boxed&quot;}">
                     <div class="e-con-inner">
-                        <div class="elementor-element elementor-element-31363e9 elementor-search-form--skin-full_screen elementor-widget elementor-widget-search-form"
-                            data-id="31363e9" data-element_type="widget"
+                    <div
+                            class="elementor-element elementor-element-31363e9 elementor-search-form--skin-full_screen elementor-hidden-mobile elementor-widget elementor-widget-search-form"
+                            data-id="31363e9"
+                            data-element_type="widget"
                             data-settings="{&quot;skin&quot;:&quot;full_screen&quot;}"
-                            data-widget_type="search-form.default">
+                            data-widget_type="search-form.default"
+                        >
                             <div class="elementor-widget-container">
                                 <search role="search">
-                                    <form class="elementor-search-form" action="https://kapiton.seikodesigns.com"
-                                        method="get">
+                                    <form class="elementor-search-form" action="https://kapiton.seikodesigns.com" method="get">
                                         <div class="elementor-search-form__toggle" tabindex="0" role="button">
                                             <div class="e-font-icon-svg-container">
-                                                <svg aria-hidden="true" class="e-font-icon-svg e-fas-search"
-                                                    viewbox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
-                                                    <path
-                                                        d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z">
-                                                    </path>
+                                                <svg
+                                                    aria-hidden="true"
+                                                    class="e-font-icon-svg e-fas-search"
+                                                    viewbox="0 0 512 512"
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                >
+                                                    <path d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"></path>
                                                 </svg>
                                             </div>
                                             <span class="elementor-screen-only">Search</span>
                                         </div>
                                         <div class="elementor-search-form__container">
-                                            <label class="elementor-screen-only"
-                                                for="elementor-search-form-31363e9">Search</label>
-                                            <input id="elementor-search-form-31363e9" placeholder="Search..."
-                                                class="elementor-search-form__input" type="search" name="s" value="">
-                                            <div class="dialog-lightbox-close-button dialog-close-button" role="button"
-                                                tabindex="0">
-                                                <svg aria-hidden="true" class="e-font-icon-svg e-eicon-close"
-                                                    viewbox="0 0 1000 1000" xmlns="http://www.w3.org/2000/svg">
-                                                    <path
-                                                        d="M742 167L500 408 258 167C246 154 233 150 217 150 196 150 179 158 167 167 154 179 150 196 150 212 150 229 154 242 171 254L408 500 167 742C138 771 138 800 167 829 196 858 225 858 254 829L496 587 738 829C750 842 767 846 783 846 800 846 817 842 829 829 842 817 846 804 846 783 846 767 842 750 829 737L588 500 833 258C863 229 863 200 833 171 804 137 775 137 742 167Z">
-                                                    </path>
+                                            <label class="elementor-screen-only" for="elementor-search-form-31363e9">Search</label>
+                                            <input
+                                                id="elementor-search-form-31363e9"
+                                                placeholder="Search..."
+                                                class="elementor-search-form__input"
+                                                type="search"
+                                                name="s"
+                                                value=""
+                                            >
+                                            <div class="dialog-lightbox-close-button dialog-close-button" role="button" tabindex="0">
+                                                <svg
+                                                    aria-hidden="true"
+                                                    class="e-font-icon-svg e-eicon-close"
+                                                    viewbox="0 0 1000 1000"
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                >
+                                                    <path d="M742 167L500 408 258 167C246 154 233 150 217 150 196 150 179 158 167 167 154 179 150 196 150 212 150 229 154 242 171 254L408 500 167 742C138 771 138 800 167 829 196 858 225 858 254 829L496 587 738 829C750 842 767 846 783 846 800 846 817 842 829 829 842 817 846 804 846 783 846 767 842 750 829 737L588 500 833 258C863 229 863 200 833 171 804 137 775 137 742 167Z"></path>
                                                 </svg>
                                                 <span class="elementor-screen-only">Close this search box.</span>
                                             </div>
