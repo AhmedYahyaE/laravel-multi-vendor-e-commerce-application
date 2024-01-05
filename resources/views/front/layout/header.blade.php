@@ -191,15 +191,14 @@ $sections = \App\Models\Section::sections();
                             <h6 class="elementor-heading-title elementor-size-default">
                                 {{-- If the user is authenticated/logged in, show 'My Account', if not, show 'Login/Register' --}} 
                                 @if (\Illuminate\Support\Facades\Auth::check()) {{-- Determining If The Current User Is Authenticated: https://laravel.com/docs/9.x/authentication#determining-if-the-current-user-is-authenticated --}}
-                                    
-                                    <a href="{{ url('user/login-register') }}">Login / Register</a>
-                                @else
                                     <a class="my-account-link" href="#">My Account</a>
                                     <ul class="my-account-sub-menu">
                                         <li><a href="#">Profile</a></li>
                                         <li><a href="#">Order List</a></li>
                                         <li><a href="#">Log out</a></li>
                                     </ul>
+                                @else
+                                    <a href="{{ url('user/login-register') }}">Login / Register</a>
                                 @endif
                             </h6>
                            
