@@ -25,10 +25,11 @@ class UserController extends Controller
             // Validation    // Manually Creating Validators: https://laravel.com/docs/9.x/validation#manually-creating-validators    
             $validator = \Illuminate\Support\Facades\Validator::make($request->all(), [
                 // the 'name' HTML attribute of the request (the array key of the $request array) (ATTRIBUTE) => Validation Rules
-                'name'     => 'required|string|max:100',
+                'first_name'     => 'required|string|max:100',
+                'last_name'     => 'required|string|max:100',
                 'mobile'   => 'required|numeric|digits:11',
                 'email'    => 'required|email|max:150|unique:users', // 'unique:users'    means it's unique in the `users` table
-                'password' => 'required|min:6',
+                'password' => 'required|min:6|confirmed',
                 'accept'   => 'required'
 
             ], [ // Customizing The Error Messages: https://laravel.com/docs/9.x/validation#manual-customizing-the-error-messages
@@ -47,7 +48,8 @@ class UserController extends Controller
                 // Register the new user
                 $user = new \App\Models\User;
 
-                $user->name     = $data['name'];   // $data['name']   comes from the 'data' object sent from inside the $.ajax() method in front/js/custom.js file
+                $user->first_name     = $data['first_name'];   // $data['name']   comes from the 'data' object sent from inside the $.ajax() method in front/js/custom.js file
+                $user->last_name     = $data['last_name'];   // $data['name']   comes from the 'data' object sent from inside the $.ajax() method in front/js/custom.js file
                 $user->mobile   = $data['mobile']; // $data['mobile'] comes from the 'data' object sent from inside the $.ajax() method in front/js/custom.js file
                 $user->email    = $data['email'];  // $data['email']  comes from the 'data' object sent from inside the $.ajax() method in front/js/custom.js file
                 $user->password = bcrypt($data['password']); // storing the HASH-ed password (not the original password) in the database    // bcrypt(): https://laravel.com/docs/9.x/helpers#method-bcrypt    // $data['password'] comes from the 'data' object sent from inside the $.ajax() method in front/js/custom.js file

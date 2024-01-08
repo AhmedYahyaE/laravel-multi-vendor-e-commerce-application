@@ -348,7 +348,7 @@ window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/14
 
 
         <!-- Our front/js/custom.js file --> 
-        <script type="text/javascript" src="{{ url('front/js/custom.js') }}"></script>
+        <script type="text/javascript" src="{{ url('front/js/custom.js') . '?date=' . date('m-d-Y h:m:s') }}"></script>
 
 
 
