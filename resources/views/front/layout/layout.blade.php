@@ -161,7 +161,20 @@ window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/14
                     'url' => 'any',
                     'href' => 'front/css/elementor-css/elementor-css-post-444.css'
                 ],
+                'elementor-post-682-css' => [
+                    'url' => 'shop_category',
+                    'href' => 'front/css/elementor-css/elementor-css-post-682.css'
+                ],
+                'elementor-post-743-css' => [
+                    'url' => 'user_account',
+                    'href' => 'front/css/elementor-css/elementor-css-post-743.css'
+                ],
+                'elementor-post-843-css' => [
+                    'url' => 'user_account',
+                    'href' => 'front/css/elementor-css/elementor-css-post-843.css'
+                ],
             ];
+
         @endphp
         @foreach ($css_headers as $css_header_id => $css_header)
             @if ($currentRoute == $css_header['url'] || $css_header['url'] == 'any')

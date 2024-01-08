@@ -3,224 +3,404 @@
 
 
 @section('content')
-    <!-- Page Introduction Wrapper -->
-    <div class="page-style-a">
-        <div class="container">
-            <div class="page-intro">
-                <h2>My Account</h2>
-                <ul class="bread-crumb">
-                    <li class="has-separator">
-                        <i class="ion ion-md-home"></i>
-                        <a href="index.html">Home</a>
-                    </li>
-                    <li class="is-marked">
-                        <a href="account.html">Account</a>
-                    </li>
-                </ul>
+<div
+    data-elementor-type="wp-page"
+    data-elementor-id="743"
+    class="elementor elementor-743"
+    data-elementor-post-type="page"
+>
+    <div
+        class="elementor-element elementor-element-f854b76 e-flex e-con-boxed e-con e-parent"
+        data-id="f854b76"
+        data-element_type="container"
+        data-settings="{&quot;background_background&quot;:&quot;classic&quot;,&quot;container_type&quot;:&quot;flex&quot;,&quot;content_width&quot;:&quot;boxed&quot;}"
+        data-core-v316-plus="true"
+    >
+        <div class="e-con-inner">
+            <div
+                class="elementor-element elementor-element-e2653fa e-con-full e-flex e-con e-child"
+                data-id="e2653fa"
+                data-element_type="container"
+                data-settings="{&quot;content_width&quot;:&quot;full&quot;,&quot;container_type&quot;:&quot;flex&quot;}"
+            >
+                <div
+                    class="elementor-element elementor-element-af14eb6 elementor-widget__width-inherit elementor-invisible elementor-widget elementor-widget-heading"
+                    data-id="af14eb6"
+                    data-element_type="widget"
+                    data-settings="{&quot;_animation&quot;:&quot;fadeInUp&quot;}"
+                    data-widget_type="heading.default"
+                >
+                    <div class="elementor-widget-container">
+                        <h1 class="elementor-heading-title elementor-size-default">MY ACCOUNT</h1>
+                    </div>
+                </div>
+                <div
+                    class="elementor-element elementor-element-5ff7960 e-flex e-con-boxed e-con e-child"
+                    data-id="5ff7960"
+                    data-element_type="container"
+                    data-settings="{&quot;container_type&quot;:&quot;flex&quot;,&quot;content_width&quot;:&quot;boxed&quot;}"
+                >
+                    <div class="e-con-inner">
+                        <div
+                            class="elementor-element elementor-element-96c8ec8 e-con-full e-flex e-con e-child"
+                            data-id="96c8ec8"
+                            data-element_type="container"
+                            data-settings="{&quot;content_width&quot;:&quot;full&quot;,&quot;container_type&quot;:&quot;flex&quot;}"
+                        >
+                            <div
+                                class="elementor-element elementor-element-9a22a87 elementor-icon-list--layout-traditional elementor-list-item-link-full_width elementor-widget elementor-widget-icon-list"
+                                data-id="9a22a87"
+                                data-element_type="widget"
+                                data-widget_type="icon-list.default"
+                            >
+                                <div class="elementor-widget-container">
+                                    <ul class="elementor-icon-list-items">
+                                        <li class="elementor-icon-list-item">
+                                            <a href="#">
+                                                <span class="elementor-icon-list-icon">
+                                                    <svg
+                                                        aria-hidden="true"
+                                                        class="e-font-icon-svg e-fas-user-alt"
+                                                        viewbox="0 0 512 512"
+                                                        xmlns="http://www.w3.org/2000/svg"
+                                                    >
+                                                        <path d="M256 288c79.5 0 144-64.5 144-144S335.5 0 256 0 112 64.5 112 144s64.5 144 144 144zm128 32h-55.1c-22.2 10.2-46.9 16-72.9 16s-50.6-5.8-72.9-16H128C57.3 320 0 377.3 0 448v16c0 26.5 21.5 48 48 48h416c26.5 0 48-21.5 48-48v-16c0-70.7-57.3-128-128-128z"></path>
+                                                    </svg>
+                                                </span>
+                                                <span class="elementor-icon-list-text">Profile</span>
+                                            </a>
+                                        </li>
+                                        <li class="elementor-icon-list-item">
+                                            <a href="#">
+                                                <span class="elementor-icon-list-icon">
+                                                    <svg
+                                                        aria-hidden="true"
+                                                        class="e-font-icon-svg e-fas-cart-arrow-down"
+                                                        viewbox="0 0 576 512"
+                                                        xmlns="http://www.w3.org/2000/svg"
+                                                    >
+                                                        <path d="M504.717 320H211.572l6.545 32h268.418c15.401 0 26.816 14.301 23.403 29.319l-5.517 24.276C523.112 414.668 536 433.828 536 456c0 31.202-25.519 56.444-56.824 55.994-29.823-.429-54.35-24.631-55.155-54.447-.44-16.287 6.085-31.049 16.803-41.548H231.176C241.553 426.165 248 440.326 248 456c0 31.813-26.528 57.431-58.67 55.938-28.54-1.325-51.751-24.385-53.251-52.917-1.158-22.034 10.436-41.455 28.051-51.586L93.883 64H24C10.745 64 0 53.255 0 40V24C0 10.745 10.745 0 24 0h102.529c11.401 0 21.228 8.021 23.513 19.19L159.208 64H551.99c15.401 0 26.816 14.301 23.403 29.319l-47.273 208C525.637 312.246 515.923 320 504.717 320zM403.029 192H360v-60c0-6.627-5.373-12-12-12h-24c-6.627 0-12 5.373-12 12v60h-43.029c-10.691 0-16.045 12.926-8.485 20.485l67.029 67.029c4.686 4.686 12.284 4.686 16.971 0l67.029-67.029c7.559-7.559 2.205-20.485-8.486-20.485z"></path>
+                                                    </svg>
+                                                </span>
+                                                <span class="elementor-icon-list-text">Order List</span>
+                                            </a>
+                                        </li>
+                                        <li class="elementor-icon-list-item">
+                                            <a href="#">
+                                                <span class="elementor-icon-list-icon">
+                                                    <svg
+                                                        aria-hidden="true"
+                                                        class="e-font-icon-svg e-fas-sign-out-alt"
+                                                        viewbox="0 0 512 512"
+                                                        xmlns="http://www.w3.org/2000/svg"
+                                                    >
+                                                        <path d="M497 273L329 441c-15 15-41 4.5-41-17v-96H152c-13.3 0-24-10.7-24-24v-96c0-13.3 10.7-24 24-24h136V88c0-21.4 25.9-32 41-17l168 168c9.3 9.4 9.3 24.6 0 34zM192 436v-40c0-6.6-5.4-12-12-12H96c-17.7 0-32-14.3-32-32V160c0-17.7 14.3-32 32-32h84c6.6 0 12-5.4 12-12V76c0-6.6-5.4-12-12-12H96c-53 0-96 43-96 96v192c0 53 43 96 96 96h84c6.6 0 12-5.4 12-12z"></path>
+                                                    </svg>
+                                                </span>
+                                                <span class="elementor-icon-list-text">Logout</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div
+                            class="elementor-element elementor-element-df7ebda e-con-full e-flex e-con e-child"
+                            data-id="df7ebda"
+                            data-element_type="container"
+                            data-settings="{&quot;content_width&quot;:&quot;full&quot;,&quot;container_type&quot;:&quot;flex&quot;}"
+                        >
+                            <div
+                                class="elementor-element elementor-element-66eba68 e-grid e-con-boxed e-con e-child"
+                                data-id="66eba68"
+                                data-element_type="container"
+                                data-settings="{&quot;container_type&quot;:&quot;grid&quot;,&quot;grid_columns_grid_tablet&quot;:{&quot;unit&quot;:&quot;fr&quot;,&quot;size&quot;:2,&quot;sizes&quot;:[]},&quot;content_width&quot;:&quot;boxed&quot;,&quot;grid_outline&quot;:&quot;yes&quot;,&quot;grid_columns_grid&quot;:{&quot;unit&quot;:&quot;fr&quot;,&quot;size&quot;:3,&quot;sizes&quot;:[]},&quot;grid_columns_grid_mobile&quot;:{&quot;unit&quot;:&quot;fr&quot;,&quot;size&quot;:1,&quot;sizes&quot;:[]},&quot;grid_rows_grid&quot;:{&quot;unit&quot;:&quot;fr&quot;,&quot;size&quot;:2,&quot;sizes&quot;:[]},&quot;grid_rows_grid_tablet&quot;:{&quot;unit&quot;:&quot;fr&quot;,&quot;size&quot;:&quot;&quot;,&quot;sizes&quot;:[]},&quot;grid_rows_grid_mobile&quot;:{&quot;unit&quot;:&quot;fr&quot;,&quot;size&quot;:&quot;&quot;,&quot;sizes&quot;:[]},&quot;grid_auto_flow&quot;:&quot;row&quot;,&quot;grid_auto_flow_tablet&quot;:&quot;row&quot;,&quot;grid_auto_flow_mobile&quot;:&quot;row&quot;}"
+                            >
+                                <div class="e-con-inner">
+                                    <div
+                                        class="elementor-element elementor-element-8ef6cca e-flex e-con-boxed e-con e-child"
+                                        data-id="8ef6cca"
+                                        data-element_type="container"
+                                        data-settings="{&quot;background_background&quot;:&quot;classic&quot;,&quot;container_type&quot;:&quot;flex&quot;,&quot;content_width&quot;:&quot;boxed&quot;}"
+                                    >
+                                        <div class="e-con-inner">
+                                            <div
+                                                class="elementor-element elementor-element-846d9e7 elementor-widget elementor-widget-heading"
+                                                data-id="846d9e7"
+                                                data-element_type="widget"
+                                                data-widget_type="heading.default"
+                                            >
+                                                <div class="elementor-widget-container">
+                                                    <h6 class="elementor-heading-title elementor-size-default">FIRST NAME</h6>
+                                                </div>
+                                            </div>
+                                            <div
+                                                class="elementor-element elementor-element-fce3415 elementor-widget elementor-widget-heading"
+                                                data-id="fce3415"
+                                                data-element_type="widget"
+                                                data-widget_type="heading.default"
+                                            >
+                                                <div class="elementor-widget-container">
+                                                    <h5 class="elementor-heading-title elementor-size-default">Niño</h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="elementor-element elementor-element-4c294d7 e-flex e-con-boxed e-con e-child"
+                                        data-id="4c294d7"
+                                        data-element_type="container"
+                                        data-settings="{&quot;background_background&quot;:&quot;classic&quot;,&quot;container_type&quot;:&quot;flex&quot;,&quot;content_width&quot;:&quot;boxed&quot;}"
+                                    >
+                                        <div class="e-con-inner">
+                                            <div
+                                                class="elementor-element elementor-element-0954561 elementor-widget elementor-widget-heading"
+                                                data-id="0954561"
+                                                data-element_type="widget"
+                                                data-widget_type="heading.default"
+                                            >
+                                                <div class="elementor-widget-container">
+                                                    <h6 class="elementor-heading-title elementor-size-default">LAST NAME</h6>
+                                                </div>
+                                            </div>
+                                            <div
+                                                class="elementor-element elementor-element-30f458e elementor-widget elementor-widget-heading"
+                                                data-id="30f458e"
+                                                data-element_type="widget"
+                                                data-widget_type="heading.default"
+                                            >
+                                                <div class="elementor-widget-container">
+                                                    <h5 class="elementor-heading-title elementor-size-default">Feliciano</h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="elementor-element elementor-element-bd6cfb3 e-flex e-con-boxed e-con e-child"
+                                        data-id="bd6cfb3"
+                                        data-element_type="container"
+                                        data-settings="{&quot;background_background&quot;:&quot;classic&quot;,&quot;container_type&quot;:&quot;flex&quot;,&quot;content_width&quot;:&quot;boxed&quot;}"
+                                    >
+                                        <div class="e-con-inner">
+                                            <div
+                                                class="elementor-element elementor-element-3f22892 elementor-widget elementor-widget-heading"
+                                                data-id="3f22892"
+                                                data-element_type="widget"
+                                                data-widget_type="heading.default"
+                                            >
+                                                <div class="elementor-widget-container">
+                                                    <h6 class="elementor-heading-title elementor-size-default">Address 1</h6>
+                                                </div>
+                                            </div>
+                                            <div
+                                                class="elementor-element elementor-element-f49bf8e elementor-widget elementor-widget-heading"
+                                                data-id="f49bf8e"
+                                                data-element_type="widget"
+                                                data-widget_type="heading.default"
+                                            >
+                                                <div class="elementor-widget-container">
+                                                    <h5 class="elementor-heading-title elementor-size-default">#407 sesame street</h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="elementor-element elementor-element-00b548d e-flex e-con-boxed e-con e-child"
+                                        data-id="00b548d"
+                                        data-element_type="container"
+                                        data-settings="{&quot;background_background&quot;:&quot;classic&quot;,&quot;container_type&quot;:&quot;flex&quot;,&quot;content_width&quot;:&quot;boxed&quot;}"
+                                    >
+                                        <div class="e-con-inner">
+                                            <div
+                                                class="elementor-element elementor-element-27fbff6 elementor-widget elementor-widget-heading"
+                                                data-id="27fbff6"
+                                                data-element_type="widget"
+                                                data-widget_type="heading.default"
+                                            >
+                                                <div class="elementor-widget-container">
+                                                    <h6 class="elementor-heading-title elementor-size-default">CITY</h6>
+                                                </div>
+                                            </div>
+                                            <div
+                                                class="elementor-element elementor-element-6892f69 elementor-widget elementor-widget-heading"
+                                                data-id="6892f69"
+                                                data-element_type="widget"
+                                                data-widget_type="heading.default"
+                                            >
+                                                <div class="elementor-widget-container">
+                                                    <h5 class="elementor-heading-title elementor-size-default">bustos</h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="elementor-element elementor-element-b364a78 e-flex e-con-boxed e-con e-child"
+                                        data-id="b364a78"
+                                        data-element_type="container"
+                                        data-settings="{&quot;background_background&quot;:&quot;classic&quot;,&quot;container_type&quot;:&quot;flex&quot;,&quot;content_width&quot;:&quot;boxed&quot;}"
+                                    >
+                                        <div class="e-con-inner">
+                                            <div
+                                                class="elementor-element elementor-element-d3788cf elementor-widget elementor-widget-heading"
+                                                data-id="d3788cf"
+                                                data-element_type="widget"
+                                                data-widget_type="heading.default"
+                                            >
+                                                <div class="elementor-widget-container">
+                                                    <h6 class="elementor-heading-title elementor-size-default">STATE</h6>
+                                                </div>
+                                            </div>
+                                            <div
+                                                class="elementor-element elementor-element-72c84e2 elementor-widget elementor-widget-heading"
+                                                data-id="72c84e2"
+                                                data-element_type="widget"
+                                                data-widget_type="heading.default"
+                                            >
+                                                <div class="elementor-widget-container">
+                                                    <h5 class="elementor-heading-title elementor-size-default">bulacan</h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="elementor-element elementor-element-39ebcd7 e-flex e-con-boxed e-con e-child"
+                                        data-id="39ebcd7"
+                                        data-element_type="container"
+                                        data-settings="{&quot;background_background&quot;:&quot;classic&quot;,&quot;container_type&quot;:&quot;flex&quot;,&quot;content_width&quot;:&quot;boxed&quot;}"
+                                    >
+                                        <div class="e-con-inner">
+                                            <div
+                                                class="elementor-element elementor-element-735d997 elementor-widget elementor-widget-heading"
+                                                data-id="735d997"
+                                                data-element_type="widget"
+                                                data-widget_type="heading.default"
+                                            >
+                                                <div class="elementor-widget-container">
+                                                    <h6 class="elementor-heading-title elementor-size-default">COUNTRY</h6>
+                                                </div>
+                                            </div>
+                                            <div
+                                                class="elementor-element elementor-element-9f0221a elementor-widget elementor-widget-heading"
+                                                data-id="9f0221a"
+                                                data-element_type="widget"
+                                                data-widget_type="heading.default"
+                                            >
+                                                <div class="elementor-widget-container">
+                                                    <h5 class="elementor-heading-title elementor-size-default">philippines</h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="elementor-element elementor-element-e30bacf e-flex e-con-boxed e-con e-child"
+                                        data-id="e30bacf"
+                                        data-element_type="container"
+                                        data-settings="{&quot;background_background&quot;:&quot;classic&quot;,&quot;container_type&quot;:&quot;flex&quot;,&quot;content_width&quot;:&quot;boxed&quot;}"
+                                    >
+                                        <div class="e-con-inner">
+                                            <div
+                                                class="elementor-element elementor-element-5a654f7 elementor-widget elementor-widget-heading"
+                                                data-id="5a654f7"
+                                                data-element_type="widget"
+                                                data-widget_type="heading.default"
+                                            >
+                                                <div class="elementor-widget-container">
+                                                    <h6 class="elementor-heading-title elementor-size-default">ZIP CODE</h6>
+                                                </div>
+                                            </div>
+                                            <div
+                                                class="elementor-element elementor-element-cba44ce elementor-widget elementor-widget-heading"
+                                                data-id="cba44ce"
+                                                data-element_type="widget"
+                                                data-widget_type="heading.default"
+                                            >
+                                                <div class="elementor-widget-container">
+                                                    <h5 class="elementor-heading-title elementor-size-default">3007</h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="elementor-element elementor-element-647b37c e-flex e-con-boxed e-con e-child"
+                                        data-id="647b37c"
+                                        data-element_type="container"
+                                        data-settings="{&quot;background_background&quot;:&quot;classic&quot;,&quot;container_type&quot;:&quot;flex&quot;,&quot;content_width&quot;:&quot;boxed&quot;}"
+                                    >
+                                        <div class="e-con-inner">
+                                            <div
+                                                class="elementor-element elementor-element-fa1ec7a elementor-widget elementor-widget-heading"
+                                                data-id="fa1ec7a"
+                                                data-element_type="widget"
+                                                data-widget_type="heading.default"
+                                            >
+                                                <div class="elementor-widget-container">
+                                                    <h6 class="elementor-heading-title elementor-size-default">ZIP MOBILE</h6>
+                                                </div>
+                                            </div>
+                                            <div
+                                                class="elementor-element elementor-element-e51720f elementor-widget elementor-widget-heading"
+                                                data-id="e51720f"
+                                                data-element_type="widget"
+                                                data-widget_type="heading.default"
+                                            >
+                                                <div class="elementor-widget-container">
+                                                    <h5 class="elementor-heading-title elementor-size-default">09451621033</h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="elementor-element elementor-element-4ad3441 e-flex e-con-boxed e-con e-child"
+                                        data-id="4ad3441"
+                                        data-element_type="container"
+                                        data-settings="{&quot;background_background&quot;:&quot;classic&quot;,&quot;container_type&quot;:&quot;flex&quot;,&quot;content_width&quot;:&quot;boxed&quot;}"
+                                    >
+                                        <div class="e-con-inner">
+                                            <div
+                                                class="elementor-element elementor-element-3739a7b elementor-widget elementor-widget-heading"
+                                                data-id="3739a7b"
+                                                data-element_type="widget"
+                                                data-widget_type="heading.default"
+                                            >
+                                                <div class="elementor-widget-container">
+                                                    <h6 class="elementor-heading-title elementor-size-default">EMAIL</h6>
+                                                </div>
+                                            </div>
+                                            <div
+                                                class="elementor-element elementor-element-7bd22e0 elementor-widget elementor-widget-heading"
+                                                data-id="7bd22e0"
+                                                data-element_type="widget"
+                                                data-widget_type="heading.default"
+                                            >
+                                                <div class="elementor-widget-container">
+                                                    <h5 class="elementor-heading-title elementor-size-default">ninofeliciano9@gmail.com</h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="elementor-element elementor-element-1765a07 elementor-mobile-align-center elementor-widget elementor-widget-button"
+                                        data-id="1765a07"
+                                        data-element_type="widget"
+                                        data-widget_type="button.default"
+                                    >
+                                        <div class="elementor-widget-container">
+                                            <div class="elementor-button-wrapper">
+                                                <a class="elementor-button elementor-button-link elementor-size-sm" href="#elementor-action%3Aaction%3Dpopup%3Aopen%26settings%3DeyJpZCI6Ijc3MCIsInRvZ2dsZSI6ZmFsc2V9">
+                                                    <span class="elementor-button-content-wrapper">
+                                                        <span class="elementor-button-text">Edit information</span>
+                                                    </span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-    <!-- Page Introduction Wrapper /- -->
-    <!-- Account-Page -->
-    <div class="page-account u-s-p-t-80">
-        <div class="container">
-
-
-
-            {{-- Displaying The Validation Errors: https://laravel.com/docs/9.x/validation#quick-displaying-the-validation-errors AND https://laravel.com/docs/9.x/blade#validation-errors --}} 
-            {{-- Determining If An Item Exists In The Session (using has() method): https://laravel.com/docs/9.x/session#determining-if-an-item-exists-in-the-session --}}
-            {{-- Our Bootstrap success message in case of updating admin password is successful: --}}
-            {{-- Displaying Success Message --}}
-            @if (Session::has('success_message')) <!-- Check userRegister() method in Front/UserController.php -->
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    <strong>Success:</strong> {{ Session::get('success_message') }}
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-            @endif
-            {{-- Displaying Error Messages --}}
-            @if (Session::has('error_message')) <!-- Check userRegister() method in Front/UserController.php -->
-                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                    <strong>Error:</strong> {{ Session::get('error_message') }}
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-            @endif
-            {{-- Displaying Error Messages --}}
-            @if ($errors->any()) <!-- Check userRegister() method in Front/UserController.php -->
-                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                    <strong>Error:</strong> @php echo implode('', $errors->all('<div>:message</div>')); @endphp
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-            @endif
-
-
-
-            <div class="row">
-                <!-- Update User Account Contact Details -->
-                <div class="col-lg-6">
-                    <div class="login-wrapper">
-                        <h2 class="account-h2 u-s-m-b-20" style="font-size: 18px">Update Contact Details</h2>
-
-
-                        
-
-                        {{-- Note: To show the form's Validation Error Messages (Laravel's Validation Error Messages) from the AJAX call response from the server (backend), we create a <p> tag after every <input> field --}} {{-- We structure and use a certain pattern so that the <p> id pattern must be like: delivery-x (e.g. delivery-mobile, delivery-email, ... in order for the jQuery loop to work. And x must be identical to the 'name' HTML attributes (e.g. the <input> with the    name='mobile'    HTML attribute must have a <p> with an id HTML attribute    id="delivery-mobile"    ) so that when the vaildation errors array is sent as a response from backend/server (check $validator->messages()    inside    the method inside the controller) to the AJAX request, they could conveniently/easily be handled by the jQuery $.each() loop. Check front/js/custom.js) --}}
-                        {{-- <p id="account-error" style="color: red"></p> --}} {{-- if the Validation passes / is okay but the login credentials provided by the user are incorrect, this'll be used by jQuery to show a generic 'Wrong Credentials!' message. Or to show a message when the user's account is inactive/disabled/deactivated --}}
-                        <p id="account-error"></p> {{-- if the Validation passes / is okay but the login credentials provided by the user are incorrect, this'll be used by jQuery to show a generic 'Wrong Credentials!' message. Or to show a message when the user's account is inactive/disabled/deactivated --}}
-
-
-                        {{-- Update details Success Message using jQuery. Check    $('#accountForm').submit();    in front/js/custom.js --}} 
-                        {{-- <p id="account-success" style="color: green"></p> --}}
-                        <p id="account-success"></p>
-
-
-                        <form id="accountForm" action="javascript:;" method="post"> {{-- We need to deactivate the 'action' HTML attribute (using    'javascript:;'    ) as we'r going to submit using an AJAX call. Check front/js/custom.js --}}
-                            @csrf {{-- Preventing CSRF Requests: https://laravel.com/docs/9.x/csrf#preventing-csrf-requests --}}
-
-
-                            <div class="u-s-m-b-30">
-                                <label for="user-email">Email
-                                    <span class="astk">*</span>
-                                </label>
-                                <input class="text-field" value="{{ \Illuminate\Support\Facades\Auth::user()->email }}" style="background-color: #e9e9e9" readonly disabled> {{-- Retrieving The Authenticated User: https://laravel.com/docs/9.x/authentication#retrieving-the-authenticated-user --}}
-                                {{-- <p id="account-email" style="color: red"></p> --}} {{-- this will be used by jQuery to show the Validation Error Messages (Laravel's Validation Error Messages) from the AJAX call response from the server (backend) --}} {{-- The pattern must be like: register-x (e.g. register-mobile, register-email, ... in order for the jQuery loop to work. And x must be identical to the 'name' HTML attributes (e.g. the <input> with the    name='mobile'    HTML attribute must have a <p> with an id HTML attribute    id="register-mobile"    ) so that when the vaildation errors array is sent as a response from backend/server (check $validator->messages()    inside    the method inside the controller) to the AJAX request, they could conveniently/easily be handled by the jQuery $.each() loop. Check front/js/custom.js) --}}
-                                <p id="account-email"></p> {{-- this will be used by jQuery to show the Validation Error Messages (Laravel's Validation Error Messages) from the AJAX call response from the server (backend) --}} {{-- The pattern must be like: register-x (e.g. register-mobile, register-email, ... in order for the jQuery loop to work. And x must be identical to the 'name' HTML attributes (e.g. the <input> with the    name='mobile'    HTML attribute must have a <p> with an id HTML attribute    id="register-mobile"    ) so that when the vaildation errors array is sent as a response from backend/server (check $validator->messages()    inside    the method inside the controller) to the AJAX request, they could conveniently/easily be handled by the jQuery $.each() loop. Check front/js/custom.js) --}}
-                            </div>
-                            <div class="u-s-m-b-30">
-                                <label for="user-name">Name
-                                    <span class="astk">*</span>
-                                </label>
-                                <input class="text-field" type="text" id="user-name" name="name" value="{{ \Illuminate\Support\Facades\Auth::user()->name }}"> {{-- Retrieving The Authenticated User: https://laravel.com/docs/9.x/authentication#retrieving-the-authenticated-user --}}
-                                {{-- <p id="account-name" style="color: red"></p> --}} {{-- this will be used by jQuery to show the Validation Error Messages (Laravel's Validation Error Messages) from the AJAX call response from the server (backend) --}} {{-- The pattern must be like: register-x (e.g. register-mobile, register-email, ... in order for the jQuery loop to work. And x must be identical to the 'name' HTML attributes (e.g. the <input> with the    name='mobile'    HTML attribute must have a <p> with an id HTML attribute    id="register-mobile"    ) so that when the vaildation errors array is sent as a response from backend/server (check $validator->messages()    inside    the method inside the controller) to the AJAX request, they could conveniently/easily be handled by the jQuery $.each() loop. Check front/js/custom.js) --}}
-                                <p id="account-name"></p> {{-- this will be used by jQuery to show the Validation Error Messages (Laravel's Validation Error Messages) from the AJAX call response from the server (backend) --}} {{-- The pattern must be like: register-x (e.g. register-mobile, register-email, ... in order for the jQuery loop to work. And x must be identical to the 'name' HTML attributes (e.g. the <input> with the    name='mobile'    HTML attribute must have a <p> with an id HTML attribute    id="register-mobile"    ) so that when the vaildation errors array is sent as a response from backend/server (check $validator->messages()    inside    the method inside the controller) to the AJAX request, they could conveniently/easily be handled by the jQuery $.each() loop. Check front/js/custom.js) --}}
-                            </div>
-                            <div class="u-s-m-b-30">
-                                <label for="user-address">Address
-                                    <span class="astk">*</span>
-                                </label>
-                                <input class="text-field" type="text" id="user-address" name="address" value="{{ \Illuminate\Support\Facades\Auth::user()->address }}"> {{-- Retrieving The Authenticated User: https://laravel.com/docs/9.x/authentication#retrieving-the-authenticated-user --}}
-                                {{-- <p id="account-address" style="color: red"></p> --}} {{-- this will be used by jQuery to show the Validation Error Messages (Laravel's Validation Error Messages) from the AJAX call response from the server (backend) --}} {{-- The pattern must be like: register-x (e.g. register-mobile, register-email, ... in order for the jQuery loop to work. And x must be identical to the 'name' HTML attributes (e.g. the <input> with the    name='mobile'    HTML attribute must have a <p> with an id HTML attribute    id="register-mobile"    ) so that when the vaildation errors array is sent as a response from backend/server (check $validator->messages()    inside    the method inside the controller) to the AJAX request, they could conveniently/easily be handled by the jQuery $.each() loop. Check front/js/custom.js) --}}
-                                <p id="account-address"></p> {{-- this will be used by jQuery to show the Validation Error Messages (Laravel's Validation Error Messages) from the AJAX call response from the server (backend) --}} {{-- The pattern must be like: register-x (e.g. register-mobile, register-email, ... in order for the jQuery loop to work. And x must be identical to the 'name' HTML attributes (e.g. the <input> with the    name='mobile'    HTML attribute must have a <p> with an id HTML attribute    id="register-mobile"    ) so that when the vaildation errors array is sent as a response from backend/server (check $validator->messages()    inside    the method inside the controller) to the AJAX request, they could conveniently/easily be handled by the jQuery $.each() loop. Check front/js/custom.js) --}}
-                            </div>
-                            <div class="u-s-m-b-30">
-                                <label for="user-city">City
-                                    <span class="astk">*</span>
-                                </label>
-                                <input class="text-field" type="text" id="user-city" name="city" value="{{ \Illuminate\Support\Facades\Auth::user()->city }}"> {{-- Retrieving The Authenticated User: https://laravel.com/docs/9.x/authentication#retrieving-the-authenticated-user --}}
-                                {{-- <p id="account-city" style="color: red"></p> --}} {{-- this will be used by jQuery to show the Validation Error Messages (Laravel's Validation Error Messages) from the AJAX call response from the server (backend) --}} {{-- The pattern must be like: register-x (e.g. register-mobile, register-email, ... in order for the jQuery loop to work. And x must be identical to the 'name' HTML attributes (e.g. the <input> with the    name='mobile'    HTML attribute must have a <p> with an id HTML attribute    id="register-mobile"    ) so that when the vaildation errors array is sent as a response from backend/server (check $validator->messages()    inside    the method inside the controller) to the AJAX request, they could conveniently/easily be handled by the jQuery $.each() loop. Check front/js/custom.js) --}}
-                                <p id="account-city"></p> {{-- this will be used by jQuery to show the Validation Error Messages (Laravel's Validation Error Messages) from the AJAX call response from the server (backend) --}} {{-- The pattern must be like: register-x (e.g. register-mobile, register-email, ... in order for the jQuery loop to work. And x must be identical to the 'name' HTML attributes (e.g. the <input> with the    name='mobile'    HTML attribute must have a <p> with an id HTML attribute    id="register-mobile"    ) so that when the vaildation errors array is sent as a response from backend/server (check $validator->messages()    inside    the method inside the controller) to the AJAX request, they could conveniently/easily be handled by the jQuery $.each() loop. Check front/js/custom.js) --}}
-                            </div>
-                            <div class="u-s-m-b-30">
-                                <label for="user-state">State
-                                    <span class="astk">*</span>
-                                </label>
-                                <input class="text-field" type="text" id="user-state" name="state" value="{{ \Illuminate\Support\Facades\Auth::user()->state }}"> {{-- Retrieving The Authenticated User: https://laravel.com/docs/9.x/authentication#retrieving-the-authenticated-user --}}
-                                {{-- <p id="account-state" style="color: red"></p> --}} {{-- this will be used by jQuery to show the Validation Error Messages (Laravel's Validation Error Messages) from the AJAX call response from the server (backend) --}} {{-- The pattern must be like: register-x (e.g. register-mobile, register-email, ... in order for the jQuery loop to work. And x must be identical to the 'name' HTML attributes (e.g. the <input> with the    name='mobile'    HTML attribute must have a <p> with an id HTML attribute    id="register-mobile"    ) so that when the vaildation errors array is sent as a response from backend/server (check $validator->messages()    inside    the method inside the controller) to the AJAX request, they could conveniently/easily be handled by the jQuery $.each() loop. Check front/js/custom.js) --}}
-                                <p id="account-state"></p> {{-- this will be used by jQuery to show the Validation Error Messages (Laravel's Validation Error Messages) from the AJAX call response from the server (backend) --}} {{-- The pattern must be like: register-x (e.g. register-mobile, register-email, ... in order for the jQuery loop to work. And x must be identical to the 'name' HTML attributes (e.g. the <input> with the    name='mobile'    HTML attribute must have a <p> with an id HTML attribute    id="register-mobile"    ) so that when the vaildation errors array is sent as a response from backend/server (check $validator->messages()    inside    the method inside the controller) to the AJAX request, they could conveniently/easily be handled by the jQuery $.each() loop. Check front/js/custom.js) --}}
-                            </div>
-                            <div class="u-s-m-b-30">
-                                <label for="user-country">Country
-                                    <span class="astk">*</span>
-                                </label>
-                                <select class="text-field" id="user-country" name="country" style="color: #495057">
-                                    <option value="">Select Country</option>
-
-                                    @foreach ($countries as $country) {{-- $countries was passed from UserController to view using compact() method --}}
-                                        <option value="{{ $country['country_name'] }}"  @if ($country['country_name'] == \Illuminate\Support\Facades\Auth::user()->country) selected @endif>{{ $country['country_name'] }}</option>
-                                    @endforeach
-
-                                </select>
-                                {{-- <p id="account-country" style="color: red"></p> --}} {{-- this will be used by jQuery to show the Validation Error Messages (Laravel's Validation Error Messages) from the AJAX call response from the server (backend) --}} {{-- The pattern must be like: register-x (e.g. register-mobile, register-email, ... in order for the jQuery loop to work. And x must be identical to the 'name' HTML attributes (e.g. the <input> with the    name='mobile'    HTML attribute must have a <p> with an id HTML attribute    id="register-mobile"    ) so that when the vaildation errors array is sent as a response from backend/server (check $validator->messages()    inside    the method inside the controller) to the AJAX request, they could conveniently/easily be handled by the jQuery $.each() loop. Check front/js/custom.js) --}}
-                                <p id="account-country"></p> {{-- this will be used by jQuery to show the Validation Error Messages (Laravel's Validation Error Messages) from the AJAX call response from the server (backend) --}} {{-- The pattern must be like: register-x (e.g. register-mobile, register-email, ... in order for the jQuery loop to work. And x must be identical to the 'name' HTML attributes (e.g. the <input> with the    name='mobile'    HTML attribute must have a <p> with an id HTML attribute    id="register-mobile"    ) so that when the vaildation errors array is sent as a response from backend/server (check $validator->messages()    inside    the method inside the controller) to the AJAX request, they could conveniently/easily be handled by the jQuery $.each() loop. Check front/js/custom.js) --}}
-                            </div>
-                            <div class="u-s-m-b-30">
-                                <label for="user-pincode">Pincode
-                                    <span class="astk">*</span>
-                                </label>
-                                <input class="text-field" type="text" id="user-pincode" name="pincode" value="{{ \Illuminate\Support\Facades\Auth::user()->pincode }}"> {{-- Retrieving The Authenticated User: https://laravel.com/docs/9.x/authentication#retrieving-the-authenticated-user --}}
-                                {{-- <p id="account-pincode" style="color: red"></p> --}} {{-- this will be used by jQuery to show the Validation Error Messages (Laravel's Validation Error Messages) from the AJAX call response from the server (backend) --}} {{-- The pattern must be like: register-x (e.g. register-mobile, register-email, ... in order for the jQuery loop to work. And x must be identical to the 'name' HTML attributes (e.g. the <input> with the    name='mobile'    HTML attribute must have a <p> with an id HTML attribute    id="register-mobile"    ) so that when the vaildation errors array is sent as a response from backend/server (check $validator->messages()    inside    the method inside the controller) to the AJAX request, they could conveniently/easily be handled by the jQuery $.each() loop. Check front/js/custom.js) --}}
-                                <p id="account-pincode"></p> {{-- this will be used by jQuery to show the Validation Error Messages (Laravel's Validation Error Messages) from the AJAX call response from the server (backend) --}} {{-- The pattern must be like: register-x (e.g. register-mobile, register-email, ... in order for the jQuery loop to work. And x must be identical to the 'name' HTML attributes (e.g. the <input> with the    name='mobile'    HTML attribute must have a <p> with an id HTML attribute    id="register-mobile"    ) so that when the vaildation errors array is sent as a response from backend/server (check $validator->messages()    inside    the method inside the controller) to the AJAX request, they could conveniently/easily be handled by the jQuery $.each() loop. Check front/js/custom.js) --}}
-                            </div>
-                            <div class="u-s-m-b-30">
-                                <label for="user-mobile">Mobile
-                                    <span class="astk">*</span>
-                                </label>
-                                <input class="text-field" type="text" id="user-mobile" name="mobile" value="{{ \Illuminate\Support\Facades\Auth::user()->mobile }}"> {{-- Retrieving The Authenticated User: https://laravel.com/docs/9.x/authentication#retrieving-the-authenticated-user --}}
-                                {{-- <p id="account-mobile" style="color: red"></p> --}} {{-- this will be used by jQuery to show the Validation Error Messages (Laravel's Validation Error Messages) from the AJAX call response from the server (backend) --}} {{-- The pattern must be like: register-x (e.g. register-mobile, register-email, ... in order for the jQuery loop to work. And x must be identical to the 'name' HTML attributes (e.g. the <input> with the    name='mobile'    HTML attribute must have a <p> with an id HTML attribute    id="register-mobile"    ) so that when the vaildation errors array is sent as a response from backend/server (check $validator->messages()    inside    the method inside the controller) to the AJAX request, they could conveniently/easily be handled by the jQuery $.each() loop. Check front/js/custom.js) --}}
-                                <p id="account-mobile"></p> {{-- this will be used by jQuery to show the Validation Error Messages (Laravel's Validation Error Messages) from the AJAX call response from the server (backend) --}} {{-- The pattern must be like: register-x (e.g. register-mobile, register-email, ... in order for the jQuery loop to work. And x must be identical to the 'name' HTML attributes (e.g. the <input> with the    name='mobile'    HTML attribute must have a <p> with an id HTML attribute    id="register-mobile"    ) so that when the vaildation errors array is sent as a response from backend/server (check $validator->messages()    inside    the method inside the controller) to the AJAX request, they could conveniently/easily be handled by the jQuery $.each() loop. Check front/js/custom.js) --}}
-                            </div>
-                            <div class="m-b-45">
-                                <button class="button button-outline-secondary w-100">Update</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-                <!-- Update User Account Contact Details /- -->
-
-
-
-                <!-- Update User Password via AJAX --> 
-                <div class="col-lg-6">
-                    <div class="reg-wrapper">
-                        <h2 class="account-h2 u-s-m-b-20" style="font-size: 18px">Update Password</h2>
-
-
-                        {{-- Registration Success Message using jQuery. Check front/js/custom.js --}} 
-                        {{-- <p id="password-success" style="color: green"></p> --}}
-                        <p id="password-success"></p>
-
-
-                        {{-- Show Update User Password Errors --}}
-                        {{-- <p id="account-error" style="color: red"></p> --}} {{-- if the Validation passes / is okay but the login credentials provided by the user are incorrect, this'll be used by jQuery to show a generic 'Wrong Credentials!' message. Or to show a message when the user's account is inactive/disabled/deactivated --}}
-                        <p id="password-error"></p> {{-- if the Validation passes / is okay but the login credentials provided by the user are incorrect, this'll be used by jQuery to show a generic 'Wrong Credentials!' message. Or to show a message when the user's account is inactive/disabled/deactivated --}}
-
-
-                        
-                        <form id="passwordForm" action="javascript:;" method="post"> {{-- We need to deactivate the 'action' HTML attribute (using    'javascript:;'    ) as we'r going to submit using an AJAX call. Check front/js/custom.js --}}
-                            @csrf {{-- Preventing CSRF Requests: https://laravel.com/docs/9.x/csrf#preventing-csrf-requests --}}
-
-
-                            <div class="u-s-m-b-30">
-                                <label for="current-password">Current Password
-                                    <span class="astk">*</span>
-                                </label>
-                                <input type="password" id="current-password" class="text-field" placeholder="Current Password" name="current_password">
-                                {{-- <p id="password-current_password" style="color: red"></p> --}} {{-- this will be used by jQuery to show the Validation Error Messages (Laravel's Validation Error Messages) from the AJAX call response from the server (backend) --}} {{-- The pattern must be like: password-x (e.g. password-mobile, register-email, ... in order for the jQuery loop to work. And x must be identical to the 'name' HTML attributes (e.g. the <input> with the    name='mobile'    HTML attribute must have a <p> with an id HTML attribute    id="password-mobile"    ) so that when the vaildation errors array is sent as a response from backend/server (check $validator->messages()    inside    the method inside the controller) to the AJAX request, they could conveniently/easily be handled by the jQuery $.each() loop. Check front/js/custom.js) --}} {{-- The pattern must be like: password-x (e.g. password-mobile, register-email, ... in order for the jQuery loop to work. And x must be identical to the 'name' HTML attributes (e.g. the <input> with the    name='mobile'    HTML attribute must have a <p> with an id HTML attribute    id="password-mobile"    ) so that when the vaildation errors array is sent as a response from backend/server (check $validator->messages()    inside    the method inside the controller) to the AJAX request, they could conveniently/easily be handled by the jQuery $.each() loop. Check front/js/custom.js) --}}
-                                <p id="password-current_password"></p> {{-- this will be used by jQuery to show the Validation Error Messages (Laravel's Validation Error Messages) from the AJAX call response from the server (backend) --}} {{-- The pattern must be like: password-x (e.g. password-mobile, register-email, ... in order for the jQuery loop to work. And x must be identical to the 'name' HTML attributes (e.g. the <input> with the    name='mobile'    HTML attribute must have a <p> with an id HTML attribute    id="password-mobile"    ) so that when the vaildation errors array is sent as a response from backend/server (check $validator->messages()    inside    the method inside the controller) to the AJAX request, they could conveniently/easily be handled by the jQuery $.each() loop. Check front/js/custom.js) --}} {{-- The pattern must be like: password-x (e.g. password-mobile, register-email, ... in order for the jQuery loop to work. And x must be identical to the 'name' HTML attributes (e.g. the <input> with the    name='mobile'    HTML attribute must have a <p> with an id HTML attribute    id="password-mobile"    ) so that when the vaildation errors array is sent as a response from backend/server (check $validator->messages()    inside    the method inside the controller) to the AJAX request, they could conveniently/easily be handled by the jQuery $.each() loop. Check front/js/custom.js) --}}
-                            </div>
-                            <div class="u-s-m-b-30">
-                                <label for="usermobile">New Password
-                                    <span class="astk">*</span>
-                                </label>
-                                <input type="password" id="new-password" class="text-field" placeholder="New Password" name="new_password">
-                                {{-- <p id="password-new_password" style="color: red"></p> --}} {{-- this will be used by jQuery to show the Validation Error Messages (Laravel's Validation Error Messages) from the AJAX call response from the server (backend) --}} {{-- The pattern must be like: password-x (e.g. password-mobile, register-email, ... in order for the jQuery loop to work. And x must be identical to the 'name' HTML attributes (e.g. the <input> with the    name='mobile'    HTML attribute must have a <p> with an id HTML attribute    id="password-mobile"    ) so that when the vaildation errors array is sent as a response from backend/server (check $validator->messages()    inside    the method inside the controller) to the AJAX request, they could conveniently/easily be handled by the jQuery $.each() loop. Check front/js/custom.js) --}} {{-- The pattern must be like: password-x (e.g. password-mobile, register-email, ... in order for the jQuery loop to work. And x must be identical to the 'name' HTML attributes (e.g. the <input> with the    name='mobile'    HTML attribute must have a <p> with an id HTML attribute    id="password-mobile"    ) so that when the vaildation errors array is sent as a response from backend/server (check $validator->messages()    inside    the method inside the controller) to the AJAX request, they could conveniently/easily be handled by the jQuery $.each() loop. Check front/js/custom.js) --}}
-                                <p id="password-new_password"></p> {{-- this will be used by jQuery to show the Validation Error Messages (Laravel's Validation Error Messages) from the AJAX call response from the server (backend) --}} {{-- The pattern must be like: password-x (e.g. password-mobile, register-email, ... in order for the jQuery loop to work. And x must be identical to the 'name' HTML attributes (e.g. the <input> with the    name='mobile'    HTML attribute must have a <p> with an id HTML attribute    id="password-mobile"    ) so that when the vaildation errors array is sent as a response from backend/server (check $validator->messages()    inside    the method inside the controller) to the AJAX request, they could conveniently/easily be handled by the jQuery $.each() loop. Check front/js/custom.js) --}} {{-- The pattern must be like: password-x (e.g. password-mobile, register-email, ... in order for the jQuery loop to work. And x must be identical to the 'name' HTML attributes (e.g. the <input> with the    name='mobile'    HTML attribute must have a <p> with an id HTML attribute    id="password-mobile"    ) so that when the vaildation errors array is sent as a response from backend/server (check $validator->messages()    inside    the method inside the controller) to the AJAX request, they could conveniently/easily be handled by the jQuery $.each() loop. Check front/js/custom.js) --}}
-                            </div>
-                            <div class="u-s-m-b-30">
-                                <label for="useremail">Confirm Password
-                                    <span class="astk">*</span>
-                                </label>
-                                <input type="password" id="confirm-password" class="text-field" placeholder="Confirm Password" name="confirm_password">
-                                {{-- <p id="password-confirm_password" style="color: red"></p> --}} {{-- this will be used by jQuery to show the Validation Error Messages (Laravel's Validation Error Messages) from the AJAX call response from the server (backend) --}} {{-- The pattern must be like: password-x (e.g. password-mobile, register-email, ... in order for the jQuery loop to work. And x must be identical to the 'name' HTML attributes (e.g. the <input> with the    name='mobile'    HTML attribute must have a <p> with an id HTML attribute    id="password-mobile"    ) so that when the vaildation errors array is sent as a response from backend/server (check $validator->messages()    inside    the method inside the controller) to the AJAX request, they could conveniently/easily be handled by the jQuery $.each() loop. Check front/js/custom.js) --}} {{-- The pattern must be like: password-x (e.g. password-mobile, register-email, ... in order for the jQuery loop to work. And x must be identical to the 'name' HTML attributes (e.g. the <input> with the    name='mobile'    HTML attribute must have a <p> with an id HTML attribute    id="password-mobile"    ) so that when the vaildation errors array is sent as a response from backend/server (check $validator->messages()    inside    the method inside the controller) to the AJAX request, they could conveniently/easily be handled by the jQuery $.each() loop. Check front/js/custom.js) --}}
-                                <p id="password-confirm_password"></p> {{-- this will be used by jQuery to show the Validation Error Messages (Laravel's Validation Error Messages) from the AJAX call response from the server (backend) --}} {{-- The pattern must be like: password-x (e.g. password-mobile, register-email, ... in order for the jQuery loop to work. And x must be identical to the 'name' HTML attributes (e.g. the <input> with the    name='mobile'    HTML attribute must have a <p> with an id HTML attribute    id="password-mobile"    ) so that when the vaildation errors array is sent as a response from backend/server (check $validator->messages()    inside    the method inside the controller) to the AJAX request, they could conveniently/easily be handled by the jQuery $.each() loop. Check front/js/custom.js) --}} {{-- The pattern must be like: password-x (e.g. password-mobile, register-email, ... in order for the jQuery loop to work. And x must be identical to the 'name' HTML attributes (e.g. the <input> with the    name='mobile'    HTML attribute must have a <p> with an id HTML attribute    id="password-mobile"    ) so that when the vaildation errors array is sent as a response from backend/server (check $validator->messages()    inside    the method inside the controller) to the AJAX request, they could conveniently/easily be handled by the jQuery $.each() loop. Check front/js/custom.js) --}}
-                            </div>
-                            <div class="u-s-m-b-45">
-                                <button class="button button-primary w-100">Update</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-                <!-- Update User Password via AJAX /- -->
-
-
-
-            </div>
-        </div>
-    </div>
-    <!-- Account-Page /- -->
+</div>
 @endsection

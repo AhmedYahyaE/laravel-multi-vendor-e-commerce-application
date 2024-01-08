@@ -4,7 +4,7 @@
 # /public/storage
 /storage/*.key
 /vendor
-# .env
+.env
 # .env.backup
 .phpunit.result.cache
 Homestead.json
@@ -14,3 +14,6 @@ npm-debug.log
 yarn-error.log
 /.idea
 /.vscode
+
+/Database - multivendor_ecommerce
+/Postman Collection of API Endpoints
