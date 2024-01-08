@@ -56,7 +56,7 @@
                                 <div class="elementor-widget-container">
                                     <ul class="elementor-icon-list-items">
                                         <li class="elementor-icon-list-item">
-                                            <a href="#">
+                                            <a href="{{ url('user/account') }}">
                                                 <span class="elementor-icon-list-icon">
                                                     <svg
                                                         aria-hidden="true"
@@ -71,7 +71,7 @@
                                             </a>
                                         </li>
                                         <li class="elementor-icon-list-item">
-                                            <a href="#">
+                                            <a href="{{ url('user/orders') }}">
                                                 <span class="elementor-icon-list-icon">
                                                     <svg
                                                         aria-hidden="true"
@@ -86,7 +86,7 @@
                                             </a>
                                         </li>
                                         <li class="elementor-icon-list-item">
-                                            <a href="#">
+                                            <a href="{{ url('user/logout') }}">
                                                 <span class="elementor-icon-list-icon">
                                                     <svg
                                                         aria-hidden="true"
