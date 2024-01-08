@@ -60,7 +60,7 @@ window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/14
         </script>
 
         <!-- Standard Favicon -->
-        <link href="favicon.ico" rel="shortcut icon">
+        <link href="{{ asset('favicon.ico') }}" rel="shortcut icon">
         <!-- Base Google Font for Web-app -->
         <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet">
         <!-- Google Fonts for Banners only -->
@@ -166,11 +166,11 @@ window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/14
                     'href' => 'front/css/elementor-css/elementor-css-post-682.css'
                 ],
                 'elementor-post-743-css' => [
-                    'url' => 'user_account',
+                    'url' => 'front.user.account',
                     'href' => 'front/css/elementor-css/elementor-css-post-743.css'
                 ],
                 'elementor-post-843-css' => [
-                    'url' => 'user_account',
+                    'url' => 'front.user.orders',
                     'href' => 'front/css/elementor-css/elementor-css-post-843.css'
                 ],
             ];
@@ -222,9 +222,9 @@ window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/14
         <link rel="alternate" type="application/json+oembed" href="https://kapiton.seikodesigns.com/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fkapiton.seikodesigns.com%2F">
         <link rel="alternate" type="text/xml+oembed" href="https://kapiton.seikodesigns.com/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fkapiton.seikodesigns.com%2F&#038;format=xml">
         <meta name="generator" content="Elementor 3.18.2; features: e_dom_optimization, e_optimized_assets_loading, e_optimized_css_loading, e_font_icon_svg, additional_custom_breakpoints, block_editor_assets_optimize, e_image_loading_optimization; settings: css_print_method-external, google_font-enabled, font_display-swap">
-        <link rel="icon" href="./images/Frame-4.png" sizes="32x32">
-        <link rel="icon" href="./images/Frame-4.png" sizes="192x192">
-        <link rel="apple-touch-icon" href="./images/Frame-4.png">
+        <link rel="icon" href="{{ asset('front/iamges/main-logo/2023-12-Green-DS-NB-2-1.png') }}" sizes="32x32">
+        <link rel="icon" href="{{ asset('front/iamges/main-logo/2023-12-Green-DS-NB-2-1.png') }}" sizes="192x192">
+        <link rel="apple-touch-icon" href="{{ asset('front/iamges/main-logo/2023-12-Green-DS-NB-2-1.png') }}">
         <meta name="msapplication-TileImage" content="https://kapiton.seikodesigns.com/wp-content/uploads/2023/12/Frame-4.png">
 
 

@@ -85,12 +85,12 @@
                                             <span id="register-last_name" style="color: red"></span>
                                         </div>
                                         <div class="elementor-field-type-text elementor-field-group elementor-column elementor-field-group-field_11df834 elementor-col-100 elementor-field-required">
-                                            <label for="form-field-field_11df834" class="elementor-field-label elementor-screen-only"> 								Mobile Number</label>
+                                            <label for="form-field-field_email" class="elementor-field-label elementor-screen-only"> 								Mobile Number</label>
                                             <input
                                                 size="1"
                                                 type="text"
                                                 name="mobile"
-                                                id="form-field-field_11df834"
+                                                id="form-field-field_email"
                                                 class="elementor-field elementor-size-sm  elementor-field-textual"
                                                 placeholder="(+63)911 356 8970"
                                                 required="required"
@@ -127,13 +127,13 @@
                                             <span id="register-password" style="color: red"></span>
                                         </div>
                                         <div class="elementor-field-type-password elementor-field-group elementor-column elementor-field-group-password elementor-col-100 elementor-field-required">
-                                            <label for="form-field-password" class="elementor-field-label elementor-screen-only"> 								Password Confirmation</label>
+                                            <label for="form-field-cpassword" class="elementor-field-label elementor-screen-only"> 								Password Confirmation</label>
                                             <input
                                                 size="1"
                                                 type="password"
                                                 name="password_confirmation"
-                                                id="form-field-password"
-                                                class="elementor-field elementor-size-sm  elementor-field-textual"
+                                                id="form-field-cpassword"
+                                                class="elementor-field elementor-size-sm elementor-field-textual"
                                                 placeholder="Password Confirmation"
                                                 required="required"
                                                 aria-required="true"
@@ -149,7 +149,7 @@
                                                         type="checkbox"
                                                         value="Accept Our Terms and Conditions"
                                                         id="form-field-field_e55c601-0"
-                                                        name="form_fields[field_e55c601]"
+                                                        name="accept"
                                                         required="required"
                                                         aria-required="true"
                                                     >

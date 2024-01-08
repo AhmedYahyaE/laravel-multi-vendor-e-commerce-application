@@ -15,7 +15,7 @@ class OrderController extends Controller
             // dd($orders);
 
 
-            return view('front.orders.orders')->with(compact('orders'));
+            return view('front.orders.user_orders')->with(compact('orders'));
 
         } else { // if the order id is passed in in the route (URL) as an Optional Parameter (slug), this means go to front/orders/order_details.blade.php page
             $orderDetails = \App\Models\Order::with('orders_products')->where('id', $id)->first()->toArray();// Eager Loading: https://laravel.com/docs/9.x/eloquent-relationships#eager-loading    // 'orders_products' is the relationship method name in Order.php model
