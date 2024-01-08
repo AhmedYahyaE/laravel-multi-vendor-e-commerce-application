@@ -140,6 +140,24 @@
                                             >
                                             <span id="register-password_confirmation" style="color: red"></span>
                                         </div>
+
+                                        <div class="elementor-field-type-checkbox elementor-field-group elementor-column elementor-field-group-field_e55c601 elementor-col-100">
+                                            <label for="form-field-field_e55c601" class="elementor-field-label elementor-screen-only"> 								Accept Our Terms and Conditions</label>
+                                            <div class="elementor-field-subgroup">
+                                                <span class="elementor-field-option">
+                                                    <input
+                                                        type="checkbox"
+                                                        value="Accept Our Terms and Conditions"
+                                                        id="form-field-field_e55c601-0"
+                                                        name="form_fields[field_e55c601]"
+                                                        required="required"
+                                                        aria-required="true"
+                                                    >
+                                                    <label for="form-field-field_e55c601-0">Accept Our Terms and Conditions</label>
+                                                </span>
+                                            </div>
+                                        </div>
+
                                         <div class="elementor-field-group elementor-column elementor-field-type-submit elementor-col-50 e-form__buttons">
                                             <button type="submit" class="elementor-button elementor-size-sm">
                                                 <span>
