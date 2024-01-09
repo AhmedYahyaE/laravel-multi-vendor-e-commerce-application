@@ -228,8 +228,11 @@
                                                 data-widget_type="heading.default"
                                             >
                                                 <div class="elementor-widget-container">
-                                                    <h5 class="elementor-heading-title elementor-size-default">bustos</h5>
+                                                    <h5 class="elementor-heading-title elementor-size-default">Bustos</h5>
                                                 </div>
+                                                <select class="text-field address-field" id="user-city" name="city" style="color: #495057">
+                                                    <option value="">Select City</option>
+                                                </select>
                                             </div>
                                         </div>
                                     </div>
@@ -257,8 +260,11 @@
                                                 data-widget_type="heading.default"
                                             >
                                                 <div class="elementor-widget-container">
-                                                    <h5 class="elementor-heading-title elementor-size-default">bulacan</h5>
+                                                    <h5 class="elementor-heading-title elementor-size-default">Bulacan</h5>
                                                 </div>
+                                                <select class="text-field address-field" id="user-state" name="state" style="color: #495057">
+                                                    <option value="">Select State</option>
+                                                </select>
                                             </div>
                                         </div>
                                     </div>
@@ -286,8 +292,16 @@
                                                 data-widget_type="heading.default"
                                             >
                                                 <div class="elementor-widget-container">
-                                                    <h5 class="elementor-heading-title elementor-size-default">philippines</h5>
+                                                    <h5 class="elementor-heading-title elementor-size-default">Philippines</h5>
                                                 </div>
+                                                <select class="text-field address-field" id="user-country" name="country" style="color: #495057">
+                                                    <option value="">Select Country</option>
+
+                                                    @foreach ($countries as $country) {{-- $countries was passed from UserController to view using compact() method --}}
+                                                        <option value="{{ $country['country_name'] }}"  @if ($country['country_name'] == \Illuminate\Support\Facades\Auth::user()->country) selected @endif>{{ $country['country_name'] }}</option>
+                                                    @endforeach
+
+                                                </select>
                                             </div>
                                         </div>
                                     </div>
@@ -334,7 +348,7 @@
                                                 data-widget_type="heading.default"
                                             >
                                                 <div class="elementor-widget-container">
-                                                    <h6 class="elementor-heading-title elementor-size-default">ZIP MOBILE</h6>
+                                                    <h6 class="elementor-heading-title elementor-size-default">MOBILE</h6>
                                                 </div>
                                             </div>
                                             <div
