@@ -141,7 +141,7 @@
                                                 data-widget_type="heading.default"
                                             >
                                                 <div class="elementor-widget-container">
-                                                    <h5 class="elementor-heading-title elementor-size-default">Niño</h5>
+                                                    <h5 class="elementor-heading-title elementor-size-default">{{ $user->first_name }}</h5>
                                                 </div>
                                             </div>
                                         </div>
@@ -170,7 +170,7 @@
                                                 data-widget_type="heading.default"
                                             >
                                                 <div class="elementor-widget-container">
-                                                    <h5 class="elementor-heading-title elementor-size-default">Feliciano</h5>
+                                                    <h5 class="elementor-heading-title elementor-size-default">{{ $user->last_name }}</h5>
                                                 </div>
                                             </div>
                                         </div>
