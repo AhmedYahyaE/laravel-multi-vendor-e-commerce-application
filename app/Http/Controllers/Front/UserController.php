@@ -367,9 +367,9 @@ class UserController extends Controller
         } else { // if it's a 'GET' request, render front/users/user_account.blade.php
             // Fetch all of the world countries from the database table `countries`
             $countries = \App\Models\Country::where('status', 1)->get()->toArray(); // get the countries which have status = 1 (to ignore the blacklisted countries, in case)
+            $user = \App\Models\User::find(Auth::user()->id);
 
-
-            return view('front.users.user_account')->with(compact('countries'));
+            return view('front.users.user_account')->with(compact(['countries', 'user']));
         }
     }
 
