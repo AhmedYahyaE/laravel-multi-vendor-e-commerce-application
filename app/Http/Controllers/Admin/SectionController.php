@@ -90,7 +90,7 @@ class SectionController extends Controller
             $section->save(); // Save all data in the database
 
 
-            return redirect('admin/products')->with('success_message', $message);
+            return redirect('admin/sections')->with('success_message', $message);
         }
 
 
