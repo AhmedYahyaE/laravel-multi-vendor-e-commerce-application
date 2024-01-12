@@ -99,3 +99,10 @@
 .customer_information.edit_active .save_button{
 	display: block;
 }
+
+
+@media (max-width: 767px){
+	.text-align-center-mobile{
+		text-align: center;
+	}
+}

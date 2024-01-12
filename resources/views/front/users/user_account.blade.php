@@ -438,7 +438,7 @@
                                         data-widget_type="button.default"
                                     >
                                         <div class="elementor-widget-container">
-                                            <div class="elementor-button-wrapper text-align-right save_button">
+                                            <div class="elementor-button-wrapper text-align-right save_button text-align-center-mobile">
                                                 <a id="save_info" class="elementor-button elementor-button-link elementor-size-sm" href="#">
                                                     <span class="elementor-button-content-wrapper">
                                                         <span class="elementor-button-text">Save changes</span>
