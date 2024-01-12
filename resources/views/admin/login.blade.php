@@ -4,6 +4,7 @@
         <!-- Required meta tags -->
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="csrf-token" content="{{ csrf_token() }}">
         <title>Admin Panel</title>
         <!-- plugins:css -->
         <link rel="stylesheet" href="{{ url('admin/vendors/feather/feather.css') }}">
