@@ -802,4 +802,20 @@ $(document).ready(function() {
         });
     });
 
+
+
+
+
+
+    $("#edit_info").click(function(event) {
+        event.preventDefault(); 
+        $(".customer_information").toggleClass("edit_active");
+    });
+
+
+
+
+
+
+
 });

@@ -74,3 +74,28 @@
 	src: url(./../../fonts/Lexend-Medium.ttf) format('truetype');
 }
 /* End Custom Fonts CSS */
+
+
+
+
+/*CUSTOM CSS NINO FELICIANO*/
+.customer_information input.text-field,
+.customer_information select.text-field{
+	margin-top: 10px;
+    border-radius: 6px;
+    border: none;
+    background: #efefef;
+    box-shadow: 0 0 10px -3px #0000001a;
+	display: none;
+}
+.text-align-right{
+	text-align: right;
+}
+.save_button{
+	display: none;
+}
+.customer_information.edit_active input.text-field,
+.customer_information.edit_active select.text-field,
+.customer_information.edit_active .save_button{
+	display: block;
+}
