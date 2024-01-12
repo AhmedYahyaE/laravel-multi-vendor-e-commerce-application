@@ -115,4 +115,12 @@
 .elementor-element-7cd9cbb h6:hover ul.my-account-sub-menu{
 	display: block;
 }
+.elementor-34 .elementor-element.elementor-element-a9bf2d7{
+	display: none;
+}
+@media (max-width: 1024px){
+	.elementor-34 .elementor-element.elementor-element-a9bf2d7{
+		display: block;
+	}
+}
 /*NINO FELICIANO CUSTOM CSS FOR HEADER*/
