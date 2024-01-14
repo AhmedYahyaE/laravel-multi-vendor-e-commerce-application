@@ -105,7 +105,7 @@
                             </div>
                         </div>
                         <div
-                            class="elementor-element elementor-element-df7ebda e-con-full e-flex e-con e-child"
+                            class="elementor-element elementor-element-df7ebda e-con-full e-flex e-con e-child customer_information"
                             data-id="df7ebda"
                             data-element_type="container"
                             data-settings="{&quot;content_width&quot;:&quot;full&quot;,&quot;container_type&quot;:&quot;flex&quot;}"
@@ -142,6 +142,7 @@
                                             >
                                                 <div class="elementor-widget-container">
                                                     <h5 class="elementor-heading-title elementor-size-default">{{ $user->first_name }}</h5>
+                                                    <input class="text-field first_name_edit" type="text" id="first_name_edit" name="first_name_edit" value="{{ $user->first_name }}">
                                                 </div>
                                             </div>
                                         </div>
@@ -171,6 +172,7 @@
                                             >
                                                 <div class="elementor-widget-container">
                                                     <h5 class="elementor-heading-title elementor-size-default">{{ $user->last_name }}</h5>
+                                                    <input class="text-field last_name_edit" type="text" id="last_name_edit" name="last_name_edit" value="{{ $user->last_name }}">
                                                 </div>
                                             </div>
                                         </div>
@@ -200,6 +202,7 @@
                                             >
                                                 <div class="elementor-widget-container">
                                                     <h5 class="elementor-heading-title elementor-size-default">#407 sesame street</h5>
+                                                    <input class="text-field address_1_edit" type="text" id="address_1_edit" name="address_1_edit" value="#407 sesame street">
                                                 </div>
                                             </div>
                                         </div>
@@ -229,10 +232,11 @@
                                             >
                                                 <div class="elementor-widget-container">
                                                     <h5 class="elementor-heading-title elementor-size-default">Bustos</h5>
+                                                    <select class="text-field address-field city-edit" id="user-city" name="city" style="color: #495057">
+                                                        <option value="">Select City</option>
+                                                    </select>
                                                 </div>
-                                                <select class="text-field address-field" id="user-city" name="city" style="color: #495057">
-                                                    <option value="">Select City</option>
-                                                </select>
+                                                
                                             </div>
                                         </div>
                                     </div>
@@ -261,10 +265,11 @@
                                             >
                                                 <div class="elementor-widget-container">
                                                     <h5 class="elementor-heading-title elementor-size-default">Bulacan</h5>
+                                                    <select class="text-field address-field state-edit" id="user-state" name="state" style="color: #495057">
+                                                        <option value="">Select State</option>
+                                                    </select>
                                                 </div>
-                                                <select class="text-field address-field" id="user-state" name="state" style="color: #495057">
-                                                    <option value="">Select State</option>
-                                                </select>
+                                                
                                             </div>
                                         </div>
                                     </div>
@@ -293,15 +298,16 @@
                                             >
                                                 <div class="elementor-widget-container">
                                                     <h5 class="elementor-heading-title elementor-size-default">Philippines</h5>
+                                                    <select class="text-field address-field country-edit" id="user-country" name="country" style="color: #495057">
+                                                        <option value="">Select Country</option>
+
+                                                        @foreach ($countries as $country) {{-- $countries was passed from UserController to view using compact() method --}}
+                                                            <option value="{{ $country['country_name'] }}"  @if ($country['country_name'] == \Illuminate\Support\Facades\Auth::user()->country) selected @endif>{{ $country['country_name'] }}</option>
+                                                        @endforeach
+
+                                                    </select>
                                                 </div>
-                                                <select class="text-field address-field" id="user-country" name="country" style="color: #495057">
-                                                    <option value="">Select Country</option>
-
-                                                    @foreach ($countries as $country) {{-- $countries was passed from UserController to view using compact() method --}}
-                                                        <option value="{{ $country['country_name'] }}"  @if ($country['country_name'] == \Illuminate\Support\Facades\Auth::user()->country) selected @endif>{{ $country['country_name'] }}</option>
-                                                    @endforeach
-
-                                                </select>
+                                                
                                             </div>
                                         </div>
                                     </div>
@@ -330,6 +336,7 @@
                                             >
                                                 <div class="elementor-widget-container">
                                                     <h5 class="elementor-heading-title elementor-size-default">3007</h5>
+                                                    <input class="text-field zip_code_edit" type="text" id="zip_code_edit" name="zip_code_edit" value="3007">
                                                 </div>
                                             </div>
                                         </div>
@@ -359,6 +366,7 @@
                                             >
                                                 <div class="elementor-widget-container">
                                                     <h5 class="elementor-heading-title elementor-size-default">09451621033</h5>
+                                                    <input type="text" class="text-field phone_edit" id="phone_edit" name="phone_edit" pattern="^0\d{10}$" value="09451621033">
                                                 </div>
                                             </div>
                                         </div>
@@ -388,10 +396,15 @@
                                             >
                                                 <div class="elementor-widget-container">
                                                     <h5 class="elementor-heading-title elementor-size-default">ninofeliciano9@gmail.com</h5>
+                                                    <input class="text-field email_edit" type="email" id="email_edit" name="email_edit" value="ninofeliciano9@gmail.com">
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
+
+
+
+
                                     <div
                                         class="elementor-element elementor-element-1765a07 elementor-mobile-align-center elementor-widget elementor-widget-button"
                                         data-id="1765a07"
@@ -400,7 +413,7 @@
                                     >
                                         <div class="elementor-widget-container">
                                             <div class="elementor-button-wrapper">
-                                                <a class="elementor-button elementor-button-link elementor-size-sm" href="#elementor-action%3Aaction%3Dpopup%3Aopen%26settings%3DeyJpZCI6Ijc3MCIsInRvZ2dsZSI6ZmFsc2V9">
+                                                <a id="edit_info" class="elementor-button elementor-button-link elementor-size-sm" href="#">
                                                     <span class="elementor-button-content-wrapper">
                                                         <span class="elementor-button-text">Edit information</span>
                                                     </span>
@@ -408,6 +421,35 @@
                                             </div>
                                         </div>
                                     </div>
+
+                                    <div
+                                        class="elementor-element elementor-element-1765a09 elementor-mobile-align-center elementor-widget elementor-widget-button"
+                                        data-id="1765a09"
+                                        data-element_type="widget"
+                                        data-widget_type="button.default"
+                                    >
+                                        
+                                    </div>
+
+                                    <div
+                                        class="elementor-element elementor-element-1765a07 elementor-mobile-align-center elementor-widget elementor-widget-button"
+                                        data-id="1765a07"
+                                        data-element_type="widget"
+                                        data-widget_type="button.default"
+                                    >
+                                        <div class="elementor-widget-container">
+                                            <div class="elementor-button-wrapper text-align-right save_button text-align-center-mobile">
+                                                <a id="save_info" class="elementor-button elementor-button-link elementor-size-sm" href="#">
+                                                    <span class="elementor-button-content-wrapper">
+                                                        <span class="elementor-button-text">Save changes</span>
+                                                    </span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
                                 </div>
                             </div>
                         </div>

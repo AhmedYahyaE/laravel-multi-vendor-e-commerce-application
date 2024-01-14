@@ -196,7 +196,7 @@ class ProductsController extends Controller
                 // Firstly, for every filter in the `products_filters` table, Get the filter's (from the foreach loop) `cat_ids` using filterAvailable() method, then check if the current category_id exists in the filter cat_ids, then show the filter, if not, then don't show the filter
                 $filterAvailable = \App\Models\ProductsFilter::filterAvailable($filter['id'], $data['category_id']);
                 if ($filterAvailable == 'Yes') {
-                    if (isset($filter['filter_column']) && $data[$filter['filter_column']]) { // check if every filter's `filter_column` is submitted by the category_filters.blade.php page
+                    if (isset($filter['filter_column']) && isset($data[$filter['filter_column']])) { // check if every filter's `filter_column` is submitted by the category_filters.blade.php page
                         // Save the product filter in the `products` table
                         $features[$filter['filter_column']] = $data[$filter['filter_column']]; // i.e. $product->filter_column = filter_value    // $data[$filter['filter_column']]    is like    $data['screen_size']    which is equal to the filter value e.g.    $data['screen_size'] = 5 to 5.4 in    // $data comes from the <select> box in category_filters.blade.php
                     }
@@ -283,8 +283,18 @@ class ProductsController extends Controller
         $product->features = json_decode($product->features, true);
         // dd($product);
 
+        $breadcrumb = [
+            [
+                'url' => 'admin/products',
+                'value' => 'Products'
+            ],
+            [
+                'value' => 'Product'
+            ]
+        ];
+
         // return view('admin.products.add_edit_product')->with(compact('title', 'product'));
-        return view('admin.products.add_edit_product')->with(compact('title', 'product', 'categories', 'brands'));
+        return view('admin.products.add_edit_product')->with(compact('title', 'product', 'categories', 'brands', 'breadcrumb'));
     }
 
     public function deleteProductImage($id) { // AJAX call from admin/js/custom.js    // Delete the product image from BOTH SERVER (FILESYSTEM) & DATABASE    // $id is passed as a Route Parameter    
