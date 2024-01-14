@@ -557,6 +557,7 @@
     <!-- Who we Are? /- -->
 
     <!-- Top Products -->
+    @if (count($bestSellers) > 0)
     <div
         class="elementor-element elementor-element-943f922 e-flex e-con-boxed e-con e-parent"
         data-id="943f922"
@@ -576,6 +577,8 @@
                     <h2 class="elementor-heading-title elementor-size-default">Our Top Products</h2>
                 </div>
             </div>
+
+            @foreach ($bestSellers as $product)
             <div
                 class="elementor-element elementor-element-6b25072 e-con-full e-flex elementor-invisible e-con e-child"
                 data-id="6b25072"
@@ -610,7 +613,7 @@
                     data-widget_type="text-editor.default"
                 >
                     <div class="elementor-widget-container">
-                        <p>Adobe CC</p>
+                        <p>{{$product['product_name']}}</p>
                     </div>
                 </div>
                 <div
@@ -620,7 +623,7 @@
                     data-widget_type="heading.default"
                 >
                     <div class="elementor-widget-container">
-                        <h2 class="elementor-heading-title elementor-size-default"> ₱1,000</h2>
+                        <h2 class="elementor-heading-title elementor-size-default"> ₱{{$product['product_price']}}</h2>
                     </div>
                 </div>
                 <div
@@ -631,7 +634,7 @@
                 >
                     <div class="elementor-widget-container">
                         <div class="elementor-button-wrapper">
-                            <a class="elementor-button elementor-button-link elementor-size-sm" href="#">
+                            <a class="elementor-button elementor-button-link elementor-size-sm" href="{{url('product/'.$product['id'])}}">
                                 <span class="elementor-button-content-wrapper">
                                     <span class="elementor-button-text">Order now</span>
                                 </span>
@@ -640,238 +643,11 @@
                     </div>
                 </div>
             </div>
-            <div
-                class="elementor-element elementor-element-f22ad2a e-con-full e-flex elementor-invisible e-con e-child"
-                data-id="f22ad2a"
-                data-element_type="container"
-                data-settings="{&quot;content_width&quot;:&quot;full&quot;,&quot;animation&quot;:&quot;fadeInUp&quot;,&quot;animation_delay&quot;:100,&quot;container_type&quot;:&quot;flex&quot;}"
-            >
-                <div
-                    class="elementor-element elementor-element-20b1589 elementor-widget elementor-widget-image"
-                    data-id="20b1589"
-                    data-element_type="widget"
-                    data-widget_type="image.default"
-                >
-                    <div class="elementor-widget-container">
-                        <a href="#">
-                            <img
-                                loading="lazy"
-                                decoding="async"
-                                width="329"
-                                height="329"
-                                src="./images/2023-12-Frame-32-2.png"
-                                class="attachment-large size-large wp-image-383"
-                                alt=""
-                                srcset="./images/2023-12-Frame-32-2.png 329w, ./images/2023-12-Frame-32-2-300x300.png 300w, ./images/2023-12-Frame-32-2-150x150.png 150w"
-                                sizes="(max-width: 329px) 100vw, 329px"
-                            >
-                        </a>
-                    </div>
-                </div>
-                <div
-                    class="elementor-element elementor-element-ea8de67 elementor-widget elementor-widget-text-editor"
-                    data-id="ea8de67"
-                    data-element_type="widget"
-                    data-widget_type="text-editor.default"
-                >
-                    <div class="elementor-widget-container">
-                        <p>Spotify</p>
-                    </div>
-                </div>
-                <div
-                    class="elementor-element elementor-element-c046c61 elementor-widget elementor-widget-heading"
-                    data-id="c046c61"
-                    data-element_type="widget"
-                    data-widget_type="heading.default"
-                >
-                    <div class="elementor-widget-container">
-                        <h2 class="elementor-heading-title elementor-size-default">₱2,799</h2>
-                    </div>
-                </div>
-                <div
-                    class="elementor-element elementor-element-97c3397 elementor-widget elementor-widget-button"
-                    data-id="97c3397"
-                    data-element_type="widget"
-                    data-widget_type="button.default"
-                >
-                    <div class="elementor-widget-container">
-                        <div class="elementor-button-wrapper">
-                            <a class="elementor-button elementor-button-link elementor-size-sm" href="#">
-                                <span class="elementor-button-content-wrapper">
-                                    <span class="elementor-button-text">Order now</span>
-                                </span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div
-                class="elementor-element elementor-element-a9e4114 e-con-full e-flex elementor-invisible e-con e-child"
-                data-id="a9e4114"
-                data-element_type="container"
-                data-settings="{&quot;content_width&quot;:&quot;full&quot;,&quot;animation&quot;:&quot;fadeInUp&quot;,&quot;animation_delay&quot;:200,&quot;container_type&quot;:&quot;flex&quot;}"
-            >
-                <div
-                    class="elementor-element elementor-element-50e5d32 elementor-widget elementor-widget-image"
-                    data-id="50e5d32"
-                    data-element_type="widget"
-                    data-widget_type="image.default"
-                >
-                    <div class="elementor-widget-container">
-                        <a href="#">
-                            <img
-                                loading="lazy"
-                                decoding="async"
-                                width="329"
-                                height="329"
-                                src="./images/2023-12-Frame-33-1.png"
-                                class="attachment-large size-large wp-image-384"
-                                alt=""
-                                srcset="./images/2023-12-Frame-33-1.png 329w, ./images/2023-12-Frame-33-1-300x300.png 300w, ./images/2023-12-Frame-33-1-150x150.png 150w"
-                                sizes="(max-width: 329px) 100vw, 329px"
-                            >
-                        </a>
-                    </div>
-                </div>
-                <div
-                    class="elementor-element elementor-element-d3393e5 elementor-widget elementor-widget-text-editor"
-                    data-id="d3393e5"
-                    data-element_type="widget"
-                    data-widget_type="text-editor.default"
-                >
-                    <div class="elementor-widget-container">
-                        <p>Office 2023</p>
-                    </div>
-                </div>
-                <div
-                    class="elementor-element elementor-element-724af9e elementor-widget elementor-widget-heading"
-                    data-id="724af9e"
-                    data-element_type="widget"
-                    data-widget_type="heading.default"
-                >
-                    <div class="elementor-widget-container">
-                        <h2 class="elementor-heading-title elementor-size-default">₱4,499</h2>
-                    </div>
-                </div>
-                <div
-                    class="elementor-element elementor-element-05d6d94 elementor-widget elementor-widget-button"
-                    data-id="05d6d94"
-                    data-element_type="widget"
-                    data-widget_type="button.default"
-                >
-                    <div class="elementor-widget-container">
-                        <div class="elementor-button-wrapper">
-                            <a class="elementor-button elementor-button-link elementor-size-sm" href="#">
-                                <span class="elementor-button-content-wrapper">
-                                    <span class="elementor-button-text">Order now</span>
-                                </span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div
-                class="elementor-element elementor-element-8fb3c2d e-con-full e-flex elementor-invisible e-con e-child"
-                data-id="8fb3c2d"
-                data-element_type="container"
-                data-settings="{&quot;content_width&quot;:&quot;full&quot;,&quot;animation&quot;:&quot;fadeInUp&quot;,&quot;animation_delay&quot;:300,&quot;container_type&quot;:&quot;flex&quot;}"
-            >
-                <div
-                    class="elementor-element elementor-element-d021aa5 elementor-widget elementor-widget-image"
-                    data-id="d021aa5"
-                    data-element_type="widget"
-                    data-widget_type="image.default"
-                >
-                    <div class="elementor-widget-container">
-                        <a href="#">
-                            <img
-                                loading="lazy"
-                                decoding="async"
-                                width="329"
-                                height="329"
-                                src="./images/2023-12-Frame-34.png"
-                                class="attachment-large size-large wp-image-385"
-                                alt=""
-                                srcset="./images/2023-12-Frame-34.png 329w, ./images/2023-12-Frame-34-300x300.png 300w, ./images/2023-12-Frame-34-150x150.png 150w"
-                                sizes="(max-width: 329px) 100vw, 329px"
-                            >
-                        </a>
-                    </div>
-                </div>
-                <div
-                    class="elementor-element elementor-element-88cd31a elementor-widget elementor-widget-text-editor"
-                    data-id="88cd31a"
-                    data-element_type="widget"
-                    data-widget_type="text-editor.default"
-                >
-                    <div class="elementor-widget-container">
-                        <p>Canva Premium</p>
-                    </div>
-                </div>
-                <div
-                    class="elementor-element elementor-element-dde3590 elementor-widget elementor-widget-heading"
-                    data-id="dde3590"
-                    data-element_type="widget"
-                    data-widget_type="heading.default"
-                >
-                    <div class="elementor-widget-container">
-                        <h2 class="elementor-heading-title elementor-size-default">₱899</h2>
-                    </div>
-                </div>
-                <div
-                    class="elementor-element elementor-element-6667f06 elementor-widget elementor-widget-button"
-                    data-id="6667f06"
-                    data-element_type="widget"
-                    data-widget_type="button.default"
-                >
-                    <div class="elementor-widget-container">
-                        <div class="elementor-button-wrapper">
-                            <a class="elementor-button elementor-button-link elementor-size-sm" href="#">
-                                <span class="elementor-button-content-wrapper">
-                                    <span class="elementor-button-text">Order now</span>
-                                </span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div
-                class="elementor-element elementor-element-9ab3157 e-flex e-con-boxed e-con e-child"
-                data-id="9ab3157"
-                data-element_type="container"
-                data-settings="{&quot;container_type&quot;:&quot;flex&quot;,&quot;content_width&quot;:&quot;boxed&quot;}"
-            >
-                <div class="e-con-inner">
-                    <div
-                        class="elementor-element elementor-element-dc7bdf9 elementor-align-center elementor-widget elementor-widget-button"
-                        data-id="dc7bdf9"
-                        data-element_type="widget"
-                        data-widget_type="button.default"
-                    >
-                        <div class="elementor-widget-container">
-                            <div class="elementor-button-wrapper">
-                                <a class="elementor-button elementor-button-link elementor-size-sm" href="#">
-                                    <span class="elementor-button-content-wrapper">
-                                        <span class="elementor-button-icon elementor-align-icon-left">
-                                            <svg
-                                                aria-hidden="true"
-                                                class="e-font-icon-svg e-fas-chevron-down"
-                                                viewbox="0 0 448 512"
-                                                xmlns="http://www.w3.org/2000/svg"
-                                            >
-                                                <path d="M207.029 381.476L12.686 187.132c-9.373-9.373-9.373-24.569 0-33.941l22.667-22.667c9.357-9.357 24.522-9.375 33.901-.04L224 284.505l154.745-154.021c9.379-9.335 24.544-9.317 33.901.04l22.667 22.667c9.373 9.373 9.373 24.569 0 33.941L240.971 381.476c-9.373 9.372-24.569 9.372-33.942 0z"></path>
-                                            </svg>
-                                        </span>
-                                        <span class="elementor-button-text"></span>
-                                    </span>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            @endforeach
+
         </div>
     </div>
+    @endif
     <!-- Top Products /- -->
 
     <!-- Recently added -->
