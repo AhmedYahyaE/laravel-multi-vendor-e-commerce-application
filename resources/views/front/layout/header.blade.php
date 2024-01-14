@@ -209,12 +209,14 @@ $sections = \App\Models\Section::sections();
                         <div class="elementor-widget-container">
                             <div class="elementor-icon-wrapper">
                                 <div class="elementor-icon">
-                                    <svg aria-hidden="true" class="e-font-icon-svg e-fas-shopping-bag" viewbox="0 0 448 512"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <path
-                                            d="M352 160v-32C352 57.42 294.579 0 224 0 153.42 0 96 57.42 96 128v32H0v272c0 44.183 35.817 80 80 80h288c44.183 0 80-35.817 80-80V160h-96zm-192-32c0-35.29 28.71-64 64-64s64 28.71 64 64v32H160v-32zm160 120c-13.255 0-24-10.745-24-24s10.745-24 24-24 24 10.745 24 24-10.745 24-24 24zm-192 0c-13.255 0-24-10.745-24-24s10.745-24 24-24 24 10.745 24 24-10.745 24-24 24z">
-                                        </path>
-                                    </svg>
+                                    <a id="mini-cart-trigger" {{-- href="{{ url('cart') }}" --}}>
+                                        <svg aria-hidden="true" class="e-font-icon-svg e-fas-shopping-bag" viewbox="0 0 448 512"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path
+                                                d="M352 160v-32C352 57.42 294.579 0 224 0 153.42 0 96 57.42 96 128v32H0v272c0 44.183 35.817 80 80 80h288c44.183 0 80-35.817 80-80V160h-96zm-192-32c0-35.29 28.71-64 64-64s64 28.71 64 64v32H160v-32zm160 120c-13.255 0-24-10.745-24-24s10.745-24 24-24 24 10.745 24 24-10.745 24-24 24zm-192 0c-13.255 0-24-10.745-24-24s10.745-24 24-24 24 10.745 24 24-10.745 24-24 24z">
+                                            </path>
+                                        </svg>
+                                    </a>
                                 </div>
                             </div>
                         </div>
@@ -338,5 +340,11 @@ $sections = \App\Models\Section::sections();
         </div>
     </div>
     <!-- Bottom-Header /- -->
+
+    <!-- Mini Cart Widget -->
+    <div id="appendHeaderCartItems"> {{-- We created the CSS class 'appendHeaderCartItems' to use it in front/js/custom.js to update the total cart items via AJAX in the Mini Cart Wedget, because in pages that we originally use AJAX to update the cart items (such as when we delete a cart item in http://127.0.0.1:8000/cart using AJAX), the number doesn't change in the header automatically because AJAX is already used and no page reload/refresh has occurred --}}
+        @include('front.layout.header_cart_items')
+    </div>
+    <!-- Mini Cart Widget /- -->
 </header>
 <!-- Header /- -->
