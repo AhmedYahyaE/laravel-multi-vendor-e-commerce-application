@@ -8,7 +8,15 @@
                 <div class="col-md-12 grid-margin">
                     <div class="row">
                         <div class="col-12 col-xl-8 mb-4 mb-xl-0">
-                            <h4 class="card-title">Products</h4>
+                            <h4 class="card-title">
+                                @foreach ($breadcrumb as $value)
+                                    @if (isset($value['url']))
+                                        <a href="{{ url($value['url']) }}">{{ $value['value'] }}</a>/
+                                    @else
+                                        <span>{{ $value['value'] }}</span>
+                                    @endif
+                                @endforeach
+                            </h4>                                
                         </div>
                         <div class="col-12 col-xl-4">
                             <div class="justify-content-end d-flex">

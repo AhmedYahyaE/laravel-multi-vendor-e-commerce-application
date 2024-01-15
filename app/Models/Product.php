@@ -46,7 +46,10 @@ class Product extends Model
         $product_ratings = \App\Models\Rating::select('rating')->where('product_id', $product_id)->get()->toArray();
         $cnt = count($product_ratings);
         
-        $computed = array_sum(Arr::pluck($product_ratings, 'rating')) / $cnt;
+        $computed = 0;
+        if ($cnt > 0) {
+            $computed = array_sum(Arr::pluck($product_ratings, 'rating')) / $cnt;
+        }
 
         return $computed;
     }
@@ -157,6 +160,12 @@ class Product extends Model
     // Delete a product from Cart if it's 'disabled' (`status` = 0) or it's out of stock (sold out)    
     public static function deleteCartProduct($product_id) {
         Cart::where('product_id', $product_id)->delete();
+    }
+
+    public static function getProductsBySectionName($section_name) {
+        $section_id = \App\Models\Section::where('name', $section_name)->get('id')->toArray();
+
+        return Product::where('section_id', $section_id)->get()->toArray();
     }
 
 }

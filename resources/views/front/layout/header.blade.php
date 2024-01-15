@@ -193,8 +193,8 @@ $sections = \App\Models\Section::sections();
                                 @if (\Illuminate\Support\Facades\Auth::check()) {{-- Determining If The Current User Is Authenticated: https://laravel.com/docs/9.x/authentication#determining-if-the-current-user-is-authenticated --}}
                                     <a class="my-account-link" href="{{ url('user/account') }}">My Account</a>
                                     <ul class="my-account-sub-menu">
-                                        <li><a href="{{ url('user/account/profile') }}">Profile</a></li>
-                                        <li><a href="{{ url('user/account/orders') }}">Order List</a></li>
+                                        <li><a href="{{ url('user/account') }}">Profile</a></li>
+                                        <li><a href="{{ url('user/orders') }}">Order List</a></li>
                                         <li><a href="{{ url('user/logout') }}">Log out</a></li>
                                     </ul>
                                 @else
@@ -311,6 +311,7 @@ $sections = \App\Models\Section::sections();
                                 </search>
                             </div>
                         </div>
+                        @if (Auth::check())
                         <div class="elementor-element elementor-element-a9bf2d7 elementor-icon-list--layout-traditional elementor-list-item-link-full_width elementor-widget elementor-widget-icon-list"
                             data-id="a9bf2d7" data-element_type="widget" data-widget_type="icon-list.default">
                             <div class="elementor-widget-container">
@@ -325,12 +326,13 @@ $sections = \App\Models\Section::sections();
                                                 </path>
                                             </svg>
                                         </span>
-                                        <span class="elementor-icon-list-text">User</span>
-                                    </li>
-                                </ul>
+                                            <span class="elementor-icon-list-text">{{ Auth::user()->first_name }}  {{  Auth::user()->last_name }}</span>
+                                        </li>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                        @endif
                 </div>
             </div>
         </div>
