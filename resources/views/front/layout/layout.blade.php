@@ -173,6 +173,10 @@ window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/14
                     'url' => 'front.user.orders',
                     'href' => 'front/css/elementor-css/elementor-css-post-843.css'
                 ],
+                'elementor-post-884-css' => [
+                    'url' => 'front.user.orders',
+                    'href' => 'front/css/elementor-css/elementor-css-post-884.css'
+                ],
             ];
 
         @endphp
