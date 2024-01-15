@@ -721,10 +721,10 @@
                                 decoding="async"
                                 width="800"
                                 height="968"
-                                src="{{ asset('front/images/product/no-image-available.jpg')}}"
+                                src="{{ asset('front/images/product/no-available-image.jpg')}}"
                                 class="attachment-large size-large wp-image-422"
                                 alt=""
-                                srcset="{{ asset('front/images/product/no-image-available.jpg') }} 846w, {{ asset('front/images/product/no-image-available.jpg') }} 248w, {{ asset('front/images/product/no-image-available.jpg') }} 768w, {{ asset('front/images/product/no-image-available.jpg') }} 879w"
+                                srcset="{{ asset('front/images/product/no-available-image.jpg') }} 846w, {{ asset('front/images/product/no-available-image.jpg') }} 248w, {{ asset('front/images/product/no-available-image.jpg') }} 768w, {{ asset('front/images/product/no-available-image.jpg') }} 879w"
                                 sizes="(max-width: 800px) 100vw, 800px"
                             >
                             @endif
