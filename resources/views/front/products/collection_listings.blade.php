@@ -52,6 +52,7 @@
                         data-widget_type="html.default"
                     >
                         <div class="elementor-widget-container">
+                            <label>Sort by:</labe>
                             <select id="sort_by">
                                 <option value="Best Selling">Best Selling</option>
                                 <option value="Alphabetically , A-Z">Alphabetically , A-Z</option>
