@@ -92,10 +92,10 @@
                                                                         decoding="async"
                                                                         width="522"
                                                                         height="522"
-                                                                        src="./images/2023-12-cc1.jpg"
+                                                                        src="{{ asset('front/images/product/no-available-image.jpg')}}"
                                                                         class="attachment-large size-large wp-image-503"
                                                                         alt=""
-                                                                        srcset="./images/2023-12-cc1.jpg 522w, ./images/2023-12-cc1-300x300.jpg 300w, ./images/2023-12-cc1-150x150.jpg 150w"
+                                                                        srcset="{{ asset('front/images/product/no-available-image.jpg')}} 522w, {{ asset('front/images/product/no-available-image.jpg')}} 300w, {{ asset('front/images/product/no-available-image.jpg')}} 150w"
                                                                         sizes="(max-width: 522px) 100vw, 522px"
                                                                     >
                                                                 </div>
@@ -137,10 +137,10 @@
                                                                         decoding="async"
                                                                         width="522"
                                                                         height="522"
-                                                                        src="./images/2023-12-cc2.jpg"
+                                                                        src="{{ asset('front/images/product/no-available-image.jpg')}}"
                                                                         class="attachment-large size-large wp-image-502"
                                                                         alt=""
-                                                                        srcset="./images/2023-12-cc2.jpg 522w, ./images/2023-12-cc2-300x300.jpg 300w, ./images/2023-12-cc2-150x150.jpg 150w"
+                                                                        srcset="{{ asset('front/images/product/no-available-image.jpg')}} 522w, {{ asset('front/images/product/no-available-image.jpg')}} 300w, {{ asset('front/images/product/no-available-image.jpg')}} 150w"
                                                                         sizes="(max-width: 522px) 100vw, 522px"
                                                                     >
                                                                 </div>
@@ -183,10 +183,10 @@
                                                                         decoding="async"
                                                                         width="522"
                                                                         height="522"
-                                                                        src="./images/2023-12-cc3.jpg"
+                                                                        src="{{ asset('front/images/product/no-available-image.jpg')}}"
                                                                         class="attachment-large size-large wp-image-501"
                                                                         alt=""
-                                                                        srcset="./images/2023-12-cc3.jpg 522w, ./images/2023-12-cc3-300x300.jpg 300w, ./images/2023-12-cc3-150x150.jpg 150w"
+                                                                        srcset="{{ asset('front/images/product/no-available-image.jpg')}} 522w, {{ asset('front/images/product/no-available-image.jpg')}} 300w, {{ asset('front/images/product/no-available-image.jpg')}} 150w"
                                                                         sizes="(max-width: 522px) 100vw, 522px"
                                                                     >
                                                                 </div>
@@ -229,10 +229,10 @@
                                                                         decoding="async"
                                                                         width="522"
                                                                         height="522"
-                                                                        src="./images/2023-12-cc4.jpg"
+                                                                        src="{{ asset('front/images/product/no-available-image.jpg')}}"
                                                                         class="attachment-large size-large wp-image-500"
                                                                         alt=""
-                                                                        srcset="./images/2023-12-cc4.jpg 522w, ./images/2023-12-cc4-300x300.jpg 300w, ./images/2023-12-cc4-150x150.jpg 150w"
+                                                                        srcset="{{ asset('front/images/product/no-available-image.jpg')}} 522w, {{ asset('front/images/product/no-available-image.jpg')}} 300w, {{ asset('front/images/product/no-available-image.jpg')}} 150w"
                                                                         sizes="(max-width: 522px) 100vw, 522px"
                                                                     >
                                                                 </div>
@@ -275,10 +275,10 @@
                                                                         decoding="async"
                                                                         width="522"
                                                                         height="522"
-                                                                        src="./images/2023-12-cc5.jpg"
+                                                                        src="{{ asset('front/images/product/no-available-image.jpg')}}"
                                                                         class="attachment-large size-large wp-image-499"
                                                                         alt=""
-                                                                        srcset="./images/2023-12-cc5.jpg 522w, ./images/2023-12-cc5-300x300.jpg 300w, ./images/2023-12-cc5-150x150.jpg 150w"
+                                                                        srcset="{{ asset('front/images/product/no-available-image.jpg')}} 522w, {{ asset('front/images/product/no-available-image.jpg')}} 300w, {{ asset('front/images/product/no-available-image.jpg')}} 150w"
                                                                         sizes="(max-width: 522px) 100vw, 522px"
                                                                     >
                                                                 </div>
@@ -321,10 +321,10 @@
                                                                         decoding="async"
                                                                         width="522"
                                                                         height="522"
-                                                                        src="./images/2023-12-cc6.jpg"
+                                                                        src="{{ asset('front/images/product/no-available-image.jpg')}}"
                                                                         class="attachment-large size-large wp-image-498"
                                                                         alt=""
-                                                                        srcset="./images/2023-12-cc6.jpg 522w, ./images/2023-12-cc6-300x300.jpg 300w, ./images/2023-12-cc6-150x150.jpg 150w"
+                                                                        srcset="{{ asset('front/images/product/no-available-image.jpg')}} 522w, {{ asset('front/images/product/no-available-image.jpg')}} 300w, {{ asset('front/images/product/no-available-image.jpg')}} 150w"
                                                                         sizes="(max-width: 522px) 100vw, 522px"
                                                                     >
                                                                 </div>
