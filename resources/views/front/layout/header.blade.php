@@ -67,7 +67,7 @@ $sections = \App\Models\Section::sections();
                                             class="elementor-item elementor-item-active">HOME</a>
                                     </li>
                                     <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-39">
-                                        <a href="/products" class="elementor-item">PRODUCTS</a>
+                                        <a href="{{ url('collection/all') }}" class="elementor-item">PRODUCTS</a>
                                     </li>
                                     <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-40">
                                         <a href="/offer" class="elementor-item">OFFER</a>
@@ -100,7 +100,7 @@ $sections = \App\Models\Section::sections();
                                             tabindex="-1">HOME</a>
                                     </li>
                                     <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-39">
-                                        <a href="/products" class="elementor-item" tabindex="-1">PRODUCTS</a>
+                                        <a href="{{ url('collection/all') }}" class="elementor-item" tabindex="-1">PRODUCTS</a>
                                     </li>
                                     <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-40">
                                         <a href="/offer" class="elementor-item" tabindex="-1">OFFER</a>
@@ -264,7 +264,7 @@ $sections = \App\Models\Section::sections();
                     data-id="c6d33de" data-element_type="container"
                     data-settings="{&quot;container_type&quot;:&quot;flex&quot;,&quot;content_width&quot;:&quot;boxed&quot;}">
                     <div class="e-con-inner">
-                    <div
+                        <div
                             class="elementor-element elementor-element-31363e9 elementor-search-form--skin-full_screen elementor-hidden-mobile elementor-widget elementor-widget-search-form"
                             data-id="31363e9"
                             data-element_type="widget"
@@ -321,20 +321,22 @@ $sections = \App\Models\Section::sections();
                                 <ul class="elementor-icon-list-items">
                                     <li class="elementor-icon-list-item">
                                         <span class="elementor-icon-list-icon">
-                                            <svg aria-hidden="true" class="e-font-icon-svg e-far-user" viewbox="0 0 448 512"
-                                                xmlns="http://www.w3.org/2000/svg">
-                                                <path
-                                                    d="M313.6 304c-28.7 0-42.5 16-89.6 16-47.1 0-60.8-16-89.6-16C60.2 304 0 364.2 0 438.4V464c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48v-25.6c0-74.2-60.2-134.4-134.4-134.4zM400 464H48v-25.6c0-47.6 38.8-86.4 86.4-86.4 14.6 0 38.3 16 89.6 16 51.7 0 74.9-16 89.6-16 47.6 0 86.4 38.8 86.4 86.4V464zM224 288c79.5 0 144-64.5 144-144S303.5 0 224 0 80 64.5 80 144s64.5 144 144 144zm0-240c52.9 0 96 43.1 96 96s-43.1 96-96 96-96-43.1-96-96 43.1-96 96-96z">
-                                                </path>
-                                            </svg>
+                                            <a href="{{url('user/account')}}">
+                                                <svg aria-hidden="true" class="e-font-icon-svg e-far-user" viewbox="0 0 448 512"
+                                                    xmlns="http://www.w3.org/2000/svg">
+                                                    <path
+                                                        d="M313.6 304c-28.7 0-42.5 16-89.6 16-47.1 0-60.8-16-89.6-16C60.2 304 0 364.2 0 438.4V464c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48v-25.6c0-74.2-60.2-134.4-134.4-134.4zM400 464H48v-25.6c0-47.6 38.8-86.4 86.4-86.4 14.6 0 38.3 16 89.6 16 51.7 0 74.9-16 89.6-16 47.6 0 86.4 38.8 86.4 86.4V464zM224 288c79.5 0 144-64.5 144-144S303.5 0 224 0 80 64.5 80 144s64.5 144 144 144zm0-240c52.9 0 96 43.1 96 96s-43.1 96-96 96-96-43.1-96-96 43.1-96 96-96z">
+                                                    </path>
+                                                </svg>
+                                            </a>
                                         </span>
-                                            <span class="elementor-icon-list-text">{{ Auth::user()->first_name }}  {{  Auth::user()->last_name }}</span>
-                                        </li>
-                                    </ul>
-                                </div>
+                                        <span class="elementor-icon-list-text">{{ Auth::user()->first_name }}  {{  Auth::user()->last_name }}</span>
+                                    </li>
+                                </ul>
                             </div>
                         </div>
                         @endif
+                    </div>
                 </div>
             </div>
         </div>
