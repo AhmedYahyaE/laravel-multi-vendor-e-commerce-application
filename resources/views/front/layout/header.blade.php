@@ -262,7 +262,7 @@ $sections = \App\Models\Section::sections();
                     data-id="c6d33de" data-element_type="container"
                     data-settings="{&quot;container_type&quot;:&quot;flex&quot;,&quot;content_width&quot;:&quot;boxed&quot;}">
                     <div class="e-con-inner">
-                    <div
+                        <div
                             class="elementor-element elementor-element-31363e9 elementor-search-form--skin-full_screen elementor-hidden-mobile elementor-widget elementor-widget-search-form"
                             data-id="31363e9"
                             data-element_type="widget"
@@ -311,13 +311,13 @@ $sections = \App\Models\Section::sections();
                                 </search>
                             </div>
                         </div>
-                        @if (Auth::check())
                         <div class="elementor-element elementor-element-a9bf2d7 elementor-icon-list--layout-traditional elementor-list-item-link-full_width elementor-widget elementor-widget-icon-list"
                             data-id="a9bf2d7" data-element_type="widget" data-widget_type="icon-list.default">
                             <div class="elementor-widget-container">
                                 <link rel="stylesheet" href="{{ url('front/css/elementor-css/elementor-assets-css-widget-icon-list.min.css') }}">
                                 <ul class="elementor-icon-list-items">
                                     <li class="elementor-icon-list-item">
+                                        @if (Auth::check())
                                         <span class="elementor-icon-list-icon">
                                             <svg aria-hidden="true" class="e-font-icon-svg e-far-user" viewbox="0 0 448 512"
                                                 xmlns="http://www.w3.org/2000/svg">
@@ -326,13 +326,13 @@ $sections = \App\Models\Section::sections();
                                                 </path>
                                             </svg>
                                         </span>
-                                            <span class="elementor-icon-list-text">{{ Auth::user()->first_name }}  {{  Auth::user()->last_name }}</span>
-                                        </li>
-                                    </ul>
-                                </div>
+                                        <span class="elementor-icon-list-text">{{ Auth::user()->first_name }}  {{  Auth::user()->last_name }}</span>
+                                        @endif
+                                    </li>
+                                </ul>
                             </div>
                         </div>
-                        @endif
+                    </div>
                 </div>
             </div>
         </div>
