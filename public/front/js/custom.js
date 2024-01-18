@@ -739,6 +739,9 @@ $(document).ready(function() {
 
     });
 
+    /**
+     * On change of country name - load city
+     */
     $('.address-field[name=country]').change((el) => {
         let country = $(el.currentTarget).val();
 
@@ -770,6 +773,9 @@ $(document).ready(function() {
         });
     })
 
+    /**
+     * On change of state get cities
+     */
     $('.address-field[name=state]').change((el) => {
         let country = $('.address-field[name=country]').val();
         let state = $(el.currentTarget).val();
