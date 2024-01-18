@@ -34,7 +34,7 @@
             
             @if ($slug == 'personal') {{-- $slug was passed from AdminController to view (using compact() method) --}}
                 <div class="row">
-                    <div class="col-md-6 grid-margin stretch-card">
+                    <div class="col-md-12 col-lg-10 col-xl-6 grid-margin stretch-card">
                         <div class="card">
                             <div class="card-body">
                                 <h4 class="card-title">Update Personal Information</h4>
@@ -91,41 +91,49 @@
                                         <label for="vendor_name">Name</label>
                                         <input type="text" class="form-control" id="vendor_name" placeholder="Enter Name" name="vendor_name" value="{{ Auth::guard('admin')->user()->name }}"> {{-- $vendorDetails was passed from AdminController --}} {{-- Accessing Specific Guard Instances: https://laravel.com/docs/9.x/authentication#accessing-specific-guard-instances --}}
                                     </div>
-                                    <div class="form-group">
-                                        <label for="vendor_address">Address</label>
-                                        <input type="text" class="form-control" id="vendor_address" placeholder="Enter Address" name="vendor_address" value="{{ $vendorDetails['address'] }}"> {{-- $vendorDetails was passed from AdminController --}}
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="vendor_city">City</label>
-                                        <input type="text" class="form-control" id="vendor_city" placeholder="Enter City" name="vendor_city" value="{{ $vendorDetails['city'] }}"> {{-- $vendorDetails was passed from AdminController --}}
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="vendor_state">State</label>
-                                        <input type="text" class="form-control" id="vendor_state" placeholder="Enter State" name="vendor_state" value="{{ $vendorDetails['state'] }}"> {{-- $vendorDetails was passed from AdminController --}}
-                                    </div>
-                                    <div class="form-group">
-                                        {{-- Show all world countries from the database `countries` table --}}
-                                        <label for="shop_country">Country</label>
                                     
-                                        <select class="form-control" id="vendor_country" name="vendor_country"  style="color: #495057">
-                                            <option value="">Select Country</option>
-
-                                            @foreach ($countries as $country) {{-- $countries was passed from AdminController to view using compact() method --}}
-                                                <option value="{{ $country['country_name'] }}" @if ($country['country_name'] == $vendorDetails['country']) selected @endif>{{ $country['country_name'] }}</option>
-                                            @endforeach
-
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="vendor_pincode">Pincode</label>
-                                        <input type="text" class="form-control" id="vendor_pincode" placeholder="Enter Pincode" name="vendor_pincode" value="{{ $vendorDetails['pincode'] }}"> {{-- $vendorDetails was passed from AdminController --}}
+                                    <div class="mb-3">
+                                        <label for="" class="form-label text-semi-bold">Personal Address</label>
+                                        <div class="form-group">
+                                            <div class="form-group col-12">
+                                                <label for="vendor_address">Address</label>
+                                                <input type="text" class="form-control" id="vendor_address" placeholder="Enter Address" name="vendor_address" value="{{ $vendorDetails['address'] }}"> {{-- $vendorDetails was passed from AdminController --}}
+                                            </div>
+                                            <div class="form-group d-md-flex justify-content-spacebetween m-0">
+                                                <div class="form-group col-12 col-md-4">
+                                                    {{-- Show all world countries from the database `countries` table --}}
+                                                    <label for="shop_country">Country</label>
+                                                
+                                                    <select class="form-control" id="vendor_country" name="vendor_country"  style="color: #495057">
+                                                        <option value="">Select Country</option>
+            
+                                                        @foreach ($countries as $country) {{-- $countries was passed from AdminController to view using compact() method --}}
+                                                            <option value="{{ $country['country_name'] }}" @if ($country['country_name'] == $vendorDetails['country']) selected @endif>{{ $country['country_name'] }}</option>
+                                                        @endforeach
+            
+                                                    </select>
+                                                </div>
+                                                <div class="form-group col-12 col-md-4">
+                                                    <label for="vendor_state">Province</label>
+                                                    <input type="text" class="form-control" id="vendor_state" placeholder="Enter State" name="vendor_state" value="{{ $vendorDetails['state'] }}"> {{-- $vendorDetails was passed from AdminController --}}
+                                                </div>
+                                                <div class="form-group col-12 col-md-4">
+                                                    <label for="vendor_city">City</label>
+                                                    <input type="text" class="form-control" id="vendor_city" placeholder="Enter City" name="vendor_city" value="{{ $vendorDetails['city'] }}"> {{-- $vendorDetails was passed from AdminController --}}
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-12 col-md-6">
+                                                <label for="vendor_pincode">Pincode</label>
+                                                <input type="text" class="form-control" id="vendor_pincode" placeholder="Enter Pincode" name="vendor_pincode" value="{{ $vendorDetails['pincode'] }}"> {{-- $vendorDetails was passed from AdminController --}}
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="vendor_mobile">Mobile</label>
                                         <input type="text" class="form-control" id="vendor_mobile" placeholder="Enter 10 Digit Mobile Number" name="vendor_mobile" value="{{ Auth::guard('admin')->user()->mobile }}" maxlength="10" minlength="10"> {{-- Accessing Specific Guard Instances: https://laravel.com/docs/9.x/authentication#accessing-specific-guard-instances --}}
                                     </div>
                                     <div class="form-group">
-                                        <label for="vendor_image">Vendor Photo</label>
+                                        <label for="vendor_image">Vendor Valid ID</label>
                                         <input type="file" class="form-control" id="vendor_image" name="vendor_image">
                                         {{-- Show the admin image if exists --}}
                                         @if (!empty(Auth::guard('admin')->user()->image)) {{-- Accessing Specific Guard Instances: https://laravel.com/docs/9.x/authentication#accessing-specific-guard-instances --}}
@@ -142,7 +150,7 @@
                 </div>
             @elseif ($slug == 'business') 
                 <div class="row">
-                    <div class="col-md-6 grid-margin stretch-card">
+                    <div class="col-md-12 col-lg-10 col-xl-6 grid-margin stretch-card">
                         <div class="card">
                             <div class="card-body">
                                 <h4 class="card-title">Update Vendor Business Information</h4>
@@ -200,35 +208,42 @@
                                         <label for="shop_name">Shop Name</label>
                                         <input type="text" class="form-control" id="shop_name" placeholder="Enter Shop Name" name="shop_name"  @if (isset($vendorDetails['shop_name'])) value="{{ $vendorDetails['shop_name'] }}" @endif> {{-- $vendorDetails was passed from AdminController --}}
                                     </div>
-                                    <div class="form-group">
-                                        <label for="shop_address">Shop Address</label>
-                                        <input type="text" class="form-control" id="shop_address" placeholder="Enter Shop Address" name="shop_address"  @if (isset($vendorDetails['shop_address'])) value="{{ $vendorDetails['shop_address'] }}" @endif> {{-- $vendorDetails was passed from AdminController --}}
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="shop_city">Shop City</label>
-                                        <input type="text" class="form-control" id="shop_city" placeholder="Enter Shop City" name="shop_city"  @if (isset($vendorDetails['shop_city'])) value="{{ $vendorDetails['shop_city'] }}" @endif> {{-- $vendorDetails was passed from AdminController --}}
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="shop_state">Shop State</label>
-                                        <input type="text" class="form-control" id="shop_state" placeholder="Enter Shop State" name="shop_state"  @if (isset($vendorDetails['shop_state'])) value="{{ $vendorDetails['shop_state'] }}" @endif> {{-- $vendorDetails was passed from AdminController --}}
-                                    </div>
-                                    <div class="form-group">
-                                        {{-- Show all world countries from the database `countries` table --}}
-                                        <label for="shop_country">Shop Country</label>
-                                    
-                                        <select class="form-control" id="shop_country" name="shop_country" style="color: #495057">
-                                            <option value="">Select Country</option>
-
-                                            @foreach ($countries as $country) {{-- $countries was passed from AdminController to view using compact() method --}}
-                                                <option value="{{ $country['country_name'] }}"  @if (isset($vendorDetails['shop_country']) && $country['country_name'] == $vendorDetails['shop_country']) selected @endif>{{ $country['country_name'] }}</option>
-                                            @endforeach
-
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="shop_pincode">Shop Pincode</label>
-                                        <input type="text" class="form-control" id="shop_pincode" placeholder="Enter Shop Pincode" name="shop_pincode"  @if (isset($vendorDetails['shop_pincode'])) value="{{ $vendorDetails['shop_pincode'] }}" @endif> {{-- $vendorDetails was passed from AdminController --}}
-                                    </div>
+                                    <div class="mb-3">
+                                        <label for="" class="form-label text-semi-bold">Shop Address</label>
+                                        <div class="form-group">
+                                            <div class="form-group col-12">
+                                                <label for="shop_address">Shop Address 1</label>
+                                                <input type="text" class="form-control" id="shop_address" placeholder="Enter Shop Address" name="shop_address"  @if (isset($vendorDetails['shop_address'])) value="{{ $vendorDetails['shop_address'] }}" @endif> {{-- $vendorDetails was passed from AdminController --}}
+                                            </div>
+                                            <div class="form-group d-md-flex justify-content-spacebetween m-0">
+                                                <div class="form-group col-12 col-md-4">
+                                                    {{-- Show all world countries from the database `countries` table --}}
+                                                    <label for="shop_country">Shop Country</label>
+                                                
+                                                    <select class="form-control" id="shop_country" name="shop_country" style="color: #495057">
+                                                        <option value="">Select Country</option>
+            
+                                                        @foreach ($countries as $country) {{-- $countries was passed from AdminController to view using compact() method --}}
+                                                            <option value="{{ $country['country_name'] }}"  @if (isset($vendorDetails['shop_country']) && $country['country_name'] == $vendorDetails['shop_country']) selected @endif>{{ $country['country_name'] }}</option>
+                                                        @endforeach
+            
+                                                    </select>
+                                                </div>
+                                                <div class="form-group col-12 col-md-4">
+                                                    <label for="shop_state">Shop Province</label>
+                                                    <input type="text" class="form-control" id="shop_state" placeholder="Enter Shop State" name="shop_state"  @if (isset($vendorDetails['shop_state'])) value="{{ $vendorDetails['shop_state'] }}" @endif> {{-- $vendorDetails was passed from AdminController --}}
+                                                </div>
+                                                <div class="form-group col-12 col-md-4">
+                                                    <label for="shop_city">Shop City</label>
+                                                    <input type="text" class="form-control" id="shop_city" placeholder="Enter Shop City" name="shop_city"  @if (isset($vendorDetails['shop_city'])) value="{{ $vendorDetails['shop_city'] }}" @endif> {{-- $vendorDetails was passed from AdminController --}}
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-12 col-md-6">
+                                                <label for="shop_pincode">Shop Postal Code</label>
+                                                <input type="text" class="form-control" id="shop_pincode" placeholder="Enter Shop Pincode" name="shop_pincode"  @if (isset($vendorDetails['shop_pincode'])) value="{{ $vendorDetails['shop_pincode'] }}" @endif> {{-- $vendorDetails was passed from AdminController --}}
+                                            </div>
+                                        </div>
+                                    </div>                                    
                                     <div class="form-group">
                                         <label for="shop_mobile">Shop Mobile</label>
                                         <input type="text" class="form-control" id="shop_mobile" placeholder="Enter 10 Digit Shop Mobile Number" name="shop_mobile"  @if (isset($vendorDetails['shop_mobile'])) value="{{ $vendorDetails['shop_mobile'] }}" @endif maxlength="10" minlength="10">
@@ -248,6 +263,15 @@
                                     <div class="form-group">
                                         <label for="pan_number">PAN Number</label>
                                         <input type="text" class="form-control" id="pan_number" placeholder="Enter PAN Number" name="pan_number"  @if (isset($vendorDetails['pan_number'])) value="{{ $vendorDetails['pan_number'] }}" @endif> {{-- $vendorDetails was passed from AdminController --}}
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="shop_logo">Shop Logo</label>
+                                        <input type="file" class="form-control" id="shop_logo" name="shop_logo">
+                                        {{-- Show the admin image if exists --}}
+                                        @if (!empty($vendorDetails['shop_logo']))
+                                            <a target="_blank" href="{{ url('admin/images/proofs/' . $vendorDetails['shop_logo']) }}">View Image</a> <!-- We used    target="_blank"    to open the image in another separate page -->
+                                            <input type="hidden" name="shop_logo" value="{{ $vendorDetails['shop_logo'] }}"> <!-- to send the current admin image url all the time with all the requests -->
+                                        @endif
                                     </div>
                                     <div class="form-group">
                                         <label for="address_proof">Shop Address Proof</label>
@@ -277,7 +301,7 @@
                 </div>
             @elseif ($slug == 'bank')
                 <div class="row">
-                    <div class="col-md-6 grid-margin stretch-card">
+                    <div class="col-md-12 col-lg-10 col-xl-6 grid-margin stretch-card">
                         <div class="card">
                             <div class="card-body">
                                 <h4 class="card-title">Update Vendor Bank Information</h4>
