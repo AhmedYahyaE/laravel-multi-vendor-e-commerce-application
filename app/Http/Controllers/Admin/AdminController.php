@@ -478,6 +478,9 @@ class AdminController extends Controller
             $admins = $admins->where('type', $type);
             $title = ucfirst($type) . 's';
 
+            if ($type == "vendor") {
+                $admins->with('vendorBusiness');
+            }
             // Correcting issues in the Skydash Admin Panel Sidebar using Session
             Session::put('page', 'view_' . strtolower($title));
 
@@ -491,7 +494,7 @@ class AdminController extends Controller
         $admins = $admins->get()->toArray(); // toArray() method converts the Collection object to a plain PHP array
         // dd($admins);
 
-        return view('admin/admins/admins')->with(compact('admins', 'title'));
+        return view('admin.admins.admins')->with(compact('admins', 'title'));
     }
 
     public function viewVendorDetails($id) { // View further 'vendor' details inside Admin Management table (if the authenticated user is superadmin, admin or subadmin)

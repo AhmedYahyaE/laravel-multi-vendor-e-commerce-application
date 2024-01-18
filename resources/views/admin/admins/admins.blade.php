@@ -14,7 +14,10 @@
                                     <thead>
                                         <tr>
                                             <th>Admin ID</th>
-                                            <th>Name</th>
+                                            <th>
+                                                @if ($title == "Vendors") Business @endif
+                                                Name
+                                            </th>
                                             <th>Type</th>
                                             <th>Mobile</th>
                                             <th>Email</th>
@@ -27,7 +30,7 @@
                                         @foreach ($admins as $admin)
                                             <tr>
                                                 <td>{{ $admin['id'] }}</td>
-                                                <td>{{ $admin['name'] }}</td>
+                                                <td>{{ $title == "Vendors" ? $admin['vendor_business']['shop_name']:$admin['name'] }}</td>
                                                 <td>{{ $admin['type'] }}</td>
                                                 <td>{{ $admin['mobile'] }}</td>
                                                 <td>{{ $admin['email'] }}</td>
