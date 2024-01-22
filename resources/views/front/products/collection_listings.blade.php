@@ -29,30 +29,93 @@
                 </div>
             </div>
             <div
-                class="elementor-element elementor-element-89b25a4 e-flex e-con-boxed elementor-invisible e-con e-child"
+                class="elementor-element elementor-element-89b25a4 e-flex e-con-boxed elementor-invisible e-con e-child z-index-2 filter-outer"
                 data-id="89b25a4"
                 data-element_type="container"
                 data-settings="{&quot;animation&quot;:&quot;fadeInUp&quot;,&quot;container_type&quot;:&quot;flex&quot;,&quot;content_width&quot;:&quot;boxed&quot;}"
             >
                 <div class="e-con-inner">
                     <div
-                        class="elementor-element elementor-element-970c6e2 elementor-widget__width-auto elementor-widget elementor-widget-heading"
+                        class="elementor-element elementor-element-970c6e2 filter-container elementor-widget__width-auto elementor-widget elementor-widget-heading"
                         data-id="970c6e2"
                         data-element_type="widget"
                         data-widget_type="heading.default"
                     >
-                        <div class="elementor-widget-container">
-                            <h5 class="elementor-heading-title elementor-size-default">128 PRODUCTS</h5>
+                        <div class="elementor-widget-container mobile-height-auto">
+                            <h5 class="elementor-heading-title elementor-size-default no-opacity-color all-filter-label"><b>Filters:</b> </h5>
                         </div>
+
+                        <a href="#" class="filter-link">
+                            <div class="elementor-widget-container single-filter-container">
+                                <h5 class="elementor-heading-title elementor-size-default no-opacity-color">Colors </h5>
+                                <svg aria-hidden="true" class="e-font-icon-svg e-fas-chevron-down" viewBox="0 0 448 512" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M207.029 381.476L12.686 187.132c-9.373-9.373-9.373-24.569 0-33.941l22.667-22.667c9.357-9.357 24.522-9.375 33.901-.04L224 284.505l154.745-154.021c9.379-9.335 24.544-9.317 33.901.04l22.667 22.667c9.373 9.373 9.373 24.569 0 33.941L240.971 381.476c-9.373 9.372-24.569 9.372-33.942 0z"></path>
+                                </svg>
+                            </div>
+                            <div class="filter_checkboxes">
+                                <div>
+                                    <input type="checkbox" id="red" name="red" value="Red">
+                                    <label for="red"> Red</label><br>
+                                </div>
+
+                                <div>
+                                    <input type="checkbox" id="white" name="white" value="White">
+                                    <label for="white"> White</label><br>
+                                </div>
+
+                                <div>
+                                    <input type="checkbox" id="black" name="black" value="Black">
+                                    <label for="black"> Black</label><br>
+                                </div>
+
+
+                                <div>
+                                    <input type="checkbox" id="blue" name="blue" value="Blue">
+                                    <label for="blue"> Blue</label><br>
+                                </div>
+                            </div>
+                        </a>
+
+
+                        <a href="#" class="filter-link">
+                            <div class="elementor-widget-container single-filter-container">
+                                <h5 class="elementor-heading-title elementor-size-default no-opacity-color">Size </h5>
+                                <svg aria-hidden="true" class="e-font-icon-svg e-fas-chevron-down" viewBox="0 0 448 512" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M207.029 381.476L12.686 187.132c-9.373-9.373-9.373-24.569 0-33.941l22.667-22.667c9.357-9.357 24.522-9.375 33.901-.04L224 284.505l154.745-154.021c9.379-9.335 24.544-9.317 33.901.04l22.667 22.667c9.373 9.373 9.373 24.569 0 33.941L240.971 381.476c-9.373 9.372-24.569 9.372-33.942 0z"></path>
+                                </svg>
+                            </div>
+                            <div class="filter_checkboxes">
+                                <div>
+                                    <input type="checkbox" id="small" name="small" value="Small">
+                                    <label for="small"> Small</label><br>
+                                </div>
+
+                                <div>
+                                    <input type="checkbox" id="medium" name="medium" value="Medium">
+                                    <label for="medium"> Medium</label><br>
+                                </div>
+
+                                <div>
+                                    <input type="checkbox" id="large" name="large" value="Large">
+                                    <label for="large"> Large</label><br>
+                                </div>
+
+                                <div>
+                                    <input type="checkbox" id="xlarge" name="xlarge" value="XLarge">
+                                    <label for="xlarge"> XLarge</label><br>
+                                </div>
+                            </div>
+                        </a>
+
                     </div>
                     <div
-                        class="elementor-element elementor-element-353f84f elementor-widget__width-auto elementor-widget elementor-widget-html"
+                        class="elementor-element elementor-element-353f84f elementor-widget__width-auto elementor-widget elementor-widget-html sort-outer-wrap"
                         data-id="353f84f"
                         data-element_type="widget"
                         data-widget_type="html.default"
                     >
                         <div class="elementor-widget-container">
-                            <label>Sort by:</labe>
+                            <h6 style="margin-bottom: 4px; font-size: 12px;">Sort by:</h6>
                             <select id="sort_by">
                                 <option value="Best Selling">Best Selling</option>
                                 <option value="Alphabetically , A-Z">Alphabetically , A-Z</option>
