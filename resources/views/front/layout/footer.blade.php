@@ -314,7 +314,7 @@
                         data-widget_type="text-editor.default"
                     >
                         <div class="elementor-widget-container">
-                            <p>2023 © kapiton.com</p>
+                            <p>2024 © kapiton.store</p>
                         </div>
                     </div>
                 </div>
