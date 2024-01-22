@@ -815,8 +815,22 @@ $(document).ready(function() {
 
     $("#edit_info").click(function(event) {
         event.preventDefault(); 
+    
+        // Toggle the class "edit_active" on ".customer_information"
         $(".customer_information").toggleClass("edit_active");
+    
+        // Find ".elementor-button-text" inside "#edit_info"
+        var buttonText = $("#edit_info .elementor-button-text");
+    
+        // Check the current text and toggle between "Cancel" and "Edit information"
+        if (buttonText.text() === "Edit information") {
+            buttonText.text("Cancel");
+        } else {
+            buttonText.text("Edit information");
+        }
     });
+
+    
 
 
 

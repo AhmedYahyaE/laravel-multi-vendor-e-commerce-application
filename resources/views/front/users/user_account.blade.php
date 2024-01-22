@@ -421,7 +421,7 @@
 
 
                                     <div
-                                        class="elementor-element elementor-element-1765a07 elementor-mobile-align-center elementor-widget elementor-widget-button"
+                                        class="elementor-element elementor-element-1765a07 tablet-grid-col-1 elementor-mobile-align-center elementor-widget elementor-widget-button"
                                         data-id="1765a07"
                                         data-element_type="widget"
                                         data-widget_type="button.default"
@@ -438,7 +438,7 @@
                                     </div>
 
                                     <div
-                                        class="elementor-element elementor-element-1765a09 elementor-mobile-align-center elementor-widget elementor-widget-button"
+                                        class="elementor-element elementor-element-1765a09 tablet-hide elementor-mobile-align-center elementor-widget elementor-widget-button"
                                         data-id="1765a09"
                                         data-element_type="widget"
                                         data-widget_type="button.default"
@@ -447,7 +447,7 @@
                                     </div>
 
                                     <div
-                                        class="elementor-element elementor-element-1765a07 elementor-mobile-align-center elementor-widget elementor-widget-button"
+                                        class="elementor-element elementor-element-1765a07 mobile-grid-col-1 elementor-mobile-align-center elementor-widget elementor-widget-button"
                                         data-id="1765a07"
                                         data-element_type="widget"
                                         data-widget_type="button.default"

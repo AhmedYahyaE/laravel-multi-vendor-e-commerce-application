@@ -99,10 +99,27 @@
 .customer_information.edit_active .save_button{
 	display: block;
 }
+.customer_information h5.elementor-heading-title{
+	overflow-wrap: break-word;
+}
+.customer_information.edit_active h5.elementor-heading-title{
+	display: none;
+}
 
+@media (max-width: 1024px){
+	.customer_information .tablet-grid-col-1{
+		grid-column: 1;
+	}
+	.tablet-hide{
+		display: none;
+	}
+}
 
 @media (max-width: 767px){
 	.text-align-center-mobile{
 		text-align: center;
+	}
+	.mobile-grid-col-1{
+		grid-column: 1;
 	}
 }
