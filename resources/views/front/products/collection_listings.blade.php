@@ -117,10 +117,10 @@
                                 decoding="async"
                                 width="800"
                                 height="968"
-                                src="{{ asset('front/images/product/2023-12-features-for-Accounting-Software-1-846x1024.png')}}"
+                                src="{{ asset('front/images/product/no-available-image.jpg')}}"
                                 class="attachment-large size-large wp-image-422"
                                 alt=""
-                                srcset="{{ asset('front/images/product/2023-12-features-for-Accounting-Software-1-846x1024.png') }} 846w, {{ asset('front/images/product/2023-12-features-for-Accounting-Software-1-248x300.png') }} 248w, {{ asset('front/images/product/2023-12-features-for-Accounting-Software-1-768x930.png') }} 768w, {{ asset('front/images/product/2023-12-features-for-Accounting-Software-1.png') }} 879w"
+                                srcset="{{ asset('front/images/product/no-available-image.jpg') }} 846w, {{ asset('front/images/product/no-available-image.jpg.png') }} 248w, {{ asset('front/images/product/no-available-image.jpg') }} 768w, {{ asset('front/images/product/no-available-image.jpg') }} 879w"
                                 sizes="(max-width: 800px) 100vw, 800px"
                             >
                             @endif

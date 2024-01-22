@@ -34,9 +34,9 @@
                                             <th>Name</th>
                                             <th>Address</th>
                                             <th>City</th>
-                                            <th>State</th>
+                                            <th>Province</th>
                                             <th>Country</th>
-                                            <th>Pincode</th>
+                                            <th>Postal Code</th>
                                             <th>Mobile</th>
                                             <th>Email</th>
                                             <th>Status</th>
