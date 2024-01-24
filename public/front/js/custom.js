@@ -820,6 +820,10 @@ $(document).ready(function() {
 
 
 
+    $(".filter-link .single-filter-container").click(function(event) {
+        event.preventDefault();
+        $(this).closest(".filter-link").toggleClass("filter_active");
+    });
 
 
 
