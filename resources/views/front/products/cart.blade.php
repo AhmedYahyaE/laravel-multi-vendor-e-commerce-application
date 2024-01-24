@@ -45,7 +45,7 @@
                 >
                     <div class="elementor-widget-container">
                         <div class="elementor-button-wrapper">
-                            <a class="elementor-button elementor-button-link elementor-size-sm" href="#">
+                            <a class="elementor-button elementor-button-link elementor-size-sm" href="{{ url('') }}">
                                 <span class="elementor-button-content-wrapper">
                                     <span class="elementor-button-icon elementor-align-icon-left">
                                         <svg
@@ -77,81 +77,87 @@
                             data-widget_type="html.default"
                         >
                             <div class="elementor-widget-container">
-                                <div style="    width: 100%;    overflow: auto; ">
+                                <div style="width: 100%; overflow: auto;">
                                     <table width="100%">
-                                        <tr>
-                                            <th>PRODUCT</th>
-                                            <th>QUANTITY</th>
-                                            <th class="align-right">TOTAL</th>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <div class="prod-cart">
-                                                    <div class="cart-img">
-                                                        <img decoding="async" class="prod-img" src="./images/2023-12-features-for-Accounting-Software-1.png">
+                                        <thead>
+                                            <tr>
+                                                <th>PRODUCT</th>
+                                                <th>QUANTITY</th>
+                                                <th class="align-right">TOTAL</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {{-- We'll place this $total_price inside the foreach loop to calculate the total price of all products in Cart. Check the end of the next foreach loop before @endforeach --}}
+                                            @php $total_price = 0 @endphp
+
+                                            @if (count($getCartItems) == 0)
+                                                <tr>
+                                                    <td colspan="3">No Cart Items.</td>
+                                                </tr>
+                                            @else
+                                            @foreach ($getCartItems as $item)
+                                            @php
+                                                $getDiscountAttributePrice = \App\Models\Product::getDiscountAttributePrice($item['product_id'], $item['size']); // from the `products_attributes` table, not the `products` table
+                                                // dd($getDiscountAttributePrice);
+                                            @endphp
+                                            <tr>
+                                                <td>
+                                                    <div class="prod-cart">
+                                                        <div class="cart-img">
+                                                            <img decoding="async" class="prod-img" src="./images/2023-12-features-for-Accounting-Software-1.png">
+                                                        </div>
+                                                        <div class="cart-prod-desc">
+                                                            <h4>{{ $item['product']['product_name'] }} ({{ $item['product']['product_code'] }}) - {{ $item['size'] }}</h4>
+                                                            <p class="price">{{ $item['product']['product_price'] }}</p>
+                                                            <p class="other-info">{{ $item['meta_keywords'] }}</p>
+                                                        </div>
                                                     </div>
-                                                    <div class="cart-prod-desc">
-                                                        <h4>ADOBE CC</h4>
-                                                        <p class="price">₱450.00</p>
-                                                        <p class="other-info">12-Month subscription with Auto-Renewal for PC/MAC</p>
+                                                </td>
+                                                <td>
+                                                    <div class="qty-and-remove">
+                                                        <div class="quantity-div">
+                                                            <button class="qty-cart minus">-</button>
+                                                            <input type="number" value="1">
+                                                            <button class="qty-cart add">+</button>
+                                                        </div>
+                                                        <a href="#" class="remove-item">
+                                                            <svg
+                                                                aria-hidden="true"
+                                                                class="e-font-icon-svg e-far-trash-alt"
+                                                                viewbox="0 0 448 512"
+                                                                xmlns="http://www.w3.org/2000/svg"
+                                                            >
+                                                                <path d="M268 416h24a12 12 0 0 0 12-12V188a12 12 0 0 0-12-12h-24a12 12 0 0 0-12 12v216a12 12 0 0 0 12 12zM432 80h-82.41l-34-56.7A48 48 0 0 0 274.41 0H173.59a48 48 0 0 0-41.16 23.3L98.41 80H16A16 16 0 0 0 0 96v16a16 16 0 0 0 16 16h16v336a48 48 0 0 0 48 48h288a48 48 0 0 0 48-48V128h16a16 16 0 0 0 16-16V96a16 16 0 0 0-16-16zM171.84 50.91A6 6 0 0 1 177 48h94a6 6 0 0 1 5.15 2.91L293.61 80H154.39zM368 464H80V128h288zm-212-48h24a12 12 0 0 0 12-12V188a12 12 0 0 0-12-12h-24a12 12 0 0 0-12 12v216a12 12 0 0 0 12 12z"></path>
+                                                            </svg>
+                                                        </a>
                                                     </div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="qty-and-remove">
-                                                    <div class="quantity-div">
-                                                        <button class="qty-cart minus">-</button>
-                                                        <input type="number" value="1">
-                                                        <button class="qty-cart add">+</button>
+                                                </td>
+                                                <td class="align-right">
+                                                    <div class="cart-price">
+                                                        @if ($getDiscountAttributePrice['discount'] > 0) {{-- If there's a discount on the price, show the price before (the original price) and after (the new price) the discount --}}
+                                                            <div class="price-template">
+                                                                <div class="item-new-price">
+                                                                    EGP{{ $getDiscountAttributePrice['final_price'] }}
+                                                                </div>
+                                                                <div class="item-old-price" style="margin-left: -40px">
+                                                                    EGP{{ $getDiscountAttributePrice['product_price'] }}
+                                                                </div>
+                                                            </div>
+                                                        @else {{-- if there's no discount on the price, show the original price --}}
+                                                            <div class="price-template">
+                                                                <div class="item-new-price">
+                                                                    EGP{{ $getDiscountAttributePrice['final_price'] }}
+                                                                </div>
+                                                            </div>
+                                                        @endif
                                                     </div>
-                                                    <a href="#" class="remove-item">
-                                                        <svg
-                                                            aria-hidden="true"
-                                                            class="e-font-icon-svg e-far-trash-alt"
-                                                            viewbox="0 0 448 512"
-                                                            xmlns="http://www.w3.org/2000/svg"
-                                                        >
-                                                            <path d="M268 416h24a12 12 0 0 0 12-12V188a12 12 0 0 0-12-12h-24a12 12 0 0 0-12 12v216a12 12 0 0 0 12 12zM432 80h-82.41l-34-56.7A48 48 0 0 0 274.41 0H173.59a48 48 0 0 0-41.16 23.3L98.41 80H16A16 16 0 0 0 0 96v16a16 16 0 0 0 16 16h16v336a48 48 0 0 0 48 48h288a48 48 0 0 0 48-48V128h16a16 16 0 0 0 16-16V96a16 16 0 0 0-16-16zM171.84 50.91A6 6 0 0 1 177 48h94a6 6 0 0 1 5.15 2.91L293.61 80H154.39zM368 464H80V128h288zm-212-48h24a12 12 0 0 0 12-12V188a12 12 0 0 0-12-12h-24a12 12 0 0 0-12 12v216a12 12 0 0 0 12 12z"></path>
-                                                        </svg>
-                                                    </a>
-                                                </div>
-                                            </td>
-                                            <td class="align-right">                 ₱450.00</td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <div class="prod-cart">
-                                                    <div class="cart-img">
-                                                        <img decoding="async" class="prod-img" src="./images/2023-12-features-for-Accounting-Software-1.png">
-                                                    </div>
-                                                    <div class="cart-prod-desc">
-                                                        <h4>ADOBE CC</h4>
-                                                        <p class="price">₱450.00</p>
-                                                        <p class="other-info">12-Month subscription with Auto-Renewal for PC/MAC</p>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="qty-and-remove">
-                                                    <div class="quantity-div">
-                                                        <button class="qty-cart minus">-</button>
-                                                        <input type="number" value="1">
-                                                        <button class="qty-cart add">+</button>
-                                                    </div>
-                                                    <a href="#" class="remove-item">
-                                                        <svg
-                                                            aria-hidden="true"
-                                                            class="e-font-icon-svg e-far-trash-alt"
-                                                            viewbox="0 0 448 512"
-                                                            xmlns="http://www.w3.org/2000/svg"
-                                                        >
-                                                            <path d="M268 416h24a12 12 0 0 0 12-12V188a12 12 0 0 0-12-12h-24a12 12 0 0 0-12 12v216a12 12 0 0 0 12 12zM432 80h-82.41l-34-56.7A48 48 0 0 0 274.41 0H173.59a48 48 0 0 0-41.16 23.3L98.41 80H16A16 16 0 0 0 0 96v16a16 16 0 0 0 16 16h16v336a48 48 0 0 0 48 48h288a48 48 0 0 0 48-48V128h16a16 16 0 0 0 16-16V96a16 16 0 0 0-16-16zM171.84 50.91A6 6 0 0 1 177 48h94a6 6 0 0 1 5.15 2.91L293.61 80H154.39zM368 464H80V128h288zm-212-48h24a12 12 0 0 0 12-12V188a12 12 0 0 0-12-12h-24a12 12 0 0 0-12 12v216a12 12 0 0 0 12 12z"></path>
-                                                        </svg>
-                                                    </a>
-                                                </div>
-                                            </td>
-                                            <td class="align-right">                 ₱450.00</td>
-                                        </tr>
+                                                </td>
+                                            </tr>
+                                            {{-- This is placed here INSIDE the foreach loop to calculate the total price of all products in Cart --}}
+                                            @php $total_price = $total_price + ($getDiscountAttributePrice['final_price'] * $item['quantity']) @endphp
+                                            @endforeach 
+                                            @endif
+                                        </tbody>
                                     </table>
                                 </div>
                                 <style></style>
@@ -289,7 +295,7 @@
                                                     </tr>
                                                     <tr>
                                                         <td>Sub total</td>
-                                                        <td>₱900.00 PHP</td>
+                                                        <td>₱{{$total_price}}</td>
                                                     </tr>
                                                     <tr>
                                                         <td>Coupon discount</td>
@@ -300,7 +306,7 @@
                                                             <b>GRAND TOTAL</b>
                                                         </td>
                                                         <td style="padding-top: 40px">
-                                                            <b>₱750.00 PHP</b>
+                                                            <b>₱{{$total_price}}</b>
                                                         </td>
                                                     </tr>
                                                 </table>
