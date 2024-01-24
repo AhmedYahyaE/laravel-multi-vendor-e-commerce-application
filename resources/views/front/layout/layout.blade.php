@@ -133,58 +133,58 @@ window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/14
             $currentRoute = request()->route()->getName();
 
             $css_headers = [
-                'elementor-post-644-css' => [
-                    'url' => 'forgoat_password',
+                'forgot_password' => [
+                    'id' => 'elementor-post-644-css',
                     'href' => 'front/css/elementor-css/elementor-css-post-644.css'
                 ],
-                'elementor-post-656-css' => [
-                    'url' => 'user_register',
+                'user_register' => [
+                    'id' => 'elementor-post-656-css',
                     'href' => 'front/css/elementor-css/elementor-css-post-656.css'
                 ],
-                'elementor-post-611-css' => [
-                    'url' => 'login',
+                'login' => [
+                    'id' => 'elementor-post-611-css',
                     'href' => 'front/css/elementor-css/elementor-css-post-611.css'
                 ],
-                'elementor-post-491-css' => [
-                    'url' => 'product_detail.show',
+                'product_detail.show' => [
+                    'id' => 'elementor-post-491-css',
                     'href' => 'front/css/elementor-css/elementor-css-post-491.css'
                 ],
-                'elementor-post-15-css' => [
-                    'url' => 'home',
+                'home' => [
+                    'id' => 'elementor-post-15-css',
                     'href' => 'front/css/elementor-css/elementor-css-post-15.css'
                 ],
-                'elementor-post-34-css' => [
-                    'url' => 'any',
+                '0' => [
+                    'id' => 'elementor-post-34-css',
                     'href' => 'front/css/elementor-css/elementor-css-post-34.css'
                 ],
-                'elementor-post-444-css' => [
-                    'url' => 'any',
+                '1' => [
+                    'id' => 'elementor-post-444-css',
                     'href' => 'front/css/elementor-css/elementor-css-post-444.css'
                 ],
-                'elementor-post-682-css' => [
-                    'url' => 'shop_category',
+                'shop_category' => [
+                    'id' => 'elementor-post-682-css',
                     'href' => 'front/css/elementor-css/elementor-css-post-682.css'
                 ],
-                'elementor-post-743-css' => [
-                    'url' => 'front.user.account',
+                'front.user.account' => [
+                    'id' => 'elementor-post-743-css',
                     'href' => 'front/css/elementor-css/elementor-css-post-743.css'
                 ],
-                'elementor-post-843-css' => [
-                    'url' => 'front.user.orders',
+                'front.user.orders' => [
+                    'id' => 'elementor-post-843-css',
                     'href' => 'front/css/elementor-css/elementor-css-post-843.css'
                 ],
-                'elementor-post-884-css' => [
-                    'url' => 'front.user.orders',
+                'front.user.security' => [
+                    'id' => 'elementor-post-884-css',
                     'href' => 'front/css/elementor-css/elementor-css-post-884.css'
                 ],
             ];
 
         @endphp
-        @foreach ($css_headers as $css_header_id => $css_header)
-            @if ($currentRoute == $css_header['url'] || $css_header['url'] == 'any')
+        @foreach ($css_headers as $css_header_name => $css_header)
+            @if ($currentRoute == $css_header_name || is_numeric($css_header_name))
             <link
                 rel="stylesheet"
-                id="{{$css_header_id}}"
+                id="{{$css_header['id']}}"
                 href="{{ url($css_header['href']) }}"
                 media="all"
             >
