@@ -436,4 +436,8 @@ class UserController extends Controller
         }
     }
 
+    public function showSecurity() {
+        return view('front.users.reset_password');
+    }
+
 }
