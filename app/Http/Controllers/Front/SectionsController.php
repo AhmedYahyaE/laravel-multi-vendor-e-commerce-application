@@ -10,7 +10,12 @@ class SectionsController extends Controller
     //
 
     public function index($collectionname = '') {
-        $collection = \App\Models\Product::getProductsBySectionName($collectionname);
+
+        if ($collectionname !== "all") {
+            $collection = \App\Models\Product::getProductsBySectionName($collectionname);
+        } else {
+            $collection = \App\Models\Product::get()->toArray();
+        }
         // dd($collection);
         return view('front.products.collection_listings')->with(compact('collectionname', 'collection'));
     }
