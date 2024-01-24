@@ -557,8 +557,8 @@ class ProductsController extends Controller
         $getCartItems = \App\Models\Cart::getCartItems();
 
         // Static SEO (HTML meta tags): Check the HTML <meta> tags and <title> tag in front/layout/layout.blade.php    
-        $meta_title       = 'Shopping Cart - Multi Vendor E-commerce';
-        $meta_keywords    = 'shopping cart, multi vendor';
+        $meta_title       = 'Shopping Cart - Kapiton Store';
+        $meta_keywords    = 'shopping cart, kapiton store, kapiton, multi vendor';
 
 
         return view('front.products.cart')->with(compact('getCartItems', 'meta_title', /* 'meta_description', */ 'meta_keywords'));
