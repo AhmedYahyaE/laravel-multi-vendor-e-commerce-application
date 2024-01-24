@@ -64,3 +64,95 @@
 	src: url(./../../fonts/Lexend-Medium.ttf) format('truetype');
 }
 /* End Custom Fonts CSS */
+
+
+/* CUSTOM CSS NINO FELICIANO */
+.filter-container{
+	display: flex;
+	gap: 10px;
+}
+.single-filter-container{
+	display: flex;
+	gap: 6px;
+}
+.single-filter-container svg{
+	width: 12px;
+	transition: all 0.3s ease;
+}
+.no-opacity-color{
+	color: #1f1f22 !important;
+}
+.filter-link{
+	position: relative;
+}
+.filter-link .single-filter-container:hover h5{
+	text-decoration: underline;
+}
+.filter_checkboxes{
+	display: none;
+	transition: all 0.3s ease;
+	top: 26px;
+	position: absolute;
+	background: white;
+	padding: 20px;
+	border-radius: 10px;
+	box-shadow: 0 0 rgba(0, 0, 0, 0.212);
+	z-index: 2;
+	width: 210px;
+}
+.z-index-2{
+	z-index: 2;
+}
+.filter-link.filter_active svg{
+    transform: rotate(180deg);
+}
+.filter-link.filter_active .filter_checkboxes{
+	display: block;
+}
+.filter-link .filter_checkboxes label{
+    margin-bottom: 0px;
+    color: #1f1f22;
+}
+.filter_checkboxes div{
+	display: flex;
+    gap: 4px;
+    align-items: center;
+}
+
+@media (max-width: 767px){
+	.filter-container{
+		flex-wrap: wrap;
+		width: 100% !important;
+		margin-bottom: 10px;
+		gap: 10px 30px;
+		padding-right: 15%;
+	}
+	.filter-outer .e-con-inner{
+		display: flex !important;
+		flex-wrap: wrap !important;
+		flex-direction: column !important;
+	}
+	.all-filter-label{
+		height: auto;
+	}
+	.sort-outer-wrap{
+		width: 100% !important;
+		margin-bottom: 20px !important;
+	}
+	.filter_checkboxes{
+		width: 160px;
+		padding: 10px 20px;
+	}
+	.filter-link .filter_checkboxes label{
+		font-size: 12px;
+	}
+	.filter-link .filter_checkboxes input{
+		width: 10px;
+	}
+	.mobile-height-auto{
+		height: auto !important;
+	}
+	.filter-outer .e-con-inner{
+		row-gap: 20px;
+	}
+}

@@ -813,7 +813,17 @@ $(document).ready(function() {
     });
 
 
+    $("#add-address a").click(function(event) {
+        event.preventDefault(); 
+        $(".add-address-form").toggleClass("display-add");
+    });
 
+
+
+    $(".filter-link .single-filter-container").click(function(event) {
+        event.preventDefault();
+        $(this).closest(".filter-link").toggleClass("filter_active");
+    });
 
 
 
