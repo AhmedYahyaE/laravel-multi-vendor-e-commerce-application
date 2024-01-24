@@ -92,7 +92,34 @@ $(document).ready(function() {
         });
     });
 
+    $(document).on('click', '.item-addCart', function(v) {
+        // cart/add
+        console.log(v);
 
+        $.ajax({
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}, // X-CSRF-TOKEN: https://laravel.com/docs/9.x/csrf#csrf-x-csrf-token    
+            data   : {}, // Sending name/value pairs to server with the AJAX request (AJAX call)
+            url    : '/cart/add', // check this route in web.php
+            type   : 'post',
+            success: function(resp) {
+                $('.totalCartItems').html(resp.totalCartItems); // totalCartItems() function is in our custom Helpers/Helper.php file that we have registered in 'composer.json' file    // We created the CSS class 'totalCartItems' in front/layout/header.blade.php to use it in front/js/custom.js to update the total cart items via AJAX, because in pages that we originally use AJAX to update the cart items (such as when we delete a cart item in http://127.0.0.1:8000/cart using AJAX), the number doesn't change in the header automatically because AJAX is already used and no page reload/refresh has occurred
+
+                if (resp.status == false) { // if    'status' => 'false'    is sent from as a response from the backend, show the message    // 'status' is sent as a PHP array key (in the HTTP response from the server (backend)) from inside the cartUpdate() method in Front/ProductsController.php
+                    alert(resp.message);
+                }
+
+                // console.log(resp.view);
+                // console.log(resp.headerview);
+
+                $('#appendCartItems').html(resp.view); // 'view' is sent as a PHP array key (in the HTTP response from the server (backend)) from inside the cartUpdate() method in Front/ProductsController.php
+
+                $('#appendHeaderCartItems').html(resp.headerview); // 'headerview' is sent as a PHP array key (in the HTTP response from the server (backend)) from inside the cartUpdate() method in Front/ProductsController.php    
+            },
+            error  : function() {
+                alert('Error');
+            }
+        });
+    });
 
     // Update Cart Item Quantity in front/products/cart_items.blade.php (which is 'include'-ed by front/products/cart.blade.php)     
     $(document).on('click', '.updateCartItem', function() {
@@ -833,7 +860,17 @@ $(document).ready(function() {
     
 
 
+    $("#add-address a").click(function(event) {
+        event.preventDefault(); 
+        $(".add-address-form").toggleClass("display-add");
+    });
 
+
+
+    $(".filter-link .single-filter-container").click(function(event) {
+        event.preventDefault();
+        $(this).closest(".filter-link").toggleClass("filter_active");
+    });
 
 
 

@@ -220,7 +220,7 @@ Route::namespace('App\Http\Controllers\Front')->group(function() {
     Route::post('cart/add', 'ProductsController@cartAdd');
 
     // Render Cart page (front/products/cart.blade.php)    // this route is accessed from the <a> HTML tag inside the flash message inside cartAdd() method in Front/ProductsController.php (inside front/products/detail.blade.php)
-    Route::get('cart', 'ProductsController@cart')->name('cart');
+    Route::get('cart', 'ProductsController@cart')->name('front.user.cart');
 
     // Update Cart Item Quantity AJAX call in front/products/cart_items.blade.php. Check front/js/custom.js
     Route::post('cart/update', 'ProductsController@cartUpdate');
@@ -283,7 +283,7 @@ Route::namespace('App\Http\Controllers\Front')->group(function() {
         Route::post('/apply-coupon', 'ProductsController@applyCoupon'); // Important Note: We added this route here as a protected route inside the 'auth' middleware group because ONLY logged in/authenticated users are allowed to redeem Coupons!
 
         // Checkout page (using match() method for the 'GET' request for rendering the front/products/checkout.blade.php page or the 'POST' request for the HTML Form submission in the same page (for submitting the user's Delivery Address and Payment Method))
-        Route::match(['GET', 'POST'], '/checkout', 'ProductsController@checkout');
+        Route::match(['GET', 'POST'], '/checkout', 'ProductsController@checkout')->name('front.user.checkout');
 
         // Edit Delivery Addresses (Page refresh and fill in the <input> fields with the authenticated/logged in user Delivery Addresses from the `delivery_addresses` database table when clicking on the Edit button) in front/products/delivery_addresses.blade.php (which is 'include'-ed in front/products/checkout.blade.php) via AJAX, check front/js/custom.js
         Route::post('get-delivery-address', 'AddressController@getDeliveryAddress');
