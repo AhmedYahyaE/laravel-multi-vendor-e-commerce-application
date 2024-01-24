@@ -177,7 +177,7 @@ window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/14
                     'id' => 'elementor-post-884-css',
                     'href' => 'front/css/elementor-css/elementor-css-post-884.css'
                 ],
-                'cart' => [
+                'front.user.cart' => [
                     'id' => 'elementor-post-896-css',
                     'href' => 'front/css/elementor-css/elementor-css-post-896.css'
                 ],
