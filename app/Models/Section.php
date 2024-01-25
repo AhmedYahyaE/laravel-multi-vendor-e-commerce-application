@@ -9,6 +9,9 @@ class Section extends Model
 {
     use HasFactory;
 
+    public function categories_nochild() {
+        return $this->hasMany('App\Models\Category', 'section_id');
+    }
 
     
     // A one section has many categories (One To Many): https://laravel.com/docs/9.x/eloquent-relationships#one-to-many
