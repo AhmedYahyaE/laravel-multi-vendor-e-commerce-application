@@ -165,7 +165,7 @@ class Product extends Model
     public static function getProductsBySectionName($section_name) {
         $section_id = \App\Models\Section::where('name', $section_name)->get('id')->toArray();
 
-        return Product::where('section_id', $section_id)->get()->toArray();
+        return Product::where('section_id', $section_id)->with('vendor');
     }
 
 }
