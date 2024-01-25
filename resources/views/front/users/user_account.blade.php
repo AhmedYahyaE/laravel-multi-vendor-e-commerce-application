@@ -313,9 +313,7 @@
                                             >
                                                 <div class="elementor-widget-container">
                                                     <h5 class="elementor-heading-title elementor-size-default">Bustos</h5>
-                                                    <select class="text-field address-field city-edit" id="user-city" name="city" style="color: #495057">
-                                                        <option value="">Select City</option>
-                                                    </select>
+                                                    <input class="text-field user-city" type="text" id="user-city" name="user-city" value="Bustos">
                                                 </div>
                                                 
                                             </div>
