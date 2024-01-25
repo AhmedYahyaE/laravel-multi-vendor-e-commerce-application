@@ -32,7 +32,7 @@
                     data-widget_type="heading.default"
                 >
                     <div class="elementor-widget-container">
-                        <h1 class="elementor-heading-title elementor-size-default">RESET YOUR PASSWORD</h1>
+                        <h1 class="elementor-heading-title elementor-size-default">FORGOT YOUR PASSWORD</h1>
                     </div>
                 </div>
                 <div
