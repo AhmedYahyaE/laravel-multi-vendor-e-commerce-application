@@ -118,7 +118,7 @@ $sections = \App\Models\Section::sections();
                         data-settings="{&quot;skin&quot;:&quot;full_screen&quot;}" data-widget_type="search-form.default">
                         <div class="elementor-widget-container">
                             <link rel="stylesheet" href="{{ url('front/css/elementor-css/elementor-pro-assets-css-widget-theme-elements.min.css') }}">
-                            <search role="search">
+                            <search role="search" class="custom_class_search">
                                 <form class="elementor-search-form" action="https://kapiton.seikodesigns.com" method="get">
                                     <div class="elementor-search-form__toggle" tabindex="0" role="button">
                                         <div class="e-font-icon-svg-container">
