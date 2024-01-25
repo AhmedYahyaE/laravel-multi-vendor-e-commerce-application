@@ -174,3 +174,20 @@
 	src: url(./../../fonts/Lexend-Medium.ttf) format('truetype');
 }
 /* End Custom Fonts CSS */
+
+
+/* CUSTOM CSS */
+.list-of-tags {
+    display: flex;
+    gap: 6px;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-bottom: 15px;
+}
+.list-of-tags span{
+    font-size: 13px;
+    background: #5f7a61;
+    color: white;
+    border-radius: 100px;
+    padding: 2px 11px;
+}
