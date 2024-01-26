@@ -31,7 +31,7 @@
                     data-widget_type="heading.default"
                 >
                     <div class="elementor-widget-container">
-                        <h1 class="elementor-heading-title elementor-size-default">MY ACCOUNT</h1>
+                        <h1 class="elementor-heading-title elementor-size-default">ORDER DETAILS</h1>
                     </div>
                 </div>
                 <div
