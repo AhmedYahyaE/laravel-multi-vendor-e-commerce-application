@@ -6,7 +6,7 @@
 <div
     data-elementor-type="wp-page"
     data-elementor-id="682"
-    class="elementor elementor-682 row"
+    class="elementor elementor-682 row collection_outer"
     data-elementor-post-type="page"
 >
     <div
@@ -36,76 +36,16 @@
             >
                 <div class="e-con-inner">
                     <div
-                        class="elementor-element elementor-element-970c6e2 filter-container elementor-widget__width-auto elementor-widget elementor-widget-heading"
+                        class="elementor-element elementor-element-970c6e2 elementor-widget__width-auto elementor-widget elementor-widget-heading"
                         data-id="970c6e2"
                         data-element_type="widget"
                         data-widget_type="heading.default"
                     >
                         <div class="elementor-widget-container mobile-height-auto">
-                            <h5 class="elementor-heading-title elementor-size-default no-opacity-color all-filter-label"><b>Filters:</b> </h5>
+                            <h5 class="elementor-heading-title elementor-size-default">128 PRODUCTS </h5>
                         </div>
 
-                        <a href="#" class="filter-link">
-                            <div class="elementor-widget-container single-filter-container">
-                                <h5 class="elementor-heading-title elementor-size-default no-opacity-color">Colors </h5>
-                                <svg aria-hidden="true" class="e-font-icon-svg e-fas-chevron-down" viewBox="0 0 448 512" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M207.029 381.476L12.686 187.132c-9.373-9.373-9.373-24.569 0-33.941l22.667-22.667c9.357-9.357 24.522-9.375 33.901-.04L224 284.505l154.745-154.021c9.379-9.335 24.544-9.317 33.901.04l22.667 22.667c9.373 9.373 9.373 24.569 0 33.941L240.971 381.476c-9.373 9.372-24.569 9.372-33.942 0z"></path>
-                                </svg>
-                            </div>
-                            <div class="filter_checkboxes">
-                                <div>
-                                    <input type="checkbox" id="red" name="red" value="Red">
-                                    <label for="red"> Red</label><br>
-                                </div>
-
-                                <div>
-                                    <input type="checkbox" id="white" name="white" value="White">
-                                    <label for="white"> White</label><br>
-                                </div>
-
-                                <div>
-                                    <input type="checkbox" id="black" name="black" value="Black">
-                                    <label for="black"> Black</label><br>
-                                </div>
-
-
-                                <div>
-                                    <input type="checkbox" id="blue" name="blue" value="Blue">
-                                    <label for="blue"> Blue</label><br>
-                                </div>
-                            </div>
-                        </a>
-
-
-                        <a href="#" class="filter-link">
-                            <div class="elementor-widget-container single-filter-container">
-                                <h5 class="elementor-heading-title elementor-size-default no-opacity-color">Size </h5>
-                                <svg aria-hidden="true" class="e-font-icon-svg e-fas-chevron-down" viewBox="0 0 448 512" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M207.029 381.476L12.686 187.132c-9.373-9.373-9.373-24.569 0-33.941l22.667-22.667c9.357-9.357 24.522-9.375 33.901-.04L224 284.505l154.745-154.021c9.379-9.335 24.544-9.317 33.901.04l22.667 22.667c9.373 9.373 9.373 24.569 0 33.941L240.971 381.476c-9.373 9.372-24.569 9.372-33.942 0z"></path>
-                                </svg>
-                            </div>
-                            <div class="filter_checkboxes">
-                                <div>
-                                    <input type="checkbox" id="small" name="small" value="Small">
-                                    <label for="small"> Small</label><br>
-                                </div>
-
-                                <div>
-                                    <input type="checkbox" id="medium" name="medium" value="Medium">
-                                    <label for="medium"> Medium</label><br>
-                                </div>
-
-                                <div>
-                                    <input type="checkbox" id="large" name="large" value="Large">
-                                    <label for="large"> Large</label><br>
-                                </div>
-
-                                <div>
-                                    <input type="checkbox" id="xlarge" name="xlarge" value="XLarge">
-                                    <label for="xlarge"> XLarge</label><br>
-                                </div>
-                            </div>
-                        </a>
+                        
 
                     </div>
                     <div
@@ -145,209 +85,216 @@
                 </div>
             </div>
 
-            @include('front.products.filters')
+            <div class="filter_outer_container">
+                @include('front.products.filters')
+            </div>
 
-            <!-- Start of product list -->
-            @foreach ($collection as $product)
-            @php
-                $product_image_path = 'front/images/product_images/small/' . $product['product_image'];
-            @endphp
-            <div
-                class="elementor-element elementor-element-80f00c9 e-con-full e-flex elementor-invisible e-con e-child"
-                data-id="80f00c9"
-                data-element_type="container"
-                data-settings="{&quot;content_width&quot;:&quot;full&quot;,&quot;animation&quot;:&quot;fadeInUp&quot;,&quot;container_type&quot;:&quot;flex&quot;}"
-            >
-                <div
-                    class="elementor-element elementor-element-757b9c4 elementor-widget__width-inherit elementor-widget elementor-widget-image"
-                    data-id="757b9c4"
-                    data-element_type="widget"
-                    data-widget_type="image.default"
-                >
-                    <div class="elementor-widget-container">
-                        <a href="{{ url('product/' . $product['id']) }}">
-                            @if (!empty($product['product_image']) && file_exists($product_image_path)) {{-- if the product image exists in BOTH database table AND filesystem (on server) --}}
-                            <img
-                                loading="lazy"
-                                decoding="async"
-                                width="800"
-                                height="968"
-                                src="{{ asset($product_image_path) }}"
-                                class="attachment-large size-large wp-image-422"
-                                alt=""
-                                srcset="{{ asset($product_image_path) }} 846w, {{ asset($product_image_path) }} 248w, {{ asset($product_image_path) }} 768w, {{ asset($product_image_path) }} 879w"
-                                sizes="(max-width: 800px) 100vw, 800px"
-                            >
-                            @else {{-- show the dummy image --}}
-                            <img
-                                loading="lazy"
-                                decoding="async"
-                                width="800"
-                                height="968"
-                                src="{{ asset('front/images/product/no-available-image.jpg')}}"
-                                class="attachment-large size-large wp-image-422"
-                                alt=""
-                                srcset="{{ asset('front/images/product/no-available-image.jpg') }} 846w, {{ asset('front/images/product/no-available-image.jpg.png') }} 248w, {{ asset('front/images/product/no-available-image.jpg') }} 768w, {{ asset('front/images/product/no-available-image.jpg') }} 879w"
-                                sizes="(max-width: 800px) 100vw, 800px"
-                            >
-                            @endif
-                        </a>
-                    </div>
-                </div>
-                <div
-                    class="elementor-element elementor-element-826026e elementor-widget__width-inherit elementor-widget elementor-widget-heading"
-                    data-id="826026e"
-                    data-element_type="widget"
-                    data-widget_type="heading.default"
-                >
-                    <div class="elementor-widget-container">
-                        <h2 class="elementor-heading-title elementor-size-default">{{$product['product_name']}}</h2>
-                    </div>
-                </div>
-                {{-- Call the static getDiscountPrice() method in the Product.php Model to determine the final price of a product because a product can have a discount from TWO things: either a `CATEGORY` discount or `PRODUCT` discout     --}}
+            <div class="product_list_container">
+                <!-- Start of product list -->
+                @foreach ($collection as $product)
                 @php
-                    $getDiscountPrice = \App\Models\Product::getDiscountPrice($product['id']);
+                    $product_image_path = 'front/images/product_images/small/' . $product['product_image'];
                 @endphp
-
-                @if ($getDiscountPrice > 0) {{-- If there's a discount on the price, show the price before (the original price) and after (the new price) the discount --}}
                 <div
-                    class="elementor-element elementor-element-753d4d0 elementor-widget elementor-widget-text-editor"
-                    data-id="753d4d0"
-                    data-element_type="widget"
-                    data-widget_type="text-editor.default"
-                >
-                    <div class="elementor-widget-container">
-                        <style>/*! elementor - v3.18.0 - 08-12-2023 */ .elementor-widget-text-editor.elementor-drop-cap-view-stacked .elementor-drop-cap{background-color:#69727d;color:#fff}.elementor-widget-text-editor.elementor-drop-cap-view-framed .elementor-drop-cap{color:#69727d;border:3px solid;background-color:transparent}.elementor-widget-text-editor:not(.elementor-drop-cap-view-default) .elementor-drop-cap{margin-top:8px}.elementor-widget-text-editor:not(.elementor-drop-cap-view-default) .elementor-drop-cap-letter{width:1em;height:1em}.elementor-widget-text-editor .elementor-drop-cap{float:left;text-align:center;line-height:1;font-size:50px}.elementor-widget-text-editor .elementor-drop-cap-letter{display:inline-block}</style>
-                        <p> ₱{{$getDiscountPrice}}</p>
-                    </div>
-                </div>
-                <div
-                    class="elementor-element elementor-element-725e6f0 elementor-widget elementor-widget-text-editor"
-                    data-id="725e6f0"
-                    data-element_type="widget"
-                    data-widget_type="text-editor.default"
-                >
-                    <div class="elementor-widget-container">
-                        <em style="text-decoration: line-through;">₱{{$product['product_price']}}</em>
-                    </div>
-                </div>
-                @else
-                <div
-                    class="elementor-element elementor-element-753d4d0 elementor-widget elementor-widget-text-editor"
-                    data-id="753d4d0"
-                    data-element_type="widget"
-                    data-widget_type="text-editor.default"
-                >
-                    <div class="elementor-widget-container">
-                        <style>/*! elementor - v3.18.0 - 08-12-2023 */ .elementor-widget-text-editor.elementor-drop-cap-view-stacked .elementor-drop-cap{background-color:#69727d;color:#fff}.elementor-widget-text-editor.elementor-drop-cap-view-framed .elementor-drop-cap{color:#69727d;border:3px solid;background-color:transparent}.elementor-widget-text-editor:not(.elementor-drop-cap-view-default) .elementor-drop-cap{margin-top:8px}.elementor-widget-text-editor:not(.elementor-drop-cap-view-default) .elementor-drop-cap-letter{width:1em;height:1em}.elementor-widget-text-editor .elementor-drop-cap{float:left;text-align:center;line-height:1;font-size:50px}.elementor-widget-text-editor .elementor-drop-cap-letter{display:inline-block}</style>
-                        <p> ₱{{$product['product_price']}}</p>
-                    </div>
-                </div>
-                @endif
-
-                <div
-                    class="elementor-element elementor-element-e6b737c e-flex e-con-boxed e-con e-child"
-                    data-id="e6b737c"
+                    class="elementor-element elementor-element-80f00c9 e-con-full e-flex elementor-invisible e-con e-child single_product_card"
+                    data-id="80f00c9"
                     data-element_type="container"
-                    data-settings="{&quot;container_type&quot;:&quot;flex&quot;,&quot;content_width&quot;:&quot;boxed&quot;}"
-                >
-                    <div class="e-con-inner">
-                        <div
-                            class="elementor-element elementor-element-a282fc6 e-con-full e-flex e-con e-child"
-                            data-id="a282fc6"
-                            data-element_type="container"
-                            data-settings="{&quot;content_width&quot;:&quot;full&quot;,&quot;container_type&quot;:&quot;flex&quot;}"
-                        >
-                            <div
-                                class="elementor-element elementor-element-ad41e9d elementor-widget elementor-widget-image"
-                                data-id="ad41e9d"
-                                data-element_type="widget"
-                                data-widget_type="image.default"
-                            >
-                                <div class="elementor-widget-container">
-                                    <img
-                                        decoding="async"
-                                        width="300"
-                                        height="300"
-                                        src="{{ asset('front/images/brand-logos/2023-12-user.png') }}"
-                                        class="attachment-large size-large wp-image-423"
-                                        alt=""
-                                        srcset="{{ asset('front/images/brand-logos/2023-12-user.png') }} 300w, {{ asset('front//images/brand-logos/2023-12-user-150x150.png') }} 150w"
-                                        sizes="(max-width: 300px) 100vw, 300px"
-                                    >
-                                </div>
-                            </div>
-                            <div
-                                class="elementor-element elementor-element-67825cd elementor-widget elementor-widget-heading"
-                                data-id="67825cd"
-                                data-element_type="widget"
-                                data-widget_type="heading.default"
-                            >
-                                <div class="elementor-widget-container">
-                                    <h5 class="elementor-heading-title elementor-size-default">{{ $product['vendor']['name'] ?? "" }}</h5>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Ratings -->
-                        <div
-                            class="elementor-element elementor-element-036fcb9 elementor-widget elementor-widget-rating"
-                            data-id="036fcb9"
-                            data-element_type="widget"
-                            data-widget_type="rating.default"
-                        >
-                            <div class="elementor-widget-container">
-                                <style>/*! elementor - v3.18.0 - 08-12-2023 */ .elementor-widget-rating{--e-rating-gap:0px;--e-rating-icon-font-size:16px;--e-rating-icon-color:#ccd6df;--e-rating-icon-marked-color:#f0ad4e;--e-rating-icon-marked-width:100%;--e-rating-justify-content:flex-start}.elementor-widget-rating .e-rating{display:flex;justify-content:var(--e-rating-justify-content)}.elementor-widget-rating .e-rating-wrapper{display:flex;justify-content:inherit;flex-direction:row;flex-wrap:wrap;width:-moz-fit-content;width:fit-content;margin-block-end:calc(0px - var(--e-rating-gap));margin-inline-end:calc(0px - var(--e-rating-gap))}.elementor-widget-rating .e-rating .e-icon{position:relative;margin-block-end:var(--e-rating-gap);margin-inline-end:var(--e-rating-gap)}.elementor-widget-rating .e-rating .e-icon-wrapper.e-icon-marked{--e-rating-icon-color:var(--e-rating-icon-marked-color);width:var(--e-rating-icon-marked-width);position:absolute;z-index:1;height:100%;left:0;top:0;overflow:hidden}.elementor-widget-rating .e-rating .e-icon-wrapper :is(i,svg){display:flex;flex-shrink:0}.elementor-widget-rating .e-rating .e-icon-wrapper i{font-size:var(--e-rating-icon-font-size);color:var(--e-rating-icon-color)}.elementor-widget-rating .e-rating .e-icon-wrapper svg{width:auto;height:var(--e-rating-icon-font-size);fill:var(--e-rating-icon-color)}</style>
-                                <div
-                                    class="e-rating"
-                                    itemtype="https://schema.org/Rating"
-                                    itemscope=""
-                                    itemprop="reviewRating"
+                    data-settings="{&quot;content_width&quot;:&quot;full&quot;,&quot;animation&quot;:&quot;fadeInUp&quot;,&quot;container_type&quot;:&quot;flex&quot;}">
+                    <div
+                        class="elementor-element elementor-element-757b9c4 elementor-widget__width-inherit elementor-widget elementor-widget-image"
+                        data-id="757b9c4"
+                        data-element_type="widget"
+                        data-widget_type="image.default"
+                    >
+                        <div class="elementor-widget-container">
+                            <a href="{{ url('product/' . $product['id']) }}">
+                                @if (!empty($product['product_image']) && file_exists($product_image_path)) {{-- if the product image exists in BOTH database table AND filesystem (on server) --}}
+                                <img
+                                    loading="lazy"
+                                    decoding="async"
+                                    width="800"
+                                    height="968"
+                                    src="{{ asset($product_image_path) }}"
+                                    class="attachment-large size-large wp-image-422"
+                                    alt=""
+                                    srcset="{{ asset($product_image_path) }} 846w, {{ asset($product_image_path) }} 248w, {{ asset($product_image_path) }} 768w, {{ asset($product_image_path) }} 879w"
+                                    sizes="(max-width: 800px) 100vw, 800px"
                                 >
-                                    <meta itemprop="worstRating" content="0">
-                                    <meta itemprop="bestRating" content="5">
+                                @else {{-- show the dummy image --}}
+                                <img
+                                    loading="lazy"
+                                    decoding="async"
+                                    width="800"
+                                    height="968"
+                                    src="{{ asset('front/images/product/no-available-image.jpg')}}"
+                                    class="attachment-large size-large wp-image-422"
+                                    alt=""
+                                    srcset="{{ asset('front/images/product/no-available-image.jpg') }} 846w, {{ asset('front/images/product/no-available-image.jpg.png') }} 248w, {{ asset('front/images/product/no-available-image.jpg') }} 768w, {{ asset('front/images/product/no-available-image.jpg') }} 879w"
+                                    sizes="(max-width: 800px) 100vw, 800px"
+                                >
+                                @endif
+                            </a>
+                        </div>
+                    </div>
+                    <div
+                        class="elementor-element elementor-element-826026e elementor-widget__width-inherit elementor-widget elementor-widget-heading"
+                        data-id="826026e"
+                        data-element_type="widget"
+                        data-widget_type="heading.default"
+                    >
+                        <div class="elementor-widget-container">
+                            <h2 class="elementor-heading-title elementor-size-default">{{$product['product_name']}}</h2>
+                        </div>
+                    </div>
+                    {{-- Call the static getDiscountPrice() method in the Product.php Model to determine the final price of a product because a product can have a discount from TWO things: either a `CATEGORY` discount or `PRODUCT` discout     --}}
+                    @php
+                        $getDiscountPrice = \App\Models\Product::getDiscountPrice($product['id']);
+                    @endphp
+
+                    @if ($getDiscountPrice > 0) {{-- If there's a discount on the price, show the price before (the original price) and after (the new price) the discount --}}
+                    <div
+                        class="elementor-element elementor-element-753d4d0 elementor-widget elementor-widget-text-editor"
+                        data-id="753d4d0"
+                        data-element_type="widget"
+                        data-widget_type="text-editor.default"
+                    >
+                        <div class="elementor-widget-container">
+                            <style>/*! elementor - v3.18.0 - 08-12-2023 */ .elementor-widget-text-editor.elementor-drop-cap-view-stacked .elementor-drop-cap{background-color:#69727d;color:#fff}.elementor-widget-text-editor.elementor-drop-cap-view-framed .elementor-drop-cap{color:#69727d;border:3px solid;background-color:transparent}.elementor-widget-text-editor:not(.elementor-drop-cap-view-default) .elementor-drop-cap{margin-top:8px}.elementor-widget-text-editor:not(.elementor-drop-cap-view-default) .elementor-drop-cap-letter{width:1em;height:1em}.elementor-widget-text-editor .elementor-drop-cap{float:left;text-align:center;line-height:1;font-size:50px}.elementor-widget-text-editor .elementor-drop-cap-letter{display:inline-block}</style>
+                            <p> ₱{{$getDiscountPrice}}</p>
+                        </div>
+                    </div>
+                    <div
+                        class="elementor-element elementor-element-725e6f0 elementor-widget elementor-widget-text-editor"
+                        data-id="725e6f0"
+                        data-element_type="widget"
+                        data-widget_type="text-editor.default"
+                    >
+                        <div class="elementor-widget-container">
+                            <em style="text-decoration: line-through;">₱{{$product['product_price']}}</em>
+                        </div>
+                    </div>
+                    @else
+                    <div
+                        class="elementor-element elementor-element-753d4d0 elementor-widget elementor-widget-text-editor"
+                        data-id="753d4d0"
+                        data-element_type="widget"
+                        data-widget_type="text-editor.default"
+                    >
+                        <div class="elementor-widget-container">
+                            <style>/*! elementor - v3.18.0 - 08-12-2023 */ .elementor-widget-text-editor.elementor-drop-cap-view-stacked .elementor-drop-cap{background-color:#69727d;color:#fff}.elementor-widget-text-editor.elementor-drop-cap-view-framed .elementor-drop-cap{color:#69727d;border:3px solid;background-color:transparent}.elementor-widget-text-editor:not(.elementor-drop-cap-view-default) .elementor-drop-cap{margin-top:8px}.elementor-widget-text-editor:not(.elementor-drop-cap-view-default) .elementor-drop-cap-letter{width:1em;height:1em}.elementor-widget-text-editor .elementor-drop-cap{float:left;text-align:center;line-height:1;font-size:50px}.elementor-widget-text-editor .elementor-drop-cap-letter{display:inline-block}</style>
+                            <p> ₱{{$product['product_price']}}</p>
+                        </div>
+                    </div>
+                    @endif
+
+                    <div
+                        class="elementor-element elementor-element-e6b737c e-flex e-con-boxed e-con e-child"
+                        data-id="e6b737c"
+                        data-element_type="container"
+                        data-settings="{&quot;container_type&quot;:&quot;flex&quot;,&quot;content_width&quot;:&quot;boxed&quot;}"
+                    >
+                        <div class="e-con-inner">
+                            <div
+                                class="elementor-element elementor-element-a282fc6 e-con-full e-flex e-con e-child"
+                                data-id="a282fc6"
+                                data-element_type="container"
+                                data-settings="{&quot;content_width&quot;:&quot;full&quot;,&quot;container_type&quot;:&quot;flex&quot;}"
+                            >
+                                <div
+                                    class="elementor-element elementor-element-ad41e9d elementor-widget elementor-widget-image"
+                                    data-id="ad41e9d"
+                                    data-element_type="widget"
+                                    data-widget_type="image.default"
+                                >
+                                    <div class="elementor-widget-container">
+                                        <img
+                                            decoding="async"
+                                            width="300"
+                                            height="300"
+                                            src="{{ asset('front/images/brand-logos/2023-12-user.png') }}"
+                                            class="attachment-large size-large wp-image-423"
+                                            alt=""
+                                            srcset="{{ asset('front/images/brand-logos/2023-12-user.png') }} 300w, {{ asset('front//images/brand-logos/2023-12-user-150x150.png') }} 150w"
+                                            sizes="(max-width: 300px) 100vw, 300px"
+                                        >
+                                    </div>
+                                </div>
+                                <div
+                                    class="elementor-element elementor-element-67825cd elementor-widget elementor-widget-heading"
+                                    data-id="67825cd"
+                                    data-element_type="widget"
+                                    data-widget_type="heading.default"
+                                >
+                                    <div class="elementor-widget-container">
+                                        <h5 class="elementor-heading-title elementor-size-default">{{ $product['vendor']['name'] ?? "" }}</h5>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Ratings -->
+                            <div
+                                class="elementor-element elementor-element-036fcb9 elementor-widget elementor-widget-rating"
+                                data-id="036fcb9"
+                                data-element_type="widget"
+                                data-widget_type="rating.default"
+                            >
+                                <div class="elementor-widget-container">
+                                    <style>/*! elementor - v3.18.0 - 08-12-2023 */ .elementor-widget-rating{--e-rating-gap:0px;--e-rating-icon-font-size:16px;--e-rating-icon-color:#ccd6df;--e-rating-icon-marked-color:#f0ad4e;--e-rating-icon-marked-width:100%;--e-rating-justify-content:flex-start}.elementor-widget-rating .e-rating{display:flex;justify-content:var(--e-rating-justify-content)}.elementor-widget-rating .e-rating-wrapper{display:flex;justify-content:inherit;flex-direction:row;flex-wrap:wrap;width:-moz-fit-content;width:fit-content;margin-block-end:calc(0px - var(--e-rating-gap));margin-inline-end:calc(0px - var(--e-rating-gap))}.elementor-widget-rating .e-rating .e-icon{position:relative;margin-block-end:var(--e-rating-gap);margin-inline-end:var(--e-rating-gap)}.elementor-widget-rating .e-rating .e-icon-wrapper.e-icon-marked{--e-rating-icon-color:var(--e-rating-icon-marked-color);width:var(--e-rating-icon-marked-width);position:absolute;z-index:1;height:100%;left:0;top:0;overflow:hidden}.elementor-widget-rating .e-rating .e-icon-wrapper :is(i,svg){display:flex;flex-shrink:0}.elementor-widget-rating .e-rating .e-icon-wrapper i{font-size:var(--e-rating-icon-font-size);color:var(--e-rating-icon-color)}.elementor-widget-rating .e-rating .e-icon-wrapper svg{width:auto;height:var(--e-rating-icon-font-size);fill:var(--e-rating-icon-color)}</style>
                                     <div
-                                        class="e-rating-wrapper"
-                                        itemprop="ratingValue"
-                                        content="4"
-                                        role="img"
-                                        aria-label="Rated 4 out of 5"
+                                        class="e-rating"
+                                        itemtype="https://schema.org/Rating"
+                                        itemscope=""
+                                        itemprop="reviewRating"
                                     >
-                                        @for ($x = 0; $x < 5; $x++)
-                                        @php
-                                            $marked = \App\Models\Product::product_computed_ratings($product['id']);
-                                        @endphp
-                                        <div class="e-icon">
-                                            <div class="e-icon-wrapper e-icon-marked" style="{{ ($x < $marked && $marked > 0) ? '':'--e-rating-icon-marked-width: 0%;' }}">
-                                                <svg
-                                                    aria-hidden="true"
-                                                    class="e-font-icon-svg e-eicon-star"
-                                                    viewbox="0 0 1000 1000"
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                >
-                                                    <path d="M450 75L338 312 88 350C46 354 25 417 58 450L238 633 196 896C188 942 238 975 275 954L500 837 725 954C767 975 813 942 804 896L763 633 942 450C975 417 954 358 913 350L663 312 550 75C529 33 471 33 450 75Z"></path>
-                                                </svg>
+                                        <meta itemprop="worstRating" content="0">
+                                        <meta itemprop="bestRating" content="5">
+                                        <div
+                                            class="e-rating-wrapper"
+                                            itemprop="ratingValue"
+                                            content="4"
+                                            role="img"
+                                            aria-label="Rated 4 out of 5"
+                                        >
+                                            @for ($x = 0; $x < 5; $x++)
+                                            @php
+                                                $marked = \App\Models\Product::product_computed_ratings($product['id']);
+                                            @endphp
+                                            <div class="e-icon">
+                                                <div class="e-icon-wrapper e-icon-marked" style="{{ ($x < $marked && $marked > 0) ? '':'--e-rating-icon-marked-width: 0%;' }}">
+                                                    <svg
+                                                        aria-hidden="true"
+                                                        class="e-font-icon-svg e-eicon-star"
+                                                        viewbox="0 0 1000 1000"
+                                                        xmlns="http://www.w3.org/2000/svg"
+                                                    >
+                                                        <path d="M450 75L338 312 88 350C46 354 25 417 58 450L238 633 196 896C188 942 238 975 275 954L500 837 725 954C767 975 813 942 804 896L763 633 942 450C975 417 954 358 913 350L663 312 550 75C529 33 471 33 450 75Z"></path>
+                                                    </svg>
+                                                </div>
+                                                <div class="e-icon-wrapper e-icon-unmarked">
+                                                    <svg
+                                                        aria-hidden="true"
+                                                        class="e-font-icon-svg e-eicon-star"
+                                                        viewbox="0 0 1000 1000"
+                                                        xmlns="http://www.w3.org/2000/svg"
+                                                    >
+                                                        <path d="M450 75L338 312 88 350C46 354 25 417 58 450L238 633 196 896C188 942 238 975 275 954L500 837 725 954C767 975 813 942 804 896L763 633 942 450C975 417 954 358 913 350L663 312 550 75C529 33 471 33 450 75Z"></path>
+                                                    </svg>
+                                                </div>
                                             </div>
-                                            <div class="e-icon-wrapper e-icon-unmarked">
-                                                <svg
-                                                    aria-hidden="true"
-                                                    class="e-font-icon-svg e-eicon-star"
-                                                    viewbox="0 0 1000 1000"
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                >
-                                                    <path d="M450 75L338 312 88 350C46 354 25 417 58 450L238 633 196 896C188 942 238 975 275 954L500 837 725 954C767 975 813 942 804 896L763 633 942 450C975 417 954 358 913 350L663 312 550 75C529 33 471 33 450 75Z"></path>
-                                                </svg>
-                                            </div>
+                                            @endfor
                                         </div>
-                                        @endfor
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                @endforeach
             </div>
-            @endforeach
+
+            
+
+
         </div>
 
         {{ $collection->links() }}

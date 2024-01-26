@@ -872,7 +872,26 @@ $(document).ready(function() {
         $(this).closest(".filter-link").toggleClass("filter_active");
     });
 
+    $("#filter-trigger").click(function(event) {
+        event.preventDefault();
+        $(".filters-inner").toggleClass("active");
+    });
 
 
+    // Set up the price range slider
+    $(".filter_outer_container #slide-price-range").slider({
+        range: true,
+        min: 0,
+        max: 1000,
+        values: [0, 1000],
+        slide: function(event, ui) {
+          $(".filter_outer_container #slide-price-min").text(ui.values[0]);
+          $(".filter_outer_container #slide-price-max").text(ui.values[1]);
+        }
+    });
+
+    // Display initial values
+    $(".filter_outer_container #slide-price-min").text($(".filter_outer_container #slide-price-range").slider("values", 0));
+    $(".filter_outer_container #slide-price-max").text($(".filter_outer_container #slide-price-range").slider("values", 1));
 
 });
