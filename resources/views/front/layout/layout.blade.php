@@ -165,6 +165,10 @@ window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/14
                     'id' => 'elementor-post-682-css',
                     'href' => 'front/css/elementor-css/elementor-css-post-682.css'
                 ],
+                'listing' => [
+                    'id' => 'elementor-post-682-css',
+                    'href' => 'front/css/elementor-css/elementor-css-post-682.css'
+                ],
                 'front.user.account' => [
                     'id' => 'elementor-post-743-css',
                     'href' => 'front/css/elementor-css/elementor-css-post-743.css'
