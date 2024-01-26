@@ -15,7 +15,16 @@ class SectionsController extends Controller
     }
 
     public function index($collectionname = '') {
-        $sectionCategories = $this->section_tbl->whereRaw('LOWER(name) = ?', [strtolower($collectionname)]);
+        
+        if ($collectionname !== "all") {
+            $sectionCategories = $this->section_tbl->whereRaw('LOWER(name) = ?', [strtolower($collectionname)]);
+            
+            $collection = \App\Models\Product::getProductsBySectionName($collectionname)->paginate(15);
+        } else {
+            $sectionCategories = $this->section_tbl;
+
+            $collection = \App\Models\Product::with('vendor')->paginate(15);
+        }
 
         if ($sectionCategories->count() > 0) {
             $catIds = $sectionCategories->get()->pluck('id')->toArray();
@@ -25,16 +34,9 @@ class SectionsController extends Controller
                 'catIds' => $catIds,
                 'categoryDetails' => $catDetails
             ];
-    
-            if ($collectionname !== "all") {
-                $collection = \App\Models\Product::getProductsBySectionName($collectionname)->paginate(15);
-            } else {
-                $collection = \App\Models\Product::with('vendor')->paginate(15);
-            }
-            // dd($collection);
-            return view('front.products.collection_listings')->with(compact('collectionname', 'collection', 'categoryDetails'));
-        } else {
-            abort(404);
         }
+        
+        // dd($collection);
+        return view('front.products.collection_listings')->with(compact('collectionname', 'collection', 'categoryDetails'));
     }
 }

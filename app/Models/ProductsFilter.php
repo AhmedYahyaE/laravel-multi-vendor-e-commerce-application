@@ -112,36 +112,49 @@ class ProductsFilter extends Model
     }
 
     public static function getCollectionSizes($collection) {
-        $collection_id = \App\Models\Section::select('id')->whereRaw('LOWER(name) = ?', [strtolower($collection)])->first()->toArray();
-        
-        $category_ids = \App\Models\Category::select('id')->where('section_id', $collection_id)->get()->pluck('id')->toArray();
-        
-        $product_ids = \App\Models\Product::select('id')->whereIn('category_id', $category_ids)->get()->pluck('id')->toArray();
-        
-        // We used groupBy() method to eliminate the repeated product `size`-s (in order not to show repeated 'filters' values (like small, small, medium, ...)): https://laravel.com/docs/9.x/collections#method-groupby
-        $getProductSizes = \App\Models\ProductsAttribute::select('size')->whereIn('product_id', $product_ids)->groupBy('size')->pluck('size')->toArray(); 
-        // dd($getProductSizes);
-
-        return $getProductSizes;
+        if ($collection == "all") {
+            return [];
+        } else {
+            $collection_id = \App\Models\Section::select('id')->whereRaw('LOWER(name) = ?', [strtolower($collection)])->first()->toArray();
+            
+            $category_ids = \App\Models\Category::select('id')->where('section_id', $collection_id)->get()->pluck('id')->toArray();
+            
+            $product_ids = \App\Models\Product::select('id')->whereIn('category_id', $category_ids)->get()->pluck('id')->toArray();
+            
+            // We used groupBy() method to eliminate the repeated product `size`-s (in order not to show repeated 'filters' values (like small, small, medium, ...)): https://laravel.com/docs/9.x/collections#method-groupby
+            $getProductSizes = \App\Models\ProductsAttribute::select('size')->whereIn('product_id', $product_ids)->groupBy('size')->pluck('size')->toArray(); 
+            // dd($getProductSizes);
+    
+            return $getProductSizes;
+        }
     }
 
     public static function getCollectionColors($collection) {
-        $collection_id = \App\Models\Section::select('id')->whereRaw('LOWER(name) = ?', [strtolower($collection)])->first()->toArray();
-        
-        $category_ids = \App\Models\Category::select('id')->where('section_id', $collection_id)->get()->pluck('id')->toArray();
-        
-        $product_ids = \App\Models\Product::select('id')->whereIn('category_id', $category_ids)->get()->pluck('id')->toArray();
-
-        // Get the colors of the product ids from the `products` table
-        $getProductColors = \App\Models\Product::select('product_color')->whereIn('id', $product_ids)->groupBy('product_color')->pluck('product_color')->toArray();
-
-        return $getProductColors;
+        if ($collection == "all") {
+            return [];
+        } else {
+            $collection_id = \App\Models\Section::select('id')->whereRaw('LOWER(name) = ?', [strtolower($collection)])->first()->toArray();
+            
+            $category_ids = \App\Models\Category::select('id')->where('section_id', $collection_id)->get()->pluck('id')->toArray();
+            
+            $product_ids = \App\Models\Product::select('id')->whereIn('category_id', $category_ids)->get()->pluck('id')->toArray();
+    
+            // Get the colors of the product ids from the `products` table
+            $getProductColors = \App\Models\Product::select('product_color')->whereIn('id', $product_ids)->groupBy('product_color')->pluck('product_color')->toArray();
+    
+            return $getProductColors;
+        }
     }
 
     public static function getCollectionBrands($collection) {
-        $collection_id = \App\Models\Section::select('id')->whereRaw('LOWER(name) = ?', [strtolower($collection)])->first()->toArray();
         
-        $category_ids = \App\Models\Category::select('id')->where('section_id', $collection_id)->get()->pluck('id')->toArray();
+        if ($collection == "all"){
+            $collection_id = \App\Models\Section::select('id')->get()->toArray();
+        } else {
+            $collection_id = \App\Models\Section::select('id')->whereRaw('LOWER(name) = ?', [strtolower($collection)])->first()->toArray();
+        }
+
+        $category_ids = \App\Models\Category::select('id')->whereIn('section_id', $collection_id)->get()->pluck('id')->toArray();
         
         $product_ids = \App\Models\Product::select('id')->whereIn('category_id', $category_ids)->get()->pluck('id')->toArray();
 
