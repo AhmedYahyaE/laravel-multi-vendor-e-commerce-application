@@ -25,7 +25,7 @@
                 data-widget_type="heading.default"
             >
                 <div class="elementor-widget-container">
-                    <h2 class="elementor-heading-title elementor-size-default">{{$collectionname}}</h2>
+                    <h2 class="elementor-heading-title elementor-size-default">{{ isset($url) ? $url:$collectionname }}</h2>
                 </div>
             </div>
             <div
@@ -42,7 +42,7 @@
                         data-widget_type="heading.default"
                     >
                         <div class="elementor-widget-container mobile-height-auto">
-                            <h5 class="elementor-heading-title elementor-size-default">128 PRODUCTS </h5>
+                            <h5 class="elementor-heading-title elementor-size-default">{{ $collection->count() }} PRODUCTS </h5>
                         </div>
 
                         

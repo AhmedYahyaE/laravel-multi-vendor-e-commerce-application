@@ -242,11 +242,11 @@ class ProductsController extends Controller
                     $categoryProducts = $categoryProducts->where('products.section_id', $_REQUEST['section_id']);
                 }
 
-                $categoryProducts = $categoryProducts->get();
+                $collection = $categoryProducts->get();
                 // dd($categoryProducts);
 
 
-                return view('front.products.listing')->with(compact('categoryDetails', 'categoryProducts'));
+                return view('front.products.collection_listings')->with(compact('categoryDetails', 'collection'));
 
             } else { // If the Search Form is NOT used, render the listing.blade.php page with the Sorting Filter WITHOUT AJAX (using the HTML <form> and jQuery)
                 $url = \Illuminate\Support\Facades\Route::getFacadeRoot()->current()->uri(); // Accessing The Current Route: https://laravel.com/docs/9.x/routing#accessing-the-current-route    // Accessing The Current URL: https://laravel.com/docs/9.x/urls#accessing-the-current-url       
@@ -279,7 +279,7 @@ class ProductsController extends Controller
                     }
         
                     // Pagination (after the Sorting Filter)
-                    $categoryProducts = $categoryProducts->paginate(30); // Moved the pagination after checking for the sorting filter <form>
+                    $collection = $categoryProducts->paginate(30); // Moved the pagination after checking for the sorting filter <form>
 
 
                     // Dynamic SEO (HTML meta tags): Check the HTML <meta> tags and <title> tag in front/layout/layout.blade.php    
@@ -288,7 +288,7 @@ class ProductsController extends Controller
                     $meta_keywords    = $categoryDetails['categoryDetails']['meta_keywords'];
 
 
-                    return view('front.products.listing')->with(compact('categoryDetails', 'categoryProducts', 'url', 'meta_title', 'meta_description', 'meta_keywords'));
+                    return view('front.products.collection_listings')->with(compact('categoryDetails', 'collection', 'url', 'meta_title', 'meta_description', 'meta_keywords'));
 
                 } else {
                     abort(404); // we will create the 404 page later on    // https://laravel.com/docs/9.x/helpers#method-abort
