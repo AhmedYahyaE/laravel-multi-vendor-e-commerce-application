@@ -224,6 +224,22 @@
 .filter_outer_container #slide-price-display{
 	margin-top: 10px
 }
+.apply-filter{
+	font-family: "Lexend", Sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    text-transform: uppercase;
+    background-color: #1f1f22;
+    border-radius: 100px 100px 100px 100px;
+    padding: 8px 21px;
+    text-align: center;
+    transition: all .3s;
+    color: white;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    width: fit-content;
+}
 @media (max-width: 1024px){
 	.elementor-682 .elementor-element.elementor-element-80f00c9 {
 		width: calc(33.333% - 20px);

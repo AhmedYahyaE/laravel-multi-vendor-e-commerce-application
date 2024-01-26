@@ -239,6 +239,6 @@
 
     @endif
 
-
+    <a href="#" class="apply-filter">Apply Filters</a>
 </div>
 <!-- Shop-Left-Side-Bar-Wrapper /- -->
