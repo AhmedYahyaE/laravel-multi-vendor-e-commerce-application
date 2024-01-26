@@ -766,6 +766,9 @@ $(document).ready(function() {
 
     });
 
+    /**
+     * On change of country name - load city
+     */
     $('.address-field[name=country]').change((el) => {
         let country = $(el.currentTarget).val();
 
@@ -797,6 +800,9 @@ $(document).ready(function() {
         });
     })
 
+    /**
+     * On change of state get cities
+     */
     $('.address-field[name=state]').change((el) => {
         let country = $('.address-field[name=country]').val();
         let state = $(el.currentTarget).val();
@@ -836,8 +842,22 @@ $(document).ready(function() {
 
     $("#edit_info").click(function(event) {
         event.preventDefault(); 
+    
+        // Toggle the class "edit_active" on ".customer_information"
         $(".customer_information").toggleClass("edit_active");
+    
+        // Find ".elementor-button-text" inside "#edit_info"
+        var buttonText = $("#edit_info .elementor-button-text");
+    
+        // Check the current text and toggle between "Cancel" and "Edit information"
+        if (buttonText.text() === "Edit information") {
+            buttonText.text("Cancel");
+        } else {
+            buttonText.text("Edit information");
+        }
     });
+
+    
 
 
     $("#add-address a").click(function(event) {

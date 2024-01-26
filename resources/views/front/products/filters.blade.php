@@ -64,10 +64,17 @@
         
         {{-- Size, price, color, brand, … are also Dynamic Filters, but won't be managed like the other Dynamic Filters, but we will manage every filter of them from the suitable respective database table, like the 'size' Filter from the `products_attributes` database table, 'color' Filter and `price` Filter from `products` table, 'brand' Filter from `brands` table --}}
         {{-- First: the 'size' filter (from `products_attributes` database table). Show the correct relevant product 'size' filter values (e.g. for the 'men' category (small, medium, large, XL, ...) BUT for the mobiles category (64GB-4GB, 128GB-6GB, ...)) depending on the URL --}}
-        @php
-            $getSizes = \App\Models\ProductsFilter::getSizes($url); // get product sizes depending on the URL (to show the proper relevant 'size' filter values (whether small, medium, ... OR 64GB-4GB, 128GB-6GB, ...))    // $url is passed from the Front/ProductsController.php
-            // dd($getSizes);
-        @endphp
+        @if(isset($url))
+            @php
+            // get product sizes depending on the URL (to show the proper relevant 'size' filter values (whether small, medium, ... OR 64GB-4GB, 128GB-6GB, ...))
+            // $url is passed from the Front/ProductsController.php
+            $getSizes = \App\Models\ProductsFilter::getSizes($url);
+            @endphp
+        @else
+            @php
+            $getSizes = \App\Models\ProductsFilter::getCollectionSizes($collectionname)
+            @endphp
+        @endif
 
 
         <div class="facet-filter-associates">
@@ -102,10 +109,18 @@
         
         {{-- Size, price, color, brand, … are also Dynamic Filters, but won't be managed like the other Dynamic Filters, but we will manage every filter of them from the suitable respective database table, like the 'size' Filter from the `products_attributes` database table, 'color' Filter and `price` Filter from `products` table, 'brand' Filter from `brands` table --}}
         {{-- Second: the 'color' filter (from `products` database table). Show the correct relevant product 'color' filter values (e.g. for the 'men' category (red, blue, ...) BUT for the mobiles category (grey, black, ...)) depending on the URL --}}
+        @if (isset($ur))
         @php
-            $getColors = \App\Models\ProductsFilter::getColors($url); // get product colors depending on the URL (to show the proper relevant 'color' filter values (whether small, medium, ... OR 64GB-4GB, 128GB-6GB, ...))    // $url is passed from the Front/ProductsController.php
+        // get product colors depending on the URL (to show the proper relevant 'color' filter values (whether small, medium, ... OR 64GB-4GB, 128GB-6GB, ...))
+        // $url is passed from the Front/ProductsController.php
+            $getColors = \App\Models\ProductsFilter::getColors($url);
             // dd($getColors);
         @endphp
+        @else
+        @php
+            $getColors = \App\Models\ProductsFilter::getCollectionColors($collectionname);
+        @endphp
+        @endif
         <div class="facet-filter-associates">
             <h3 class="title-name">Color</h3>
             <form class="facet-form" action="#" method="post">
@@ -136,10 +151,16 @@
         
         {{-- Size, price, color, brand, … are also Dynamic Filters, but won't be managed like the other Dynamic Filters, but we will manage every filter of them from the suitable respective database table, like the 'size' Filter from the `products_attributes` database table, 'color' Filter and `price` Filter from `products` table, 'brand' Filter from `brands` table --}}
         {{-- Fourth: the 'brand' filter (from `products` and `brands` database table). Show the correct relevant product 'price' filter values (e.g. for the 'men' category (LC Waikiki, Concrete, ...) BUT for the mobiles category (iPhone, Xiaomi, ...)) depending on the URL --}}
+        @if (isset($url))
         @php
             $getBrands = \App\Models\ProductsFilter::getBrands($url); // get product brands depending on the URL (to show the proper relevant 'brand' filter values (whether LC Waikiki, Concrete, ... OR iPhone, Xiaomi, ...))    // $url is passed from the Front/ProductsController.php
             // dd($getColors);
         @endphp
+        @else
+        @php
+            $getBrands = \App\Models\ProductsFilter::getCollectionBrands($collectionname);
+        @endphp
+        @endif
         <div class="facet-filter-associates">
             <h3 class="title-name">Brand</h3>
             <form class="facet-form" action="#" method="post">
@@ -190,14 +211,11 @@
         </div>
         <!-- Filter-Price /- -->
 
-
-
-        
         {{-- Dynamic Filters --}}
         <!-- Filter -->
         @foreach ($productFilters as $filter) {{-- $productFilters comes from the far top of this file --}}
             @php
-                // dd($filter);
+                // dd($categoryDetails['categoryDetails']['id']);
 
                 // Firstly, for every filter in the `products_filters` table, Get the filter's (from the foreach loop) `cat_ids` using filterAvailable() method, then check if the current category id (using the $categoryDetails variable and depending on the URL) exists in the filter's `cat_ids`. If it exists, then show the filter, if not, then don't show the filter
                 $filterAvailable = \App\Models\ProductsFilter::filterAvailable($filter['id'], $categoryDetails['categoryDetails']['id']); // $categoryDetails was passed from the listing() method in the Front/ProductsController

@@ -217,78 +217,12 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div
-                                        class="elementor-element elementor-element-00b548d e-flex e-con-boxed e-con e-child"
-                                        data-id="00b548d"
-                                        data-element_type="container"
-                                        data-settings="{&quot;background_background&quot;:&quot;classic&quot;,&quot;container_type&quot;:&quot;flex&quot;,&quot;content_width&quot;:&quot;boxed&quot;}"
-                                    >
-                                        <div class="e-con-inner">
-                                            <div
-                                                class="elementor-element elementor-element-27fbff6 elementor-widget elementor-widget-heading"
-                                                data-id="27fbff6"
-                                                data-element_type="widget"
-                                                data-widget_type="heading.default"
-                                            >
-                                                <div class="elementor-widget-container">
-                                                    <h6 class="elementor-heading-title elementor-size-default">CITY</h6>
-                                                </div>
-                                            </div>
-                                            <div
-                                                class="elementor-element elementor-element-6892f69 elementor-widget elementor-widget-heading"
-                                                data-id="6892f69"
-                                                data-element_type="widget"
-                                                data-widget_type="heading.default"
-                                            >
-                                                <div class="elementor-widget-container">
-                                                    <h5 class="elementor-heading-title elementor-size-default">Bustos</h5>
-                                                    <select class="text-field address-field city-edit" id="user-city" name="city" style="color: #495057">
-                                                        <option value="">Select City</option>
-                                                    </select>
-                                                </div>
-                                                
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div
-                                        class="elementor-element elementor-element-b364a78 e-flex e-con-boxed e-con e-child"
-                                        data-id="b364a78"
-                                        data-element_type="container"
-                                        data-settings="{&quot;background_background&quot;:&quot;classic&quot;,&quot;container_type&quot;:&quot;flex&quot;,&quot;content_width&quot;:&quot;boxed&quot;}"
-                                    >
-                                        <div class="e-con-inner">
-                                            <div
-                                                class="elementor-element elementor-element-d3788cf elementor-widget elementor-widget-heading"
-                                                data-id="d3788cf"
-                                                data-element_type="widget"
-                                                data-widget_type="heading.default"
-                                            >
-                                                <div class="elementor-widget-container">
-                                                    <h6 class="elementor-heading-title elementor-size-default">STATE</h6>
-                                                </div>
-                                            </div>
-                                            <div
-                                                class="elementor-element elementor-element-72c84e2 elementor-widget elementor-widget-heading"
-                                                data-id="72c84e2"
-                                                data-element_type="widget"
-                                                data-widget_type="heading.default"
-                                            >
-                                                <div class="elementor-widget-container">
-                                                    <h5 class="elementor-heading-title elementor-size-default">Bulacan</h5>
-                                                    <select class="text-field address-field state-edit" id="user-state" name="state" style="color: #495057">
-                                                        <option value="">Select State</option>
-                                                    </select>
-                                                </div>
-                                                
-                                            </div>
-                                        </div>
-                                    </div>
+
                                     <div
                                         class="elementor-element elementor-element-39ebcd7 e-flex e-con-boxed e-con e-child"
                                         data-id="39ebcd7"
                                         data-element_type="container"
-                                        data-settings="{&quot;background_background&quot;:&quot;classic&quot;,&quot;container_type&quot;:&quot;flex&quot;,&quot;content_width&quot;:&quot;boxed&quot;}"
-                                    >
+                                        data-settings="{&quot;background_background&quot;:&quot;classic&quot;,&quot;container_type&quot;:&quot;flex&quot;,&quot;content_width&quot;:&quot;boxed&quot;}">
                                         <div class="e-con-inner">
                                             <div
                                                 class="elementor-element elementor-element-735d997 elementor-widget elementor-widget-heading"
@@ -321,6 +255,75 @@
                                             </div>
                                         </div>
                                     </div>
+
+                                    <div
+                                        class="elementor-element elementor-element-b364a78 e-flex e-con-boxed e-con e-child"
+                                        data-id="b364a78"
+                                        data-element_type="container"
+                                        data-settings="{&quot;background_background&quot;:&quot;classic&quot;,&quot;container_type&quot;:&quot;flex&quot;,&quot;content_width&quot;:&quot;boxed&quot;}">
+                                        <div class="e-con-inner">
+                                            <div
+                                                class="elementor-element elementor-element-d3788cf elementor-widget elementor-widget-heading"
+                                                data-id="d3788cf"
+                                                data-element_type="widget"
+                                                data-widget_type="heading.default"
+                                            >
+                                                <div class="elementor-widget-container">
+                                                    <h6 class="elementor-heading-title elementor-size-default">PROVINCE</h6>
+                                                </div>
+                                            </div>
+                                            <div
+                                                class="elementor-element elementor-element-72c84e2 elementor-widget elementor-widget-heading"
+                                                data-id="72c84e2"
+                                                data-element_type="widget"
+                                                data-widget_type="heading.default"
+                                            >
+                                                <div class="elementor-widget-container">
+                                                    <h5 class="elementor-heading-title elementor-size-default">Bulacan</h5>
+                                                    <select class="text-field address-field state-edit" id="user-state" name="state" style="color: #495057">
+                                                        <option value="">Select State</option>
+                                                    </select>
+                                                </div>
+                                                
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div
+                                        class="elementor-element elementor-element-00b548d e-flex e-con-boxed e-con e-child"
+                                        data-id="00b548d"
+                                        data-element_type="container"
+                                        data-settings="{&quot;background_background&quot;:&quot;classic&quot;,&quot;container_type&quot;:&quot;flex&quot;,&quot;content_width&quot;:&quot;boxed&quot;}">
+                                        <div class="e-con-inner">
+                                            <div
+                                                class="elementor-element elementor-element-27fbff6 elementor-widget elementor-widget-heading"
+                                                data-id="27fbff6"
+                                                data-element_type="widget"
+                                                data-widget_type="heading.default"
+                                            >
+                                                <div class="elementor-widget-container">
+                                                    <h6 class="elementor-heading-title elementor-size-default">CITY</h6>
+                                                </div>
+                                            </div>
+                                            <div
+                                                class="elementor-element elementor-element-6892f69 elementor-widget elementor-widget-heading"
+                                                data-id="6892f69"
+                                                data-element_type="widget"
+                                                data-widget_type="heading.default"
+                                            >
+                                                <div class="elementor-widget-container">
+                                                    <h5 class="elementor-heading-title elementor-size-default">Bustos</h5>
+                                                    <input class="text-field user-city" type="text" id="user-city" name="user-city" value="Bustos">
+                                                </div>
+                                                
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    
+
+                                    
+
                                     <div
                                         class="elementor-element elementor-element-e30bacf e-flex e-con-boxed e-con e-child"
                                         data-id="e30bacf"
@@ -416,7 +419,7 @@
 
 
                                     <div
-                                        class="elementor-element elementor-element-1765a07 elementor-mobile-align-center elementor-widget elementor-widget-button"
+                                        class="elementor-element elementor-element-1765a07 tablet-grid-col-1 elementor-mobile-align-center elementor-widget elementor-widget-button"
                                         data-id="1765a07"
                                         data-element_type="widget"
                                         data-widget_type="button.default"
@@ -433,7 +436,7 @@
                                     </div>
 
                                     <div
-                                        class="elementor-element elementor-element-1765a09 elementor-mobile-align-center elementor-widget elementor-widget-button"
+                                        class="elementor-element elementor-element-1765a09 tablet-hide elementor-mobile-align-center elementor-widget elementor-widget-button"
                                         data-id="1765a09"
                                         data-element_type="widget"
                                         data-widget_type="button.default"
@@ -442,7 +445,7 @@
                                     </div>
 
                                     <div
-                                        class="elementor-element elementor-element-1765a07 elementor-mobile-align-center elementor-widget elementor-widget-button"
+                                        class="elementor-element elementor-element-1765a07 mobile-grid-col-1 elementor-mobile-align-center elementor-widget elementor-widget-button"
                                         data-id="1765a07"
                                         data-element_type="widget"
                                         data-widget_type="button.default"

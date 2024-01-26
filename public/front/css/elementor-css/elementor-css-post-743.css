@@ -99,10 +99,35 @@
 .customer_information.edit_active .save_button{
 	display: block;
 }
+.customer_information h5.elementor-heading-title{
+	overflow: hidden;
+}
+.customer_information.edit_active h5.elementor-heading-title{
+	display: none;
+}
+#edit_info,
+#save_info{
+	transition: all 0.3s ease;
+}
+#edit_info:hover,
+#save_info:hover{
+	text-shadow: 0 0 1px black;
+}
 
+@media (max-width: 1024px){
+	.customer_information .tablet-grid-col-1{
+		grid-column: 1;
+	}
+	.tablet-hide{
+		display: none;
+	}
+}
 
 @media (max-width: 767px){
 	.text-align-center-mobile{
 		text-align: center;
+	}
+	.mobile-grid-col-1{
+		grid-column: 1;
 	}
 }

@@ -4,11 +4,11 @@
 
 @section('content')
 <div
-            data-elementor-type="wp-page"
-            data-elementor-id="682"
-            class="elementor elementor-682"
-            data-elementor-post-type="page"
-    >
+    data-elementor-type="wp-page"
+    data-elementor-id="682"
+    class="elementor elementor-682 row"
+    data-elementor-post-type="page"
+>
     <div
         class="elementor-element elementor-element-a4dba70 e-flex e-con-boxed e-con e-parent"
         data-id="a4dba70"
@@ -144,6 +144,8 @@
                     </div>
                 </div>
             </div>
+
+            @include('front.products.filters')
 
             <!-- Start of product list -->
             @foreach ($collection as $product)
@@ -282,7 +284,7 @@
                                 data-widget_type="heading.default"
                             >
                                 <div class="elementor-widget-container">
-                                    <h5 class="elementor-heading-title elementor-size-default">Merchant ABC</h5>
+                                    <h5 class="elementor-heading-title elementor-size-default">{{ $product['vendor']['name'] ?? "" }}</h5>
                                 </div>
                             </div>
                         </div>
@@ -347,6 +349,8 @@
             </div>
             @endforeach
         </div>
+
+        {{ $collection->links() }}
     </div>
 </div>
 @endsection
