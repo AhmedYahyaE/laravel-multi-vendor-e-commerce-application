@@ -146,6 +146,13 @@
                     data-widget_type="heading.default"
                 >
                     <div class="elementor-widget-container">
+
+                        <div class="list-of-tags">
+                            <span>100% Cotton</span>
+                            <span>Recycled Materials</span>
+                            <span>Eco - Friendly</span>
+                        </div>
+
                         <h1 class="elementor-heading-title elementor-size-default">{{$productDetails['product_name']}}</h1>
                     </div>
                 </div>
