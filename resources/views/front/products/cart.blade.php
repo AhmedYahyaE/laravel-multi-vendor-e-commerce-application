@@ -108,8 +108,8 @@
                                                         </div>
                                                         <div class="cart-prod-desc">
                                                             <h4>{{ $item['product']['product_name'] }} ({{ $item['product']['product_code'] }}) - {{ $item['size'] }}</h4>
-                                                            <p class="price">{{ $item['product']['product_price'] }}</p>
-                                                            <p class="other-info">{{ $item['meta_keywords'] }}</p>
+                                                            <p class="cart-prod-price">{{ $getDiscountAttributePrice['product_price'] }}</p>
+                                                            <p class="other-info">{{ $item['product']['meta_keywords'] }}</p>
                                                         </div>
                                                     </div>
                                                 </td>
@@ -137,16 +137,16 @@
                                                         @if ($getDiscountAttributePrice['discount'] > 0) {{-- If there's a discount on the price, show the price before (the original price) and after (the new price) the discount --}}
                                                             <div class="price-template">
                                                                 <div class="item-new-price">
-                                                                    EGP{{ $getDiscountAttributePrice['final_price'] }}
+                                                                    {{ $getDiscountAttributePrice['final_price'] }}
                                                                 </div>
-                                                                <div class="item-old-price" style="margin-left: -40px">
-                                                                    EGP{{ $getDiscountAttributePrice['product_price'] }}
+                                                                <div class="item-old-price">
+                                                                    {{ $getDiscountAttributePrice['product_price'] }}
                                                                 </div>
                                                             </div>
                                                         @else {{-- if there's no discount on the price, show the original price --}}
                                                             <div class="price-template">
                                                                 <div class="item-new-price">
-                                                                    EGP{{ $getDiscountAttributePrice['final_price'] }}
+                                                                    {{ $getDiscountAttributePrice['final_price'] }}
                                                                 </div>
                                                             </div>
                                                         @endif
