@@ -195,7 +195,7 @@
             <h3 class="title-name">Price</h3>
 
             <div id="slide-price-range"></div>
-            <p id="slide-price-display">$<span id="slide-price-min"></span> - $<span id="slide-price-max"></span></p>
+            <p id="slide-price-display">₱<span id="slide-price-min"></span> - ₱<span id="slide-price-max"></span></p>
 
        
         </div>
