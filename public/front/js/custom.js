@@ -872,6 +872,10 @@ $(document).ready(function() {
         $(this).closest(".filter-link").toggleClass("filter_active");
     });
 
+    $("#filter-trigger").click(function(event) {
+        event.preventDefault();
+        $(".filters-inner").toggleClass("active");
+    });
 
 
 

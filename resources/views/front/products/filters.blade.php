@@ -8,7 +8,9 @@
 
 
 <!-- Shop-Left-Side-Bar-Wrapper -->
-<div class="col-lg-3 col-md-3 col-sm-12">
+<h6 class="mobile-filter-trigger"><a id="filter-trigger" href="#"><b>FILTERS</b></a></h6>
+<div class="filters-inner">
+    
     <!-- Fetch-Categories-from-Root-Category  -->
     <div class="fetch-categories">
         <h3 class="title-name">Browse Categories</h3>
