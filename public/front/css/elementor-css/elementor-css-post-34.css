@@ -118,6 +118,35 @@
 .elementor-34 .elementor-element.elementor-element-a9bf2d7{
 	display: none;
 }
+
+.custom_class_search .elementor-search-form__container{
+	height: auto !important;
+    top: 46px !important;
+    right: 10px !important;
+    left: auto !important;
+    padding: 0 !important;
+    position: absolute !important;
+    width: 200px !important;
+    border-radius: 10px !important;
+    background: white !important;
+    box-shadow: 0 0 10px #00000038 !important;
+}
+.custom_class_search .elementor-search-form__container input{
+	font-size: 18px !important;
+    border: none !important;
+    text-align: left !important;
+    padding-left: 13px !important;
+    padding-right: 30px !important;
+    color: #1f1f22 !important;
+}
+.custom_class_search .elementor-search-form__container .dialog-lightbox-close-button{
+	margin-top: 0 !important;
+    right: 5px !important;
+}
+.custom_class_search .elementor-search-form__container .dialog-lightbox-close-button svg{
+	fill: black !important;
+}
+
 @media (max-width: 1024px){
 	.elementor-34 .elementor-element.elementor-element-a9bf2d7{
 		display: block;

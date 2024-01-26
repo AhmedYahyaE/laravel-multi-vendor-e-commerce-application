@@ -118,7 +118,7 @@ $sections = \App\Models\Section::sections();
                         data-settings="{&quot;skin&quot;:&quot;full_screen&quot;}" data-widget_type="search-form.default">
                         <div class="elementor-widget-container">
                             <link rel="stylesheet" href="{{ url('front/css/elementor-css/elementor-pro-assets-css-widget-theme-elements.min.css') }}">
-                            <search role="search">
+                            <search role="search" class="custom_class_search">
                                 <form class="elementor-search-form" action="https://kapiton.seikodesigns.com" method="get">
                                     <div class="elementor-search-form__toggle" tabindex="0" role="button">
                                         <div class="e-font-icon-svg-container">
@@ -272,7 +272,7 @@ $sections = \App\Models\Section::sections();
                             data-widget_type="search-form.default"
                         >
                             <div class="elementor-widget-container">
-                                <search role="search">
+                                <search role="search" class="custom_class_search">
                                     <form class="elementor-search-form" action="https://kapiton.seikodesigns.com" method="get">
                                         <div class="elementor-search-form__toggle" tabindex="0" role="button">
                                             <div class="e-font-icon-svg-container">
@@ -331,6 +331,14 @@ $sections = \App\Models\Section::sections();
                                             </a>
                                         </span>
                                         <span class="elementor-icon-list-text">{{ Auth::user()->first_name }}  {{  Auth::user()->last_name }}</span>
+                                        @else
+                                        <span class="elementor-icon-list-icon">
+                                            <a href="{{ url('user/login-register') }}">
+                                                <svg aria-hidden="true" class="e-font-icon-svg e-fas-user-lock" viewBox="0 0 640 512" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M224 256A128 128 0 1 0 96 128a128 128 0 0 0 128 128zm96 64a63.08 63.08 0 0 1 8.1-30.5c-4.8-.5-9.5-1.5-14.5-1.5h-16.7a174.08 174.08 0 0 1-145.8 0h-16.7A134.43 134.43 0 0 0 0 422.4V464a48 48 0 0 0 48 48h280.9a63.54 63.54 0 0 1-8.9-32zm288-32h-32v-80a80 80 0 0 0-160 0v80h-32a32 32 0 0 0-32 32v160a32 32 0 0 0 32 32h224a32 32 0 0 0 32-32V320a32 32 0 0 0-32-32zM496 432a32 32 0 1 1 32-32 32 32 0 0 1-32 32zm32-144h-64v-80a32 32 0 0 1 64 0z"></path>
+                                                </svg>
+                                            </a>
+                                        </span>
                                         @endif
                                     </li>
                                 </ul>
