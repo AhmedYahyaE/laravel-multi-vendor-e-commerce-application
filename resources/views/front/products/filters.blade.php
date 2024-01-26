@@ -193,23 +193,11 @@
         {{-- Third: the 'price' filter (from `products` database table). Show the correct relevant product 'price' filter values (e.g. for the 'men' category (red, blue, ...) BUT for the mobiles category (grey, black, ...)) depending on the URL --}}
         <div class="facet-filter-associates">
             <h3 class="title-name">Price</h3>
-            <form class="facet-form" action="#" method="post">
-                <div class="associate-wrapper">
 
+            <div id="slide-price-range"></div>
+            <p id="slide-price-display">$<span id="slide-price-min"></span> - $<span id="slide-price-max"></span></p>
 
-                    {{-- Third: the 'price' filter --}} 
-                    @php
-                        // our desired array of price ranges
-                        $prices = array('0-1000', '1000-2000', '2000-5000', '5000-10000', '10000-100000');
-                    @endphp
-
-                    @foreach ($prices as $key => $price)
-                        <input type="checkbox" class="check-box price" id="price{{ $key }}" name="price[]" value="{{ $price }}"> {{-- Note!!: PLEASE NOTE THE SQUARE BRACKETS [] OF THE "name" ATTRIBUTE!! --}} {{-- echo the $price as a 'CSS class' to be able to use it in jQuery for filtering --}} {{-- the checked checkboxes <input> fields of the price filter values (like '1000-2000', '2000-5000', ...) will be submitted as an ARRAY because we used SQUARE BRACKETS [] with the "name" HTML attribute in the checkbox <input> field in filters.blade.php, or else, AJAX is used to send the <input> values WITHOUT submitting the <form> at all --}}
-                        <label class="label-text" for="price{{ $key }}">EGP {{ $price }}
-                        </label>
-                    @endforeach
-                </div>
-            </form>
+       
         </div>
         <!-- Filter-Price /- -->
 

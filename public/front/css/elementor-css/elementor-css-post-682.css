@@ -193,6 +193,13 @@
 .filter_outer_container{
 	width: calc(25% - 25px);
 }
+.filter_outer_container #price-range{
+	width: 80%;
+	margin: 20px auto;
+}
+.filter_outer_container #price-display {
+	margin-top: 10px;
+}
 .product_list_container{
 	width: calc(75% - 25px);
 	gap: 40px 20px;
@@ -210,6 +217,12 @@
 }
 .mobile-filter-trigger a{
 	color: white;
+}
+.filter_outer_container .ui-slider .ui-slider-range{
+	background-color: #87cbb9;
+}
+.filter_outer_container #slide-price-display{
+	margin-top: 10px
 }
 @media (max-width: 1024px){
 	.elementor-682 .elementor-element.elementor-element-80f00c9 {
