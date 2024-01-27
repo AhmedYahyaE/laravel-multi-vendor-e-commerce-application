@@ -132,7 +132,9 @@ Route::middleware(['web'])->prefix('/admin')->namespace('App\Http\Controllers\Ad
 
         // Shipping Charges module
         // Render the Shipping Charges page (admin/shipping/shipping_charges.blade.php) in the Admin Panel for 'admin'-s only, not for vendors
+        Route::resource('shipping-charges', ShippingController::class);
         Route::get('shipping-charges', 'ShippingController@shippingCharges');
+        Route::post('shipping-charges/store', 'ShippingController@store');
 
         // Update Shipping Status (active/inactive) via AJAX in admin/shipping/shipping_charages.blade.php, check admin/js/custom.js
         Route::post('update-shipping-status', 'ShippingController@updateShippingStatus');
