@@ -42,7 +42,7 @@
                 >
                     <div class="elementor-widget-container">
                         <div class="elementor-button-wrapper">
-                            <a class="elementor-button elementor-button-link elementor-size-sm" href="#">
+                            <a class="elementor-button elementor-button-link elementor-size-sm" href="{{ url('/cart') }}">
                                 <span class="elementor-button-content-wrapper">
                                     <span class="elementor-button-icon elementor-align-icon-left">
                                         <svg
