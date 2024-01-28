@@ -1155,7 +1155,7 @@ class ProductsController extends Controller
             return redirect('thanks'); // redirect to front/products/thanks.blade.php page
         }
 
-
+        $total_price = number_format($total_price, 2);
         return view('front.products.checkout')->with(compact('deliveryAddresses', 'countries', 'getCartItems', 'total_price'));
     }
 

@@ -336,8 +336,8 @@
                                                 checked
                                                 type="radio"
                                                 id="paymongo"
-                                                name="paymongo"
-                                                value="HTML"
+                                                name="paymentgateway"
+                                                value="paymongo"
                                             >
                                             <label for="html">
                                                 <b>Secure Payment via PayMongo</b>
@@ -347,8 +347,8 @@
                                             <input
                                                 type="radio"
                                                 id=""
-                                                name=""
-                                                value="HTML"
+                                                name="paymentgateway"
+                                                value="xendit"
                                             >
                                             <label for="html">  Payments By Xendit</label>
                                         </div>
@@ -356,8 +356,8 @@
                                             <input
                                                 type="radio"
                                                 id=""
-                                                name=""
-                                                value="HTML"
+                                                name="paymentgateway"
+                                                value="atomepaylater"
                                             >
                                             <label for="html">Atome PayLater - 3 easy payments, 0% interest</label>
                                         </div>
@@ -365,8 +365,8 @@
                                             <input
                                                 type="radio"
                                                 id=""
-                                                name=""
-                                                value="HTML"
+                                                name="paymentgateway"
+                                                value="bankdeposit"
                                             >
                                             <label for="html">Bank Deposit</label>
                                         </div>
@@ -416,95 +416,10 @@
                                         <h6 class="elementor-heading-title elementor-size-default">YOUR ORDER</h6>
                                     </div>
                                 </div>
-                                <div
-                                    class="elementor-element elementor-element-8d1dcf9 e-flex e-con-boxed e-con e-child"
-                                    data-id="8d1dcf9"
-                                    data-element_type="container"
-                                    data-settings="{&quot;container_type&quot;:&quot;flex&quot;,&quot;content_width&quot;:&quot;boxed&quot;}"
-                                >
-                                    <div class="e-con-inner">
-                                        <div
-                                            class="elementor-element elementor-element-b79a4e9 e-con-full e-flex e-con e-child"
-                                            data-id="b79a4e9"
-                                            data-element_type="container"
-                                            data-settings="{&quot;content_width&quot;:&quot;full&quot;,&quot;container_type&quot;:&quot;flex&quot;}"
-                                        >
-                                            <div
-                                                class="elementor-element elementor-element-63a7d61 elementor-widget elementor-widget-image"
-                                                data-id="63a7d61"
-                                                data-element_type="widget"
-                                                data-widget_type="image.default"
-                                            >
-                                                <div class="elementor-widget-container">
-                                                    <img
-                                                        fetchpriority="high"
-                                                        decoding="async"
-                                                        width="800"
-                                                        height="968"
-                                                        src="./images/2023-12-features-for-Accounting-Software-1-846x1024.png"
-                                                        class="attachment-large size-large wp-image-422"
-                                                        alt=""
-                                                        srcset="./images/2023-12-features-for-Accounting-Software-1-846x1024.png 846w, ./images/2023-12-features-for-Accounting-Software-1-248x300.png 248w, ./images/2023-12-features-for-Accounting-Software-1-768x930.png 768w, ./images/2023-12-features-for-Accounting-Software-1.png 879w"
-                                                        sizes="(max-width: 800px) 100vw, 800px"
-                                                    >
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div
-                                            class="elementor-element elementor-element-dfe06fc e-con-full e-flex e-con e-child"
-                                            data-id="dfe06fc"
-                                            data-element_type="container"
-                                            data-settings="{&quot;content_width&quot;:&quot;full&quot;,&quot;container_type&quot;:&quot;flex&quot;}"
-                                        >
-                                            <div
-                                                class="elementor-element elementor-element-9635769 elementor-widget elementor-widget-heading"
-                                                data-id="9635769"
-                                                data-element_type="widget"
-                                                data-widget_type="heading.default"
-                                            >
-                                                <div class="elementor-widget-container">
-                                                    <h6 class="elementor-heading-title elementor-size-default">ADOBE CC</h6>
-                                                </div>
-                                            </div>
-                                            <div
-                                                class="elementor-element elementor-element-2cf1aca elementor-widget elementor-widget-text-editor"
-                                                data-id="2cf1aca"
-                                                data-element_type="widget"
-                                                data-widget_type="text-editor.default"
-                                            >
-                                                <div class="elementor-widget-container">
-                                                    <style>/*! elementor - v3.18.0 - 08-12-2023 */ .elementor-widget-text-editor.elementor-drop-cap-view-stacked .elementor-drop-cap{background-color:#69727d;color:#fff}.elementor-widget-text-editor.elementor-drop-cap-view-framed .elementor-drop-cap{color:#69727d;border:3px solid;background-color:transparent}.elementor-widget-text-editor:not(.elementor-drop-cap-view-default) .elementor-drop-cap{margin-top:8px}.elementor-widget-text-editor:not(.elementor-drop-cap-view-default) .elementor-drop-cap-letter{width:1em;height:1em}.elementor-widget-text-editor .elementor-drop-cap{float:left;text-align:center;line-height:1;font-size:50px}.elementor-widget-text-editor .elementor-drop-cap-letter{display:inline-block}</style>
-                                                    <p>
-                                                        <strong>₱150.00 x 1
-                                                            <br>
-                                                        </strong>12-Month subscription with Auto-Renewal for PC/MAC
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div
-                                            class="elementor-element elementor-element-8c84be6 e-flex e-con-boxed e-con e-child"
-                                            data-id="8c84be6"
-                                            data-element_type="container"
-                                            data-settings="{&quot;container_type&quot;:&quot;flex&quot;,&quot;content_width&quot;:&quot;boxed&quot;}"
-                                        >
-                                            <div class="e-con-inner">
-                                                <div
-                                                    class="elementor-element elementor-element-e5d9d07 elementor-widget elementor-widget-text-editor"
-                                                    data-id="e5d9d07"
-                                                    data-element_type="widget"
-                                                    data-widget_type="text-editor.default"
-                                                >
-                                                    <div class="elementor-widget-container">
-                                                        <p>
-                                                            <strong>₱150.00</strong>
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                @foreach ($getCartItems as $item)
+                                @php
+                                    $getDiscountAttributePrice = \App\Models\Product::getDiscountAttributePrice($item['product_id'], $item['size']);
+                                @endphp
                                 <div
                                     class="elementor-element elementor-element-35df199 e-flex e-con-boxed e-con e-child"
                                     data-id="35df199"
@@ -552,7 +467,7 @@
                                                 data-widget_type="heading.default"
                                             >
                                                 <div class="elementor-widget-container">
-                                                    <h6 class="elementor-heading-title elementor-size-default">ADOBE CC</h6>
+                                                    <h6 class="elementor-heading-title elementor-size-default">{{ $item['product']['product_name'] }}</h6>
                                                 </div>
                                             </div>
                                             <div
@@ -563,9 +478,9 @@
                                             >
                                                 <div class="elementor-widget-container">
                                                     <p>
-                                                        <strong>₱150.00 x 1
+                                                        <strong>₱{{ $getDiscountAttributePrice['final_price'] }} x {{ $item['quantity'] }}
                                                             <br>
-                                                        </strong>12-Month subscription with Auto-Renewal for PC/MAC
+                                                        </strong>{{ $item['product']['meta_keywords'] }}
                                                     </p>
                                                 </div>
                                             </div>
@@ -585,7 +500,7 @@
                                                 >
                                                     <div class="elementor-widget-container">
                                                         <p>
-                                                            <strong>₱150.00</strong>
+                                                            <strong>₱{{ $getDiscountAttributePrice['final_price'] * $item['quantity'] }}</strong>
                                                         </p>
                                                     </div>
                                                 </div>
@@ -593,6 +508,7 @@
                                         </div>
                                     </div>
                                 </div>
+                                @endforeach
                                 <div
                                     class="elementor-element elementor-element-a05a04e elementor-widget elementor-widget-html"
                                     data-id="a05a04e"
@@ -603,18 +519,18 @@
                                         <table>
                                             <tr>
                                                 <td>Sub total</td>
-                                                <td class="align-right">₱900.00 PHP</td>
+                                                <td class="align-right">₱{{$total_price}}</td>
                                             </tr>
-                                            <tr>
+                                            <!-- <tr>
                                                 <td>Coupon discount</td>
-                                                <td class="align-right">₱150.00 PHP</td>
-                                            </tr>
+                                                <td class="align-right">₱150.00</td>
+                                            </tr> -->
                                             <tr>
                                                 <td style="padding-top: 40px">
                                                     <b>GRAND TOTAL</b>
                                                 </td>
                                                 <td class="align-right" style="padding-top: 40px">
-                                                    <b>₱750.00 PHP</b>
+                                                    <b>₱{{$total_price}}</b>
                                                 </td>
                                             </tr>
                                         </table>
