@@ -890,7 +890,7 @@ $(document).ready(function() {
     
 
 
-    $("#add-address a").click(function(event) {
+    $(".add-address a").click(function(event) {
         event.preventDefault(); 
         $(".add-address-form").toggleClass("display-add");
     });

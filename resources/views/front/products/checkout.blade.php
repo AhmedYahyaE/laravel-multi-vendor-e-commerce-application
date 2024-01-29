@@ -266,27 +266,18 @@
                                                 <div class="elementor-field-type-select elementor-field-group elementor-column elementor-field-group-field_81b413f elementor-col-50 elementor-field-required">
                                                     <label for="form-field-field_81b413f" class="elementor-field-label elementor-screen-only"> 								City</label>
                                                     <div class="elementor-field elementor-select-wrapper remove-before">
-                                                        <div class="select-caret-down-wrapper">
-                                                            <svg
-                                                                aria-hidden="true"
-                                                                class="e-font-icon-svg e-eicon-caret-down"
-                                                                viewbox="0 0 571.4 571.4"
-                                                                xmlns="http://www.w3.org/2000/svg"
-                                                            >
-                                                                <path d="M571 393Q571 407 561 418L311 668Q300 679 286 679T261 668L11 418Q0 407 0 393T11 368 36 357H536Q550 357 561 368T571 393Z"></path>
-                                                            </svg>
-                                                        </div>
-                                                        <select
-                                                            name="form_fields[field_81b413f]"
-                                                            id="form-field-field_81b413f"
-                                                            class="elementor-field-textual elementor-size-sm"
+                                                        <label for="form-field-field_289f7z9" class="elementor-field-label elementor-screen-only"> 								City</label>
+                                                        <input
+                                                            size="1"
+                                                            type="text"
+                                                            name="form_fields[field_289f7z9]"
+                                                            id="form-field-field_289f7z9"
+                                                            class="elementor-field elementor-size-sm  elementor-field-textual"
+                                                            placeholder="City"
                                                             required="required"
                                                             aria-required="true"
                                                         >
-                                                            <option value="Select City">Select City</option>
-                                                            <option value="Baliuag">Baliuag</option>
-                                                            <option value="Bustos">Bustos</option>
-                                                        </select>
+                                                        
                                                     </div>
                                                 </div>
                                                 <div class="elementor-field-type-text elementor-field-group elementor-column elementor-field-group-field_289f7f5 elementor-col-50 elementor-field-required">
