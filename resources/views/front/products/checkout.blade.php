@@ -85,7 +85,7 @@
                                     </div>
                                 </div>
                                 <div
-                                    class="elementor-element elementor-element-4605a74 elementor-widget elementor-widget-html"
+                                    class="checkout-form elementor-element elementor-element-4605a74 elementor-widget elementor-widget-html"
                                     data-id="4605a74"
                                     data-element_type="widget"
                                     data-widget_type="html.default"
@@ -97,7 +97,7 @@
                                                 type="radio"
                                                 id="preferred_address"
                                                 name="preferred_address"
-                                                value="HTML"
+                                                value="1"
                                             >
                                             <label for="html">
                                                 <b>#407 Sesame Street, Bonga Menor, Bustos Bulacan 3007 PH
@@ -111,8 +111,8 @@
                                             <input
                                                 type="radio"
                                                 id="second-address"
-                                                name="second-address"
-                                                value="HTML"
+                                                name="preferred_address"
+                                                value="2"
                                             >
                                             <label for="html">#123 Burgos Street, Poblacion, San Jose Del Monte Bulacan 3022 PH
                                                 <br>(+63) 945 321 5655
@@ -316,7 +316,7 @@
                                     </div>
                                 </div>
                                 <div
-                                    class="elementor-element elementor-element-52dbad4 elementor-widget elementor-widget-html"
+                                    class="checkout-form elementor-element elementor-element-52dbad4 elementor-widget elementor-widget-html"
                                     data-id="52dbad4"
                                     data-element_type="widget"
                                     data-widget_type="html.default"
@@ -378,11 +378,11 @@
                                         >
                                             <div class="elementor-widget-container">
                                                 <div class="elementor-button-wrapper">
-                                                    <a class="elementor-button elementor-button-link elementor-size-sm" href="#">
+                                                    <button id="checkout-submit-btn" class="elementor-button elementor-button-link elementor-size-sm" type="button">
                                                         <span class="elementor-button-content-wrapper">
                                                             <span class="elementor-button-text">PAY NOW</span>
                                                         </span>
-                                                    </a>
+                                                    </button>
                                                 </div>
                                             </div>
                                         </div>

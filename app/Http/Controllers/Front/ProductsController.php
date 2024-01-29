@@ -1066,6 +1066,7 @@ class ProductsController extends Controller
                 $cartItem->product_name    = $getProductDetails['product_name'];
                 $cartItem->product_color   = $getProductDetails['product_color'];
                 $cartItem->product_size    = $item['size'];
+                $cartItem->item_status     = 1;
 
                 $getDiscountAttributePrice = \App\Models\Product::getDiscountAttributePrice($item['product_id'], $item['size']); // from the `products_attributes` table, not the `products` table
                 $cartItem->product_price   = $getDiscountAttributePrice['final_price'];
@@ -1152,7 +1153,9 @@ class ProductsController extends Controller
             }
 
 
-            return redirect('thanks'); // redirect to front/products/thanks.blade.php page
+            return [
+                'success' => true
+            ]; // redirect to front/products/thanks.blade.php page
         }
 
         $total_price = number_format($total_price, 2);
