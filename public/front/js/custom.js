@@ -797,6 +797,33 @@ $(document).ready(function() {
     });
 
     /**
+     * Submit checkout
+     */
+    $('button#checkout-submit-btn').on('click', function () {
+        let data = {
+            'address_id': $('.checkout-form input[name^="preferred_address"]:checked').val(),
+            'payment_gateway': $('.checkout-form input[name^="paymentgateway"]').val(),
+            'accept': true
+        };
+
+        $.ajax({
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}, // X-CSRF-TOKEN: https://laravel.com/docs/9.x/csrf#csrf-x-csrf-token    
+            url    : '/checkout', // check this route in web.php
+            type   : 'post',
+            contentType: 'application/json',
+            data   : JSON.stringify(data), // Sending name/value pairs to server with the AJAX request (AJAX call)
+            success: function(resp) { // if the AJAX request / AJAX call is successful
+                if (resp.data.success) {
+                    window.location.href = "/thanks";
+                }
+            },
+            error  : function() { // if the AJAX request is unsuccessful
+                alert('Error');
+            }
+        });
+    })
+
+    /**
      * On change of country name - load city
      */
     $('.address-field[name=country]').change((el) => {
@@ -865,11 +892,7 @@ $(document).ready(function() {
         });
     });
 
-
-
-
-
-
+    // Customer Profile edit information
     $("#edit_info").click(function(event) {
         event.preventDefault(); 
     
@@ -887,15 +910,10 @@ $(document).ready(function() {
         }
     });
 
-    
-
-
-    $("#add-address a").click(function(event) {
+    $(".add-address a").click(function(event) {
         event.preventDefault(); 
         $(".add-address-form").toggleClass("display-add");
     });
-
-
 
     $(".filter-link .single-filter-container").click(function(event) {
         event.preventDefault();
