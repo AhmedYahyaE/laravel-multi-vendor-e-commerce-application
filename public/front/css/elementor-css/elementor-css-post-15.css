@@ -79,4 +79,13 @@
 }
 /* End Custom Fonts CSS */
 
+/* CUSTOM CSS NINO FELICIANO */
+.elementor-15 .elementor-element.elementor-element-bfbcc32 > .elementor-widget-container{
+	border-radius: 10px 10px 10px 10px !important;
+    box-shadow: 0px 0px 20px 0px rgb(0 0 0 / 14%) !important;
+    overflow: hidden !important;
+	height: fit-content !important;
+}
+.elementor-15 .elementor-element.elementor-element-bfbcc32 img{
 
+}
