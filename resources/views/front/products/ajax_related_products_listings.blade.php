@@ -17,6 +17,11 @@
                 <h2 class="elementor-heading-title elementor-size-default">RELATED PRODUCTS</h2>
             </div>
         </div>
+
+        @foreach ($similarProducts as $product)
+        @php
+            $product_image_path = 'front/images/product_images/small/' . $product['product_image'];
+        @endphp
         <div
             class="elementor-element elementor-element-34808d4 e-con-full e-flex elementor-invisible e-con e-child"
             data-id="34808d4"
@@ -29,7 +34,20 @@
                 data-widget_type="image.default"
             >
                 <div class="elementor-widget-container">
-                    <a href="#">
+                    <a href="{{ url('product/' . $product['id']) }}">
+                    @if (!empty($product['product_image']) && file_exists($product_image_path)) {{-- if the product image exists in BOTH database table AND filesystem (on server) --}}
+                        <img
+                            loading="lazy"
+                            decoding="async"
+                            width="800"
+                            height="968"
+                            src="{{ asset($product_image_path) }}"
+                            class="attachment-large size-large wp-image-422"
+                            alt=""
+                            srcset="{{ asset($product_image_path) }} 846w, {{ asset($product_image_path) }} 248w, {{ asset($product_image_path) }} 768w, {{ asset($product_image_path) }} 879w"
+                            sizes="(max-width: 800px) 100vw, 800px"
+                        >
+                    @else {{-- show the dummy image --}}
                         <img
                             loading="lazy"
                             decoding="async"
@@ -41,6 +59,7 @@
                             srcset="{{ asset('front/images/product/no-available-image.jpg')}} 846w, {{ asset('front/images/product/no-available-image.jpg')}} 248w, {{ asset('front/images/product/no-available-image.jpg')}} 768w, {{ asset('front/images/product/no-available-image.jpg')}} 879w"
                             sizes="(max-width: 800px) 100vw, 800px"
                         >
+                    @endif
                     </a>
                 </div>
             </div>
@@ -51,9 +70,15 @@
                 data-widget_type="heading.default"
             >
                 <div class="elementor-widget-container">
-                    <h2 class="elementor-heading-title elementor-size-default">Kreyon</h2>
+                    <h2 class="elementor-heading-title elementor-size-default">{{ $product['product_name'] }}</h2>
                 </div>
             </div>
+            {{-- Call the static getDiscountPrice() method in the Product.php Model to determine the final price of a product because a product can have a discount from TWO things: either a `CATEGORY` discount or `PRODUCT` discout     --}}
+            @php
+                $getDiscountPrice = \App\Models\Product::getDiscountPrice($product['id']);
+            @endphp
+
+            @if ($getDiscountPrice > 0) {{-- If there's a discount on the price, show the price before (the original price) and after (the new price) the discount --}}
             <div
                 class="elementor-element elementor-element-482d1e5 elementor-widget elementor-widget-text-editor"
                 data-id="482d1e5"
@@ -61,7 +86,7 @@
                 data-widget_type="text-editor.default"
             >
                 <div class="elementor-widget-container">
-                    <p> ₱599.99</p>
+                    <p> ₱{{$getDiscountPrice}}</p>
                 </div>
             </div>
             <div
@@ -71,9 +96,21 @@
                 data-widget_type="text-editor.default"
             >
                 <div class="elementor-widget-container">
-                    <em style="text-decoration: line-through;">₱599.99</em>
+                    <em style="text-decoration: line-through;">₱{{$product['product_price']}}</em>
                 </div>
             </div>
+            @else
+            <div
+                class="elementor-element elementor-element-482d1e5 elementor-widget elementor-widget-text-editor"
+                data-id="482d1e5"
+                data-element_type="widget"
+                data-widget_type="text-editor.default"
+            >
+                <div class="elementor-widget-container">
+                    <p> ₱{{$product['product_price']}}</p>
+                </div>
+            </div>
+            @endif
             <div
                 class="elementor-element elementor-element-288cf62 e-flex e-con-boxed e-con e-child"
                 data-id="288cf62"
@@ -114,7 +151,7 @@
                             data-widget_type="heading.default"
                         >
                             <div class="elementor-widget-container">
-                                <h5 class="elementor-heading-title elementor-size-default">Merchant ABC</h5>
+                                <h5 class="elementor-heading-title elementor-size-default">{{$product['vendor']['name']}}</h5>
                             </div>
                         </div>
                     </div>
@@ -140,8 +177,12 @@
                                     role="img"
                                     aria-label="Rated 4 out of 5"
                                 >
+                                    @for ($x = 0; $x < 5; $x++)
+                                    @php
+                                        $marked = \App\Models\Product::product_computed_ratings($product['id']);
+                                    @endphp
                                     <div class="e-icon">
-                                        <div class="e-icon-wrapper e-icon-marked">
+                                        <div class="e-icon-wrapper e-icon-marked" style="{{ ($x < $marked && $marked > 0) ? '':'--e-rating-icon-marked-width: 0%;' }}">
                                             <svg
                                                 aria-hidden="true"
                                                 class="e-font-icon-svg e-eicon-star"
@@ -162,94 +203,7 @@
                                             </svg>
                                         </div>
                                     </div>
-                                    <div class="e-icon">
-                                        <div class="e-icon-wrapper e-icon-marked">
-                                            <svg
-                                                aria-hidden="true"
-                                                class="e-font-icon-svg e-eicon-star"
-                                                viewbox="0 0 1000 1000"
-                                                xmlns="http://www.w3.org/2000/svg"
-                                            >
-                                                <path d="M450 75L338 312 88 350C46 354 25 417 58 450L238 633 196 896C188 942 238 975 275 954L500 837 725 954C767 975 813 942 804 896L763 633 942 450C975 417 954 358 913 350L663 312 550 75C529 33 471 33 450 75Z"></path>
-                                            </svg>
-                                        </div>
-                                        <div class="e-icon-wrapper e-icon-unmarked">
-                                            <svg
-                                                aria-hidden="true"
-                                                class="e-font-icon-svg e-eicon-star"
-                                                viewbox="0 0 1000 1000"
-                                                xmlns="http://www.w3.org/2000/svg"
-                                            >
-                                                <path d="M450 75L338 312 88 350C46 354 25 417 58 450L238 633 196 896C188 942 238 975 275 954L500 837 725 954C767 975 813 942 804 896L763 633 942 450C975 417 954 358 913 350L663 312 550 75C529 33 471 33 450 75Z"></path>
-                                            </svg>
-                                        </div>
-                                    </div>
-                                    <div class="e-icon">
-                                        <div class="e-icon-wrapper e-icon-marked">
-                                            <svg
-                                                aria-hidden="true"
-                                                class="e-font-icon-svg e-eicon-star"
-                                                viewbox="0 0 1000 1000"
-                                                xmlns="http://www.w3.org/2000/svg"
-                                            >
-                                                <path d="M450 75L338 312 88 350C46 354 25 417 58 450L238 633 196 896C188 942 238 975 275 954L500 837 725 954C767 975 813 942 804 896L763 633 942 450C975 417 954 358 913 350L663 312 550 75C529 33 471 33 450 75Z"></path>
-                                            </svg>
-                                        </div>
-                                        <div class="e-icon-wrapper e-icon-unmarked">
-                                            <svg
-                                                aria-hidden="true"
-                                                class="e-font-icon-svg e-eicon-star"
-                                                viewbox="0 0 1000 1000"
-                                                xmlns="http://www.w3.org/2000/svg"
-                                            >
-                                                <path d="M450 75L338 312 88 350C46 354 25 417 58 450L238 633 196 896C188 942 238 975 275 954L500 837 725 954C767 975 813 942 804 896L763 633 942 450C975 417 954 358 913 350L663 312 550 75C529 33 471 33 450 75Z"></path>
-                                            </svg>
-                                        </div>
-                                    </div>
-                                    <div class="e-icon">
-                                        <div class="e-icon-wrapper e-icon-marked">
-                                            <svg
-                                                aria-hidden="true"
-                                                class="e-font-icon-svg e-eicon-star"
-                                                viewbox="0 0 1000 1000"
-                                                xmlns="http://www.w3.org/2000/svg"
-                                            >
-                                                <path d="M450 75L338 312 88 350C46 354 25 417 58 450L238 633 196 896C188 942 238 975 275 954L500 837 725 954C767 975 813 942 804 896L763 633 942 450C975 417 954 358 913 350L663 312 550 75C529 33 471 33 450 75Z"></path>
-                                            </svg>
-                                        </div>
-                                        <div class="e-icon-wrapper e-icon-unmarked">
-                                            <svg
-                                                aria-hidden="true"
-                                                class="e-font-icon-svg e-eicon-star"
-                                                viewbox="0 0 1000 1000"
-                                                xmlns="http://www.w3.org/2000/svg"
-                                            >
-                                                <path d="M450 75L338 312 88 350C46 354 25 417 58 450L238 633 196 896C188 942 238 975 275 954L500 837 725 954C767 975 813 942 804 896L763 633 942 450C975 417 954 358 913 350L663 312 550 75C529 33 471 33 450 75Z"></path>
-                                            </svg>
-                                        </div>
-                                    </div>
-                                    <div class="e-icon">
-                                        <div class="e-icon-wrapper e-icon-marked" style="--e-rating-icon-marked-width: 0%;">
-                                            <svg
-                                                aria-hidden="true"
-                                                class="e-font-icon-svg e-eicon-star"
-                                                viewbox="0 0 1000 1000"
-                                                xmlns="http://www.w3.org/2000/svg"
-                                            >
-                                                <path d="M450 75L338 312 88 350C46 354 25 417 58 450L238 633 196 896C188 942 238 975 275 954L500 837 725 954C767 975 813 942 804 896L763 633 942 450C975 417 954 358 913 350L663 312 550 75C529 33 471 33 450 75Z"></path>
-                                            </svg>
-                                        </div>
-                                        <div class="e-icon-wrapper e-icon-unmarked">
-                                            <svg
-                                                aria-hidden="true"
-                                                class="e-font-icon-svg e-eicon-star"
-                                                viewbox="0 0 1000 1000"
-                                                xmlns="http://www.w3.org/2000/svg"
-                                            >
-                                                <path d="M450 75L338 312 88 350C46 354 25 417 58 450L238 633 196 896C188 942 238 975 275 954L500 837 725 954C767 975 813 942 804 896L763 633 942 450C975 417 954 358 913 350L663 312 550 75C529 33 471 33 450 75Z"></path>
-                                            </svg>
-                                        </div>
-                                    </div>
+                                    @endfor
                                 </div>
                             </div>
                         </div>
@@ -257,8 +211,7 @@
                 </div>
             </div>
         </div>
-   
-   
+        @endforeach
     
     </div>
 </div>
