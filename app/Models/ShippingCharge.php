@@ -9,6 +9,14 @@ class ShippingCharge extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'country',
+        '0_500g',
+        '501g_1000g',
+        '1001_2000g',
+        '2001g_5000g',
+        'above_5000g'
+    ];
 
     
     public static function getShippingCharges($total_weight , $country) { // this method is used inside checkout() method in Front/ProductsController.php
