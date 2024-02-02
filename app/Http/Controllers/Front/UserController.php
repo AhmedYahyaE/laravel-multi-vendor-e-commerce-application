@@ -25,10 +25,11 @@ class UserController extends Controller
             // Validation    // Manually Creating Validators: https://laravel.com/docs/9.x/validation#manually-creating-validators    
             $validator = \Illuminate\Support\Facades\Validator::make($request->all(), [
                 // the 'name' HTML attribute of the request (the array key of the $request array) (ATTRIBUTE) => Validation Rules
-                'name'     => 'required|string|max:100',
+                'first_name'     => 'required|string|max:100',
+                'last_name'     => 'required|string|max:100',
                 'mobile'   => 'required|numeric|digits:11',
                 'email'    => 'required|email|max:150|unique:users', // 'unique:users'    means it's unique in the `users` table
-                'password' => 'required|min:6',
+                'password' => 'required|min:6|confirmed',
                 'accept'   => 'required'
 
             ], [ // Customizing The Error Messages: https://laravel.com/docs/9.x/validation#manual-customizing-the-error-messages
@@ -47,7 +48,8 @@ class UserController extends Controller
                 // Register the new user
                 $user = new \App\Models\User;
 
-                $user->name     = $data['name'];   // $data['name']   comes from the 'data' object sent from inside the $.ajax() method in front/js/custom.js file
+                $user->first_name     = $data['first_name'];   // $data['name']   comes from the 'data' object sent from inside the $.ajax() method in front/js/custom.js file
+                $user->last_name     = $data['last_name'];   // $data['name']   comes from the 'data' object sent from inside the $.ajax() method in front/js/custom.js file
                 $user->mobile   = $data['mobile']; // $data['mobile'] comes from the 'data' object sent from inside the $.ajax() method in front/js/custom.js file
                 $user->email    = $data['email'];  // $data['email']  comes from the 'data' object sent from inside the $.ajax() method in front/js/custom.js file
                 $user->password = bcrypt($data['password']); // storing the HASH-ed password (not the original password) in the database    // bcrypt(): https://laravel.com/docs/9.x/helpers#method-bcrypt    // $data['password'] comes from the 'data' object sent from inside the $.ajax() method in front/js/custom.js file
@@ -62,12 +64,12 @@ class UserController extends Controller
 
                 // The email message data/variables that will be passed in to the email view
                 $messageData = [
-                    'name'   => $data['name'],   // the user's name that they entered while submitting the registration form
+                    'name'   => $data['first_name']. ' ' . $data['last_name'],   // the user's name that they entered while submitting the registration form
                     'email'  => $data['email'],  // the user's email that they entered while submitting the registration form
                     'code'   => base64_encode($data['email']) // We base64 code the user's $email and send it as a Route Parameter from resources/views/emails/confirmation.blade.php to the 'user/confirm/{code}' route in web.php, then it gets base64 de-coded again in confirmUser() method in Front/UserController.php    // We will use the opposite: base64_decode() in the confirmUser() method to decode the encoded string (encode X decode)
                 ];
                 \Illuminate\Support\Facades\Mail::send('emails.confirmation', $messageData, function ($message) use ($email) { // Sending Mail: https://laravel.com/docs/9.x/mail#sending-mail    // 'emails.confirmation' is the resources/views/emails/confirmation.blade.php file that will be sent as an email    // We pass in all the variables that confirmation.blade.php will use    // https://www.php.net/manual/en/functions.anonymous.php
-                    $message->to($email)->subject('Confirm your Multi-vendor E-commerce Application Account');
+                    $message->to($email)->subject('Confirm your Kapiton Account');
                 });
 
                 // Redirect user back with a success message
@@ -94,6 +96,12 @@ class UserController extends Controller
                     'type'   => 'error',
                     'errors' => $validator->messages() // we'll loop over the Validation Errors Messages array using jQuery to show them in the frontend (check front/js/custom.js)    // Working With Error Messages: https://laravel.com/docs/9.x/validation#working-with-error-messages    
                 ]);
+            }
+        } else { // if the 'GET' request is coming from the <a> tag in front/users/login_register.blade.php, render the front/users/register.blade.php page
+            if (Auth::check()) {
+                return redirect('/');
+            } else {
+                return view('front.users.register');
             }
         }
     }
@@ -209,13 +217,13 @@ class UserController extends Controller
 
                 // The email message data/variables that will be passed in to the email view
                 $messageData = [
-                    'name'   => $userDetails->name, // the user's name that they entered while submitting the registration form
+                    'name'   => $userDetails->first_name . " " . $userDetails->last_name, // the user's name that they entered while submitting the registration form
                     'mobile' => $userDetails->mobile, // the user's mobile that they entered while submitting the registration form
                     'email'  => $email // the user's email that they entered while submitting the registration form
                     // 'code'   => base64_encode($data['email']) // We base64 code the user's $email and send it as a Route Parameter from user_confirmation.blade.php to the 'user/confirm/{code}' route in web.php, then it gets base64 decoded again in confirmUser() method in Front/UserController.php    // we will use the opposite: base64_decode() in the confirmAccount() method (encode X decode)
                 ];
                 \Illuminate\Support\Facades\Mail::send('emails.register', $messageData, function ($message) use ($email) { // Sending Mail: https://laravel.com/docs/9.x/mail#sending-mail    // 'emails.register' is the register.blade.php file inside the 'resources/views/emails' folder that will be sent as an email    // We pass in all the variables that register.blade.php will use    // https://www.php.net/manual/en/functions.anonymous.php
-                    $message->to($email)->subject('Welcome to Multi-vendor E-commerce Application');
+                    $message->to($email)->subject('Welcome to Kapiton');
                 });
 
                 // Note: Here, we have TWO options, either redirect user with a success message or Log the user In IMMDEIATELY, AUTOMATICALLY and DIRECTLY
@@ -273,7 +281,7 @@ class UserController extends Controller
                     // 'code'  => base64_encode($data['email']) // We base64 code the user's $email and send it as a Route Parameter from user_confirmation.blade.php to the 'user/confirm/{code}' route in web.php, then it gets base64 decoded again in confirmUser() method in Front/UserController.php    // we will use the opposite: base64_decode() in the confirmUser() method (encode X decode)
                 ];
                 \Illuminate\Support\Facades\Mail::send('emails.user_forgot_password', $messageData, function ($message) use ($email) { // Sending Mail: https://laravel.com/docs/9.x/mail#sending-mail    // 'emails.user_forgot_password' is the resources/views/emails/user_forgot_password.blade.php file inside the 'resources/views/emails' folder that will be sent as an email    // We pass in all the variables that the user_forgot_password.blade.php file will use    // https://www.php.net/manual/en/functions.anonymous.php
-                    $message->to($email)->subject('New Password - Multi-vendor E-commerce Application');
+                    $message->to($email)->subject('New Password - Kapiton');
                 });
 
                 // Redirect user with a success message
@@ -359,9 +367,9 @@ class UserController extends Controller
         } else { // if it's a 'GET' request, render front/users/user_account.blade.php
             // Fetch all of the world countries from the database table `countries`
             $countries = \App\Models\Country::where('status', 1)->get()->toArray(); // get the countries which have status = 1 (to ignore the blacklisted countries, in case)
+            $user = \App\Models\User::find(Auth::user()->id);
 
-
-            return view('front.users.user_account')->with(compact('countries'));
+            return view('front.users.user_account')->with(compact(['countries', 'user']));
         }
     }
 
@@ -426,6 +434,10 @@ class UserController extends Controller
             }
 
         }
+    }
+
+    public function showSecurity() {
+        return view('front.users.reset_password');
     }
 
 }

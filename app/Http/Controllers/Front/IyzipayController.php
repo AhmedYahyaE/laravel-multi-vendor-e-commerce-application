@@ -109,7 +109,7 @@ class IyzipayController extends Controller
         // $firstBasketItem->setName("Binocular"); // dummy data
         $firstBasketItem->setName("Order ID: " . Session::get('order_id')); // real data (our order details)    // 'order_id' was stored in the Session in checkout() method in Front/ProductsController.php    // Interacting With The Session: Retrieving Data: https://laravel.com/docs/9.x/session#retrieving-data
         // $firstBasketItem->setCategory1("Collectibles"); // dummy data
-        $firstBasketItem->setCategory1("Multi-vendor E-commerce Application Product"); // real data (our order details)
+        $firstBasketItem->setCategory1("Kapiton Product"); // real data (our order details)
         // $firstBasketItem->setCategory2("Accessories"); // dummy data
         $firstBasketItem->setCategory2("");// Not mandatory (from the Documentation: https://dev.iyzipay.com/en/iyzico-ile-ode/intialize#:~:text=Sample%20Codes-,Request,-Parameters%20to%20be)
         $firstBasketItem->setItemType(\Iyzipay\Model\BasketItemType::PHYSICAL); // dummy data

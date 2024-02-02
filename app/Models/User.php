@@ -24,6 +24,8 @@ class User extends Authenticatable
         'password',
     ];
 
+    protected $with = ['deliveryAddress'];
+
     /**
      * The attributes that should be hidden for serialization.
      *
@@ -42,4 +44,12 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function userDeliveryAddresses() {
+        return $this->hasMany(\App\Models\DeliveryAddress::class);
+    }
+
+    public function deliveryAddress() {
+        return $this->userDeliveryAddresses()->take(1);
+    }
 }

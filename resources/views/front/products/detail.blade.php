@@ -1,837 +1,393 @@
 {{-- Note: front/products/detail.blade.php is the page that opens when you click on a product in the FRONT home page --}} {{-- $productDetails, categoryDetails and $totalStock are passed in from detail() method in Front/ProductsController.php --}}
 @extends('front.layout.layout')
 
-
 @section('content')
-    {{-- Star Rating (of a Product) (in the "Reviews" tab) --}}
-    <style>
-        *{
-            margin: 0;
-            padding: 0;
-        }
-        .rate {
-            float: left;
-            height: 46px;
-            padding: 0 10px;
-        }
-        .rate:not(:checked) > input {
-            /* position:absolute; */
-            position:inherit;
-            top:-9999px;
-        }
-        .rate:not(:checked) > label {
-            float:right;
-            width:1em;
-            overflow:hidden;
-            white-space:nowrap;
-            cursor:pointer;
-            font-size:30px;
-            color:#ccc;
-        }
-        .rate:not(:checked) > label:before {
-            content: '★ ';
-        }
-        .rate > input:checked ~ label {
-            color: #ffc700;    
-        }
-        .rate:not(:checked) > label:hover,
-        .rate:not(:checked) > label:hover ~ label {
-            color: #deb217;  
-        }
-        .rate > input:checked + label:hover,
-        .rate > input:checked + label:hover ~ label,
-        .rate > input:checked ~ label:hover,
-        .rate > input:checked ~ label:hover ~ label,
-        .rate > label:hover ~ input:checked ~ label {
-            color: #c59b08;
-        }
-    </style>
-
-
-    
-    <!-- Page Introduction Wrapper -->
-    <div class="page-style-a">
-        <div class="container">
-            <div class="page-intro">
-                <h2>Detail</h2>
-                <ul class="bread-crumb">
-                    <li class="has-separator">
-                        <i class="ion ion-md-home"></i>
-                        <a href="{{ url('/') }}">Home</a>
-                    </li>
-                    <li class="is-marked">
-                        <a href="javascript:;">Detail</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
-    <!-- Page Introduction Wrapper /- -->
-    <!-- Single-Product-Full-Width-Page -->
-    <div class="page-detail u-s-p-t-80">
-        <div class="container">
-            <!-- Product-Detail -->
-            <div class="row">
-                <div class="col-lg-6 col-md-6 col-sm-12">
-
-
-
-                    {{-- EasyZoom plugin for zooming product images upon hover --}}
-                    {{-- My EasyZoom (jQuery image zoom plugin): https://i-like-robots.github.io/EasyZoom/ --}}
-
-                    <!-- Product-zoom-area -->
-                    <div class="easyzoom easyzoom--overlay easyzoom--with-thumbnails"> {{-- EasyZoom plugin --}}
-                        <a      href="{{ asset('front/images/product_images/large/' . $productDetails['product_image']) }}">
-                            <img src="{{ asset('front/images/product_images/large/' . $productDetails['product_image']) }}" alt="" width="500" height="500" />
-                        </a>
+<div
+    data-elementor-type="wp-page"
+    data-elementor-id="491"
+    class="elementor elementor-491"
+    data-elementor-post-type="page"
+>
+    <div
+        class="elementor-element elementor-element-51b2b2e e-flex e-con-boxed e-con e-parent"
+        data-id="51b2b2e"
+        data-element_type="container"
+        data-settings="{&quot;background_background&quot;:&quot;classic&quot;,&quot;container_type&quot;:&quot;flex&quot;,&quot;content_width&quot;:&quot;boxed&quot;}"
+        data-core-v316-plus="true"
+    >
+        <div class="e-con-inner">
+            <div
+                class="elementor-element elementor-element-37b0796 e-con-full e-flex e-con e-child"
+                data-id="37b0796"
+                data-element_type="container"
+                data-settings="{&quot;content_width&quot;:&quot;full&quot;,&quot;container_type&quot;:&quot;flex&quot;}"
+            >
+                <div
+                    class="elementor-element elementor-element-e8c1cfd elementor-invisible elementor-widget elementor-widget-heading"
+                    data-id="e8c1cfd"
+                    data-element_type="widget"
+                    data-settings="{&quot;_animation&quot;:&quot;fadeInLeft&quot;}"
+                    data-widget_type="heading.default"
+                >
+                    <div class="elementor-widget-container">
+                        {{-- Breadcrumbs --}} 
+                        <p class="elementor-heading-title elementor-size-default">Home / @php echo $categoryDetails['breadcrumbs']; @endphp </p>
                     </div>
-
-                    <div class="thumbnails" style="margin-top: 30px"> {{-- EasyZoom plugin --}}
-                        <a      href="{{ asset('front/images/product_images/large/' . $productDetails['product_image']) }}" data-standard="{{ asset('front/images/product_images/small/' . $productDetails['product_image']) }}">
-                            <img src="{{ asset('front/images/product_images/small/' . $productDetails['product_image']) }}" width="120" height="120" alt="" />
-                        </a>
-
-
-
-                        {{-- Show the product Alternative images (`image` in `products_images` table) --}}
-                        @foreach ($productDetails['images'] as $image)
-                            {{-- EasyZoom plugin --}}
-                            <a      href="{{ asset('front/images/product_images/large/' . $image['image']) }}" data-standard="{{ asset('front/images/product_images/small/' . $image['image']) }}">
-                                <img src="{{ asset('front/images/product_images/small/' . $image['image']) }}" width="120" height="120" alt="" />
-                            </a>
-                        @endforeach
-
-
-
-                    </div>
-                    <!-- Product-zoom-area /- -->
-                </div>
-                <div class="col-lg-6 col-md-6 col-sm-12">
-                    <!-- Product-details -->
-                    <div class="all-information-wrapper">
-
-
-                        {{-- My Bootstrap error code in case of wrong current password or the new password and confirm password are not matching: --}}
-                        {{-- Determining If An Item Exists In The Session (using has() method): https://laravel.com/docs/9.x/session#determining-if-an-item-exists-in-the-session --}}
-                        @if (Session::has('error_message')) <!-- Check AdminController.php, updateAdminPassword() method -->
-                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                <strong>Error:</strong> {{ Session::get('error_message') }}
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                        @endif
-
-
-                        {{-- Displaying Laravel Validation Errors: https://laravel.com/docs/9.x/validation#quick-displaying-the-validation-errors --}}    
-                        @if ($errors->any())
-                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                        @endif
-
-
-                        {{-- Displaying The Validation Errors: https://laravel.com/docs/9.x/validation#quick-displaying-the-validation-errors AND https://laravel.com/docs/9.x/blade#validation-errors --}}
-                        {{-- Determining If An Item Exists In The Session (using has() method): https://laravel.com/docs/9.x/session#determining-if-an-item-exists-in-the-session --}}
-                        {{-- My Bootstrap success message in case of updating admin password is successful: --}}
-                        @if (Session::has('success_message')) <!-- Check AdminController.php, updateAdminPassword() method -->
-                            <div class="alert alert-success alert-dismissible fade show" role="alert">
-
-                                {{-- There are TWO ways to: Displaying Unescaped Data: https://laravel.com/docs/9.x/blade#displaying-unescaped-data --}}
-                                <strong>Success:</strong> @php echo Session::get('success_message') @endphp       {{-- Displaying Unescaped Data: https://laravel.com/docs/9.x/blade#displaying-unescaped-data --}}
-
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                        @endif
-
-
-
-                        <div class="section-1-title-breadcrumb-rating">
-                            <div class="product-title">
-                                <h1>
-                                    <a href="javascript:;">{{ $productDetails['product_name'] }}</a> {{-- $productDetails is passed in from detail() method in Front/ProductsController.php --}}
-                                </h1>
-                            </div>
-
-
-
-                            {{-- Breadcrumb --}}
-                            <ul class="bread-crumb">
-                                <li class="has-separator">
-                                    <a href="{{ url('/') }}">Home</a> {{-- Home --}}
-                                </li>
-                                <li class="has-separator">
-                                    <a href="javascript:;">{{ $productDetails['section']['name'] }}</a> {{-- Section Name --}}
-                                </li>
-                                @php echo $categoryDetails['breadcrumbs'] @endphp {{-- $categoryDetails is passed in from detail() method in Front/ProductsController.php --}}
-                            </ul>
-                            {{-- Breadcrumb --}}
-
-
-
-                            <div class="product-rating">
-                                <div title="{{ $avgRating }} out of 5 - based on {{ count($ratings) }} Reviews">
-
-                                    {{-- Show/Display the Rating Stars --}}
-                                    @if ($avgStarRating > 0) {{-- If the product has been rated at least once, show the "Stars" HTML Entities --}}
-                                        @php
-                                            $star = 1;
-                                            while ($star < $avgStarRating):
-                                        @endphp
-
-                                                <span style="color: gold; font-size: 17px">&#9733;</span>
-
-                                        @php
-                                                $star++;
-                                            endwhile;
-                                        @endphp
-                                        ({{ $avgRating }})
-                                    @endif
-
-                                </div>
-                            </div>
-                        </div>
-                        <div class="section-2-short-description u-s-p-y-14">
-                            <h6 class="information-heading u-s-m-b-8">Description:</h6>
-                            <p>{{ $productDetails['description'] }}</p>
-                        </div>
-                        <div class="section-3-price-original-discount u-s-p-y-14">
-
-                        
-
-                            @php $getDiscountPrice = \App\Models\Product::getDiscountPrice($productDetails['id']) @endphp
-
-                            <span class="getAttributePrice">{{-- this <span> will be used by jQuery for getting the respective `price` and `stock` depending on the selected `size` in the <select> box (through the AJAX call). Check front/js/custom.js --}}
-
-                                @if ($getDiscountPrice > 0) {{-- if there's a discount on the product price --}}
-                                    <div class="price">
-                                        <h4>EGP{{ $getDiscountPrice }}</h4>
-                                    </div>
-                                    <div class="original-price">
-                                        <span>Original Price:</span>
-                                        <span>EGP{{ $productDetails['product_price'] }}</span> {{-- the product original price (without discount) --}}
-                                    </div>
-                                @else {{-- if there's no discount on the product price --}}
-                                    <div class="price">
-                                        <h4>EGP{{ $productDetails['product_price'] }}</h4> {{-- the product original price (without discount) --}}
-                                    </div>
-                                @endif
-
-                            </span> 
-
-
-
-                        </div>
-                        <div class="section-4-sku-information u-s-p-y-14">
-                            <h6 class="information-heading u-s-m-b-8">Sku Information:</h6>
-                            <div class="left">
-                                <span>Product Code:</span>
-                                <span>{{ $productDetails['product_code'] }}</span>
-                            </div>
-                            <div class="left">
-                                <span>Product Color:</span>
-                                <span>{{ $productDetails['product_color'] }}</span>
-                            </div>
-                            <div class="availability">
-                                <span>Availability:</span>
-
-
-                                @if ($totalStock > 0)
-                                    <span>In Stock</span>
-                                @else
-                                    <span style="color: red">Out of Stock (Sold-out)</span>
-                                @endif
-
-
-
-                            </div>
-
-
-
-                            @if ($totalStock > 0)
-                                <div class="left">
-                                    <span>Only:</span>
-                                    <span>{{ $totalStock }} left</span>
-                                </div>
-                            @endif
-
-
-
-                        </div>
-
-
-
-                        {{-- Show the vendor shop name (only in case that the product is added by a vendor, not admin or superadmin) --}}
-                        @if(isset($productDetails['vendor']))
-                            <div>
-                                {{-- Sold by: {{ $productDetails['vendor']['name'] }} --}}
-                                Sold by: <a href="/products/{{ $productDetails['vendor']['id'] }}">
-                                            {{ $productDetails['vendor']['vendorbusinessdetails']['shop_name'] }}
-                                        </a>
-                            </div>
-                        @endif
-
-
-
-                        {{-- Add to Cart <form> --}} 
-                        <form action="{{ url('cart/add') }}" method="Post" class="post-form">
-                            @csrf {{-- Preventing CSRF Requests: https://laravel.com/docs/9.x/csrf#preventing-csrf-requests --}}
-
-
-                            <input type="hidden" name="product_id" value="{{ $productDetails['id'] }}"> {{-- Add to Cart <form> --}} 
-
-
-                            <div class="section-5-product-variants u-s-p-y-14">
-
-
-
-                                {{-- Managing Product Colors (using the `group_code` column in `products` table) --}} 
-                                @if (count($groupProducts) > 0) {{-- if there's a value for the `group_code` column (in `products` table) for the currently viewed product --}}
-                                    <div>
-                                        <div><strong>Product Colors</strong></div>
-                                        <div style="margin-top: 10px">
-                                            @foreach ($groupProducts as $product)
-                                                <a href="{{ url('product/' . $product['id']) }}">
-                                                    <img style="width: 80px" src="{{ asset('front/images/product_images/small/' . $product['product_image']) }}">
-                                                </a>
-                                            @endforeach
-                                        </div>
-                                    </div>
-                                @endif
-
-
-
-                                <div class="sizes u-s-m-b-11" style="margin-top: 20px">
-                                    <span>Available Size:</span>
-                                    <div class="size-variant select-box-wrapper">
-                                        <select class="select-box product-size" id="getPrice" product-id="{{ $productDetails['id'] }}" name="size" required> {{-- Check front/js/custom.js file --}}
-
-
-
-                                            <option value="">Select Size</option>
-                                            @foreach ($productDetails['attributes'] as $attribute)
-                                                <option value="{{ $attribute['size'] }}">{{ $attribute['size'] }}</option>
-                                            @endforeach
-
-
-
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="section-6-social-media-quantity-actions u-s-p-y-14">
-
-                                
-                                <div class="quantity-wrapper u-s-m-b-22">
-                                    <span>Quantity:</span>
-                                    <div class="quantity">
-                                        <input class="quantity-text-field" type="number" name="quantity" value="1">
-                                    </div>
-                                </div>
-                                <div>
-                                    <button class="button button-outline-secondary" type="submit">Add to cart</button>
-                                    <button class="button button-outline-secondary far fa-heart u-s-m-l-6"></button>
-                                    <button class="button button-outline-secondary far fa-envelope u-s-m-l-6"></button>
-                                </div>
-
-
-
-                            </div>
-                        </form>
-
-
-                        {{-- PIN code Availability Check: check if the PIN code of the user's Delivery Address exists in our database (in both `cod_pincodes` and `prepaid_pincodes`) or not via AJAX. Check front/js/custom.js --}} 
-                        <br><br><b>Delivery</b>
-                        <input type="text" id="pincode" placeholder="Check Pincode" required>
-                        <button type="button" id="checkPincode">Go</button> {{-- We'll use that checkPincode HTML id attribute in front/js/custom.js as a handle for jQuery --}}
-
-
-                    </div>
-                    <!-- Product-details /- -->
                 </div>
             </div>
-            <!-- Product-Detail /- -->
-            <!-- Detail-Tabs -->
-            <div class="row">
-                <div class="col-lg-12 col-md-12 col-sm-12">
-                    <div class="detail-tabs-wrapper u-s-p-t-80">
-                        <div class="detail-nav-wrapper u-s-m-b-30">
-                            <ul class="nav single-product-nav justify-content-center">
-                                <li class="nav-item">
-                                    <a class="nav-link active" data-toggle="tab" href="#video">Product Video</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" data-toggle="tab" href="#detail">Product Details</a>
-                                </li>
-                                <li class="nav-item">
-                                    {{-- <a class="nav-link" data-toggle="tab" href="#review">Reviews (15)</a> --}}
-                                    <a class="nav-link" data-toggle="tab" href="#review">Reviews {{ count($ratings) }}</a>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="tab-content">
-                            <!-- Description-Tab -->
-                            <div class="tab-pane fade active show" id="video">
-                                <div class="description-whole-container">
-
-
-
-                                    @if ($productDetails['product_video'])
-                                        <video controls>
-                                            <source src="{{ url('front/videos/product_videos/' . $productDetails['product_video']) }}" type="video/mp4">
-                                        </video>
-                                    @else
-                                        Product Video does not exist    
-                                    @endif
-
-
-
-                                </div>
-                            </div>
-                            <!-- Description-Tab /- -->
-                            <!-- Details-Tab -->
-                            <div class="tab-pane fade" id="detail">
-                                <div class="specification-whole-container">
-                                    <div class="spec-table u-s-m-b-50">
-                                        <h4 class="spec-heading">Product Details</h4>
-                                        <table>
-
-
-
-                                            @php
-                                                $productFilters = \App\Models\ProductsFilter::productFilters(); // Get ALL the (enabled/active) Filters
-                                                // dd($productFilters);
-                                            @endphp
-
-                                            @foreach ($productFilters as $filter) {{-- show ALL the (enabled/active) Filters --}}
-                                                @php
-                                                    // echo '<pre>', var_dump($product), '</pre>';
-                                                    // exit;
-                                                    // echo '<pre>', var_dump($filter), '</pre>';
-                                                    // exit;
-                                                    // dd($filter);
-                                                @endphp
-
-                                                @if (isset($productDetails['category_id'])) {{-- which comes from the AJAX call (passed in through the categoryFilters() method in Admin/FilterController.php, and ALSO may come from the if condition above there (in this page) in case of 'Edit Product' (not 'Add a Product') from addEditProduct() method in Admin/ProductsController --}}
-                                                    @php
-                                                        // dd($filter);
-
-                                                        // Firstly, for every filter in the `products_filters` table, Get the filter's (from the foreach loop) `cat_ids` using filterAvailable() method, then check if the current category id (using the $productDetails['category_id'] variable and depending on the URL) exists in the filter's `cat_ids`. If it exists, then show the filter, if not, then don't show the filter
-                                                        $filterAvailable = \App\Models\ProductsFilter::filterAvailable($filter['id'], $productDetails['category_id']);
-                                                    @endphp
-
-                                                    @if ($filterAvailable == 'Yes') {{-- if the filter has the current productDetails['category_id'] in its `cat_ids` --}}
-
-                                                        <tr>
-                                                            <td>{{ $filter['filter_name'] }}</td>
-                                                            <td>
-                                                                @foreach ($filter['filter_values'] as $value) {{-- show the related values of the filter of the product --}}
-                                                                    @php
-                                                                        // echo '<pre>', var_dump($value), '</pre>'; exit;
-                                                                    @endphp
-                                                                    @if (!empty($productDetails[$filter['filter_column']]) && $productDetails[$filter['filter_column']] == $value['filter_value']) {{-- $value['filter_value'] is like '4GB' --}} {{-- $productDetails[$filter['filter_column']]    is like    $productDetails['screen_size']    which in turn, may be equal to    '5 to 5.4 in' --}}
-                                                                        {{ ucwords($value['filter_value']) }}
-                                                                    @endif
-                                                                @endforeach
-                                                            </td>
-                                                        </tr>
-
-                                                    @endif
-                                                @endif
-                                            @endforeach
-
-
-
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Specifications-Tab /- -->
-                            <!-- Reviews-Tab -->
-                            <div class="tab-pane fade" id="review">
-                                <div class="review-whole-container">
-                                    <div class="row r-1 u-s-m-b-26 u-s-p-b-22">
-                                        <div class="col-lg-6 col-md-6">
-                                            <div class="total-score-wrapper">
-                                                <h6 class="review-h6">Average Rating</h6>
-                                                <div class="circle-wrapper">
-                                                    <h1>{{ $avgRating }}</h1>
-                                                </div>
-                                                <h6 class="review-h6">Based on {{ count($ratings) }} Reviews</h6>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6 col-md-6">
-                                            <div class="total-star-meter">
-                                                <div class="star-wrapper">
-                                                    <span>5 Stars</span>
-                                                    <div class="star">
-                                                        <span style='width:0'></span>
-                                                    </div>
-                                                    <span>({{ $ratingFiveStarCount }})</span>
-                                                </div>
-                                                <div class="star-wrapper">
-                                                    <span>4 Stars</span>
-                                                    <div class="star">
-                                                        <span style='width:0'></span>
-                                                    </div>
-                                                    <span>({{ $ratingFourStarCount }})</span>
-                                                </div>
-                                                <div class="star-wrapper">
-                                                    <span>3 Stars</span>
-                                                    <div class="star">
-                                                        <span style='width:0'></span>
-                                                    </div>
-                                                    <span>({{ $ratingThreeStarCount }})</span>
-                                                </div>
-                                                <div class="star-wrapper">
-                                                    <span>2 Stars</span>
-                                                    <div class="star">
-                                                        <span style='width:0'></span>
-                                                    </div>
-                                                    <span>({{ $ratingTwoStarCount }})</span>
-                                                </div>
-                                                <div class="star-wrapper">
-                                                    <span>1 Star</span>
-                                                    <div class="star">
-                                                        <span style='width:0'></span>
-                                                    </div>
-                                                    <span>({{ $ratingOneStarCount }})</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row r-2 u-s-m-b-26 u-s-p-b-22">
-                                        <div class="col-lg-12">
-
-
-                                            {{-- Star Rating (of a Product) (in the "Reviews" tab). --}}
-                                            <form method="POST" action="{{ url('add-rating') }}" name="formRating" id="formRating">
-                                                @csrf {{-- Preventing CSRF Requests: https://laravel.com/docs/9.x/csrf#preventing-csrf-requests --}}
-
-                                                <input type="hidden" name="product_id" value="{{ $productDetails['id'] }}">
-                                                <div class="your-rating-wrapper">
-                                                    <h6 class="review-h6">Your Review matters.</h6>
-                                                    <h6 class="review-h6">Have you used this product before?</h6>
-                                                    <div class="star-wrapper u-s-m-b-8">
-
-
-                                                        {{-- Star Rating (of a Product) (in the "Reviews" tab). --}}
-                                                        <div class="rate">
-                                                            <input style="display: none" type="radio" id="star5" name="rating" value="5" />
-                                                            <label for="star5" title="text">5 stars</label>
-
-                                                            <input style="display: none" type="radio" id="star4" name="rating" value="4" />
-                                                            <label for="star4" title="text">4 stars</label>
-
-                                                            <input style="display: none" type="radio" id="star3" name="rating" value="3" />
-                                                            <label for="star3" title="text">3 stars</label>
-
-                                                            <input style="display: none" type="radio" id="star2" name="rating" value="2" />
-                                                            <label for="star2" title="text">2 stars</label>
-
-                                                            <input style="display: none" type="radio" id="star1" name="rating" value="1" />
-                                                            <label for="star1" title="text">1 star</label>
-                                                        </div>
-
-
-                                                    </div>
-                                                        <textarea class="text-area u-s-m-b-8" id="review-text-area" placeholder="Your Review" name="review" required></textarea>
-                                                        <button class="button button-outline-secondary">Submit Review</button>
-                                                    {{-- </form> --}}
-                                                </div>
-                                            </form>
-
-
-                                        </div>
-                                    </div>
-                                    <!-- Get-Reviews -->
-                                    <div class="get-reviews u-s-p-b-22">
-                                        <!-- Review-Options -->
-                                        <div class="review-options u-s-m-b-16">
-                                            <div class="review-option-heading">
-                                                <h6>Reviews
-                                                    <span> ({{ count($ratings) }}) </span>
-                                                </h6>
-                                            </div>
-                                        </div>
-                                        <!-- Review-Options /- -->
-                                        <!-- All-Reviews -->
-                                        <div class="reviewers">
-
-                                            {{-- Display/Show user's Ratings --}}
-                                            @if (count($ratings) > 0) {{-- if there're any ratings for the product --}}
-                                                @foreach($ratings as $rating)
-                                                    <div class="review-data">
-                                                        <div class="reviewer-name-and-date">
-                                                            <h6 class="reviewer-name">{{ $rating['user']['name'] }}</h6>
-                                                            <h6 class="review-posted-date">{{ date('d-m-Y H:i:s', strtotime($rating['created_at'])) }}</h6>
-                                                        </div>
-                                                        <div class="reviewer-stars-title-body">
-                                                            <div class="reviewer-stars">
-
-
-                                                                {{-- Show/Display the Star Rating of the Review/Rating --}}
-                                                                @php
-                                                                    $count = 0;
-
-                                                                    // Show the stars
-                                                                    while ($count < $rating['rating']): // while $count is 0, 1, 2, 3, 4, or 5 Stars
-                                                                @endphp
-
-                                                                        <span style="color: gold">&#9733;</span> {{-- "BLACK STAR" HTML Entity --}} {{-- HTML Entities: https://www.w3schools.com/html/html_entities.asp --}}
-
-                                                                @php
-                                                                        $count++;
-                                                                    endwhile;
-                                                                @endphp
-
-
+            <div
+                class="elementor-element elementor-element-de7af75 e-con-full e-flex elementor-invisible e-con e-child"
+                data-id="de7af75"
+                data-element_type="container"
+                data-settings="{&quot;content_width&quot;:&quot;full&quot;,&quot;animation&quot;:&quot;fadeInLeft&quot;,&quot;container_type&quot;:&quot;flex&quot;}"
+            >
+                <div
+                    class="elementor-element elementor-element-7e93cf1 e-flex e-con-boxed e-con e-child"
+                    data-id="7e93cf1"
+                    data-element_type="container"
+                    data-settings="{&quot;container_type&quot;:&quot;flex&quot;,&quot;content_width&quot;:&quot;boxed&quot;}"
+                >
+                    <div class="e-con-inner">
+                        <div
+                            class="elementor-element elementor-element-14f2792 elementor-pagination-type-progressbar elementor-arrows-position-inside elementor-widget elementor-widget-n-carousel"
+                            data-id="14f2792"
+                            data-element_type="widget"
+                            data-settings="{&quot;carousel_items&quot;:[{&quot;slide_title&quot;:&quot;Slide #1&quot;,&quot;_id&quot;:&quot;9df787b&quot;},{&quot;slide_title&quot;:&quot;Slide #1&quot;,&quot;_id&quot;:&quot;9a06489&quot;},{&quot;slide_title&quot;:&quot;Slide #1&quot;,&quot;_id&quot;:&quot;a96bbe5&quot;},{&quot;slide_title&quot;:&quot;Slide #1&quot;,&quot;_id&quot;:&quot;96cff8d&quot;},{&quot;slide_title&quot;:&quot;Slide #1&quot;,&quot;_id&quot;:&quot;8586e44&quot;},{&quot;slide_title&quot;:&quot;Slide #1&quot;,&quot;_id&quot;:&quot;1f406b6&quot;}],&quot;slides_to_show&quot;:&quot;1&quot;,&quot;pagination&quot;:&quot;progressbar&quot;,&quot;slides_to_show_tablet&quot;:&quot;1&quot;,&quot;slides_to_show_mobile&quot;:&quot;1&quot;,&quot;autoplay&quot;:&quot;yes&quot;,&quot;autoplay_speed&quot;:5000,&quot;pause_on_hover&quot;:&quot;yes&quot;,&quot;pause_on_interaction&quot;:&quot;yes&quot;,&quot;infinite&quot;:&quot;yes&quot;,&quot;speed&quot;:500,&quot;offset_sides&quot;:&quot;none&quot;,&quot;arrows&quot;:&quot;yes&quot;,&quot;image_spacing_custom&quot;:{&quot;unit&quot;:&quot;px&quot;,&quot;size&quot;:10,&quot;sizes&quot;:[]},&quot;image_spacing_custom_tablet&quot;:{&quot;unit&quot;:&quot;px&quot;,&quot;size&quot;:&quot;&quot;,&quot;sizes&quot;:[]},&quot;image_spacing_custom_mobile&quot;:{&quot;unit&quot;:&quot;px&quot;,&quot;size&quot;:&quot;&quot;,&quot;sizes&quot;:[]}}"
+                            data-widget_type="nested-carousel.default"
+                        >
+                            <div class="elementor-widget-container">
+                                <link rel="stylesheet" href="{{ url('front/css/elementor-css/elementor-pro-assets-css-widget-nested-carousel.min.css') }}">
+                                <div class="e-n-carousel swiper" dir="ltr">
+                                    <div class="swiper-wrapper" aria-live="off">
+                                        <div
+                                            class="swiper-slide"
+                                            data-slide="1"
+                                            role="group"
+                                            aria-roledescription="slide"
+                                            aria-label="1 of 6"
+                                        >
+                                            <div
+                                                class="elementor-element elementor-element-09d9b51 e-flex e-con-boxed e-con e-child"
+                                                data-id="09d9b51"
+                                                data-element_type="container"
+                                                data-settings="{&quot;container_type&quot;:&quot;flex&quot;,&quot;content_width&quot;:&quot;boxed&quot;}"
+                                            >
+                                                <div class="e-con-inner">
+                                                    <div
+                                                        class="elementor-element elementor-element-7496269 e-flex e-con-boxed e-con e-child"
+                                                        data-id="7496269"
+                                                        data-element_type="container"
+                                                        data-settings="{&quot;container_type&quot;:&quot;flex&quot;,&quot;content_width&quot;:&quot;boxed&quot;}"
+                                                    >
+                                                        <div class="e-con-inner">
+                                                            <div
+                                                                class="elementor-element elementor-element-9905f7b elementor-widget elementor-widget-image"
+                                                                data-id="9905f7b"
+                                                                data-element_type="widget"
+                                                                data-widget_type="image.default"
+                                                            >
+                                                                <div class="elementor-widget-container">
+                                                                    <img
+                                                                        fetchpriority="high"
+                                                                        decoding="async"
+                                                                        width="522"
+                                                                        height="522"
+                                                                        src="{{ asset('front/images/product/no-available-image.jpg')}}"
+                                                                        class="attachment-large size-large wp-image-503"
+                                                                        alt=""
+                                                                        srcset="{{ asset('front/images/product/no-available-image.jpg')}} 522w, {{ asset('front/images/product/no-available-image.jpg')}} 300w, {{ asset('front/images/product/no-available-image.jpg')}} 150w"
+                                                                        sizes="(max-width: 522px) 100vw, 522px"
+                                                                    >
+                                                                </div>
                                                             </div>
-                                                            <p class="review-body">
-                                                                {{ $rating['review'] }}
-                                                            </p>
                                                         </div>
                                                     </div>
-                                                @endforeach
-                                            @endif
-
+                                                </div>
+                                            </div>
                                         </div>
-                                        <!-- All-Reviews /- -->
-                                        <!-- Pagination-Review -->
-
-                                        <!-- Pagination-Review /- -->
                                     </div>
-                                    <!-- Get-Reviews /- -->
                                 </div>
+                                <div class="elementor-swiper-button elementor-swiper-button-prev" role="button" tabindex="0">
+                                    <svg
+                                        aria-hidden="true"
+                                        class="e-font-icon-svg e-eicon-chevron-left"
+                                        viewbox="0 0 1000 1000"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                        <path d="M646 125C629 125 613 133 604 142L308 442C296 454 292 471 292 487 292 504 296 521 308 533L604 854C617 867 629 875 646 875 663 875 679 871 692 858 704 846 713 829 713 812 713 796 708 779 692 767L438 487 692 225C700 217 708 204 708 187 708 171 704 154 692 142 675 129 663 125 646 125Z"></path>
+                                    </svg>
+                                </div>
+                                <div class="elementor-swiper-button elementor-swiper-button-next" role="button" tabindex="0">
+                                    <svg
+                                        aria-hidden="true"
+                                        class="e-font-icon-svg e-eicon-chevron-right"
+                                        viewbox="0 0 1000 1000"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                        <path d="M696 533C708 521 713 504 713 487 713 471 708 454 696 446L400 146C388 133 375 125 354 125 338 125 325 129 313 142 300 154 292 171 292 187 292 204 296 221 308 233L563 492 304 771C292 783 288 800 288 817 288 833 296 850 308 863 321 871 338 875 354 875 371 875 388 867 400 854L696 533Z"></path>
+                                    </svg>
+                                </div>
+                                <div class="swiper-pagination"></div>
                             </div>
-                            <!-- Reviews-Tab /- -->
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- Detail-Tabs /- -->
-            <!-- Different-Product-Section -->
-            <div class="detail-different-product-section u-s-p-t-80">
-                <!-- Similar-Products -->
-                <section class="section-maker">
-                    <div class="container">
-                        <div class="sec-maker-header text-center">
-                            <h3 class="sec-maker-h3">Similar Products</h3>
+            <div
+                class="elementor-element elementor-element-a402a83 e-con-full e-flex elementor-invisible e-con e-child"
+                data-id="a402a83"
+                data-element_type="container"
+                data-settings="{&quot;content_width&quot;:&quot;full&quot;,&quot;animation&quot;:&quot;fadeInRight&quot;,&quot;container_type&quot;:&quot;flex&quot;}"
+            >
+                <div
+                    class="elementor-element elementor-element-9707fe2 elementor-widget elementor-widget-heading"
+                    data-id="9707fe2"
+                    data-element_type="widget"
+                    data-widget_type="heading.default"
+                >
+                    <div class="elementor-widget-container">
+
+                        <div class="list-of-tags">
+                            <span>100% Cotton</span>
+                            <span>Recycled Materials</span>
+                            <span>Eco - Friendly</span>
                         </div>
-                        <div class="slider-fouc">
-                            <div class="products-slider owl-carousel" data-item="4">
 
-
-
-                                {{-- Show similar products (or related products) (functionality) by getting other products from THE SAME CATEGORY --}}    
-                                @foreach ($similarProducts as $product)
-                                    <div class="item">
-                                        <div class="image-container">
-                                            <a class="item-img-wrapper-link" href="{{ url('product/' . $product['id']) }}">
-
-
-
-                                                @php
-                                                    $product_image_path = 'front/images/product_images/small/' . $product['product_image'];
-                                                @endphp
-                        
-                                                @if (!empty($product['product_image']) && file_exists($product_image_path)) {{-- if the product image exists in BOTH database table AND filesystem (on server) --}}
-                                                    <img class="img-fluid" src="{{ asset($product_image_path) }}" alt="Product">
-                                                @else {{-- show the dummy image --}}
-                                                    <img class="img-fluid" src="{{ asset('front/images/product_images/small/no-image.png') }}" alt="Product">
-                                                @endif
-
-
-
-                                            </a>
-                                            <div class="item-action-behaviors">
-                                                <a class="item-quick-look" data-toggle="modal" href="#quick-view">Quick Look</a>
-                                                <a class="item-mail" href="javascript:void(0)">Mail</a>
-                                                <a class="item-addwishlist" href="javascript:void(0)">Add to Wishlist</a>
-                                                <a class="item-addCart" href="javascript:void(0)">Add to Cart</a>
-                                            </div>
-                                        </div>
-                                        <div class="item-content">
-                                            <div class="what-product-is">
-                                                <ul class="bread-crumb">
-                                                    <li class="has-separator">
-
-
-
-                                                        <a href="shop-v1-root-category.html">{{ $product['product_code'] }}</a>
-                                                    </li>
-                                                    <li class="has-separator">
-                                                        <a href="listing.html">{{ $product['product_color'] }}</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="listing.html">{{ $product['brand']['name'] }}</a>
-
-
-
-                                                    </li>
-                                                </ul>
-                                                <h6 class="item-title">
-                                                    <a href="{{ url('product/' . $product['id']) }}">{{ $product['product_name'] }}</a>
-                                                </h6>
-
-                                            </div>
-
-
-
-                                            {{-- Call the static getDiscountPrice() method in the Product.php Model to determine the final price of a product because a product can have a discount from TWO things: either a `CATEGORY` discount or `PRODUCT` discout --}}
-                                            @php
-                                                $getDiscountPrice = \App\Models\Product::getDiscountPrice($product['id']);
-                                            @endphp
-
-                                            @if ($getDiscountPrice > 0) {{-- If there's a discount on the price, show the price before (the original price) and after (the new price) the discount --}}
-                                                <div class="price-template">
-                                                    <div class="item-new-price">
-                                                        EGP{{ $getDiscountPrice }} 
-                                                    </div>
-                                                    <div class="item-old-price">
-                                                        EGP{{ $product['product_price'] }}
-                                                    </div>
-                                                </div>
-                                            @else {{-- if there's no discount on the price, show the original price --}}
-                                                <div class="price-template">
-                                                    <div class="item-new-price">
-                                                        EGP{{ $product['product_price'] }}
-                                                    </div>
-                                                </div>
-                                            @endif
-
-
-
-                                        </div>
-                                        <div class="tag new">
-                                            <span>NEW</span>
-                                        </div>
-                                    </div>
-                                @endforeach
-
-
-
+                        <h1 class="elementor-heading-title elementor-size-default">{{$productDetails['product_name']}}</h1>
+                    </div>
+                </div>
+                <!-- <div
+                    class="elementor-element elementor-element-e6c5248 elementor-widget elementor-widget-heading"
+                    data-id="e6c5248"
+                    data-element_type="widget"
+                    data-widget_type="heading.default"
+                >
+                    <div class="elementor-widget-container">
+                        <h6 class="elementor-heading-title elementor-size-default">12-Month subscription with Auto-Renewal for PC/MAC</h6>
+                    </div>
+                </div> -->
+                <div
+                    class="elementor-element elementor-element-8305131 e-con-full e-flex e-con e-child"
+                    data-id="8305131"
+                    data-element_type="container"
+                    data-settings="{&quot;content_width&quot;:&quot;full&quot;,&quot;container_type&quot;:&quot;flex&quot;}"
+                >
+                    <div
+                        class="elementor-element elementor-element-c850d33 e-con-full e-flex e-con e-child"
+                        data-id="c850d33"
+                        data-element_type="container"
+                        data-settings="{&quot;content_width&quot;:&quot;full&quot;,&quot;container_type&quot;:&quot;flex&quot;}"
+                    >
+                        <div
+                            class="elementor-element elementor-element-8b97798 elementor-widget elementor-widget-image"
+                            data-id="8b97798"
+                            data-element_type="widget"
+                            data-widget_type="image.default"
+                        >
+                            <div class="elementor-widget-container">
+                                <img
+                                    loading="lazy"
+                                    decoding="async"
+                                    width="300"
+                                    height="300"
+                                    src="{{ asset('front/images/brand-logos/2023-12-user.png') }}"
+                                    class="attachment-large size-large wp-image-423"
+                                    alt=""
+                                    srcset="{{ asset('front/images/brand-logos/2023-12-user.png') }} 300w, {{ asset('front/images/brand-logos/2023-12-user-150x150.png') }} 150w"
+                                    sizes="(max-width: 300px) 100vw, 300px"
+                                >
+                            </div>
+                        </div>
+                        <div
+                            class="elementor-element elementor-element-621ad64 elementor-widget elementor-widget-heading"
+                            data-id="621ad64"
+                            data-element_type="widget"
+                            data-widget_type="heading.default"
+                        >
+                            <div class="elementor-widget-container">
+                                <h5 class="elementor-heading-title elementor-size-default">{{ (isset($productDetails['vendor']['name'])  ? $productDetails['vendor']['name']:'') }}</h5>
                             </div>
                         </div>
                     </div>
-                </section>
-                <!-- Similar-Products /- -->
-                <!-- Recently-View-Products  -->
-                <section class="section-maker">
-                    <div class="container">
-                        <div class="sec-maker-header text-center">
-                            <h3 class="sec-maker-h3">Recently Viewed Products</h3>
-                        </div>
-                        <div class="slider-fouc">
-                            <div class="products-slider owl-carousel" data-item="4">
-
-
-
-
-                                {{-- Recently Viewed Products (Items) functionality --}}
-                                @foreach ($recentlyViewedProducts as $product)
-                                    <div class="item">
-                                        <div class="image-container">
-                                            <a class="item-img-wrapper-link" href="{{ url('product/' . $product['id']) }}">
-
-
-
-                                                @php
-                                                    $product_image_path = 'front/images/product_images/small/' . $product['product_image'];
-                                                @endphp
-                        
-                                                @if (!empty($product['product_image']) && file_exists($product_image_path)) {{-- if the product image exists in BOTH database table AND filesystem (on server) --}}
-                                                    <img class="img-fluid" src="{{ asset($product_image_path) }}" alt="Product">
-                                                @else {{-- show the dummy image --}}
-                                                    <img class="img-fluid" src="{{ asset('front/images/product_images/small/no-image.png') }}" alt="Product">
-                                                @endif
-
-
-
-                                            </a>
-                                            <div class="item-action-behaviors">
-                                                <a class="item-quick-look" data-toggle="modal" href="#quick-view">Quick Look</a>
-                                                <a class="item-mail" href="javascript:void(0)">Mail</a>
-                                                <a class="item-addwishlist" href="javascript:void(0)">Add to Wishlist</a>
-                                                <a class="item-addCart" href="javascript:void(0)">Add to Cart</a>
-                                            </div>
+                    <div
+                        class="elementor-element elementor-element-0e1807c elementor-widget elementor-widget-rating"
+                        data-id="0e1807c"
+                        data-element_type="widget"
+                        data-widget_type="rating.default"
+                    >
+                        <div class="elementor-widget-container">
+                            <style>/*! elementor - v3.18.0 - 08-12-2023 */ .elementor-widget-rating{--e-rating-gap:0px;--e-rating-icon-font-size:16px;--e-rating-icon-color:#ccd6df;--e-rating-icon-marked-color:#f0ad4e;--e-rating-icon-marked-width:100%;--e-rating-justify-content:flex-start}.elementor-widget-rating .e-rating{display:flex;justify-content:var(--e-rating-justify-content)}.elementor-widget-rating .e-rating-wrapper{display:flex;justify-content:inherit;flex-direction:row;flex-wrap:wrap;width:-moz-fit-content;width:fit-content;margin-block-end:calc(0px - var(--e-rating-gap));margin-inline-end:calc(0px - var(--e-rating-gap))}.elementor-widget-rating .e-rating .e-icon{position:relative;margin-block-end:var(--e-rating-gap);margin-inline-end:var(--e-rating-gap)}.elementor-widget-rating .e-rating .e-icon-wrapper.e-icon-marked{--e-rating-icon-color:var(--e-rating-icon-marked-color);width:var(--e-rating-icon-marked-width);position:absolute;z-index:1;height:100%;left:0;top:0;overflow:hidden}.elementor-widget-rating .e-rating .e-icon-wrapper :is(i,svg){display:flex;flex-shrink:0}.elementor-widget-rating .e-rating .e-icon-wrapper i{font-size:var(--e-rating-icon-font-size);color:var(--e-rating-icon-color)}.elementor-widget-rating .e-rating .e-icon-wrapper svg{width:auto;height:var(--e-rating-icon-font-size);fill:var(--e-rating-icon-color)}</style>
+                            <div
+                                class="e-rating"
+                                itemtype="https://schema.org/Rating"
+                                itemscope=""
+                                itemprop="reviewRating"
+                            >
+                                <meta itemprop="worstRating" content="0">
+                                <meta itemprop="bestRating" content="5">
+                                <div
+                                    class="e-rating-wrapper"
+                                    itemprop="ratingValue"
+                                    content="4"
+                                    role="img"
+                                    aria-label="Rated 4 out of 5"
+                                >
+                                    @for ($x = 0; $x < 5; $x++)
+                                        @php
+                                            $marked = \App\Models\Product::product_computed_ratings($productDetails['id']);
+                                        @endphp
+                                    <!-- marked -->
+                                    <div class="e-icon">
+                                        <div class="e-icon-wrapper e-icon-marked" style="{{ ($x < $marked && $marked > 0) ? '':'--e-rating-icon-marked-width: 0%;' }}">
+                                            <svg
+                                                aria-hidden="true"
+                                                class="e-font-icon-svg e-eicon-star"
+                                                viewbox="0 0 1000 1000"
+                                                xmlns="http://www.w3.org/2000/svg"
+                                            >
+                                                <path d="M450 75L338 312 88 350C46 354 25 417 58 450L238 633 196 896C188 942 238 975 275 954L500 837 725 954C767 975 813 942 804 896L763 633 942 450C975 417 954 358 913 350L663 312 550 75C529 33 471 33 450 75Z"></path>
+                                            </svg>
                                         </div>
-                                        <div class="item-content">
-                                            <div class="what-product-is">
-                                                <ul class="bread-crumb">
-                                                    <li class="has-separator">
-
-
-
-                                                        <a href="shop-v1-root-category.html">{{ $product['product_code'] }}</a>
-                                                    </li>
-                                                    <li class="has-separator">
-                                                        <a href="listing.html">{{ $product['product_color'] }}</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="listing.html">{{ $product['brand']['name'] }}</a>
-
-
-
-                                                    </li>
-                                                </ul>
-                                                <h6 class="item-title">
-                                                    <a href="{{ url('product/' . $product['id']) }}">{{ $product['product_name'] }}</a>
-                                                </h6>
-                                            </div>
-
-
-
-                                            {{-- Call the static getDiscountPrice() method in the Product.php Model to determine the final price of a product because a product can have a discount from TWO things: either a `CATEGORY` discount or `PRODUCT` discout --}}
-                                            @php
-                                                $getDiscountPrice = \App\Models\Product::getDiscountPrice($product['id']);
-                                            @endphp
-
-                                            @if ($getDiscountPrice > 0) {{-- If there's a discount on the price, show the price before (the original price) and after (the new price) the discount --}}
-                                                <div class="price-template">
-                                                    <div class="item-new-price">
-                                                        EGP{{ $getDiscountPrice }} 
-                                                    </div>
-                                                    <div class="item-old-price">
-                                                        EGP{{ $product['product_price'] }}
-                                                    </div>
-                                                </div>
-                                            @else {{-- if there's no discount on the price, show the original price --}}
-                                                <div class="price-template">
-                                                    <div class="item-new-price">
-                                                        EGP{{ $product['product_price'] }}
-                                                    </div>
-                                                </div>
-                                            @endif
-
-
-
-                                        </div>
-                                        <div class="tag new">
-                                            <span>NEW</span>
+                                        <div class="e-icon-wrapper e-icon-unmarked">
+                                            <svg
+                                                aria-hidden="true"
+                                                class="e-font-icon-svg e-eicon-star"
+                                                viewbox="0 0 1000 1000"
+                                                xmlns="http://www.w3.org/2000/svg"
+                                            >
+                                                <path d="M450 75L338 312 88 350C46 354 25 417 58 450L238 633 196 896C188 942 238 975 275 954L500 837 725 954C767 975 813 942 804 896L763 633 942 450C975 417 954 358 913 350L663 312 550 75C529 33 471 33 450 75Z"></path>
+                                            </svg>
                                         </div>
                                     </div>
-                                @endforeach
-
-
-
+                                    @endfor
+                                </div>
                             </div>
                         </div>
                     </div>
-                </section>
-                <!-- Recently-View-Products /- -->
+                </div>
+
+                @php $getDiscountPrice = \App\Models\Product::getDiscountPrice($productDetails['id']) @endphp
+
+                <div
+                    class="elementor-element elementor-element-0fe71b8 price-container e-flex e-con-boxed e-con e-child"
+                    data-id="0fe71b8"
+                    data-element_type="container"
+                    data-settings="{&quot;container_type&quot;:&quot;flex&quot;,&quot;content_width&quot;:&quot;boxed&quot;}"
+                >
+                    <div class="e-con-inner">
+                        @if ($getDiscountPrice > 0)
+                        <div
+                            class="elementor-element elementor-element-824f352 elementor-widget__width-auto elementor-widget elementor-widget-heading"
+                            data-id="824f352"
+                            data-element_type="widget"
+                            data-widget_type="heading.default"
+                        >
+                            <div class="elementor-widget-container">
+                                <h2 class="elementor-heading-title elementor-size-default">₱{{$getDiscountPrice}}</h2>
+                            </div>
+                        </div>
+                        <div
+                            class="elementor-element elementor-element-32fc723 elementor-widget__width-auto elementor-widget elementor-widget-heading"
+                            data-id="32fc723"
+                            data-element_type="widget"
+                            data-widget_type="heading.default"
+                        >
+                            <div class="elementor-widget-container">
+                                <h2 class="elementor-heading-title elementor-size-default">₱{{$productDetails['product_price']}}</h2>
+                            </div>
+                        </div>
+                        @else
+                        <div
+                            class="elementor-element elementor-element-824f352 elementor-widget__width-auto elementor-widget elementor-widget-heading"
+                            data-id="824f352"
+                            data-element_type="widget"
+                            data-widget_type="heading.default"
+                        >
+                            <div class="elementor-widget-container">
+                                <h2 class="elementor-heading-title elementor-size-default">₱{{$productDetails['product_price']}}</h2>
+                            </div>
+                        </div>
+                        @endif
+                    </div>
+                </div>
+                <div
+                    class="elementor-element elementor-element-b77bd95 elementor-widget elementor-widget-text-editor"
+                    data-id="b77bd95"
+                    data-element_type="widget"
+                    data-widget_type="text-editor.default"
+                >
+                    <div class="elementor-widget-container">
+                        <style>/*! elementor - v3.18.0 - 08-12-2023 */ .elementor-widget-text-editor.elementor-drop-cap-view-stacked .elementor-drop-cap{background-color:#69727d;color:#fff}.elementor-widget-text-editor.elementor-drop-cap-view-framed .elementor-drop-cap{color:#69727d;border:3px solid;background-color:transparent}.elementor-widget-text-editor:not(.elementor-drop-cap-view-default) .elementor-drop-cap{margin-top:8px}.elementor-widget-text-editor:not(.elementor-drop-cap-view-default) .elementor-drop-cap-letter{width:1em;height:1em}.elementor-widget-text-editor .elementor-drop-cap{float:left;text-align:center;line-height:1;font-size:50px}.elementor-widget-text-editor .elementor-drop-cap-letter{display:inline-block}</style>
+                        {{$productDetails['description']}}
+                    </div>
+                </div>
+                <div
+                    class="elementor-element elementor-element-6671d28 add-to-cart-form e-flex e-con-boxed e-con e-child"
+                    data-id="6671d28"
+                    data-element_type="container"
+                    data-settings="{&quot;container_type&quot;:&quot;flex&quot;,&quot;content_width&quot;:&quot;boxed&quot;}"
+                >
+                    <div class="e-con-inner">
+                        <div
+                            class="elementor-element elementor-element-0b98135 elementor-button-align-stretch elementor-widget elementor-widget-form"
+                            data-id="0b98135"
+                            data-element_type="widget"
+                            data-settings="{&quot;button_width&quot;:&quot;25&quot;,&quot;step_next_label&quot;:&quot;Next&quot;,&quot;step_previous_label&quot;:&quot;Previous&quot;,&quot;button_width_tablet&quot;:&quot;60&quot;,&quot;step_type&quot;:&quot;number_text&quot;,&quot;step_icon_shape&quot;:&quot;circle&quot;}"
+                            data-widget_type="form.default"
+                        >
+                            <div class="elementor-widget-container">
+                                <style>/*! elementor-pro - v3.18.0 - 06-12-2023 */ .elementor-button.elementor-hidden,.elementor-hidden{display:none}.e-form__step{width:100%}.e-form__step:not(.elementor-hidden){display:flex;flex-wrap:wrap}.e-form__buttons{flex-wrap:wrap}.e-form__buttons,.e-form__buttons__wrapper{display:flex}.e-form__indicators{display:flex;justify-content:space-between;align-items:center;flex-wrap:nowrap;font-size:13px;margin-bottom:var(--e-form-steps-indicators-spacing)}.e-form__indicators__indicator{display:flex;flex-direction:column;align-items:center;justify-content:center;flex-basis:0;padding:0 var(--e-form-steps-divider-gap)}.e-form__indicators__indicator__progress{width:100%;position:relative;background-color:var(--e-form-steps-indicator-progress-background-color);border-radius:var(--e-form-steps-indicator-progress-border-radius);overflow:hidden}.e-form__indicators__indicator__progress__meter{width:var(--e-form-steps-indicator-progress-meter-width,0);height:var(--e-form-steps-indicator-progress-height);line-height:var(--e-form-steps-indicator-progress-height);padding-right:15px;border-radius:var(--e-form-steps-indicator-progress-border-radius);background-color:var(--e-form-steps-indicator-progress-color);color:var(--e-form-steps-indicator-progress-meter-color);text-align:right;transition:width .1s linear}.e-form__indicators__indicator:first-child{padding-left:0}.e-form__indicators__indicator:last-child{padding-right:0}.e-form__indicators__indicator--state-inactive{color:var(--e-form-steps-indicator-inactive-primary-color,#c2cbd2)}.e-form__indicators__indicator--state-inactive [class*=indicator--shape-]:not(.e-form__indicators__indicator--shape-none){background-color:var(--e-form-steps-indicator-inactive-secondary-color,#fff)}.e-form__indicators__indicator--state-inactive object,.e-form__indicators__indicator--state-inactive svg{fill:var(--e-form-steps-indicator-inactive-primary-color,#c2cbd2)}.e-form__indicators__indicator--state-active{color:var(--e-form-steps-indicator-active-primary-color,#39b54a);border-color:var(--e-form-steps-indicator-active-secondary-color,#fff)}.e-form__indicators__indicator--state-active [class*=indicator--shape-]:not(.e-form__indicators__indicator--shape-none){background-color:var(--e-form-steps-indicator-active-secondary-color,#fff)}.e-form__indicators__indicator--state-active object,.e-form__indicators__indicator--state-active svg{fill:var(--e-form-steps-indicator-active-primary-color,#39b54a)}.e-form__indicators__indicator--state-completed{color:var(--e-form-steps-indicator-completed-secondary-color,#fff)}.e-form__indicators__indicator--state-completed [class*=indicator--shape-]:not(.e-form__indicators__indicator--shape-none){background-color:var(--e-form-steps-indicator-completed-primary-color,#39b54a)}.e-form__indicators__indicator--state-completed .e-form__indicators__indicator__label{color:var(--e-form-steps-indicator-completed-primary-color,#39b54a)}.e-form__indicators__indicator--state-completed .e-form__indicators__indicator--shape-none{color:var(--e-form-steps-indicator-completed-primary-color,#39b54a);background-color:initial}.e-form__indicators__indicator--state-completed object,.e-form__indicators__indicator--state-completed svg{fill:var(--e-form-steps-indicator-completed-secondary-color,#fff)}.e-form__indicators__indicator__icon{width:var(--e-form-steps-indicator-padding,30px);height:var(--e-form-steps-indicator-padding,30px);font-size:var(--e-form-steps-indicator-icon-size);border-width:1px;border-style:solid;display:flex;justify-content:center;align-items:center;overflow:hidden;margin-bottom:10px}.e-form__indicators__indicator__icon img,.e-form__indicators__indicator__icon object,.e-form__indicators__indicator__icon svg{width:var(--e-form-steps-indicator-icon-size);height:auto}.e-form__indicators__indicator__icon .e-font-icon-svg{height:1em}.e-form__indicators__indicator__number{width:var(--e-form-steps-indicator-padding,30px);height:var(--e-form-steps-indicator-padding,30px);border-width:1px;border-style:solid;display:flex;justify-content:center;align-items:center;margin-bottom:10px}.e-form__indicators__indicator--shape-circle{border-radius:50%}.e-form__indicators__indicator--shape-square{border-radius:0}.e-form__indicators__indicator--shape-rounded{border-radius:5px}.e-form__indicators__indicator--shape-none{border:0}.e-form__indicators__indicator__label{text-align:center}.e-form__indicators__indicator__separator{width:100%;height:var(--e-form-steps-divider-width);background-color:#babfc5}.e-form__indicators--type-icon,.e-form__indicators--type-icon_text,.e-form__indicators--type-number,.e-form__indicators--type-number_text{align-items:flex-start}.e-form__indicators--type-icon .e-form__indicators__indicator__separator,.e-form__indicators--type-icon_text .e-form__indicators__indicator__separator,.e-form__indicators--type-number .e-form__indicators__indicator__separator,.e-form__indicators--type-number_text .e-form__indicators__indicator__separator{margin-top:calc(var(--e-form-steps-indicator-padding, 30px) / 2 - var(--e-form-steps-divider-width, 1px) / 2)}.elementor-field-type-hidden{display:none}.elementor-field-type-html{display:inline-block}.elementor-field-type-tel input{direction:inherit}.elementor-login .elementor-lost-password,.elementor-login .elementor-remember-me{font-size:.85em}.elementor-field-type-recaptcha_v3 .elementor-field-label{display:none}.elementor-field-type-recaptcha_v3 .grecaptcha-badge{z-index:1}.elementor-button .elementor-form-spinner{order:3}.elementor-form .elementor-button>span{display:flex;justify-content:center;align-items:center}.elementor-form .elementor-button .elementor-button-text{white-space:normal;flex-grow:0}.elementor-form .elementor-button svg{height:auto}.elementor-form .elementor-button .e-font-icon-svg{height:1em}.elementor-select-wrapper .select-caret-down-wrapper{position:absolute;top:50%;transform:translateY(-50%);inset-inline-end:10px;pointer-events:none;font-size:11px}.elementor-select-wrapper .select-caret-down-wrapper svg{display:unset;width:1em;aspect-ratio:unset;fill:currentColor}.elementor-select-wrapper .select-caret-down-wrapper i{font-size:19px;line-height:2}.elementor-select-wrapper.remove-before:before{content:""!important}</style>
+                                <form id="product-detail-add-to-cart-form" method="post" action="javascript:;" name="New Form">
+                                    <input type="hidden" name="post_id" value="491">
+                                    <input type="hidden" name="form_id" value="0b98135">
+                                    <input type="hidden" name="referer_title" value="Product Page">
+                                    <input type="hidden" name="queried_id" value="491">
+                                    <input type="hidden" name="product_id" value="{{ $productDetails['id'] }}">
+                                    <input type="hidden" name="size" value="{{ $productDetails['attributes'][0]['size'] }}">
+                                    <div class="elementor-form-fields-wrapper elementor-labels-">
+                                        <div class="elementor-field-type-number elementor-field-group elementor-column elementor-field-group-name elementor-col-20 elementor-field-required">
+                                            <label for="form-field-name" class="elementor-field-label elementor-screen-only">Quantity</label>
+                                            <input
+                                                type="number"
+                                                name="quantity"
+                                                id="form-field-name"
+                                                class="elementor-field elementor-size-sm  elementor-field-textual"
+                                                placeholder="1"
+                                                required="required"
+                                                aria-required="true"
+                                                min="1"
+                                                max=""
+                                            >
+                                        </div>
+                                        <div class="elementor-field-group elementor-column elementor-field-type-submit elementor-col-25 e-form__buttons elementor-md-60">
+                                            <button type="submit" class="elementor-button elementor-size-sm">
+                                                <span>
+                                                    <span class="elementor-button-icon"></span>
+                                                    <span class="elementor-button-text">ADD TO CART</span>
+                                                </span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div
+                    class="elementor-element elementor-element-b451558 elementor-widget elementor-widget-heading"
+                    data-id="b451558"
+                    data-element_type="widget"
+                    data-widget_type="heading.default"
+                >
+                    <div class="elementor-widget-container">
+                        <h6 class="elementor-heading-title elementor-size-default">SKU: KAPITON0001</h6>
+                    </div>
+                </div>
             </div>
-            <!-- Different-Product-Section /- -->
         </div>
     </div>
-    <!-- Single-Product-Full-Width-Page /- -->
+    
+    @include('front.products.ajax_related_products_listings')
+</div>
+<div class="post-tags"></div>
 @endsection

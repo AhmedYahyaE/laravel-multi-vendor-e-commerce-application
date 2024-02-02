@@ -92,7 +92,64 @@ $(document).ready(function() {
         });
     });
 
+    $('#product-detail-add-to-cart-form').submit(function (v) {
+        let form = new FormData(v.target);
 
+        $.ajax({
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}, // X-CSRF-TOKEN: https://laravel.com/docs/9.x/csrf#csrf-x-csrf-token    
+            data   : form, // Sending name/value pairs to server with the AJAX request (AJAX call)
+            url    : '/cart/add', // check this route in web.php
+            type   : 'post',
+            processData: false,
+            contentType: false,
+            success: function(resp) {
+                $('.totalCartItems').html(resp.totalCartItems); // totalCartItems() function is in our custom Helpers/Helper.php file that we have registered in 'composer.json' file    // We created the CSS class 'totalCartItems' in front/layout/header.blade.php to use it in front/js/custom.js to update the total cart items via AJAX, because in pages that we originally use AJAX to update the cart items (such as when we delete a cart item in http://127.0.0.1:8000/cart using AJAX), the number doesn't change in the header automatically because AJAX is already used and no page reload/refresh has occurred
+
+                if (resp.status == false) { // if    'status' => 'false'    is sent from as a response from the backend, show the message    // 'status' is sent as a PHP array key (in the HTTP response from the server (backend)) from inside the cartUpdate() method in Front/ProductsController.php
+                    alert(resp.message);
+                }
+
+                // console.log(resp.view);
+                // console.log(resp.headerview);
+
+                $('#appendCartItems').html(resp.view); // 'view' is sent as a PHP array key (in the HTTP response from the server (backend)) from inside the cartUpdate() method in Front/ProductsController.php
+
+                $('#appendHeaderCartItems').html(resp.headerview); // 'headerview' is sent as a PHP array key (in the HTTP response from the server (backend)) from inside the cartUpdate() method in Front/ProductsController.php    
+            },
+            error  : function() {
+                alert('Error');
+            }
+        });
+    })
+
+    $(document).on('click', '.item-addCart', function(v) {
+        // cart/add
+        // console.log(v);
+
+        $.ajax({
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}, // X-CSRF-TOKEN: https://laravel.com/docs/9.x/csrf#csrf-x-csrf-token    
+            data   : {}, // Sending name/value pairs to server with the AJAX request (AJAX call)
+            url    : '/cart/add', // check this route in web.php
+            type   : 'post',
+            success: function(resp) {
+                $('.totalCartItems').html(resp.totalCartItems); // totalCartItems() function is in our custom Helpers/Helper.php file that we have registered in 'composer.json' file    // We created the CSS class 'totalCartItems' in front/layout/header.blade.php to use it in front/js/custom.js to update the total cart items via AJAX, because in pages that we originally use AJAX to update the cart items (such as when we delete a cart item in http://127.0.0.1:8000/cart using AJAX), the number doesn't change in the header automatically because AJAX is already used and no page reload/refresh has occurred
+
+                if (resp.status == false) { // if    'status' => 'false'    is sent from as a response from the backend, show the message    // 'status' is sent as a PHP array key (in the HTTP response from the server (backend)) from inside the cartUpdate() method in Front/ProductsController.php
+                    alert(resp.message);
+                }
+
+                // console.log(resp.view);
+                // console.log(resp.headerview);
+
+                $('#appendCartItems').html(resp.view); // 'view' is sent as a PHP array key (in the HTTP response from the server (backend)) from inside the cartUpdate() method in Front/ProductsController.php
+
+                $('#appendHeaderCartItems').html(resp.headerview); // 'headerview' is sent as a PHP array key (in the HTTP response from the server (backend)) from inside the cartUpdate() method in Front/ProductsController.php    
+            },
+            error  : function() {
+                alert('Error');
+            }
+        });
+    });
 
     // Update Cart Item Quantity in front/products/cart_items.blade.php (which is 'include'-ed by front/products/cart.blade.php)     
     $(document).on('click', '.updateCartItem', function() {
@@ -738,5 +795,151 @@ $(document).ready(function() {
         });
 
     });
+
+    /**
+     * Submit checkout
+     */
+    $('button#checkout-submit-btn').on('click', function () {
+        let data = {
+            'address_id': $('.checkout-form input[name^="preferred_address"]:checked').val(),
+            'payment_gateway': $('.checkout-form input[name^="paymentgateway"]').val(),
+            'accept': true
+        };
+
+        $.ajax({
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}, // X-CSRF-TOKEN: https://laravel.com/docs/9.x/csrf#csrf-x-csrf-token    
+            url    : '/checkout', // check this route in web.php
+            type   : 'post',
+            contentType: 'application/json',
+            data   : JSON.stringify(data), // Sending name/value pairs to server with the AJAX request (AJAX call)
+            success: function(resp) { // if the AJAX request / AJAX call is successful
+                if (resp.data.success) {
+                    window.location.href = "/thanks";
+                }
+            },
+            error  : function() { // if the AJAX request is unsuccessful
+                alert('Error');
+            }
+        });
+    })
+
+    /**
+     * On change of country name - load city
+     */
+    $('.address-field[name=country]').change((el) => {
+        let country = $(el.currentTarget).val();
+
+        var settings = {
+            "url": 'https://countriesnow.space/api/v0.1/countries/states',
+            "method": "POST",
+            data: {
+                "country": country
+            }
+        };
+          
+
+        $.ajax(settings).done(function (response) {
+            if (!response.error) {
+                $('.address-field[name=state] .added-through-api').remove();
+
+                let states = response.data.states.map((state) => {
+                    let newOption = $('<option>', {
+                        value: state.name,
+                        text: state.name,
+                        class: "added-through-api"
+                    });
+
+                    return newOption;
+                });
+                
+                $('.address-field[name=state]').append(states);
+            }
+        });
+    })
+
+    /**
+     * On change of state get cities
+     */
+    $('.address-field[name=state]').change((el) => {
+        let country = $('.address-field[name=country]').val();
+        let state = $(el.currentTarget).val();
+
+        var settings = {
+            "url": 'https://countriesnow.space/api/v0.1/countries/state/cities',
+            "method": "POST",
+            data: {
+                "country": country,
+                "state": state
+            }
+        }
+
+        $.ajax(settings).done(function (response) {
+            if (!response.error) {
+                $('.address-field[name=city] .added-through-api').remove();
+                
+                let cities = response.data.map((city) => {
+                    let newOption = $('<option>', {
+                        value: city,
+                        text: city,
+                        class: "added-through-api"
+                    });
+
+                    return newOption;
+                });
+                
+                $('.address-field[name=city]').append(cities);
+            }
+        });
+    });
+
+    // Customer Profile edit information
+    $("#edit_info").click(function(event) {
+        event.preventDefault(); 
+    
+        // Toggle the class "edit_active" on ".customer_information"
+        $(".customer_information").toggleClass("edit_active");
+    
+        // Find ".elementor-button-text" inside "#edit_info"
+        var buttonText = $("#edit_info .elementor-button-text");
+    
+        // Check the current text and toggle between "Cancel" and "Edit information"
+        if (buttonText.text() === "Edit information") {
+            buttonText.text("Cancel");
+        } else {
+            buttonText.text("Edit information");
+        }
+    });
+
+    $(".add-address a").click(function(event) {
+        event.preventDefault(); 
+        $(".add-address-form").toggleClass("display-add");
+    });
+
+    $(".filter-link .single-filter-container").click(function(event) {
+        event.preventDefault();
+        $(this).closest(".filter-link").toggleClass("filter_active");
+    });
+
+    $("#filter-trigger").click(function(event) {
+        event.preventDefault();
+        $(".filters-inner").toggleClass("active");
+    });
+
+
+    // Set up the price range slider
+    $(".filter_outer_container #slide-price-range").slider({
+        range: true,
+        min: 0,
+        max: 1000,
+        values: [0, 1000],
+        slide: function(event, ui) {
+          $(".filter_outer_container #slide-price-min").text(ui.values[0]);
+          $(".filter_outer_container #slide-price-max").text(ui.values[1]);
+        }
+    });
+
+    // Display initial values
+    $(".filter_outer_container #slide-price-min").text($(".filter_outer_container #slide-price-range").slider("values", 0));
+    $(".filter_outer_container #slide-price-max").text($(".filter_outer_container #slide-price-range").slider("values", 1));
 
 });

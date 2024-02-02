@@ -242,11 +242,11 @@ class ProductsController extends Controller
                     $categoryProducts = $categoryProducts->where('products.section_id', $_REQUEST['section_id']);
                 }
 
-                $categoryProducts = $categoryProducts->get();
+                $collection = $categoryProducts->get();
                 // dd($categoryProducts);
 
 
-                return view('front.products.listing')->with(compact('categoryDetails', 'categoryProducts'));
+                return view('front.products.collection_listings')->with(compact('categoryDetails', 'collection'));
 
             } else { // If the Search Form is NOT used, render the listing.blade.php page with the Sorting Filter WITHOUT AJAX (using the HTML <form> and jQuery)
                 $url = \Illuminate\Support\Facades\Route::getFacadeRoot()->current()->uri(); // Accessing The Current Route: https://laravel.com/docs/9.x/routing#accessing-the-current-route    // Accessing The Current URL: https://laravel.com/docs/9.x/urls#accessing-the-current-url       
@@ -279,7 +279,7 @@ class ProductsController extends Controller
                     }
         
                     // Pagination (after the Sorting Filter)
-                    $categoryProducts = $categoryProducts->paginate(30); // Moved the pagination after checking for the sorting filter <form>
+                    $collection = $categoryProducts->paginate(30); // Moved the pagination after checking for the sorting filter <form>
 
 
                     // Dynamic SEO (HTML meta tags): Check the HTML <meta> tags and <title> tag in front/layout/layout.blade.php    
@@ -288,7 +288,7 @@ class ProductsController extends Controller
                     $meta_keywords    = $categoryDetails['categoryDetails']['meta_keywords'];
 
 
-                    return view('front.products.listing')->with(compact('categoryDetails', 'categoryProducts', 'url', 'meta_title', 'meta_description', 'meta_keywords'));
+                    return view('front.products.collection_listings')->with(compact('categoryDetails', 'collection', 'url', 'meta_title', 'meta_description', 'meta_keywords'));
 
                 } else {
                     abort(404); // we will create the 404 page later on    // https://laravel.com/docs/9.x/helpers#method-abort
@@ -314,7 +314,7 @@ class ProductsController extends Controller
         
 
         // Get similar products (or related products) (functionality) by getting other products from THE SAME CATEGORY    
-        $similarProducts = \App\Models\Product::with('brand')->where('category_id', $productDetails['category']['id'])->where('id', '!=', $id)->limit(4)->inRandomOrder()->get()->toArray(); // where('id', '!=', $id)    means get all similar products (of the same category) EXCEPT (exclude) the currently viewed product (to not be repeated (to prevent repetition))    // limit(4)->inRandomOrder()    means show only 4 similar products but IN RANDOM ORDER
+        $similarProducts = \App\Models\Product::with('vendor','brand')->where('category_id', $productDetails['category']['id'])->where('id', '!=', $id)->limit(4)->inRandomOrder()->get()->toArray(); // where('id', '!=', $id)    means get all similar products (of the same category) EXCEPT (exclude) the currently viewed product (to not be repeated (to prevent repetition))    // limit(4)->inRandomOrder()    means show only 4 similar products but IN RANDOM ORDER
 
 
         // Recently Viewed Products (Items) functionality (we created `recently_viewed_products` table but we won't need to create a Model for it, because we won't do much work with it)
@@ -557,8 +557,8 @@ class ProductsController extends Controller
         $getCartItems = \App\Models\Cart::getCartItems();
 
         // Static SEO (HTML meta tags): Check the HTML <meta> tags and <title> tag in front/layout/layout.blade.php    
-        $meta_title       = 'Shopping Cart - Multi Vendor E-commerce';
-        $meta_keywords    = 'shopping cart, multi vendor';
+        $meta_title       = 'Shopping Cart - Kapiton';
+        $meta_keywords    = 'shopping cart, kapiton cart, kapiton e-commerce';
 
 
         return view('front.products.cart')->with(compact('getCartItems', 'meta_title', /* 'meta_description', */ 'meta_keywords'));
@@ -1066,6 +1066,7 @@ class ProductsController extends Controller
                 $cartItem->product_name    = $getProductDetails['product_name'];
                 $cartItem->product_color   = $getProductDetails['product_color'];
                 $cartItem->product_size    = $item['size'];
+                $cartItem->item_status     = 1;
 
                 $getDiscountAttributePrice = \App\Models\Product::getDiscountAttributePrice($item['product_id'], $item['size']); // from the `products_attributes` table, not the `products` table
                 $cartItem->product_price   = $getDiscountAttributePrice['final_price'];
@@ -1152,10 +1153,12 @@ class ProductsController extends Controller
             }
 
 
-            return redirect('thanks'); // redirect to front/products/thanks.blade.php page
+            return [
+                'success' => true
+            ]; // redirect to front/products/thanks.blade.php page
         }
 
-
+        $total_price = number_format($total_price, 2);
         return view('front.products.checkout')->with(compact('deliveryAddresses', 'countries', 'getCartItems', 'total_price'));
     }
 

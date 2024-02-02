@@ -1,0 +1,42 @@
+.e-ai-button {
+  background: none;
+  border: none;
+  font-size: var(--control-title-size);
+  cursor: pointer;
+  transition: var(--e-a-transition-hover);
+}
+.e-ai-button:not(.e-active) {
+  color: var(--e-a-color-primary-bold);
+}
+.e-ai-button:hover {
+  color: #E73CF6;
+}
+
+.e-ai-promotion {
+  font-size: var(--control-title-size);
+}
+.e-ai-promotion i {
+  margin-inline-end: 5px;
+}
+
+.elementor-label-block .e-ai-promotion,
+.elementor-label-block .e-ai-button {
+  margin-inline-start: auto;
+}
+
+.elementor-context-menu-list__item__ai-badge {
+  background-color: #524CFF;
+  border-radius: 25px;
+  display: flex;
+  justify-content: center;
+  padding: 4px;
+}
+.elementor-context-menu-list__item__ai-badge svg {
+  width: 12px;
+  height: 12px;
+}
+.elementor-context-menu-list__item__ai-badge svg path {
+  fill: #ffffff;
+}
+
+/*# sourceMappingURL=editor.css.map */

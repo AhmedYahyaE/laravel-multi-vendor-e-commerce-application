@@ -21,7 +21,7 @@ require __DIR__.'/auth.php';
 
 // First: Admin Panel routes:
 // The website 'ADMIN' Section: Route Group for routes starting with the 'admin' word (Admin Route Group)    // NOTE: ALL THE ROUTES INSIDE THIS PREFIX STATRT WITH 'admin/', SO THOSE ROUTES INSIDE THE PREFIX, YOU DON'T WRITE '/admin' WHEN YOU DEFINE THEM, IT'LL BE DEFINED AUTOMATICALLY!!
-Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function() {
+Route::middleware(['web'])->prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function() {
     Route::match(['get', 'post'], 'login', 'AdminController@login'); // match() method is used to use more than one HTTP request method for the same route, so GET for rendering the login.php page, and POST for the login.php page <form> submission (e.g. GET and POST)    // Matches the '/admin/dashboard' URL (i.e. http://127.0.0.1:8000/admin/dashboard)
 
 
@@ -132,7 +132,9 @@ Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function
 
         // Shipping Charges module
         // Render the Shipping Charges page (admin/shipping/shipping_charges.blade.php) in the Admin Panel for 'admin'-s only, not for vendors
+        Route::resource('shipping-charges', ShippingController::class);
         Route::get('shipping-charges', 'ShippingController@shippingCharges');
+        Route::post('shipping-charges/store', 'ShippingController@store');
 
         // Update Shipping Status (active/inactive) via AJAX in admin/shipping/shipping_charages.blade.php, check admin/js/custom.js
         Route::post('update-shipping-status', 'ShippingController@updateShippingStatus');
@@ -185,7 +187,7 @@ Route::get('orders/invoice/download/{id}', 'App\Http\Controllers\Admin\OrderCont
 
 // Second: FRONT section routes:
 Route::namespace('App\Http\Controllers\Front')->group(function() {
-    Route::get('/', 'IndexController@index');
+    Route::get('/', ['as' => 'home', 'uses' => 'IndexController@index']);
 
 
     // Dynamic Routes for the `url` column in the `categories` table using a foreach loop    // Listing/Categories Routes
@@ -194,7 +196,7 @@ Route::namespace('App\Http\Controllers\Front')->group(function() {
     // dd($catUrls);
     foreach ($catUrls as $key => $url) {
         // Important Note: When you run this Laravel project for the first time and if you're running  the "php artisan migrate" command for the first time, before that you must comment out the $catUrls variable and the following foreach loop in web.php file (routes file), because when we run that artisan command, by then the `categories` table has not been created yet, and this causes an error, so make sure to comment out this code in web.php file before running the "php artisan migrate" command for the first time.
-        Route::match(['get', 'post'], '/' . $url, 'ProductsController@listing'); // used match() for the HTTP 'GET' requests to render listing.blade.php page and the HTTP 'POST' method for the AJAX request of the Sorting Filter or the HTML Form submission and jQuery for the Sorting Filter WITHOUT AJAX, AND ALSO for submitting the Search Form in listing.blade.php    // e.g.    /men    or    /computers    // Important Note: When you run this Laravel project for the first time and if you're running  the "php artisan migrate" command for the first time, before that you must comment out the $catUrls variable and the following foreach loop in web.php file (routes file), because when we run that artisan command, by then the `categories` table has not been created yet, and this causes an error, so make sure to comment out this code in web.php file before running the "php artisan migrate" command for the first time.
+        Route::match(['get', 'post'], '/' . $url, 'ProductsController@listing')->name('listing'); // used match() for the HTTP 'GET' requests to render listing.blade.php page and the HTTP 'POST' method for the AJAX request of the Sorting Filter or the HTML Form submission and jQuery for the Sorting Filter WITHOUT AJAX, AND ALSO for submitting the Search Form in listing.blade.php    // e.g.    /men    or    /computers    // Important Note: When you run this Laravel project for the first time and if you're running  the "php artisan migrate" command for the first time, before that you must comment out the $catUrls variable and the following foreach loop in web.php file (routes file), because when we run that artisan command, by then the `categories` table has not been created yet, and this causes an error, so make sure to comment out this code in web.php file before running the "php artisan migrate" command for the first time.
     }
 
 
@@ -208,7 +210,7 @@ Route::namespace('App\Http\Controllers\Front')->group(function() {
     Route::get('vendor/confirm/{code}', 'VendorController@confirmVendor'); // {code} is the base64 encoded vendor e-mail with which they have registered which is a Route Parameters/URL Paramters: https://laravel.com/docs/9.x/routing#required-parameters    // this route is requested (accessed/opened) from inside the mail sent to vendor (vendor_confirmation.blade.php)
 
     // Render Single Product Detail Page in front/products/detail.blade.php
-    Route::get('/product/{id}', 'ProductsController@detail');
+    Route::get('/product/{id}', ['as' => 'product_detail.show', 'uses' => 'ProductsController@detail']);
 
     // The AJAX call from front/js/custom.js file, to show the the correct related `price` and `stock` depending on the selected `size` (from the `products_attributes` table)) by clicking the size <select> box in front/products/detail.blade.php
     Route::post('get-product-price', 'ProductsController@getProductPrice');
@@ -220,7 +222,7 @@ Route::namespace('App\Http\Controllers\Front')->group(function() {
     Route::post('cart/add', 'ProductsController@cartAdd');
 
     // Render Cart page (front/products/cart.blade.php)    // this route is accessed from the <a> HTML tag inside the flash message inside cartAdd() method in Front/ProductsController.php (inside front/products/detail.blade.php)
-    Route::get('cart', 'ProductsController@cart')->name('cart');
+    Route::get('cart', 'ProductsController@cart')->name('front.user.cart');
 
     // Update Cart Item Quantity AJAX call in front/products/cart_items.blade.php. Check front/js/custom.js
     Route::post('cart/update', 'ProductsController@cartUpdate');
@@ -234,7 +236,7 @@ Route::namespace('App\Http\Controllers\Front')->group(function() {
     Route::get('user/login-register', ['as' => 'login', 'uses' => 'UserController@loginRegister']); // 'as' => 'login'    is Giving this route a name 'login' route in order for the 'auth' middleware ('auth' middleware is the Authenticate.php) to redirect to the right page
 
     // User Registration (in front/users/login_register.blade.php) <form> submission using an AJAX request. Check front/js/custom.js
-    Route::post('user/register', 'UserController@userRegister');
+    Route::match(['get', 'post'], 'user/register', ['as' => 'user_register', 'uses' => 'UserController@userRegister']);
 
     // User Login (in front/users/login_register.blade.php) <form> submission using an AJAX request. Check front/js/custom.js
     Route::post('user/login', 'UserController@userLogin');
@@ -243,7 +245,7 @@ Route::namespace('App\Http\Controllers\Front')->group(function() {
     Route::get('user/logout', 'UserController@userLogout');
 
     // User Forgot Password Functionality (this route is accessed from the <a> tag in front/users/login_register.blade.php through a 'GET' request, and through a 'POST' request when the HTML Form is submitted in front/users/forgot_password.blade.php)
-    Route::match(['get', 'post'], 'user/forgot-password', 'UserController@forgotPassword'); // We used match() method to use get() to render the front/users/forgot_password.blade.php page, and post() when the HTML Form in the same page is submitted    // The POST request is from an AJAX request. Check front/js/custom.js
+    Route::match(['get', 'post'], 'user/forgot-password', ['as' => 'forgot_password', 'uses' => 'UserController@forgotPassword']); // We used match() method to use get() to render the front/users/forgot_password.blade.php page, and post() when the HTML Form in the same page is submitted    // The POST request is from an AJAX request. Check front/js/custom.js
 
     // User account Confirmation E-mail which contains the 'Activation Link' to activate the user account (in resources/views/emails/confirmation.blade.php, using Mailtrap)
     Route::get('user/confirm/{code}', 'UserController@confirmAccount'); // {code} is the base64 encoded user's 'Activation Code' sent to the user in the Confirmation E-mail with which they have registered, which is received as a Route Parameters/URL Paramters in the 'Activation Link'    // this route is requested (accessed/opened) from inside the mail sent to user (in resources/views/emails/confirmation.blade.php)
@@ -263,22 +265,27 @@ Route::namespace('App\Http\Controllers\Front')->group(function() {
     // Add Rating & Review on a product in front/products/detail.blade.php
     Route::post('add-rating', 'RatingController@addRating');
 
+    // Collections
+    Route::get('collection/{collectionname}', ['as' => 'shop_category', 'uses' => 'SectionsController@index']);
+
 
 
 
     // Protecting the routes of user (user must be authenticated/logged in) (to prevent access to these links while being unauthenticated/not being logged in (logged out))
     Route::group(['middleware' => ['auth']], function() {
         // Render User Account page with 'GET' request (front/users/user_account.blade.php), or the HTML Form submission in the same page with 'POST' request using AJAX (to update user details). Check front/js/custom.js
-        Route::match(['GET', 'POST'], 'user/account', 'UserController@userAccount');
+        Route::match(['GET', 'POST'], 'user/account', ['as' => 'front.user.account', 'uses' => 'UserController@userAccount']);
 
         // User Account Update Password HTML Form submission via AJAX. Check front/js/custom.js
         Route::post('user/update-password', 'UserController@userUpdatePassword');
+
+        Route::get('user/security', 'UserController@showSecurity')->name('front.user.security');
 
         // Coupon Code redemption (Apply coupon) / Coupon Code HTML Form submission via AJAX in front/products/cart_items.blade.php, check front/js/custom.js
         Route::post('/apply-coupon', 'ProductsController@applyCoupon'); // Important Note: We added this route here as a protected route inside the 'auth' middleware group because ONLY logged in/authenticated users are allowed to redeem Coupons!
 
         // Checkout page (using match() method for the 'GET' request for rendering the front/products/checkout.blade.php page or the 'POST' request for the HTML Form submission in the same page (for submitting the user's Delivery Address and Payment Method))
-        Route::match(['GET', 'POST'], '/checkout', 'ProductsController@checkout');
+        Route::match(['GET', 'POST'], '/checkout', 'ProductsController@checkout')->name('front.user.checkout');
 
         // Edit Delivery Addresses (Page refresh and fill in the <input> fields with the authenticated/logged in user Delivery Addresses from the `delivery_addresses` database table when clicking on the Edit button) in front/products/delivery_addresses.blade.php (which is 'include'-ed in front/products/checkout.blade.php) via AJAX, check front/js/custom.js
         Route::post('get-delivery-address', 'AddressController@getDeliveryAddress');
@@ -293,7 +300,10 @@ Route::namespace('App\Http\Controllers\Front')->group(function() {
         Route::get('thanks', 'ProductsController@thanks');
 
         // Render User 'My Orders' page
-        Route::get('user/orders/{id?}', 'OrderController@orders'); // If the slug {id?} (Optional Parameters) is passed in, this means go to the front/orders/order_details.blade.php page, and if not, this means go to the front/orders/orders.blade.php page
+        Route::get('user/orders/{id?}', [
+            'as' => 'front.user.orders',
+            'uses' => 'OrderController@orders'
+        ]); // If the slug {id?} (Optional Parameters) is passed in, this means go to the front/orders/order_details.blade.php page, and if not, this means go to the front/orders/orders.blade.php page
 
 
 

@@ -15,6 +15,6 @@
         <tr><td>&nbsp;<br></td></tr>
         <tr><td>Thanks & Regards,</td></tr>
         <tr><td>&nbsp;</td></tr>
-        <tr><td>Multi-vendor E-commerce Application</td></tr>
+        <tr><td>Kapiton</td></tr>
     </body>
 </html>

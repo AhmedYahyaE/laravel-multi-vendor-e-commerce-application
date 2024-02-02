@@ -608,7 +608,7 @@ class OrderController extends Controller
                 <header class="clearfix">
                     <div class="container">
                         <div class="company-address">
-                            <h2 class="title">Multi-vendor E-commerce Application</h2>
+                            <h2 class="title">Kapiton</h2>
                             <p>
                                 37 Salah Salem St.<br>
                                 Cairo, Egypt

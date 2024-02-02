@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\ShippingCharge;
+use Illuminate\Http\RedirectResponse;
 use App\Http\Controllers\Controller;
+use App\Models\Country;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
@@ -21,6 +24,33 @@ class ShippingController extends Controller
 
 
         return view('admin.shipping.shipping_charges')->with(compact('shippingCharges'));
+    }
+
+    public function create() {
+        $title = "New Shipping Charge";
+        $obj_country = new Country;
+
+        $countries = $obj_country->get()->toArray();
+
+        return view('admin.shipping.add_shipping_charges')->with(compact('title', 'countries'));
+    }
+
+    public function store(Request $request): RedirectResponse {
+        $validated = $request->validate([
+            'country' => 'required',
+            '0_500g' => 'required|numeric',
+            '501g_1000g' => 'required|numeric',
+            '1001_2000g' => 'required|numeric',
+            '2001g_5000g' => 'required|numeric',
+            'above_5000g' => 'required|numeric'
+        ]);
+
+        $shippingCharage = new ShippingCharge($validated);
+
+        $shippingCharage->status = 1;
+        $shippingCharage->save();
+
+        return redirect('/admin/shipping-charges');
     }
 
     // Update Shipping Status (active/inactive) via AJAX in admin/shipping/shipping_charages.blade.php, check admin/js/custom.js    

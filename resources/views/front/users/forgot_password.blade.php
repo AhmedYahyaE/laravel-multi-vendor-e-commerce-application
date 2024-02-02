@@ -4,172 +4,113 @@
 
 
 @section('content')
-    <!-- Page Introduction Wrapper -->
-    <div class="page-style-a">
-        <div class="container">
-            <div class="page-intro">
-                <h2>Account</h2>
-                <ul class="bread-crumb">
-                    <li class="has-separator">
-                        <i class="ion ion-md-home"></i>
-                        <a href="index.html">Home</a>
-                    </li>
-                    <li class="is-marked">
-                        <a href="account.html">Account</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
-    <!-- Page Introduction Wrapper /- -->
-    <!-- Account-Page -->
-    <div class="page-account u-s-p-t-80">
-        <div class="container">
-
-
-
-            {{-- Displaying The Validation Errors: https://laravel.com/docs/9.x/validation#quick-displaying-the-validation-errors AND https://laravel.com/docs/9.x/blade#validation-errors --}} 
-            {{-- Determining If An Item Exists In The Session (using has() method): https://laravel.com/docs/9.x/session#determining-if-an-item-exists-in-the-session --}}
-            {{-- Our Bootstrap success message in case of updating admin password is successful: --}}
-            {{-- Displaying Success Message --}}
-            @if (Session::has('success_message')) <!-- Check userRegister() method in Front/UserController.php -->
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    <strong>Success:</strong> {{ Session::get('success_message') }}
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                    </button>
+<div
+    data-elementor-type="wp-page"
+    data-elementor-id="644"
+    class="elementor elementor-644"
+    data-elementor-post-type="page"
+>
+    <div
+        class="elementor-element elementor-element-44869ee e-flex e-con-boxed e-con e-parent"
+        data-id="44869ee"
+        data-element_type="container"
+        data-settings="{&quot;background_background&quot;:&quot;classic&quot;,&quot;container_type&quot;:&quot;flex&quot;,&quot;content_width&quot;:&quot;boxed&quot;}"
+        data-core-v316-plus="true"
+    >
+        <div class="e-con-inner">
+            <div
+                class="elementor-element elementor-element-414fadd e-con-full e-flex e-con e-child"
+                data-id="414fadd"
+                data-element_type="container"
+                data-settings="{&quot;content_width&quot;:&quot;full&quot;,&quot;container_type&quot;:&quot;flex&quot;}"
+            >
+                <div
+                    class="elementor-element elementor-element-df691bb elementor-invisible elementor-widget elementor-widget-heading"
+                    data-id="df691bb"
+                    data-element_type="widget"
+                    data-settings="{&quot;_animation&quot;:&quot;fadeInUp&quot;}"
+                    data-widget_type="heading.default"
+                >
+                    <div class="elementor-widget-container">
+                        <h1 class="elementor-heading-title elementor-size-default">FORGOT YOUR PASSWORD</h1>
+                    </div>
                 </div>
-            @endif
-            {{-- Displaying Error Messages --}}
-            @if (Session::has('error_message')) <!-- Check userRegister() method in Front/UserController.php -->
-                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                    <strong>Error:</strong> {{ Session::get('error_message') }}
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                    </button>
+                <div
+                    class="elementor-element elementor-element-8011b80 elementor-invisible elementor-widget elementor-widget-heading"
+                    data-id="8011b80"
+                    data-element_type="widget"
+                    data-settings="{&quot;_animation&quot;:&quot;fadeInUp&quot;}"
+                    data-widget_type="heading.default"
+                >
+                    <div class="elementor-widget-container">
+                        <p class="elementor-heading-title elementor-size-default">We will send you an email to reset your password</p>
+                    </div>
                 </div>
-            @endif
-            {{-- Displaying Error Messages --}}
-            @if ($errors->any()) <!-- Check userRegister() method in Front/UserController.php -->
-                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                    <strong>Error:</strong> @php echo implode('', $errors->all('<div>:message</div>')); @endphp
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-            @endif
-
-
-
-            <div class="row">
-
-
-
-                <!-- Forgot Password -->
-                <div class="col-lg-6">
-                    <div class="login-wrapper">
-                        <h2 class="account-h2 u-s-m-b-20">Forgot Password?</h2>
-                        <h6 class="account-h6 u-s-m-b-30">Welcome back! Sign in to your account.</h6>
-
-
-                        
-
-                        {{-- Note: To show the form's Validation Error Messages (Laravel's Validation Error Messages) from the AJAX call response from the server (backend), we create a <p> tag after every <input> field --}} {{-- We structure and use a certain pattern so that the <p> id pattern must be like: delivery-x (e.g. delivery-mobile, delivery-email, ... in order for the jQuery loop to work. And x must be identical to the 'name' HTML attributes (e.g. the <input> with the    name='mobile'    HTML attribute must have a <p> with an id HTML attribute    id="delivery-mobile"    ) so that when the vaildation errors array is sent as a response from backend/server (check $validator->messages()    inside    the method inside the controller) to the AJAX request, they could conveniently/easily be handled by the jQuery $.each() loop. Check front/js/custom.js) --}}
-                        <p id="forgot-error"></p> {{-- if the Validation passes / is okay but the login credentials provided by the user are incorrect, this'll be used by jQuery to show a generic 'Wrong Credentials!' message. Or to show a message when the user's account is inactive/disabled/deactivated --}}
-                        <p id="forgot-success"></p> {{-- if the Validation passes / is okay but the login credentials provided by the user are incorrect, this'll be used by jQuery to show a generic 'Wrong Credentials!' message. Or to show a message when the user's account is inactive/disabled/deactivated --}}
-                        <form id="forgotForm" action="javascript:;" method="post"> {{-- We need to deactivate the 'action' HTML attribute (using    'javascript:;'    ) as we'r going to submit using an AJAX call. Check front/js/custom.js --}}
-                            @csrf {{-- Preventing CSRF Requests: https://laravel.com/docs/9.x/csrf#preventing-csrf-requests --}}
-
-
-                            <div class="u-s-m-b-30">
-                                <label for="user-email">Email
-                                    <span class="astk">*</span>
-                                </label>
-                                <input type="email" name="email" id="users-email" class="text-field" placeholder="Email" name="email">
-                                <p id="forgot-email"></p> {{-- this will be used by jQuery to show the Validation Error Messages (Laravel's Validation Error Messages) from the AJAX call response from the server (backend) --}} {{-- The pattern must be like: register-x (e.g. register-mobile, register-email, ... in order for the jQuery loop to work. And x must be identical to the 'name' HTML attributes (e.g. the <input> with the    name='mobile'    HTML attribute must have a <p> with an id HTML attribute    id="register-mobile"    ) so that when the vaildation errors array is sent as a response from backend/server (check $validator->messages()    inside    the method inside the controller) to the AJAX request, they could conveniently/easily be handled by the jQuery $.each() loop. Check front/js/custom.js) --}}
-                            </div>
-                            <div class="group-inline u-s-m-b-30">
-                                <div class="group-2 text-right">
-                                    <div class="page-anchor">
-                                        <a href="{{ url('user/login-register') }}">
-                                            <i class="fas fa-circle-o-notch u-s-m-r-9"></i>Back to Login
-                                        </a>
+                <div
+                    class="elementor-element elementor-element-739bb7d reset-password-container e-flex e-con-boxed elementor-invisible e-con e-child"
+                    data-id="739bb7d"
+                    data-element_type="container"
+                    data-settings="{&quot;animation&quot;:&quot;fadeInUp&quot;,&quot;container_type&quot;:&quot;flex&quot;,&quot;content_width&quot;:&quot;boxed&quot;}"
+                >
+                    <div class="e-con-inner">
+                        <div
+                            class="elementor-element elementor-element-d056eaf elementor-button-align-stretch elementor-widget elementor-widget-form"
+                            data-id="d056eaf"
+                            data-element_type="widget"
+                            data-settings="{&quot;button_width&quot;:&quot;50&quot;,&quot;step_type&quot;:&quot;number_text&quot;,&quot;step_icon_shape&quot;:&quot;circle&quot;}"
+                            data-widget_type="form.default"
+                        >
+                            <div class="elementor-widget-container">
+                                <style>/*! elementor-pro - v3.18.0 - 06-12-2023 */ .elementor-button.elementor-hidden,.elementor-hidden{display:none}.e-form__step{width:100%}.e-form__step:not(.elementor-hidden){display:flex;flex-wrap:wrap}.e-form__buttons{flex-wrap:wrap}.e-form__buttons,.e-form__buttons__wrapper{display:flex}.e-form__indicators{display:flex;justify-content:space-between;align-items:center;flex-wrap:nowrap;font-size:13px;margin-bottom:var(--e-form-steps-indicators-spacing)}.e-form__indicators__indicator{display:flex;flex-direction:column;align-items:center;justify-content:center;flex-basis:0;padding:0 var(--e-form-steps-divider-gap)}.e-form__indicators__indicator__progress{width:100%;position:relative;background-color:var(--e-form-steps-indicator-progress-background-color);border-radius:var(--e-form-steps-indicator-progress-border-radius);overflow:hidden}.e-form__indicators__indicator__progress__meter{width:var(--e-form-steps-indicator-progress-meter-width,0);height:var(--e-form-steps-indicator-progress-height);line-height:var(--e-form-steps-indicator-progress-height);padding-right:15px;border-radius:var(--e-form-steps-indicator-progress-border-radius);background-color:var(--e-form-steps-indicator-progress-color);color:var(--e-form-steps-indicator-progress-meter-color);text-align:right;transition:width .1s linear}.e-form__indicators__indicator:first-child{padding-left:0}.e-form__indicators__indicator:last-child{padding-right:0}.e-form__indicators__indicator--state-inactive{color:var(--e-form-steps-indicator-inactive-primary-color,#c2cbd2)}.e-form__indicators__indicator--state-inactive [class*=indicator--shape-]:not(.e-form__indicators__indicator--shape-none){background-color:var(--e-form-steps-indicator-inactive-secondary-color,#fff)}.e-form__indicators__indicator--state-inactive object,.e-form__indicators__indicator--state-inactive svg{fill:var(--e-form-steps-indicator-inactive-primary-color,#c2cbd2)}.e-form__indicators__indicator--state-active{color:var(--e-form-steps-indicator-active-primary-color,#39b54a);border-color:var(--e-form-steps-indicator-active-secondary-color,#fff)}.e-form__indicators__indicator--state-active [class*=indicator--shape-]:not(.e-form__indicators__indicator--shape-none){background-color:var(--e-form-steps-indicator-active-secondary-color,#fff)}.e-form__indicators__indicator--state-active object,.e-form__indicators__indicator--state-active svg{fill:var(--e-form-steps-indicator-active-primary-color,#39b54a)}.e-form__indicators__indicator--state-completed{color:var(--e-form-steps-indicator-completed-secondary-color,#fff)}.e-form__indicators__indicator--state-completed [class*=indicator--shape-]:not(.e-form__indicators__indicator--shape-none){background-color:var(--e-form-steps-indicator-completed-primary-color,#39b54a)}.e-form__indicators__indicator--state-completed .e-form__indicators__indicator__label{color:var(--e-form-steps-indicator-completed-primary-color,#39b54a)}.e-form__indicators__indicator--state-completed .e-form__indicators__indicator--shape-none{color:var(--e-form-steps-indicator-completed-primary-color,#39b54a);background-color:initial}.e-form__indicators__indicator--state-completed object,.e-form__indicators__indicator--state-completed svg{fill:var(--e-form-steps-indicator-completed-secondary-color,#fff)}.e-form__indicators__indicator__icon{width:var(--e-form-steps-indicator-padding,30px);height:var(--e-form-steps-indicator-padding,30px);font-size:var(--e-form-steps-indicator-icon-size);border-width:1px;border-style:solid;display:flex;justify-content:center;align-items:center;overflow:hidden;margin-bottom:10px}.e-form__indicators__indicator__icon img,.e-form__indicators__indicator__icon object,.e-form__indicators__indicator__icon svg{width:var(--e-form-steps-indicator-icon-size);height:auto}.e-form__indicators__indicator__icon .e-font-icon-svg{height:1em}.e-form__indicators__indicator__number{width:var(--e-form-steps-indicator-padding,30px);height:var(--e-form-steps-indicator-padding,30px);border-width:1px;border-style:solid;display:flex;justify-content:center;align-items:center;margin-bottom:10px}.e-form__indicators__indicator--shape-circle{border-radius:50%}.e-form__indicators__indicator--shape-square{border-radius:0}.e-form__indicators__indicator--shape-rounded{border-radius:5px}.e-form__indicators__indicator--shape-none{border:0}.e-form__indicators__indicator__label{text-align:center}.e-form__indicators__indicator__separator{width:100%;height:var(--e-form-steps-divider-width);background-color:#babfc5}.e-form__indicators--type-icon,.e-form__indicators--type-icon_text,.e-form__indicators--type-number,.e-form__indicators--type-number_text{align-items:flex-start}.e-form__indicators--type-icon .e-form__indicators__indicator__separator,.e-form__indicators--type-icon_text .e-form__indicators__indicator__separator,.e-form__indicators--type-number .e-form__indicators__indicator__separator,.e-form__indicators--type-number_text .e-form__indicators__indicator__separator{margin-top:calc(var(--e-form-steps-indicator-padding, 30px) / 2 - var(--e-form-steps-divider-width, 1px) / 2)}.elementor-field-type-hidden{display:none}.elementor-field-type-html{display:inline-block}.elementor-field-type-tel input{direction:inherit}.elementor-login .elementor-lost-password,.elementor-login .elementor-remember-me{font-size:.85em}.elementor-field-type-recaptcha_v3 .elementor-field-label{display:none}.elementor-field-type-recaptcha_v3 .grecaptcha-badge{z-index:1}.elementor-button .elementor-form-spinner{order:3}.elementor-form .elementor-button>span{display:flex;justify-content:center;align-items:center}.elementor-form .elementor-button .elementor-button-text{white-space:normal;flex-grow:0}.elementor-form .elementor-button svg{height:auto}.elementor-form .elementor-button .e-font-icon-svg{height:1em}.elementor-select-wrapper .select-caret-down-wrapper{position:absolute;top:50%;transform:translateY(-50%);inset-inline-end:10px;pointer-events:none;font-size:11px}.elementor-select-wrapper .select-caret-down-wrapper svg{display:unset;width:1em;aspect-ratio:unset;fill:currentColor}.elementor-select-wrapper .select-caret-down-wrapper i{font-size:19px;line-height:2}.elementor-select-wrapper.remove-before:before{content:""!important}</style>
+                                <form class="elementor-form" method="post" name="Reset Password">
+                                    @csrf
+                                    <input type="hidden" name="post_id" value="644">
+                                    <input type="hidden" name="form_id" value="d056eaf">
+                                    <input type="hidden" name="referer_title" value="Reset your password">
+                                    <input type="hidden" name="queried_id" value="644">
+                                    <div class="elementor-form-fields-wrapper elementor-labels-">
+                                        <div class="elementor-field-type-email elementor-field-group elementor-column elementor-field-group-email elementor-col-100 elementor-field-required">
+                                            <label for="form-field-email" class="elementor-field-label elementor-screen-only"> 								Email</label>
+                                            <input
+                                                size="1"
+                                                type="email"
+                                                name="form_fields[email]"
+                                                id="form-field-email"
+                                                class="elementor-field elementor-size-sm  elementor-field-textual"
+                                                placeholder="Email"
+                                                required="required"
+                                                aria-required="true"
+                                            >
+                                        </div>
+                                        <div class="elementor-field-group elementor-column elementor-field-type-submit elementor-col-50 e-form__buttons">
+                                            <button type="submit" class="elementor-button elementor-size-sm">
+                                                <span>
+                                                    <span class="elementor-button-icon"></span>
+                                                    <span class="elementor-button-text">Submit</span>
+                                                </span>
+                                            </button>
+                                        </div>
                                     </div>
-                                </div>
+                                </form>
                             </div>
-                            <div class="m-b-45">
-                                <button type="submit" class="button button-outline-secondary w-100">Submit</button>
+                        </div>
+                        <div
+                            class="elementor-element elementor-element-501933e elementor-widget elementor-widget-text-editor"
+                            data-id="501933e"
+                            data-element_type="widget"
+                            data-widget_type="text-editor.default"
+                        >
+                            <div class="elementor-widget-container">
+                                <style>/*! elementor - v3.18.0 - 08-12-2023 */ .elementor-widget-text-editor.elementor-drop-cap-view-stacked .elementor-drop-cap{background-color:#69727d;color:#fff}.elementor-widget-text-editor.elementor-drop-cap-view-framed .elementor-drop-cap{color:#69727d;border:3px solid;background-color:transparent}.elementor-widget-text-editor:not(.elementor-drop-cap-view-default) .elementor-drop-cap{margin-top:8px}.elementor-widget-text-editor:not(.elementor-drop-cap-view-default) .elementor-drop-cap-letter{width:1em;height:1em}.elementor-widget-text-editor .elementor-drop-cap{float:left;text-align:center;line-height:1;font-size:50px}.elementor-widget-text-editor .elementor-drop-cap-letter{display:inline-block}</style>
+                                <p>
+                                    <a style="color: #1f1f22; text-decoration: underline;" href="{{ url('user/login-register') }}">Back to login</a>
+                                </p>
                             </div>
-                        </form>
+                        </div>
                     </div>
                 </div>
-                <!-- Forgot Password /- -->
-
-
-
-                <!-- Register -->
-                <div class="col-lg-6">
-                    <div class="reg-wrapper">
-                        <h2 class="account-h2 u-s-m-b-20">Register</h2>
-                        <h6 class="account-h6 u-s-m-b-30">Registering for this site allows you to access your order status and history.</h6>
-
-
-
-                        {{-- Registration Success Message using jQuery. Check front/js/custom.js --}} 
-                        <p id="register-success"></p>
-
-
-
-                        
-                        <form id="registerForm" action="javascript:;" method="post"> {{-- We need to deactivate the 'action' HTML attribute (using    'javascript:;'    ) as we'r going to submit using an AJAX call. Check front/js/custom.js --}}
-                            @csrf {{-- Preventing CSRF Requests: https://laravel.com/docs/9.x/csrf#preventing-csrf-requests --}}
-
-
-                            <div class="u-s-m-b-30">
-                                <label for="username">Name
-                                    <span class="astk">*</span>
-                                </label>
-                                <input type="text" id="user-name" class="text-field" placeholder="User Name" name="name">
-                                <p id="register-name"></p> {{-- this will be used by jQuery to show the Validation Error Messages (Laravel's Validation Error Messages) from the AJAX call response from the server (backend) --}} {{-- The pattern must be like: register-x (e.g. register-mobile, register-email, ... in order for the jQuery loop to work. And x must be identical to the 'name' HTML attributes (e.g. the <input> with the    name='mobile'    HTML attribute must have a <p> with an id HTML attribute    id="register-mobile"    ) so that when the vaildation errors array is sent as a response from backend/server (check $validator->messages()    inside    the method inside the controller) to the AJAX request, they could conveniently/easily be handled by the jQuery $.each() loop. Check front/js/custom.js) --}} {{-- The pattern must be like: register-x (e.g. register-mobile, register-email, ... in order for the jQuery loop to work. And x must be identical to the 'name' HTML attributes (e.g. the <input> with the    name='mobile'    HTML attribute must have a <p> with an id HTML attribute    id="register-mobile"    ) so that when the vaildation errors array is sent as a response from backend/server (check $validator->messages()    inside    the method inside the controller) to the AJAX request, they could conveniently/easily be handled by the jQuery $.each() loop. Check front/js/custom.js) --}}
-                            </div>
-                            <div class="u-s-m-b-30">
-                                <label for="usermobile">Mobile
-                                    <span class="astk">*</span>
-                                </label>
-                                <input type="text" id="user-mobile" class="text-field" placeholder="User Mobile" name="mobile">
-                                <p id="register-mobile"></p> {{-- this will be used by jQuery to show the Validation Error Messages (Laravel's Validation Error Messages) from the AJAX call response from the server (backend) --}} {{-- The pattern must be like: register-x (e.g. register-mobile, register-email, ... in order for the jQuery loop to work. And x must be identical to the 'name' HTML attributes (e.g. the <input> with the    name='mobile'    HTML attribute must have a <p> with an id HTML attribute    id="register-mobile"    ) so that when the vaildation errors array is sent as a response from backend/server (check $validator->messages()    inside    the method inside the controller) to the AJAX request, they could conveniently/easily be handled by the jQuery $.each() loop. Check front/js/custom.js) --}}
-                            </div>
-                            <div class="u-s-m-b-30">
-                                <label for="useremail">Email
-                                    <span class="astk">*</span>
-                                </label>
-                                <input type="email" id="user-email" class="text-field" placeholder="User Email" name="email">
-                                <p id="register-email"></p> {{-- this will be used by jQuery to show the Validation Error Messages (Laravel's Validation Error Messages) from the AJAX call response from the server (backend) --}} {{-- The pattern must be like: register-x (e.g. register-mobile, register-email, ... in order for the jQuery loop to work. And x must be identical to the 'name' HTML attributes (e.g. the <input> with the    name='mobile'    HTML attribute must have a <p> with an id HTML attribute    id="register-mobile"    ) so that when the vaildation errors array is sent as a response from backend/server (check $validator->messages()    inside    the method inside the controller) to the AJAX request, they could conveniently/easily be handled by the jQuery $.each() loop. Check front/js/custom.js) --}}
-                            </div>
-                            <div class="u-s-m-b-30">
-                                <label for="userpassword">Password
-                                    <span class="astk">*</span>
-                                </label>
-                                <input type="password" id="user-password" class="text-field" placeholder="User Password" name="password">
-                                <p id="register-password"></p> {{-- this will be used by jQuery to show the Validation Error Messages (Laravel's Validation Error Messages) from the AJAX call response from the server (backend) --}} {{-- The pattern must be like: register-x (e.g. register-mobile, register-email, ... in order for the jQuery loop to work. And x must be identical to the 'name' HTML attributes (e.g. the <input> with the    name='mobile'    HTML attribute must have a <p> with an id HTML attribute    id="register-mobile"    ) so that when the vaildation errors array is sent as a response from backend/server (check $validator->messages()    inside    the method inside the controller) to the AJAX request, they could conveniently/easily be handled by the jQuery $.each() loop. Check front/js/custom.js) --}}
-                            </div>
-                            <div class="u-s-m-b-30"> {{-- "I've read and accept the terms & conditions" Checkbox --}}
-                                <input type="checkbox" class="check-box" id="accept" name="accept">
-                                <label class="label-text no-color" for="accept">I’ve read and accept the
-                                    <a href="terms-and-conditions.html" class="u-c-brand">terms & conditions</a>
-                                </label>
-                                <p id="register-accept"></p> {{-- this will be used by jQuery to show the Validation Error Messages (Laravel's Validation Error Messages) from the AJAX call response from the server (backend) --}} {{-- The pattern must be like: register-x (e.g. register-mobile, register-email, ... in order for the jQuery loop to work. And x must be identical to the 'name' HTML attributes (e.g. the <input> with the    name='mobile'    HTML attribute must have a <p> with an id HTML attribute    id="register-mobile"    ) so that when the vaildation errors array is sent as a response from backend/server (check $validator->messages()    inside    the method inside the controller) to the AJAX request, they could conveniently/easily be handled by the jQuery $.each() loop. Check front/js/custom.js) --}}
-                            </div>
-
-                            <div class="u-s-m-b-45">
-                                <button class="button button-primary w-100">Register</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-                <!-- Register /- -->
             </div>
         </div>
     </div>
-    <!-- Account-Page /- -->
+</div>
 @endsection

@@ -12,7 +12,7 @@
         <table>
             <tr><td>Dear Admin!</td></tr>
             <tr><td>&nbsp;</td></tr>
-            <tr><td>User's Inquiry on Multi-vendor E-commerce Application Website, Contact Us page. The details are as below:</td></tr>
+            <tr><td>User's Inquiry on Kapiton Website, Contact Us page. The details are as below:</td></tr>
             <tr><td>&nbsp;</td></tr>
             <tr><td>Name: {{ $name }}</td></tr>
             <tr><td>&nbsp;</td></tr>
@@ -24,7 +24,7 @@
             <tr><td>&nbsp;</td></tr>
             <tr><td>&nbsp;</td></tr>
             <tr><td>Thanks & Regards,</td></tr>
-            <tr><td>Multi-vendor E-commerce Application</td></tr>
+            <tr><td>Kapiton</td></tr>
         </table>
     </body>
 </html>

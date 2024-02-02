@@ -46,14 +46,14 @@ class Category extends Model
         if ($categoryDetails['parent_id'] == 0) { // if the category is PARENT category (not SUBcategory)
             // Show main category only in the Breadcrumb
             $breadcrumbs = '
-                <li class="is-marked"><a href="' . url($categoryDetails['url']) .'">' . $categoryDetails['category_name'] .'</a></li>
+                <a href="' . url($categoryDetails['url']) .'">' . $categoryDetails['category_name'] .'</a>
             ';
         } else { // if the category is SUBcategory category (not PARENT category)
             // Show BOTH main (parent) category AND subcategory in the Breadcrumb
             $parentCategory = \App\Models\Category::select('category_name', 'url')->where('id', $categoryDetails['parent_id'])->first()->toArray();
             $breadcrumbs = '
-                <li class="has-separator"><a href="' . url($parentCategory['url'])  .'">' . $parentCategory['category_name']  . '</a></li>
-                <li class="is-marked"><a href="'     . url($categoryDetails['url']) .'">' . $categoryDetails['category_name'] . '</a></li>
+                <a href="' . url($parentCategory['url'])  .'">' . $parentCategory['category_name']  . '</a>
+                <a href="'     . url($categoryDetails['url']) .'">' . $categoryDetails['category_name'] . '</a>
             ';
         }
 
@@ -81,7 +81,11 @@ class Category extends Model
         $getCategoryName = \App\Models\Category::select('category_name')->where('id', $category_id)->first();
 
 
-        return $getCategoryName->category_name;
+        if ($getCategoryName !== null) {
+            return $getCategoryName->category_name;
+        }
+    
+        return null;
     }
 
     // Note: We also prevent making orders of the products of the Categories that are disabled (`status` = 0) (whether the Category is a Child Category or a Parent Category (Root Category) is disabled) in admin/categories/categories.blade.php
