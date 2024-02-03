@@ -14,6 +14,10 @@ class VendorController extends Controller
         return view('front.vendors.login_register');
     }
 
+    public function create() {
+        return view('front.vendors.vendor_register');
+    }
+
     public function vendorRegister(Request $request) { // the register HTML form submission in vendor login_register.blade.php page    
         if ($request->isMethod('post')) { // if the register form is submitted
             $data = $request->all();
