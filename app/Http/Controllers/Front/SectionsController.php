@@ -76,7 +76,7 @@ class SectionsController extends Controller
      */
     private function getAvailableFilters($categoryDetails, $products) {
 
-        $selection = $products->select('id','product_color','brand_id', 'vendor_id', 'category_id')->with(['brand', 'attributes' => function($query) {
+        $selection = $products->select('*')->with(['brand', 'attributes' => function($query) {
             return $query->select('product_id','size');
         }, 'vendor'])->get()->toArray();
         
