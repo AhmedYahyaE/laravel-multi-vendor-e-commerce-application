@@ -9,6 +9,11 @@ class Vendor extends Model
 {
     use HasFactory;
 
+    public function products() {
+        return $this->hasMany('\App\Models\Product', 'vendor_id')->where([
+            'status' => 1
+        ]);
+    }
 
     // Relationship of a Vendor `vendors` with VendorsBusinessDetail `vendors_business_details` (every product belongs to a vendor)    
     public function vendorbusinessdetails() {    

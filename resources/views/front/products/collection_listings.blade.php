@@ -25,7 +25,7 @@
                 data-widget_type="heading.default"
             >
                 <div class="elementor-widget-container">
-                    <h2 class="elementor-heading-title elementor-size-default">{{ isset($url) ? $url:$collectionname }}</h2>
+                    <h2 class="elementor-heading-title elementor-size-default">{{ $pageTitle }}</h2>
                 </div>
             </div>
             <div
@@ -200,35 +200,37 @@
                                 data-element_type="container"
                                 data-settings="{&quot;content_width&quot;:&quot;full&quot;,&quot;container_type&quot;:&quot;flex&quot;}"
                             >
-                                <div
-                                    class="elementor-element elementor-element-ad41e9d elementor-widget elementor-widget-image"
-                                    data-id="ad41e9d"
-                                    data-element_type="widget"
-                                    data-widget_type="image.default"
-                                >
-                                    <div class="elementor-widget-container">
-                                        <img
-                                            decoding="async"
-                                            width="300"
-                                            height="300"
-                                            src="{{ asset('front/images/brand-logos/2023-12-user.png') }}"
-                                            class="attachment-large size-large wp-image-423"
-                                            alt=""
-                                            srcset="{{ asset('front/images/brand-logos/2023-12-user.png') }} 300w, {{ asset('front//images/brand-logos/2023-12-user-150x150.png') }} 150w"
-                                            sizes="(max-width: 300px) 100vw, 300px"
-                                        >
+                                <a href="{{ url('vendor/' . $product['vendor']['id'] . '/collection') }}">
+                                    <div
+                                        class="elementor-element elementor-element-ad41e9d elementor-widget elementor-widget-image"
+                                        data-id="ad41e9d"
+                                        data-element_type="widget"
+                                        data-widget_type="image.default"
+                                    >
+                                        <div class="elementor-widget-container">
+                                            <img
+                                                decoding="async"
+                                                width="300"
+                                                height="300"
+                                                src="{{ asset('front/images/brand-logos/2023-12-user.png') }}"
+                                                class="attachment-large size-large wp-image-423"
+                                                alt=""
+                                                srcset="{{ asset('front/images/brand-logos/2023-12-user.png') }} 300w, {{ asset('front//images/brand-logos/2023-12-user-150x150.png') }} 150w"
+                                                sizes="(max-width: 300px) 100vw, 300px"
+                                            >
+                                        </div>
                                     </div>
-                                </div>
-                                <div
-                                    class="elementor-element elementor-element-67825cd elementor-widget elementor-widget-heading"
-                                    data-id="67825cd"
-                                    data-element_type="widget"
-                                    data-widget_type="heading.default"
-                                >
-                                    <div class="elementor-widget-container">
-                                        <h5 class="elementor-heading-title elementor-size-default">{{ $product['vendor']['name'] ?? "" }}</h5>
+                                    <div
+                                        class="elementor-element elementor-element-67825cd elementor-widget elementor-widget-heading"
+                                        data-id="67825cd"
+                                        data-element_type="widget"
+                                        data-widget_type="heading.default"
+                                    >
+                                        <div class="elementor-widget-container">
+                                            <h5 class="elementor-heading-title elementor-size-default">{{ $product['vendor']['name'] ?? "" }}</h5>
+                                        </div>
                                     </div>
-                                </div>
+                                </a>
                             </div>
 
                             <!-- Ratings -->

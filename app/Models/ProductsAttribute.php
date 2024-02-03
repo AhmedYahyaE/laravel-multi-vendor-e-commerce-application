@@ -9,7 +9,9 @@ class ProductsAttribute extends Model
 {
     use HasFactory;
 
-
+    public function product() {
+        return $this->belongsTo(Product::class, 'product_id');
+    }
     
     public static function getProductStock($product_id, $size) { // Get the `stock` available for that specific product (`product_id`) with that specific size (`size`) (in `products_attributes` table)?
         $getProductStock = ProductsAttribute::select('stock')->where([
