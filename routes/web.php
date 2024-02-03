@@ -202,7 +202,7 @@ Route::namespace('App\Http\Controllers\Front')->group(function() {
     // Vendor Login/Register
     Route::get('vendor/login-register', 'VendorController@loginRegister'); // render vendor login_register.blade.php page
 
-    Route::get('vendor/register', 'VendorController@create');
+    Route::get('vendor/register', 'VendorController@create')->name('front.vendor.account.create');
     // Vendor Register
     Route::post('vendor/register', 'VendorController@vendorRegister'); // the register HTML form submission in vendor login_register.blade.php page
 

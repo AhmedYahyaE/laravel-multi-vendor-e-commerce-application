@@ -197,9 +197,10 @@ window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/14
                     'id' => 'elementor-post-992-css',
                     'href' => 'front/css/elementor-css/elementor-css-post-992.css'
                 ],
-                'front.vendor.account' => [
+                'front.vendor.account.create' => [
                     'id' => 'elementor-post-1070-css',
-                    'href' => 'front/css/elementor-css/elementor-css-post-1070.css'
+                    'href' => 'front/css/elementor-css/elementor-css-post-1070.css',
+                    'javascript_src' => 'front/js/custom-vendor-registration.js',
                 ],
             ];
 
@@ -377,6 +378,11 @@ window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/14
 
         <!-- Our front/js/custom.js file --> 
         <script type="text/javascript" src="{{ url('front/js/custom.js') . '?date=' . date('m-d-Y h:m:s') }}"></script>
+        @foreach ($css_headers as $css_header_name => $css_header)
+            @if ($currentRoute == $css_header_name && isset($css_header['javascript_src']))
+                <script type="text/javascript" src="{{ url($css_header['javascript_src']) . '?date=' . date('m-d-Y h:m:s') }}"></script>
+            @endif
+        @endforeach
 
 
 

@@ -15,7 +15,8 @@ class VendorController extends Controller
     }
 
     public function create() {
-        return view('front.vendors.vendor_register');
+        $countries = \App\Models\Country::where('status', 1)->get()->toArray();
+        return view('front.vendors.vendor_register')->with(compact('countries'));
     }
 
     public function vendorRegister(Request $request) { // the register HTML form submission in vendor login_register.blade.php page    
@@ -25,21 +26,31 @@ class VendorController extends Controller
 
             // Validation (Validation of vendor registration form)    // Manually Creating Validators: https://laravel.com/docs/9.x/validation#manually-creating-validators    
             $rules = [
-                // <input> "name" attribute => its rule
-                            'name'          => 'required',
-                            'email'         => 'required|email|unique:admins|unique:vendors',  // 'unique:admins' and 'unique:vendors' means check the `admins` table and `vendors` table for the `mobile` uniqueness: https://laravel.com/docs/9.x/validation#rule-unique
-                            'mobile'        => 'required|min:10|numeric|unique:admins|unique:vendors', // 'unique:admins' and 'unique:vendors' means check the `admins` table and `vendors` table for the `mobile` uniqueness: https://laravel.com/docs/9.x/validation#rule-unique    // 'min:10|numeric' is the mobile number validation
-                            'accept'        => 'required'
+                'name' => 'required',
+                'email' => 'required|email|unique:admins|unique:vendors',
+                'mobile' => 'required|min:10|numeric|unique:admins|unique:vendors',
+                'personal.address' => 'required',
+                'personal.city' => 'required',
+                'personal.state' => 'required',
+                'personal.country' => 'required',
+                'business.shop_name' => 'required|unique:business_details',
+                'business.shop_email' => 'required|email|unique:business_details',
+                'business.shop_mobile' => 'required|min:10|numeric',
+                'business.address' => 'required',
+                'business.city' => 'required',
+                'business.state' => 'required',
+                'business.country' => 'required',
+                'business.website' => '', // No specific validation for optional field
             ];
+                
 
             $customMessages = [ // Specifying A Custom Message For A Given Attribute: https://laravel.com/docs/9.x/validation#specifying-a-custom-message-for-a-given-attribute
                 // <input> "name" attribute.validation rule => validation rule message
-                                'name.required'             => 'Name is required',
-                                'email.required'            => 'Email is required',
-                                'email.unique'              => 'Email alreay exists',
-                                'mobile.required'           => 'Mobile is required',
-                                'mobile.unique'             => 'Mobile alreay exists',
-                                'accept.required'           => 'Please accept Terms & Conditions',
+                'name.required'             => 'Name is required',
+                'email.required'            => 'Email is required',
+                'email.unique'              => 'Email alreay exists',
+                'mobile.required'           => 'Mobile is required',
+                'mobile.unique'             => 'Mobile alreay exists',
             ];
 
             $validator = Validator::make($data, $rules, $customMessages); // Manually Creating Validators: https://laravel.com/docs/9.x/validation#manually-creating-validators
@@ -89,7 +100,8 @@ class VendorController extends Controller
             $admin->updated_at = date('Y-m-d H:i:s'); // enter `updated_at` MANUALLY!
 
             $admin->save();
-
+            
+            $business_details = new \App\Models\VendorsBusinessDetail;
 
             // Send the Confirmation Email to the new vendor who has just registered    
             $email = $data['email']; // the vendor's email
