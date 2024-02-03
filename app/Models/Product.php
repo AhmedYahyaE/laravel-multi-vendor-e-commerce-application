@@ -23,7 +23,7 @@ class Product extends Model
     }
 
     public function brand() { // Every product belongs to some brand    // this relationship method is used in Front/ProductsController.php    
-        return $this->belongsTo('App\Models\Brand', 'brand_id'); // 'brand_id' is the foreign key
+        return $this->belongsTo('App\Models\Brand', 'brand_id', 'id'); // 'brand_id' is the foreign key
     }
 
     // Every product has many attributes
@@ -36,6 +36,9 @@ class Product extends Model
         return $this->hasMany('App\Models\ProductsImage');
     }
 
+    public function product_category_filters() {
+        return $this->category()->with('filters');
+    }
 
     // Relationship of a Product `products` table with Vendor `vendors` table (every product belongs to a vendor)    
     public function vendor() {    
@@ -163,9 +166,9 @@ class Product extends Model
     }
 
     public static function getProductsBySectionName($section_name) {
-        $section_id = \App\Models\Section::where('name', $section_name)->get('id')->toArray();
+        $section_id = \App\Models\Section::where('name', $section_name)->where('status', 1)->get('id')->toArray();
 
-        return Product::where('section_id', $section_id)->with('vendor');
+        return Product::where('section_id', $section_id)->where('status', 1)->with('vendor');
     }
 
 }

@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
+use App\Models\ProductsFilter;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Arr;
 
 
 class ProductsController extends Controller
@@ -217,6 +219,7 @@ class ProductsController extends Controller
                     $categoryDetails['breadcrumbs']                      = $search_product;
                     $categoryDetails['categoryDetails']['category_name'] = $search_product;
                     $categoryDetails['categoryDetails']['description']   = 'Search Products for ' . $search_product;
+                    $pageTitle = $categoryDetails['categoryDetails']['description'];
 
                     // We join `products` table (at the `category_id` column) with `categoreis` table (becausee we're going to search `category_name` column in `categories` table)
                     // Note: It's best practice to name table columns with more verbose descriptive names (e.g. if the table name is `products`, then you should have a column called `product_id`, NOT `id`), and also, don't have repeated column names THROUGHOUT/ACROSS the tables of a certain (one) database (i.e. make all your database tables column names (throughout your database) UNIQUE (even columns in different tables!)). That's because of that problem that emerges when you join (JOIN clause) two tables which have the same column names, when you join them, the column names of the second table overrides the column names of the first table (similar column names override each other), leading to many problems. There are TWO ways/workarounds to tackle this problem
@@ -242,15 +245,17 @@ class ProductsController extends Controller
                     $categoryProducts = $categoryProducts->where('products.section_id', $_REQUEST['section_id']);
                 }
 
-                $collection = $categoryProducts->get();
+                $categoryDetails['categoryDetails']['id'] = $categoryProducts->first()->id;
+                $collection = $categoryProducts->paginate(15);
                 // dd($categoryProducts);
 
 
-                return view('front.products.collection_listings')->with(compact('categoryDetails', 'collection'));
+                return view('front.products.collection_listings')->with(compact('categoryDetails', 'collection', 'pageTitle'));
 
             } else { // If the Search Form is NOT used, render the listing.blade.php page with the Sorting Filter WITHOUT AJAX (using the HTML <form> and jQuery)
                 $url = \Illuminate\Support\Facades\Route::getFacadeRoot()->current()->uri(); // Accessing The Current Route: https://laravel.com/docs/9.x/routing#accessing-the-current-route    // Accessing The Current URL: https://laravel.com/docs/9.x/urls#accessing-the-current-url       
                 // dd($url);
+                $pageTitle = $url;
                 $categoryCount = \App\Models\Category::where([
                     'url'    => $url,
                     'status' => 1
@@ -287,8 +292,14 @@ class ProductsController extends Controller
                     $meta_description = $categoryDetails['categoryDetails']['meta_description'];
                     $meta_keywords    = $categoryDetails['categoryDetails']['meta_keywords'];
 
+                    $filters = [
+                        'brands' => Arr::pluck(ProductsFilter::getBrands($url), 'name'),
+                        'sizes' => ProductsFilter::getSizes($url),
+                        'color' => ProductsFilter::getColors($url),
+                    ];
 
-                    return view('front.products.collection_listings')->with(compact('categoryDetails', 'collection', 'url', 'meta_title', 'meta_description', 'meta_keywords'));
+                    // dd($filters);
+                    return view('front.products.collection_listings')->with(compact('pageTitle', 'categoryDetails', 'collection', 'url', 'filters', 'meta_title', 'meta_description', 'meta_keywords'));
 
                 } else {
                     abort(404); // we will create the 404 page later on    // https://laravel.com/docs/9.x/helpers#method-abort
