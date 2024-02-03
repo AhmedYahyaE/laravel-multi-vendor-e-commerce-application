@@ -119,7 +119,7 @@ $sections = \App\Models\Section::sections();
                         <div class="elementor-widget-container">
                             <link rel="stylesheet" href="{{ url('front/css/elementor-css/elementor-pro-assets-css-widget-theme-elements.min.css') }}">
                             <search role="search" class="custom_class_search">
-                                <form class="elementor-search-form" action="https://kapiton.seikodesigns.com" method="get">
+                                <form class="elementor-search-form" action="{{ url('/search-products') }}" method="get">
                                     <div class="elementor-search-form__toggle" tabindex="0" role="button">
                                         <div class="e-font-icon-svg-container">
                                             <svg aria-hidden="true" class="e-font-icon-svg e-fas-search"
@@ -273,7 +273,7 @@ $sections = \App\Models\Section::sections();
                         >
                             <div class="elementor-widget-container">
                                 <search role="search" class="custom_class_search">
-                                    <form class="elementor-search-form" action="https://kapiton.seikodesigns.com" method="get">
+                                    <form class="elementor-search-form" action="{{ url('/search-products') }}" method="get">
                                         <div class="elementor-search-form__toggle" tabindex="0" role="button">
                                             <div class="e-font-icon-svg-container">
                                                 <svg
@@ -294,7 +294,7 @@ $sections = \App\Models\Section::sections();
                                                 placeholder="Search..."
                                                 class="elementor-search-form__input"
                                                 type="search"
-                                                name="s"
+                                                name="search"
                                                 value=""
                                             >
                                             <div class="dialog-lightbox-close-button dialog-close-button" role="button" tabindex="0">

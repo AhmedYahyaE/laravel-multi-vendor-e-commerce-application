@@ -4,12 +4,25 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class ProductsFilter extends Model
 {
     use HasFactory;
 
-
+    public function categories() {
+        return $this->select([
+            'products_filters.id',
+            DB::raw('SUBSTRING_INDEX(SUBSTRING_INDEX(products_filters.cat_ids, ",", categories.id), ",", -1) as `category_id`'),
+            'products_filters.filter_name'
+        ])
+            ->join('categories', function ($join) {
+                $join->whereRaw('CHAR_LENGTH(products_filters.cat_ids) - CHAR_LENGTH(REPLACE(products_filters.cat_ids, ",", "")) >= categories.id - 1');
+            })
+            ->where('products_filters.status', 1)
+            ->orderBy('products_filters.id')
+            ->orderBy('categories.id');
+    }
 
     // this method is called in admin\filters\filters_values.blade.php to be able to translate the `filter_id` column to filter names to show them in the table in filters_values.blade.php in the Admin Panel    
     public static function getFilterName($filter_id) {
