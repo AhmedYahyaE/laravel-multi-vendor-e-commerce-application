@@ -194,13 +194,14 @@
                         data-settings="{&quot;container_type&quot;:&quot;flex&quot;,&quot;content_width&quot;:&quot;boxed&quot;}"
                     >
                         <div class="e-con-inner">
-                            <div
-                                class="elementor-element elementor-element-a282fc6 e-con-full e-flex e-con e-child"
-                                data-id="a282fc6"
-                                data-element_type="container"
-                                data-settings="{&quot;content_width&quot;:&quot;full&quot;,&quot;container_type&quot;:&quot;flex&quot;}"
-                            >
-                                <a href="{{ url('vendor/' . $product['vendor']['id'] . '/collection') }}">
+                            @if (isset($product['vendor']))
+                            <a href="{{ url('vendor/' . $product->vendor->id) }}">
+                                <div
+                                    class="elementor-element elementor-element-a282fc6 e-con-full e-flex e-con e-child"
+                                    data-id="a282fc6"
+                                    data-element_type="container"
+                                    data-settings="{&quot;content_width&quot;:&quot;full&quot;,&quot;container_type&quot;:&quot;flex&quot;}"
+                                >
                                     <div
                                         class="elementor-element elementor-element-ad41e9d elementor-widget elementor-widget-image"
                                         data-id="ad41e9d"
@@ -227,11 +228,12 @@
                                         data-widget_type="heading.default"
                                     >
                                         <div class="elementor-widget-container">
-                                            <h5 class="elementor-heading-title elementor-size-default">{{ $product['vendor']['name'] ?? "" }}</h5>
+                                            <h5 class="elementor-heading-title elementor-size-default">{{ $product->vendor->name ?? "" }}</h5>
                                         </div>
                                     </div>
-                                </a>
-                            </div>
+                                </div>
+                            </a>
+                            @endif
 
                             <!-- Ratings -->
                             <div
@@ -299,7 +301,7 @@
 
         </div>
 
-        {{ $collection->links() }}
+        {{-- $collection->links() --}}
     </div>
 </div>
 @endsection

@@ -59,8 +59,8 @@ class ProductsFilter extends Model
 
         $catIdsArray = explode(',', $filterAvailable['cat_ids']); // convert the string `cat_ids` column of the `products_filters` database table to an array
 
-
-        if (in_array($category_id, $catIdsArray)) {
+        // dd(array_intersect($catIdsArray, $category_id));
+        if (array_intersect($category_id, $catIdsArray)) {
             $available = 'Yes';
         } else {
             $available = 'No';
@@ -69,8 +69,6 @@ class ProductsFilter extends Model
 
         return $available;
     }
-
-
 
     // Get the sizes of a product from a URL (URL of the category)    
     public static function getSizes($url) { // this method is used in filters.blade.php

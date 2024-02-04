@@ -407,7 +407,7 @@
                                             data-id="778c4e0"
                                             data-element_type="container"
                                             data-settings="{&quot;container_type&quot;:&quot;flex&quot;,&quot;content_width&quot;:&quot;boxed&quot;}"
-                                            href="{{$category['url']}}"
+                                            href="{{ url('/products/category/' . $category['url']) }}"
                                         >
                                             <div class="e-con-inner">
                                                 <div
