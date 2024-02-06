@@ -67,7 +67,7 @@ $sections = \App\Models\Section::sections();
                                             class="elementor-item elementor-item-active">HOME</a>
                                     </li>
                                     <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-39">
-                                        <a href="{{ url('collection/all') }}" class="elementor-item">PRODUCTS</a>
+                                        <a href="{{ url('products/collection/all') }}" class="elementor-item">PRODUCTS</a>
                                     </li>
                                     <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-40">
                                         <a href="/offer" class="elementor-item">OFFER</a>
@@ -119,7 +119,7 @@ $sections = \App\Models\Section::sections();
                         <div class="elementor-widget-container">
                             <link rel="stylesheet" href="{{ url('front/css/elementor-css/elementor-pro-assets-css-widget-theme-elements.min.css') }}">
                             <search role="search" class="custom_class_search">
-                                <form class="elementor-search-form" action="{{ url('/search-products') }}" method="get">
+                                <form class="elementor-search-form" action="{{ url('products/search') }}" method="get">
                                     <div class="elementor-search-form__toggle" tabindex="0" role="button">
                                         <div class="e-font-icon-svg-container">
                                             <svg aria-hidden="true" class="e-font-icon-svg e-fas-search"
@@ -242,7 +242,7 @@ $sections = \App\Models\Section::sections();
                                 <ul id="menu-1-ba4b160" class="elementor-nav-menu">
                                     @foreach ($sections as $section)
                                     <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-41">
-                                        <a href="{{ url('collection/' . strtolower($section['name'])) }}" class="elementor-item">{{ $section['name']}}</a>
+                                        <a href="{{ url('products/collection/' . strtolower($section['name'])) }}" class="elementor-item">{{ $section['name']}}</a>
                                     </li>
                                     @endforeach
                                 </ul>
@@ -251,7 +251,7 @@ $sections = \App\Models\Section::sections();
                                 <ul id="menu-2-ba4b160" class="elementor-nav-menu">
                                     @foreach ($sections as $section)
                                     <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-41">
-                                        <a href="{{ url('collection/' . strtolower($section['name'])) }}" class="elementor-item"
+                                        <a href="{{ url('products/collection/' . strtolower($section['name'])) }}" class="elementor-item"
                                             tabindex="-1">{{ $section['name'] }}</a>
                                     </li>
                                     @endforeach
@@ -273,7 +273,7 @@ $sections = \App\Models\Section::sections();
                         >
                             <div class="elementor-widget-container">
                                 <search role="search" class="custom_class_search">
-                                    <form class="elementor-search-form" action="{{ url('/search-products') }}" method="get">
+                                    <form class="elementor-search-form" action="{{ url('products/search') }}" method="get">
                                         <div class="elementor-search-form__toggle" tabindex="0" role="button">
                                             <div class="e-font-icon-svg-container">
                                                 <svg

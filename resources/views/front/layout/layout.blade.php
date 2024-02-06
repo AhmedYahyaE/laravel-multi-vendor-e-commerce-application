@@ -424,7 +424,7 @@ window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/14
 
 
         {{-- To enable us to write PHP code within JavaScript code (to operate the Dynamic Filters dynamically (the second way)) --}} 
-        @include('front.layout.scripts') {{-- scripts.blade.php --}}
+        {{-- @include('front.layout.scripts') --}} {{-- scripts.blade.php --}}
 
 
         
