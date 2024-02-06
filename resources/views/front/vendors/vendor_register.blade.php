@@ -100,7 +100,7 @@
                                                 aria-required="true"
                                             >
                                         </div>
-                                        <div class="personal-address">
+                                        <div class="personal-address flex-box-input-wrapper">
                                             <div class="elementor-field-type-html elementor-field-group elementor-column elementor-field-group-field_1bf80f6 elementor-col-100">
                                                 <p style="margin: 15px 0 0 0">
                                                     <b>Address</b>
@@ -203,7 +203,7 @@
                                                 >
                                             </div>
                                         </div>
-                                        <div class="business-details">
+                                        <div class="business-details flex-box-input-wrapper">
                                             <div class="elementor-field-type-html elementor-field-group elementor-column elementor-field-group-field_2edf570 elementor-col-100">
                                                 <h6 style="margin-top: 50px">
                                                     <b>BUSINESS INFORMATION</b>

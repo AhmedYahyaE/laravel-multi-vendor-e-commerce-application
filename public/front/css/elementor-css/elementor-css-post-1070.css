@@ -6,3 +6,11 @@
     margin-left: auto;
     margin-right: auto;
 }/* End custom CSS */
+
+
+/* CUSTOM CSS NINO FELICIANO */
+.flex-box-input-wrapper{
+    width: 100% !important;
+    display: flex !important;
+    flex-wrap: wrap !important;
+}
