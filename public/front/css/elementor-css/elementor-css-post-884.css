@@ -37,48 +37,48 @@
 	font-style: normal;
 	font-weight: normal;
 	font-display: auto;
-	src: url(./../fonts/Louis-George-Cafe.ttf) format('truetype');
+	src: url(./../../fonts/Louis-George-Cafe.ttf) format('truetype');
 }
 @font-face {
 	font-family: 'Louis George Cafe';
 	font-style: italic;
 	font-weight: normal;
 	font-display: auto;
-	src: url(./../fonts/Louis-George-Cafe-Italic.ttf) format('truetype');
+	src: url(./../../fonts/Louis-George-Cafe-Italic.ttf) format('truetype');
 }
 @font-face {
 	font-family: 'Louis George Cafe';
 	font-style: normal;
 	font-weight: 300;
 	font-display: auto;
-	src: url(./../fonts/Louis-George-Cafe-Light.ttf) format('truetype');
+	src: url(./../../fonts/Louis-George-Cafe-Light.ttf) format('truetype');
 }
 @font-face {
 	font-family: 'Louis George Cafe';
 	font-style: italic;
 	font-weight: 300;
 	font-display: auto;
-	src: url(./../fonts/Louis-George-Cafe-Light-Italic.ttf) format('truetype');
+	src: url(./../../fonts/Louis-George-Cafe-Light-Italic.ttf) format('truetype');
 }
 @font-face {
 	font-family: 'Louis George Cafe';
 	font-style: normal;
 	font-weight: 600;
 	font-display: auto;
-	src: url(./../fonts/Louis-George-Cafe-Bold.ttf) format('truetype');
+	src: url(./../../fonts/Louis-George-Cafe-Bold.ttf) format('truetype');
 }
 @font-face {
 	font-family: 'Louis George Cafe';
 	font-style: italic;
 	font-weight: 600;
 	font-display: auto;
-	src: url(./../fonts/Louis-George-Cafe-Bold-Italic.ttf) format('truetype');
+	src: url(./../../fonts/Louis-George-Cafe-Bold-Italic.ttf) format('truetype');
 }
 @font-face {
 	font-family: 'Louis George Cafe';
 	font-style: normal;
 	font-weight: 700;
 	font-display: auto;
-	src: url(./../fonts/Lexend-Medium.ttf) format('truetype');
+	src: url(./../../fonts/Lexend-Medium.ttf) format('truetype');
 }
 /* End Custom Fonts CSS */
