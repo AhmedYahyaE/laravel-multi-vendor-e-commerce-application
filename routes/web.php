@@ -200,7 +200,7 @@ Route::namespace('App\Http\Controllers\Front')->group(function() {
 
     Route::get('vendor/register', 'VendorController@create')->name('front.vendor.account.create');
     // Vendor Register
-    Route::post('vendor/register', 'VendorController@vendorRegister'); // the register HTML form submission in vendor login_register.blade.php page
+    Route::post('vendor/registration', 'VendorController@vendorRegister'); // the register HTML form submission in vendor login_register.blade.php page
 
     // Confirm Vendor Account (from 'vendor_confirmation.blade.php) from the mail by Mailtrap
     Route::get('vendor/confirm/{code}', 'VendorController@confirmVendor'); // {code} is the base64 encoded vendor e-mail with which they have registered which is a Route Parameters/URL Paramters: https://laravel.com/docs/9.x/routing#required-parameters    // this route is requested (accessed/opened) from inside the mail sent to vendor (vendor_confirmation.blade.php)

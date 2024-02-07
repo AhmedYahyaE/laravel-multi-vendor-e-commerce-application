@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
-
+use Illuminate\Validation\Rules\File;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 
 class VendorController extends Controller
 {
@@ -23,7 +25,7 @@ class VendorController extends Controller
         if ($request->isMethod('post')) { // if the register form is submitted
             $data = $request->all();
             
-
+            // dd($data);
             // Validation (Validation of vendor registration form)    // Manually Creating Validators: https://laravel.com/docs/9.x/validation#manually-creating-validators    
             $rules = [
                 'name' => 'required',
@@ -33,17 +35,33 @@ class VendorController extends Controller
                 'personal.city' => 'required',
                 'personal.state' => 'required',
                 'personal.country' => 'required',
-                'business.shop_name' => 'required|unique:business_details',
-                'business.shop_email' => 'required|email|unique:business_details',
+                'personal.postal' => 'required|numeric|min:3|max_digits:6',
+                'business.shop_name' => 'required|unique:vendors_business_details,shop_name',
+                'business.shop_email' => 'required|email|unique:vendors_business_details,shop_email',
                 'business.shop_mobile' => 'required|min:10|numeric',
                 'business.address' => 'required',
                 'business.city' => 'required',
                 'business.state' => 'required',
                 'business.country' => 'required',
-                'business.website' => '', // No specific validation for optional field
+                'business.postal' => 'required|numeric|min_digits:3|max_digits:6',
+                'business.website' => '', // No specific validation for optional field,
             ];
-                
 
+            // validating file if any
+            if ($request->hasFile('business_license')) {
+                $rules['business_license'] = [
+                    'required',
+                    File::types(['pdf','jpg','jpeg','png'])->min(100)->max('100mb'),
+                ];
+            }
+
+            if ($request->hasFile('business_proof')) {
+                $rules['business_proof'] = [
+                    'required',
+                    File::types(['pdf','jpg','jpeg','png'])->min(100)->max('100mb')
+                ];
+            }
+                
             $customMessages = [ // Specifying A Custom Message For A Given Attribute: https://laravel.com/docs/9.x/validation#specifying-a-custom-message-for-a-given-attribute
                 // <input> "name" attribute.validation rule => validation rule message
                 'name.required'             => 'Name is required',
@@ -51,13 +69,32 @@ class VendorController extends Controller
                 'email.unique'              => 'Email alreay exists',
                 'mobile.required'           => 'Mobile is required',
                 'mobile.unique'             => 'Mobile alreay exists',
+                // personal address
+                'personal.address.required' => 'Address is required.',
+                'personal.city.required' => 'Address City is required.',
+                'personal.state.required' => 'Address Province/State is required.',
+                'personal.country.required' => 'Address Country is required.',
+                'personal.postal.required' => 'Address Postal Code is required.',
+                // business
+                'business.shop_name.required'  => 'Business Shop Name is required.',
+                'business.shop_email.required' => 'Business Shop Email is required.',
+                'business.shop_email.unique' => 'Business Shop Email already exists.',
+                'business.shop_mobile.required' => 'Business Shop Mobile is required.',
+                'business.shop_mobile.unique' => 'Business Shop Mobile already exists.',
+                'business.shop_mobile.numeric' => 'Business Shop Mobile must be numeric',
+                // business address
+                'business.address.required' => 'Business Address is required.',
+                'business.city.required' => 'Business Address City is required.',
+                'business.state.required' => 'Business Address Province/State is required.',
+                'business.country.required' => 'Business Address Country is required.',
+                'business.postal.required' => 'Business Address Code is required.',
+                'business.website.required' => '', // No specific validation for optional field,
             ];
 
             $validator = Validator::make($data, $rules, $customMessages); // Manually Creating Validators: https://laravel.com/docs/9.x/validation#manually-creating-validators
             if ($validator->fails()) { // Manually Creating Validators: https://laravel.com/docs/9.x/validation#manually-creating-validators
                 return \Illuminate\Support\Facades\Redirect::back()->withErrors($validator); // Manually Creating Validators: https://laravel.com/docs/9.x/validation#manually-creating-validators
             }
-
 
             // Create Vendor Account (Save the submitted data in BOTH `vendors` and `admins` tables)
 
@@ -72,6 +109,11 @@ class VendorController extends Controller
             $vendor->mobile = $data['mobile'];
             $vendor->email  = $data['email'];
             $vendor->status = 0; // Note: After a new vendor registers a new account, they will remain inactive/disabled (`status` is 0), untill the confirmation email arrives for them and they click the link, and they complete filling their vendor details, then the admin APPROVES them (then status becomes 1)
+            $vendor->address = $data['business']['address'];
+            $vendor->city = $data['business']['city'];
+            $vendor->state = $data['business']['state'];
+            $vendor->country = $data['business']['country'];
+            $vendor->pincode = $data['business']['postal'];
 
             // Set Laravel's default timezone to Egypt's (to enter correct `created_at` and `updated_at` records in the database tables) instead of UTC
             date_default_timezone_set('Africa/Cairo'); // https://www.php.net/manual/en/timezones.php and https://www.php.net/manual/en/timezones.africa.php
@@ -91,7 +133,9 @@ class VendorController extends Controller
             $admin->name      = $data['name'];
             $admin->mobile    = $data['mobile'];
             $admin->email     = $data['email'];
-            $admin->password  = bcrypt($data['password']); // hashing the password to store the hashed password in the table (NOT THE PASSWORD ITSELF!!)
+
+            $initial_password = Str::random(12);
+            $admin->password  = bcrypt($initial_password); // hashing the password to store the hashed password in the table (NOT THE PASSWORD ITSELF!!)
             $admin->status    = 0; // Note: After a new vendor registers a new account, they will remain inactive/disabled (`status` is 0), untill the confirmation email arrives for them and they click the link, and they complete filling their vendor details, then the admin APPROVES them (then status becomes 1)
 
             // Set Laravel's default timezone to Egypt's (to enter correct `created_at` and `updated_at` records in the database tables) instead of UTC
@@ -103,6 +147,35 @@ class VendorController extends Controller
             
             $business_details = new \App\Models\VendorsBusinessDetail;
 
+            $business_details->vendor_id = $vendor_id;
+            $business_details->shop_name = $data['business']['shop_name'];
+            $business_details->shop_mobile = $data['business']['shop_mobile'];
+            $business_details->shop_email = $data['business']['shop_email'];
+            $business_details->shop_address = $data['business']['address'];
+            $business_details->shop_city = $data['business']['city'];
+            $business_details->shop_state = $data['business']['state'];
+            $business_details->shop_country = $data['business']['country'];
+            $business_details->shop_pincode = $data['business']['postal'];
+            
+            $business_details->shop_website = $data['business']['website'];
+
+            $license_filepath = null; $business_proof_filepath = null;
+            if ($request->hasFile('business_license')) {
+                if ($request->file('business_license')->isValid()) {
+                    $license_filepath = $request->file('business_license')->store('public/images');
+                    $business_details->license_image = Storage::url($license_filepath);
+                }
+            }
+            
+            if ($request->hasFile('business_proof')) {
+                if ($request->file('business_proof')->isValid()) {
+                    $business_proof_filepath = $request->file('business_proof')->store('public/images');
+                    $business_details->business_proof_image = Storage::url($business_proof_filepath);
+                }
+            }
+
+            $business_details->save();
+
             // Send the Confirmation Email to the new vendor who has just registered    
             $email = $data['email']; // the vendor's email
 
@@ -110,6 +183,7 @@ class VendorController extends Controller
             $messageData = [
                 'email' => $data['email'],
                 'name'  => $data['name'],
+                'initial_password' => $initial_password,
                 'code'  => base64_encode($data['email']) // We base64 code the vendor $email and send it as a Route Parameter from vendor_confirmation.blade.php to the 'vendor/confirm/{code}' route in web.php, then it gets base64 decoded again in confirmVendor() method in Front/VendorController.php    // we will use the opposite: base64_decode() in the confirmVendor() method (encode X decode)
             ];
 
@@ -117,12 +191,15 @@ class VendorController extends Controller
                 $message->to($email)->subject('Confirm your Vendor Account');
             });
 
-
             DB::commit(); // commit the Database Transaction
 
+            if (is_null($license_filepath) || is_null($business_proof_filepath)) {
+                DB::rollback();
+                return redirect()->back()->with('success_message', "Changes did not saved because of some error.");
+            }
 
             // Redirect the vendor back with a success message
-            $message = 'Thanks for registering as Vendor. Please confirm your email to activate your account.';
+            $message = 'Thanks for registering as Vendor. Please confirm your email to have your account in-line for admin approval.';
             return redirect()->back()->with('success_message', $message);
         }
     }

@@ -120,23 +120,35 @@
                                 <label>Business License Number</label>
                                 <input class="form-control"  @if (isset($vendorDetails['vendor_business']['business_license_number'])) value="{{ $vendorDetails['vendor_business']['business_license_number'] }}" @endif  readonly> <!-- Check updateAdminPassword() method in AdminController.php -->
                             </div>
-                            <div class="form-group">
-                                <label>GST Number</label>
-                                <input class="form-control"  @if (isset($vendorDetails['vendor_business']['gst_number'])) value="{{ $vendorDetails['vendor_business']['gst_number'] }}" @endif  readonly> <!-- Check updateAdminPassword() method in AdminController.php -->
-                            </div>
-                            <div class="form-group">
-                                <label>PAN Number</label>
-                                <input class="form-control"  @if (isset($vendorDetails['vendor_business']['pan_number'])) value="{{ $vendorDetails['vendor_business']['pan_number'] }}" @endif  readonly> <!-- Check updateAdminPassword() method in AdminController.php -->
-                            </div>
-                            <div class="form-group">
-                                <label>Address Proof</label>
-                                <input class="form-control"  @if (isset($vendorDetails['vendor_business']['address_proof'])) value="{{ $vendorDetails['vendor_business']['address_proof'] }}" @endif  readonly> <!-- Check updateAdminPassword() method in AdminController.php -->
-                            </div>
-                            @if (!empty($vendorDetails['vendor_business']['address_proof_image']))
+                            @if (!empty($vendorDetails['vendor_business']['license_image']))
                                 <div class="form-group">
-                                    <label for="vendor_image">Address Proof Image</label>
+                                    <label for="vendor_image">License</label>
                                     <br>
-                                    <img style="width: 200px" src="{{ url('admin/images/proofs/' . $vendorDetails['vendor_business']['address_proof_image']) }}">
+                                    <a 
+                                        href="{{ asset($vendorDetails['vendor_business']['license_image']) }}" 
+                                        target="_blank" 
+                                        rel="noopener noreferrer"
+                                    >
+                                        <img 
+                                          src="{{ asset($vendorDetails['vendor_business']['license_image']) }}" 
+                                          alt="License Image" 
+                                          srcset=""
+                                          style="width: 150px;"
+                                        >
+                                    </a>
+                                    <!-- <img style="width: 200px" src="{{ url('admin/images/proofs/' . $vendorDetails['vendor_business']['license_image']) }}"> -->
+                                </div>
+                            @endif
+                            @if (!empty($vendorDetails['vendor_business']['business_proof_image']))
+                                <div class="form-group">
+                                    <label for="vendor_image">Business Proof</label>
+                                    <br>
+                                    <a 
+                                        href="{{ asset($vendorDetails['vendor_business']['business_proof_image']) }}" 
+                                        target="_blank" 
+                                        rel="noopener noreferrer"
+                                    >View</a>
+                                    <!-- <img style="width: 200px" src="{{ url('admin/images/proofs/' . $vendorDetails['vendor_business']['business_proof_image']) }}"> -->
                                 </div>
                             @endif
                         </div>

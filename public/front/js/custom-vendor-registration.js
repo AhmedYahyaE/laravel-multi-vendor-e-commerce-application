@@ -2,7 +2,7 @@ $(document).ready(function() {
     /**
      * On change of country name - load city
      */
-    $('.personal-address.form-group .address-field[name*="country"]').change((el) => {
+    $('#form-vendor_registration div.personal-address .address-field[name*="country"]').change((el) => {
         let country = $(el.currentTarget).val();
 
         var settings = {
@@ -16,7 +16,7 @@ $(document).ready(function() {
 
         $.ajax(settings).done(function (response) {
             if (!response.error) {
-                $('.personal-address.form-group .address-field[name*="state"] .added-through-api').remove();
+                $('#form-vendor_registration div.personal-address .address-field[name*="state"] .added-through-api').remove();
 
                 let states = response.data.states.map((state) => {
                     let newOption = $('<option>', {
@@ -28,7 +28,7 @@ $(document).ready(function() {
                     return newOption;
                 });
                 
-                $('.personal-address.form-group .address-field[name*="state"]').append(states);
+                $('#form-vendor_registration div.personal-address .address-field[name*="state"]').append(states);
             }
         });
     })
@@ -36,7 +36,7 @@ $(document).ready(function() {
     /**
      * On change of state get cities
      */
-    $('.personal-address.form-group .address-field[name*="state"]').change((el) => {
+    $('#form-vendor_registration div.personal-address .address-field[name*="state"]').change((el) => {
         let country = $('.address-field[name*="country"]').val();
         let state = $(el.currentTarget).val();
 
@@ -51,7 +51,7 @@ $(document).ready(function() {
 
         $.ajax(settings).done(function (response) {
             if (!response.error) {
-                $('.personal-address.form-group .address-field[name*="city"] .added-through-api').remove();
+                $('#form-vendor_registration div.personal-address .address-field[name*="city"] .added-through-api').remove();
                 
                 let cities = response.data.map((city) => {
                     let newOption = $('<option>', {
@@ -63,7 +63,7 @@ $(document).ready(function() {
                     return newOption;
                 });
                 
-                $('.personal-address.form-group .address-field[name*="city"]').append(cities);
+                $('#form-vendor_registration div.personal-address .address-field[name*="city"]').append(cities);
             }
         });
     });
@@ -74,7 +74,7 @@ $(document).ready(function() {
     /**
      * On change of country name - load city
      */
-    $('.business-details.form-group .address-field[name*="country"]').change((el) => {
+    $('#form-vendor_registration div.business-details .address-field[name*="country"]').change((el) => {
         let country = $(el.currentTarget).val();
 
         var settings = {
@@ -88,7 +88,7 @@ $(document).ready(function() {
 
         $.ajax(settings).done(function (response) {
             if (!response.error) {
-                $('.business-details.form-group .address-field[name*="state"] .added-through-api').remove();
+                $('#form-vendor_registration div.business-details .address-field[name*="state"] .added-through-api').remove();
 
                 let states = response.data.states.map((state) => {
                     let newOption = $('<option>', {
@@ -100,15 +100,15 @@ $(document).ready(function() {
                     return newOption;
                 });
                 
-                $('.business-details.form-group .address-field[name*="state"]').append(states);
+                $('#form-vendor_registration div.business-details .address-field[name*="state"]').append(states);
             }
         });
     })
     /**
      * On change of state get cities
      */
-    $('.business-details.form-group .address-field[name*="state"]').change((el) => {
-        let country = $('.address-field[name*="country"]').val();
+    $('#form-vendor_registration div.business-details .address-field[name*="state"]').change((el) => {
+        let country = $('#form-vendor_registration div.business-details .address-field[name*="country"]').val();
         let state = $(el.currentTarget).val();
 
         var settings = {
@@ -122,7 +122,7 @@ $(document).ready(function() {
 
         $.ajax(settings).done(function (response) {
             if (!response.error) {
-                $('.business-details.form-group .address-field[name*="city"] .added-through-api').remove();
+                $('#form-vendor_registration div.business-details .address-field[name*="city"] .added-through-api').remove();
                 
                 let cities = response.data.map((city) => {
                     let newOption = $('<option>', {
@@ -134,7 +134,7 @@ $(document).ready(function() {
                     return newOption;
                 });
                 
-                $('.business-details.form-group .address-field[name*="city"]').append(cities);
+                $('#form-vendor_registration div.business-details .address-field[name*="city"]').append(cities);
             }
         });
     });
