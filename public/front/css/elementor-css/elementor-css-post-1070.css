@@ -14,3 +14,34 @@
     display: flex !important;
     flex-wrap: wrap !important;
 }
+#form-vendor_registration .alert{
+    width: 100%;
+    margin-top: 30px;
+}
+#form-vendor_registration .alert ul{
+    line-height: 210%;
+    padding-right: 40px;
+}
+#form-vendor_registration .alert.success{
+    background: #4bb54352;
+    margin-top: 0;
+    margin-bottom: 40px;
+    padding: 22px 40px;
+    line-height: 210%;
+    text-align: center;
+}
+
+@media (max-width: 767px){
+    #form-vendor_registration .alert ul{
+        padding-left: 20px;
+        padding-right: 20px;
+        line-height: 170%;
+    }
+    #form-vendor_registration .alert li{
+        margin-bottom: 10px;
+    }
+    #form-vendor_registration .alert.success{
+        line-height: 160%;
+        padding: 12px 25px;
+    }
+}

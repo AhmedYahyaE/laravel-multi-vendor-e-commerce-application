@@ -53,7 +53,7 @@
                                 <form id="form-vendor_registration" action="{{ url('vendor/registration') }}" method="post" name="Vendor Register" enctype="multipart/form-data">
                                     @csrf
                                     @if (session('success_message'))
-                                        <div>{{ session('success_message') }}</div>
+                                        <div class="alert success">{{ session('success_message') }}</div>
                                     @endif
                                     <input type="hidden" name="post_id" value="1070">
                                     <input type="hidden" name="form_id" value="c35e8e1">
@@ -377,6 +377,22 @@
                                                     data-maxsize-message="This file exceeds the maximum allowed size."
                                                     required
                                                 >
+                                            </div>
+                                            <div class="elementor-field-type-checkbox elementor-field-group elementor-column elementor-field-group-field_e55c601 elementor-col-100" style="margin-top: 10px;">
+                                                <label for="form-field-field_e55c601" class="elementor-field-label elementor-screen-only"> Accept Our Terms and Conditions</label>
+                                                <div class="elementor-field-subgroup">
+                                                    <span class="elementor-field-option">
+                                                        <input
+                                                            type="checkbox"
+                                                            value="Accept Our Terms and Conditions"
+                                                            id="form-field-field_e55c601-0"
+                                                            name="accept"
+                                                            required="required"
+                                                            aria-required="true"
+                                                        >
+                                                        <label for="form-field-field_e55c601-0">Accept Our Terms and Conditions</label>
+                                                    </span>
+                                                </div>
                                             </div>
                                         </div>
                                         @if ($errors->any())
