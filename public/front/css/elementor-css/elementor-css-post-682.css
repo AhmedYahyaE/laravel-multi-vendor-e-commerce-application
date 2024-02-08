@@ -240,6 +240,14 @@
     display: block;
     width: fit-content;
 }
+#form-products-listing-filter .ScrollDiv,
+#form-products-listing-filter .associate-wrapper{
+	height: auto !important;
+}
+body, html{
+	overflow-x: hidden;
+}
+
 @media (max-width: 1024px){
 	.elementor-682 .elementor-element.elementor-element-80f00c9 {
 		width: calc(33.333% - 20px);
