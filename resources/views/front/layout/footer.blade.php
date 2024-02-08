@@ -58,7 +58,7 @@
                 >
                     <div class="elementor-widget-container">
                         <div class="elementor-button-wrapper">
-                            <a class="elementor-button elementor-button-link elementor-size-sm" href="#">
+                            <a class="elementor-button elementor-button-link elementor-size-sm" href="{{ url('/vendor/register') }}">
                                 <span class="elementor-button-content-wrapper">
                                     <span class="elementor-button-text">LEARN MORE</span>
                                 </span>
