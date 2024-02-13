@@ -293,6 +293,7 @@ Route::namespace('App\Http\Controllers\Front')->group(function() {
             'uses' => 'OrderController@orders'
         ]); // If the slug {id?} (Optional Parameters) is passed in, this means go to the front/orders/order_details.blade.php page, and if not, this means go to the front/orders/orders.blade.php page
 
+        Route::get('user/chats', 'ChatsController@index')->name('user.chats.show');
 
 
         // PayPal routes:
