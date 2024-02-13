@@ -11,7 +11,7 @@ use Intervention\Image\Facades\Image;
 
 class ProductsController extends Controller
 {
-    public function products() { // render products.blade.php in the Admin Panel
+    public function products(Request $request) { // render products.blade.php in the Admin Panel
         Session::put('page', 'products');
 
 
@@ -44,8 +44,11 @@ class ProductsController extends Controller
         $products = $products->get()->toArray(); // $products will be either ALL products Or VENDOR products ONLY (depending on the last if condition)    // Using subqueries with Eager Loading for a better performance    // Constraining Eager Loads: https://laravel.com/docs/9.x/eloquent-relationships#constraining-eager-loads    // Subquery Where Clauses: https://laravel.com/docs/9.x/queries#subquery-where-clauses    // Advanced Subqueries: https://laravel.com/docs/9.x/eloquent#advanced-subqueries    // ['section', 'category'] are the relationships methods names
         // dd($products);
 
-
-        return view('admin.products.products')->with(compact('products')); // render products.blade.php page, and pass $products variable to the view
+        $search_value = "";
+        if (isset($request->product_code)) {
+            $search_value = $request->product_code;
+        }
+        return view('admin.products.products')->with(compact('products','search_value')); // render products.blade.php page, and pass $products variable to the view
     }
     
     public function updateProductStatus(Request $request) { // Update Product Status using AJAX in products.blade.php
@@ -104,7 +107,7 @@ class ProductsController extends Controller
             $rules = [
                 'category_id'   => 'required',
                 'product_name'  => 'required', // only alphabetical characters and spaces
-                'product_code'  => 'required|regex:/^\w+$/', // alphanumeric regular expression
+                'product_code'  => "required|regex:/^\w+$/|unique:products,product_code,{$id}", // alphanumeric regular expression
                 'product_price' => 'required|numeric',
                 'product_color' => 'required|regex:/^[\pL\s\-]+$/u', // only alphabetical characters and spaces
             ];
@@ -263,10 +266,29 @@ class ProductsController extends Controller
             }
 
 
-            $product->status = 1;
+            $product->status = is_null($id) ? 0:$product->status;
 
 
             $product->save(); // Save all data in the database
+
+            if (is_null($id)) {
+                $adminModel = new \App\Models\Admin;
+                $admins_emails = $adminModel->pluck('email')->toArray();
+    
+                $vendorModel = new \App\Models\Vendor;
+                $vendorDetails = $vendorModel->find($product->vendor_id)->first();
+    
+                $messageData = [
+                    'product_id' => $product->id,
+                    'vendor' => $vendorDetails,
+                    'product_code' => $product->product_code,
+                    'category' => $categoryDetails
+                ];
+    
+                \Illuminate\Support\Facades\Mail::send('emails.new_product', $messageData, function ($message) use ($admins_emails) { // Sending Mail: https://laravel.com/docs/9.x/mail#sending-mail    // 'emails.vendor_approved' is the vendor_approved.blade.php file inside the 'resources/views/emails' folder that will be sent as an email    // We pass in all the variables that vendor_approved.blade.php will use    // https://www.php.net/manual/en/functions.anonymous.php
+                    $message->to($admins_emails)->subject('Product for Review');
+                });
+            }
 
             return redirect('admin/products')->with('success_message', $message);
         }

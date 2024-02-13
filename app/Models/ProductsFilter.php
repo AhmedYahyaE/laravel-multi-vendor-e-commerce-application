@@ -60,7 +60,7 @@ class ProductsFilter extends Model
         $catIdsArray = explode(',', $filterAvailable['cat_ids']); // convert the string `cat_ids` column of the `products_filters` database table to an array
 
         // dd(array_intersect($catIdsArray, $category_id));
-        if (array_intersect($category_id, $catIdsArray)) {
+        if (array_intersect([$category_id], $catIdsArray)) {
             $available = 'Yes';
         } else {
             $available = 'No';
