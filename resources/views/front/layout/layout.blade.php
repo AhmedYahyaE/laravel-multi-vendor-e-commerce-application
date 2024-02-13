@@ -202,6 +202,10 @@ window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/14
                     'href' => 'front/css/elementor-css/elementor-css-post-1070.css',
                     'javascript_src' => 'front/js/custom-vendor-registration.js',
                 ],
+                'front.user.chat' => [
+                    'id' => 'elementor-post-1086-css',
+                    'href' => 'front/css/elementor-css/elementor-css-post-1086.css'
+                ],
             ];
 
         @endphp
