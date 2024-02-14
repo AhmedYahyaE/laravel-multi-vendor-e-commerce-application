@@ -138,7 +138,7 @@
                             >
                                 <div class="">
 
-                                    <form method="post" name="Edit Form" class="edit-information-form">
+                                    <form id="accountForm" action="javascript:;" method="post" name="Edit Form" class="edit-information-form">
                                         <div
                                             class="elementor-element elementor-element-8ef6cca e-flex e-con-boxed e-con e-child"
                                             data-id="8ef6cca"
@@ -163,7 +163,7 @@
                                                 >
                                                     <div class="elementor-widget-container">
                                                         <h5 class="elementor-heading-title elementor-size-default">{{ $user->first_name }}</h5>
-                                                        <input class="text-field first_name_edit" type="text" id="first_name_edit" name="first_name_edit" value="{{ $user->first_name }}">
+                                                        <input class="text-field first_name_edit" type="text" id="first_name_edit" name="first_name" value="{{ $user->first_name }}">
                                                     </div>
                                                 </div>
                                             </div>
@@ -193,7 +193,7 @@
                                                 >
                                                     <div class="elementor-widget-container">
                                                         <h5 class="elementor-heading-title elementor-size-default">{{ $user->last_name }}</h5>
-                                                        <input class="text-field last_name_edit" type="text" id="last_name_edit" name="last_name_edit" value="{{ $user->last_name }}">
+                                                        <input class="text-field last_name_edit" type="text" id="last_name_edit" name="last_name" value="{{ $user->last_name }}">
                                                     </div>
                                                 </div>
                                             </div>
@@ -223,7 +223,7 @@
                                                 >
                                                     <div class="elementor-widget-container">
                                                         <h5 class="elementor-heading-title elementor-size-default">#407 sesame street</h5>
-                                                        <input class="text-field address_1_edit" type="text" id="address_1_edit" name="address_1_edit" value="#407 sesame street">
+                                                        <input class="text-field address_1_edit" type="text" id="address_1_edit" name="address" value="#407 sesame street">
                                                     </div>
                                                 </div>
                                             </div>
@@ -324,7 +324,7 @@
                                                 >
                                                     <div class="elementor-widget-container">
                                                         <h5 class="elementor-heading-title elementor-size-default">Bustos</h5>
-                                                        <input class="text-field user-city" type="text" id="user-city" name="user-city" value="Bustos">
+                                                        <input class="text-field user-city" type="text" id="user-city" name="city" value="Bustos">
                                                     </div>
                                                     
                                                 </div>
@@ -360,7 +360,7 @@
                                                 >
                                                     <div class="elementor-widget-container">
                                                         <h5 class="elementor-heading-title elementor-size-default">3007</h5>
-                                                        <input class="text-field zip_code_edit" type="text" id="zip_code_edit" name="zip_code_edit" value="3007">
+                                                        <input class="text-field zip_code_edit" type="text" id="zip_code_edit" name="pincode" value="3007">
                                                     </div>
                                                 </div>
                                             </div>
@@ -390,7 +390,7 @@
                                                 >
                                                     <div class="elementor-widget-container">
                                                         <h5 class="elementor-heading-title elementor-size-default">09451621033</h5>
-                                                        <input type="text" class="text-field phone_edit" id="phone_edit" name="phone_edit" pattern="^0\d{10}$" value="09451621033">
+                                                        <input type="text" class="text-field phone_edit" id="phone_edit" name="mobile" pattern="^0\d{10}$" value="09451621033">
                                                     </div>
                                                 </div>
                                             </div>
@@ -463,11 +463,11 @@
                                         >
                                             <div class="elementor-widget-container">
                                                 <div class="elementor-button-wrapper text-align-right save_button text-align-center-mobile">
-                                                    <a id="save_info" class="elementor-button elementor-button-link elementor-size-sm" href="#">
+                                                    <button id="save_info" type="submit" class="elementor-button elementor-button-link elementor-size-sm">
                                                         <span class="elementor-button-content-wrapper">
                                                             <span class="elementor-button-text">Save changes</span>
                                                         </span>
-                                                    </a>
+                                                    </button>
                                                 </div>
                                             </div>
                                         </div>
