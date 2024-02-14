@@ -7,7 +7,11 @@ $(document).ready(function() {
     $('#sections').DataTable();    // in sections.blade.php
     $('#categories').DataTable();  // in categories.blade.php
     $('#brands').DataTable();      // in brands.blade.php
-    $('#products').DataTable();    // in products.blade.php
+    $('#products').DataTable({
+        search: {
+            search: $('input[name="search"]').val()
+        }
+    });    // in products.blade.php
     $('#banners').DataTable();     // in banners.blade.php
     $('#filters').DataTable();     // in filters.blade.php
     $('#coupons').DataTable();     // in admin/coupons/coupons.blade.php              
