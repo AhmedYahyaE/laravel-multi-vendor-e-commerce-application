@@ -195,6 +195,7 @@ $sections = \App\Models\Section::sections();
                                     <ul class="my-account-sub-menu">
                                         <li><a href="{{ url('user/account') }}">Profile</a></li>
                                         <li><a href="{{ url('user/orders') }}">Order List</a></li>
+                                        <li><a href="{{ url('user/chats') }}">Chats</a></li>
                                         <li><a href="{{ url('user/logout') }}">Log out</a></li>
                                     </ul>
                                 @else
