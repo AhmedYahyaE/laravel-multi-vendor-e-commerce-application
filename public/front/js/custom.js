@@ -478,6 +478,9 @@ $(document).ready(function() {
                         $('#account-success').css({
                             'display': 'none'
                         });
+                        setTimeout(function() {
+                            windows.location.reload();
+                        }, 500);
                     }, 3000);
                 }
             },
@@ -826,6 +829,16 @@ $(document).ready(function() {
             }
         });
     })
+
+    var countryElement = $('.address-field[name=country]');
+
+    // Check if the element has a value
+    if (countryElement.val()) {
+        // Trigger the change event
+        setTimeout(function() {
+            countryElement.trigger('change');
+        }, 500)
+    }
 
     /**
      * On change of country name - load city
