@@ -945,4 +945,15 @@ $(document).ready(function() {
     // Display initial values
     $(".filter_outer_container #slide-price-min").text($(".filter_outer_container #slide-price-range").slider("values", 0));
     $(".filter_outer_container #slide-price-max").text($(".filter_outer_container #slide-price-range").slider("values", 1));
+
+
+
+    $("#write_review_btn").click(function(event) {
+        event.preventDefault();
+        $("#form_write_review").toggleClass("active");
+    });
+
+
+
+
 });
