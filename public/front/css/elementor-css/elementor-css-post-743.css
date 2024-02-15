@@ -120,6 +120,32 @@
     gap: 50px 50px;
     grid-auto-flow: row;
 }
+#accountForm .message-form{
+	display: none;
+    position: fixed;
+    width: fit-content;
+    max-width: 90vw;
+    height: fit-content;
+    max-height: 80vh;
+    background: white;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    z-index: 1;
+    border-radius: 10px;
+    box-shadow: 0 0 0px 200vw #0000002e;
+    align-items: center;
+    justify-content: center;
+    font-size: 19px;
+    padding: 40px 70px;
+    text-align: center;
+}
+#accountForm .message-form ul{
+	text-align: left;
+}
+
 
 @media (max-width: 1024px){
 	.customer_information .tablet-grid-col-1{

@@ -447,27 +447,29 @@ $(document).ready(function() {
 
 
                     // Note: in HTML in front/users/user_account.blade.php, to conveniently display the errors by jQuery loop, the pattern must be like: account-x (e.g. account-mobile, regitster-email, ... in order for the jQuery loop to work. And x must be identical to the 'name' HTML attributes (e.g. the <input> with the    name='mobile'    HTML attribute must have a <p> with an id HTML attribute    id="account-mobile"    ) so that when the vaildation errors array are sent as a response to the AJAX request, they could conveniently/easily handled by the jQuery $.each() loop)
-                    $.each(resp.errors, function(i, error) { // 'i' is the attribute (the 'name' HTML attribute) ('i' is the JavaScript object keys or the PHP array (sent from backend/server response from method inside controller) keys/indexes, and 'error' is the Validation Error ('error' is the JavaScript object values or the PHP array (sent from backend/server response from method inside controller) values    // $.each(): https://api.jquery.com/jquery.each/    // 'errors' is sent as a PHP array key (in the HTTP response from the server (backend)) from inside the userAccount() method in Front/UserController.php
-
-                        $('#account-' + i).attr('style', 'color: red'); // I already did this in the HTML page in the <p> tags in the HTML in front/users/user_account.blade.php (    <p id="account-name" style="color: red"></p>    )    // This is the same as:    $('#account-' + i).css('color', 'red');    // Change the CSS color of the <p> tags
-                        $('#account-' + i).html(error); // replace the <p> tags that we created inside the user registration <form> in front/users/user_account.blade.php depending on x in their 'id' HTML attributes 'account-x' (e.g. account-mobile, account-email, ...)
-
-
-                        // Make the Validation Error Messages disappear after a certain amount of time (don't stick)
-                        setTimeout(function() {
-                            $('#account-' + i).css({
-                                'display': 'none'
-                            });
-                        }, 3000);
-
+                    var errorList = '<ul>'; // Initialize error list outside the loop
+                    $.each(resp.errors, function(i, error) { 
+                        errorList += '<li>' + error + '</li>'; // Append each error message to the list
                     });
+
+                    errorList += '</ul>'; // Close the list after all errors have been added
+
+                    $('#account-error').attr('style', 'color: red; display: flex'); 
+                    $('#account-error').html(errorList); 
+
+                    setTimeout(function() {
+                        $('#account-error').css({
+                            'display': 'none'
+                        });
+                    }, 3000);
+                    
 
                 } else if (resp.type == 'success') { // if there're no validation errors (login is successful), redirect to the Cart page    // 'type' is sent as a PHP array key (in the HTTP response from the server (backend)) from inside the userAccount() method in Front/UserController.php
                     // Hide our Preloader/Loader/Loading Page/Preloading Screen when the response is 'success'    
                     $('.loader').hide();
 
 
-                    $('#account-success').attr('style', 'color: green'); // I already did this in the HTML page in the <p> tags in the HTML in front/users/user_account.blade.php (    <p id="login-name" style="color: red"></p>    )    // This is the same as:    $('#login-' + i).css('color', 'green');    // Change the CSS color of the <p> tags
+                    $('#account-success').attr('style', 'color: green; display: flex'); // I already did this in the HTML page in the <p> tags in the HTML in front/users/user_account.blade.php (    <p id="login-name" style="color: red"></p>    )    // This is the same as:    $('#login-' + i).css('color', 'green');    // Change the CSS color of the <p> tags
                     $('#account-success').html(resp.message); // replace the <p> tags that we created inside the user registration <form> in front/users/user_account.blade.php depending on x in their 'id' HTML attributes 'login-x' (e.g. login-mobile, login-email, ...)
 
 
@@ -514,32 +516,34 @@ $(document).ready(function() {
                     // Hide our Preloader/Loader/Loading Page/Preloading Screen when there's an error    
                     $('.loader').hide();
 
-
                     // Note: in HTML in front/users/user_account.blade.php, to conveniently display the errors by jQuery loop, the pattern must be like: account-x (e.g. account-mobile, regitster-email, ... in order for the jQuery loop to work. And x must be identical to the 'name' HTML attributes (e.g. the <input> with the    name='mobile'    HTML attribute must have a <p> with an id HTML attribute    id="account-mobile"    ) so that when the vaildation errors array are sent as a response to the AJAX request, they could conveniently/easily handled by the jQuery $.each() loop)
-                    $.each(resp.errors, function(i, error) { // 'i' is the attribute (the 'name' HTML attribute) ('i' is the JavaScript object keys or the PHP array (sent from backend/server response from method inside controller) keys/indexes, and 'error' is the Validation Error ('error' is the JavaScript object values or the PHP array (sent from backend/server response from method inside controller) values    // $.each(): https://api.jquery.com/jquery.each/    // 'errors' is sent as a PHP array key (in the HTTP response from the server (backend)) from inside the userAccount() method in Front/UserController.php
-                        $('#password-' + i).attr('style', 'color: red'); // I already did this in the HTML page in the <p> tags in the HTML in front/users/user_account.blade.php (    <p id="account-name" style="color: red"></p>    )    // This is the same as:    $('#password-' + i).css('color', 'red');    // Change the CSS color of the <p> tags
-                        $('#password-' + i).html(error); // replace the <p> tags that we created inside the user registration <form> in front/users/user_account.blade.php depending on x in their 'id' HTML attributes 'account-x' (e.g. account-mobile, account-email, ...)
-
-
-                        // Make the Validation Error Messages disappear after a certain amount of time (don't stick)
-                        setTimeout(function() {
-                            $('#password-' + i).css({
-                                'display': 'none'
-                            });
-                        }, 3000);
-
+                    var errorList = '<ul>'; // Initialize error list outside the loop
+                    $.each(resp.errors, function(i, error) { 
+                        errorList += '<li>' + error + '</li>'; // Append each error message to the list
                     });
+
+                    errorList += '</ul>'; // Close the list after all errors have been added
+
+                    $('#password-error').attr('style', 'color: red; display: flex'); 
+                    $('#password-error').html(errorList); 
+
+                    setTimeout(function() {
+                        $('#password-error').css({
+                            'display': 'none'
+                        });
+                    }, 3000);
+                 
 
                 } else if (resp.type == 'incorrect') { // if the entered current password is incorrect/wrong    // 'type' is sent as a PHP array key (in the HTTP response from the server (backend)) from inside the userUpdatePassword() method in Front/UserController.php
                     // Hide our Preloader/Loader/Loading Page/Preloading Screen when the response is 'success'    
                     $('.loader').hide();
 
-                    $('#password-error').attr('style', 'color: red'); // I already did this in the HTML page in the <p> tags in the HTML in front/users/user_account.blade.php (    <p id="password-name" style="color: red"></p>    )    // This is the same as:    $('#password-' + i).css('color', 'red');    // Change the CSS color of the <p> tags
-                    $('#password-error').html(resp.message); // replace the <p> tags that we created inside the user registration <form> in front/users/user_account.blade.php depending on x in their 'id' HTML attributes 'password-x' (e.g. password-mobile, password-email, ...)
+                    $('#password-error-current').attr('style', 'color: red; display: flex'); // I already did this in the HTML page in the <p> tags in the HTML in front/users/user_account.blade.php (    <p id="password-name" style="color: red"></p>    )    // This is the same as:    $('#password-' + i).css('color', 'red');    // Change the CSS color of the <p> tags
+                    $('#password-error-current').html(resp.message); // replace the <p> tags that we created inside the user registration <form> in front/users/user_account.blade.php depending on x in their 'id' HTML attributes 'password-x' (e.g. password-mobile, password-email, ...)
 
                     // Make the Validation Error Messages disappear after a certain amount of time (don't stick)
                     setTimeout(function() {
-                        $('#password-error').css({
+                        $('#password-error-current').css({
                             'display': 'none'
                         });
                     }, 3000);
@@ -548,7 +552,7 @@ $(document).ready(function() {
                     // Hide our Preloader/Loader/Loading Page/Preloading Screen when the response is 'success'    
                     $('.loader').hide();
 
-                    $('#password-success').attr('style', 'color: green'); // I already did this in the HTML page in the <p> tags in the HTML in front/users/user_account.blade.php (    <p id="password-name" style="color: red"></p>    )    // This is the same as:    $('#password-' + i).css('color', 'green');    // Change the CSS color of the <p> tags
+                    $('#password-success').attr('style', 'color: green; display: flex'); // I already did this in the HTML page in the <p> tags in the HTML in front/users/user_account.blade.php (    <p id="password-name" style="color: red"></p>    )    // This is the same as:    $('#password-' + i).css('color', 'green');    // Change the CSS color of the <p> tags
                     $('#password-success').html(resp.message); // replace the <p> tags that we created inside the user registration <form> in front/users/user_account.blade.php depending on x in their 'id' HTML attributes 'password-x' (e.g. password-mobile, password-email, ...)
 
                     // Make the Validation Error Messages disappear after a certain amount of time (don't stick)

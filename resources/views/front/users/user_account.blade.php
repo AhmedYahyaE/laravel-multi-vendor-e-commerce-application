@@ -139,6 +139,8 @@
                                 <div class="">
 
                                     <form id="accountForm" action="javascript:;" method="post" name="Edit Form" class="edit-information-form">
+                                        <div id="account-success" class="message-form"></div>
+                                        <div id="account-error" class="message-form"></div>
                                         <div
                                             class="elementor-element elementor-element-8ef6cca e-flex e-con-boxed e-con e-child"
                                             data-id="8ef6cca"
