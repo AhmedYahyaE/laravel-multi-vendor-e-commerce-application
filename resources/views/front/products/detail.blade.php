@@ -342,7 +342,7 @@
                                     <input type="hidden" name="referer_title" value="Product Page">
                                     <input type="hidden" name="queried_id" value="491">
                                     <input type="hidden" name="product_id" value="{{ $productDetails['id'] }}">
-                                    <input type="hidden" name="size" value="{{ $productDetails['attributes'][0]['size'] }}">
+                                    <input type="hidden" name="size" value="{{ isset($productDetails['attributes'][0]) ? $productDetails['attributes'][0]['size']:"" }}">
                                     <div class="elementor-form-fields-wrapper elementor-labels-">
                                         <div class="elementor-field-type-number elementor-field-group elementor-column elementor-field-group-name elementor-col-20 elementor-field-required">
                                             <label for="form-field-name" class="elementor-field-label elementor-screen-only">Quantity</label>
