@@ -224,8 +224,8 @@
                                                     data-widget_type="heading.default"
                                                 >
                                                     <div class="elementor-widget-container">
-                                                        <h5 class="elementor-heading-title elementor-size-default">#407 sesame street</h5>
-                                                        <input class="text-field address_1_edit" type="text" id="address_1_edit" name="address" value="#407 sesame street">
+                                                        <h5 class="elementor-heading-title elementor-size-default">{{ $user->address }}</h5>
+                                                        <input class="text-field address_1_edit" type="text" id="address_1_edit" name="address" value="{{ $user->address }}">
                                                     </div>
                                                 </div>
                                             </div>
@@ -254,7 +254,7 @@
                                                     data-widget_type="heading.default"
                                                 >
                                                     <div class="elementor-widget-container">
-                                                        <h5 class="elementor-heading-title elementor-size-default">Philippines</h5>
+                                                        <h5 class="elementor-heading-title elementor-size-default">{{ $user->country }}</h5>
                                                         <select class="text-field address-field country-edit" id="user-country" name="country" style="color: #495057">
                                                             <option value="">Select Country</option>
 
@@ -292,7 +292,7 @@
                                                     data-widget_type="heading.default"
                                                 >
                                                     <div class="elementor-widget-container">
-                                                        <h5 class="elementor-heading-title elementor-size-default">Bulacan</h5>
+                                                        <h5 class="elementor-heading-title elementor-size-default">{{ $user->state }}</h5>
                                                         <select class="text-field address-field state-edit" id="user-state" name="state" style="color: #495057">
                                                             <option value="">Select State</option>
                                                         </select>
@@ -325,8 +325,8 @@
                                                     data-widget_type="heading.default"
                                                 >
                                                     <div class="elementor-widget-container">
-                                                        <h5 class="elementor-heading-title elementor-size-default">Bustos</h5>
-                                                        <input class="text-field user-city" type="text" id="user-city" name="city" value="Bustos">
+                                                        <h5 class="elementor-heading-title elementor-size-default">{{ $user->city }}</h5>
+                                                        <input class="text-field user-city" type="text" id="user-city" name="city" value="{{ $user->city }}">
                                                     </div>
                                                     
                                                 </div>
@@ -361,8 +361,8 @@
                                                     data-widget_type="heading.default"
                                                 >
                                                     <div class="elementor-widget-container">
-                                                        <h5 class="elementor-heading-title elementor-size-default">3007</h5>
-                                                        <input class="text-field zip_code_edit" type="text" id="zip_code_edit" name="pincode" value="3007">
+                                                        <h5 class="elementor-heading-title elementor-size-default">{{ $user->pincode }}</h5>
+                                                        <input class="text-field zip_code_edit" type="text" id="zip_code_edit" name="pincode" value="{{ $user->pincode }}">
                                                     </div>
                                                 </div>
                                             </div>
@@ -391,8 +391,8 @@
                                                     data-widget_type="heading.default"
                                                 >
                                                     <div class="elementor-widget-container">
-                                                        <h5 class="elementor-heading-title elementor-size-default">09451621033</h5>
-                                                        <input type="text" class="text-field phone_edit" id="phone_edit" name="mobile" pattern="^0\d{10}$" value="09451621033">
+                                                        <h5 class="elementor-heading-title elementor-size-default">{{ $user->mobile }}</h5>
+                                                        <input type="text" class="text-field phone_edit" id="phone_edit" name="mobile" pattern="^0\d{10}$" value="{{ $user->mobile }}">
                                                     </div>
                                                 </div>
                                             </div>
@@ -421,8 +421,8 @@
                                                     data-widget_type="heading.default"
                                                 >
                                                     <div class="elementor-widget-container">
-                                                        <h5 class="elementor-heading-title elementor-size-default">ninofeliciano9@gmail.com</h5>
-                                                        <input class="text-field email_edit" type="email" id="email_edit" name="email_edit" value="ninofeliciano9@gmail.com">
+                                                        <h5 class="elementor-heading-title elementor-size-default">{{ $user->email }}</h5>
+                                                        <input class="text-field email_edit" type="email" id="email_edit" name="email_edit" value="{{ $user->email }}">
                                                     </div>
                                                 </div>
                                             </div>
