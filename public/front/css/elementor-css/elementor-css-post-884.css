@@ -37,48 +37,80 @@
 	font-style: normal;
 	font-weight: normal;
 	font-display: auto;
-	src: url(./../fonts/Louis-George-Cafe.ttf) format('truetype');
+	src: url(./../../fonts/Louis-George-Cafe.ttf) format('truetype');
 }
 @font-face {
 	font-family: 'Louis George Cafe';
 	font-style: italic;
 	font-weight: normal;
 	font-display: auto;
-	src: url(./../fonts/Louis-George-Cafe-Italic.ttf) format('truetype');
+	src: url(./../../fonts/Louis-George-Cafe-Italic.ttf) format('truetype');
 }
 @font-face {
 	font-family: 'Louis George Cafe';
 	font-style: normal;
 	font-weight: 300;
 	font-display: auto;
-	src: url(./../fonts/Louis-George-Cafe-Light.ttf) format('truetype');
+	src: url(./../../fonts/Louis-George-Cafe-Light.ttf) format('truetype');
 }
 @font-face {
 	font-family: 'Louis George Cafe';
 	font-style: italic;
 	font-weight: 300;
 	font-display: auto;
-	src: url(./../fonts/Louis-George-Cafe-Light-Italic.ttf) format('truetype');
+	src: url(./../../fonts/Louis-George-Cafe-Light-Italic.ttf) format('truetype');
 }
 @font-face {
 	font-family: 'Louis George Cafe';
 	font-style: normal;
 	font-weight: 600;
 	font-display: auto;
-	src: url(./../fonts/Louis-George-Cafe-Bold.ttf) format('truetype');
+	src: url(./../../fonts/Louis-George-Cafe-Bold.ttf) format('truetype');
 }
 @font-face {
 	font-family: 'Louis George Cafe';
 	font-style: italic;
 	font-weight: 600;
 	font-display: auto;
-	src: url(./../fonts/Louis-George-Cafe-Bold-Italic.ttf) format('truetype');
+	src: url(./../../fonts/Louis-George-Cafe-Bold-Italic.ttf) format('truetype');
 }
 @font-face {
 	font-family: 'Louis George Cafe';
 	font-style: normal;
 	font-weight: 700;
 	font-display: auto;
-	src: url(./../fonts/Lexend-Medium.ttf) format('truetype');
+	src: url(./../../fonts/Lexend-Medium.ttf) format('truetype');
 }
 /* End Custom Fonts CSS */
+
+
+
+/*NINO FELICIANO CUSTOM CSS*/
+#passwordForm .message-form{
+	display: none;
+    position: fixed;
+    width: fit-content;
+    max-width: 90vw;
+    height: fit-content;
+    max-height: 80vh;
+    background: white;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    z-index: 1;
+    border-radius: 10px;
+    box-shadow: 0 0 0px 200vw #0000002e;
+    align-items: center;
+    justify-content: center;
+    font-size: 19px;
+    padding: 40px 70px;
+    text-align: center;
+}
+#passwordForm .message-form ul{
+	text-align: left;
+}
+#passwordForm .elementor-message{
+	display: none !important;
+}

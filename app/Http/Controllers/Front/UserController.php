@@ -317,13 +317,14 @@ class UserController extends Controller
             // Validation    // Manually Creating Validators: https://laravel.com/docs/9.x/validation#manually-creating-validators    
             $validator = \Illuminate\Support\Facades\Validator::make($request->all(), [
                 // the 'name' HTML attribute of the request (the array key of the $request array) (ATTRIBUTE) => Validation Rules
-                'name'    => 'required|string|max:100',
+                'first_name'    => 'required|string|max:100',
+                'last_name'    => 'required|string|max:100',
                 'city'    => 'required|string|max:100',
                 'state'   => 'required|string|max:100',
                 'address' => 'required|string|max:100',
                 'country' => 'required|string|max:100',
                 'mobile'  => 'required|numeric|digits:11',
-                'pincode' => 'required|digits:6',
+                'pincode' => 'required|min_digits:4|max_digits:6',
 
             ] /*, [ // Customizing The Error Messages: https://laravel.com/docs/9.x/validation#manual-customizing-the-error-messages
                 // the 'name' HTML attribute of the request (the array key of the $request array) (ATTRIBUTE) => Custom Messages
@@ -339,7 +340,8 @@ class UserController extends Controller
             if ($validator->passes()) { // if validation passes (is successful), register (INSERT) the new user into the database `users` table, and log the user in IMMEDIATELY and AUTOMATICALLY and DIRECTLY, and redirect them to the Cart cart.blade.php page
                 // Update user details in `users` table
                 \App\Models\User::where('id', Auth::user()->id)->update([ // Retrieving The Authenticated User: https://laravel.com/docs/9.x/authentication#retrieving-the-authenticated-user
-                    'name'    => $data['name'],    // $data['name']       comes from the 'data' object sent from inside the $.ajax() method in front/js/custom.js file
+                    'first_name'    => $data['first_name'],    // $data['name']       comes from the 'data' object sent from inside the $.ajax() method in front/js/custom.js file
+                    'last_name'    => $data['last_name'],    // $data['name']       comes from the 'data' object sent from inside the $.ajax() method in front/js/custom.js file
                     'mobile'  => $data['mobile'],  // $data['mobile']     comes from the 'data' object sent from inside the $.ajax() method in front/js/custom.js file
                     'city'    => $data['city'],    // $data['city']       comes from the 'data' object sent from inside the $.ajax() method in front/js/custom.js file
                     'state'   => $data['state'],   // $data['state']      comes from the 'data' object sent from inside the $.ajax() method in front/js/custom.js file
