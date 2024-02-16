@@ -271,6 +271,15 @@ window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/14
         {{-- My Preloader/Loader/Loading Page/Preloading Screen --}} 
         <link rel="stylesheet" href="{{ url('front/css/custom.css') }}">
 
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-80LRJ48RYZ"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+
+            gtag('config', 'G-80LRJ48RYZ');
+        </script>
 
 
     </head>
