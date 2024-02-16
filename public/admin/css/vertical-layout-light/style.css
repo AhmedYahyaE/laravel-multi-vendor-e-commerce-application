@@ -28622,8 +28622,12 @@ div.tagsinput span.tag a {
 }
 
 .sidebar .nav:not(.sub-menu) > .nav-item:hover > .nav-link, .sidebar .nav:not(.sub-menu) > .nav-item:hover[aria-expanded="true"] {
-  background: #052CA3;
+  background: #5f7a61;
   color: #fff;
+}
+.sidebar .nav:not(.sub-menu) > .nav-item > .nav-link[aria-expanded="true"] i,
+.sidebar .nav:not(.sub-menu) > .nav-item > .nav-link[style] i{
+  color: white !important;
 }
 
 .sidebar .nav:not(.sub-menu) > .nav-item > .nav-link {
@@ -28632,7 +28636,7 @@ div.tagsinput span.tag a {
 
 .sidebar .nav:not(.sub-menu) > .nav-item > .nav-link[aria-expanded="true"] {
   border-radius: 8px 8px 0 0;
-  background: #052CA3;
+  background: #5f7a61;
   color: #fff;
 }
 
@@ -30593,3 +30597,20 @@ div.tagsinput span.tag a {
 }
 
 /*# sourceMappingURL=../maps/vertical-layout-light/style.css.map */
+
+
+
+/*NINO FELICIANO CUSTOM CSS*/
+.card .card-body{
+  color: black !important;
+  border-radius: 20px !important;
+}
+.content-wrapper, .footer{
+  background: #f1f5f0;
+}
+.card{
+  border-color: white !important;
+  border-radius: 20px !important;
+  background: white !important;
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.04);
+}
