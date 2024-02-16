@@ -37,6 +37,16 @@
         {{-- DataTable --}}
         <link rel="stylesheet" href="{{ url('admin/css/bootstrap.css') }}">
         <link rel="stylesheet" href="{{ url('admin/css/dataTables.bootstrap4.min.css') }}">
+
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-80LRJ48RYZ"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+
+            gtag('config', 'G-80LRJ48RYZ');
+        </script>
     </head>
     <body>
         <div class="container-scroller">
