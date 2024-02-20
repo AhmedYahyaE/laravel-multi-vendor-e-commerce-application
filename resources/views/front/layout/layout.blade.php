@@ -281,6 +281,9 @@ window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/14
             gtag('config', 'G-80LRJ48RYZ');
         </script>
 
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/crypto-js.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/hmac-sha256.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/enc-base64.min.js"></script>
 
     </head>
     <body class="home page-template-default page page-id-15 wp-custom-logo elementor-default elementor-kit-6 elementor-page elementor-page-15">

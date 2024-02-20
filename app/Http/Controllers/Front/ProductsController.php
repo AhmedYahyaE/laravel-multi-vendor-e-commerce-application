@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 use App\Models\ProductsAttribute;
 use App\Models\ProductsFilter;
@@ -975,6 +976,23 @@ class ProductsController extends Controller
 
         $total_price = number_format($total_price, 2);
         return view('front.products.checkout')->with(compact('deliveryAddresses', 'countries', 'getCartItems', 'total_price'));
+    }
+
+    public function processLalamove(Request $request) {
+        $secret = config('app.lalamove.api_secret');
+
+        $rawSignature = "{$request->time}\r\n{$request->method}\r\n/v3/quotations\r\n\r\n{$request->body}";
+        $signature = hash_hmac('sha256', $rawSignature, $secret);
+        $nonce = Str::uuid();
+        $key = config('app.lalamove.api_key');
+        $url = config('app.lalamove.api_url');
+        $token = "{$key}:{$request->time}:{$signature}";
+
+        return [
+            "token" => $token,
+            "api" => $url . "v3/quotations",
+            "nonce" => $nonce
+        ];
     }
 
 

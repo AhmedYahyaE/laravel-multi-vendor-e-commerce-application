@@ -803,6 +803,58 @@ $(document).ready(function() {
 
     });
 
+    var checkout_details_container = $('#checkout-details-container');
+
+    if (checkout_details_container.length > 0) {
+        const time = new Date().getTime().toString();
+        const method = 'GET';
+        const body = JSON.stringify({"data": {
+            "serviceType": "MOTORCYCLE",
+            "specialRequests": [],
+            "language": "en_SG",
+            "stops": [
+            {
+                "coordinates": {
+                    "lat": "1.3140113",
+                    "lng": "103.8807331"
+                },
+                "address": "Lorong 23 Geylang, Singapore Badminton Hall, Singapore"
+            },
+            {
+                "coordinates": {
+                    "lat": "1.2966147",
+                    "lng": "103.8485095"
+                },
+                "address": "Stamford Road, National Museum of Singapore, Singapore"
+            }]
+        }});
+        const path = 'v3/quotations';
+
+        $.ajax({
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+            url: "/getCheckoutDeliveryDetails",
+            type: "GET",
+            data: {
+                time: time,
+                method: method,
+                body: body,
+                path: path
+            }
+        }).then(resp => {
+            $.ajax({
+                headers: {
+                    "Authorization": `hmac ${resp.token}`,
+                    "Market": "PH",
+                    "Request-ID": resp.nonce,
+                    "Content-Type": "application/json"
+                },
+                url: resp.api
+            })
+        }).catch(e => {
+            console.log(e);
+        })
+    }
+
     /**
      * Submit checkout
      */
