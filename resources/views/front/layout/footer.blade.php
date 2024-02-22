@@ -85,10 +85,10 @@
                             loading="lazy"
                             width="692"
                             height="1024"
-                            src="{{ asset('front/images/banner_images/2023-12-happy-asian-woman-holding-package-parcel-box-isolated-white-wall-delivery-courier-shipment-service-concept-PhotoRoom-3-1-692x1024.png') }}"
+                            src="{{ asset('front/images/banner_images/Kapiton - Markus Box.png') }}"
                             class="attachment-large size-large wp-image-431"
                             alt=""
-                            srcset="{{ asset('front/images/banner_images/2023-12-happy-asian-woman-holding-package-parcel-box-isolated-white-wall-delivery-courier-shipment-service-concept-PhotoRoom-3-1-692x1024.png') }} 692w, {{ asset('front/images/banner_images/2023-12-happy-asian-woman-holding-package-parcel-box-isolated-white-wall-delivery-courier-shipment-service-concept-PhotoRoom-3-1-203x300.png') }} 203w, {{ asset('front/images/banner_images/2023-12-happy-asian-woman-holding-package-parcel-box-isolated-white-wall-delivery-courier-shipment-service-concept-PhotoRoom-3-1.png') }} 716w"
+                            srcset="{{ asset('front/images/banner_images/Kapiton - Markus Box.png') }} 692w, {{ asset('front/images/banner_images/Kapiton - Markus Box.png') }} 203w, {{ asset('front/images/banner_images/Kapiton - Markus Box.png') }} 716w"
                             sizes="(max-width: 692px) 100vw, 692px"
                         >
                     </div>
