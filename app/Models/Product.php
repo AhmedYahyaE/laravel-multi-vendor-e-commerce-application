@@ -80,7 +80,7 @@ class Product extends Model
         }
 
 
-        return $discounted_price;
+        return number_format($discounted_price, 2);
     }
 
 
