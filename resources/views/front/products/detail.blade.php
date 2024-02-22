@@ -795,6 +795,15 @@
                                             aria-required="true"
                                         ></textarea>
                                     </div>
+                                    <div class="elementor-field-type-checkbox elementor-field-group elementor-column elementor-field-group-field_e55c601 elementor-col-100">
+                                        <label for="form-field-field_e55c601" class="elementor-field-label elementor-screen-only">Write review anonymously</label>
+                                        <div class="elementor-field-subgroup">
+                                            <span class="elementor-field-option">
+                                                <input type="checkbox" value="Write review anonymously" id="form-field-field_e55c601-0" name="accept" required="required" aria-required="true">
+                                                <label for="form-field-field_e55c601-0">Write review anonymously</label>
+                                            </span>
+                                        </div>
+                                    </div>
                                     <div class="elementor-field-group elementor-column elementor-field-type-submit elementor-col-100 e-form__buttons">
                                         <button type="submit" class="elementor-button elementor-size-sm">
                                             <span>
