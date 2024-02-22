@@ -981,7 +981,8 @@ class ProductsController extends Controller
     public function processLalamove(Request $request) {
         $secret = config('app.lalamove.api_secret');
 
-        $rawSignature = "{$request->time}\r\n{$request->method}\r\n/v3/quotations\r\n\r\n{$request->body}";
+        $body = json_encode($request->body);
+        $rawSignature = "{$request->time}\r\n{$request->method}\r\n/v3/quotations\r\n\r\n{$body}";
         $signature = hash_hmac('sha256', $rawSignature, $secret);
         $nonce = Str::uuid();
         $key = config('app.lalamove.api_key');
