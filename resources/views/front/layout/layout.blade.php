@@ -272,13 +272,13 @@ window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/14
         <link rel="stylesheet" href="{{ url('front/css/custom.css') }}">
 
         <!-- Google tag (gtag.js) -->
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-80LRJ48RYZ"></script>
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-W02N3JGNCH"></script>
         <script>
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
 
-            gtag('config', 'G-80LRJ48RYZ');
+            gtag('config', 'G-W02N3JGNCH');
         </script>
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/crypto-js.min.js"></script>

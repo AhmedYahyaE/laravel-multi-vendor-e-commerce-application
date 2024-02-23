@@ -39,13 +39,13 @@
         <link rel="stylesheet" href="{{ url('admin/css/dataTables.bootstrap4.min.css') }}">
 
         <!-- Google tag (gtag.js) -->
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-80LRJ48RYZ"></script>
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-W02N3JGNCH"></script>
         <script>
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
 
-            gtag('config', 'G-80LRJ48RYZ');
+            gtag('config', 'G-W02N3JGNCH');
         </script>
     </head>
     <body>
