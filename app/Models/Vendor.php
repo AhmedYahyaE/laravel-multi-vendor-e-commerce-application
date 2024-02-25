@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Vendor extends Model
 {
+    protected $primary_key = 'id';
+    
     use HasFactory;
 
     public function products() {

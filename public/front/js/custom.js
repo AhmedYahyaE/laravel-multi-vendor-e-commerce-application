@@ -801,45 +801,7 @@ $(document).ready(function() {
             }
         });
 
-    });
-
-    var checkout_details_container = $('#checkout-details-container');
-
-    if (checkout_details_container.length > 0) {
-        const time = new Date().getTime().toString();
-        const method = 'POST';
-        const body = JSON.stringify({"data":{"scheduleAt":"2024-02-22T10:38:21.639Z","serviceType":"MOTORCYCLE","specialRequests":[],"language":"en_PH","stops":[{"coordinates":{"lat":"14.557893131859206","lng":"121.02761007634646"},"address":"H25H+325, Sen. Gil J. Puyat Ave, Makati, Metro Manila, Philippines"},{"coordinates":{"lat":"14.570481310750882","lng":"121.05265267699743"},"address":"1550, 1554 Sheridan, Mandaluyong, Metro Manila, Philippines"}],"isRouteOptimized":true}});
-        const path = 'v3/quotations';
-
-        // this method in the backend will create the hmac-sha256
-        $.ajax({
-            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-            url: "/getCheckoutDeliveryDetails",
-            type: "GET",
-            data: {
-                time: time,
-                method: method,
-                body: body,
-                path: path
-            }
-        }).then(resp => {
-            // then will request for the lalamove API get quotations
-            $.ajax({
-                headers: {
-                    "Authorization": `hmac ${resp.token}`,
-                    "market": "PH",
-                    "Content-Type": "text/plain",
-                    "accept": "*/*",
-                    "Accept-Encoding": "gzip,deflate,br"
-                },
-                data: body,
-                method: 'POST',
-                url: resp.api
-            })
-        }).catch(e => {
-            console.log(e);
-        })
-    }
+    });    
 
     /**
      * Submit checkout
@@ -858,7 +820,7 @@ $(document).ready(function() {
             contentType: 'application/json',
             data   : JSON.stringify(data), // Sending name/value pairs to server with the AJAX request (AJAX call)
             success: function(resp) { // if the AJAX request / AJAX call is successful
-                if (resp.data.success) {
+                if (resp.success) {
                     window.location.href = "/thanks";
                 }
             },

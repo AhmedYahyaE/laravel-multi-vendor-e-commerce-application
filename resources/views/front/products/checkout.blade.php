@@ -91,36 +91,25 @@
                                     data-element_type="widget"
                                     data-widget_type="html.default"
                                 >
-                                    <div class="elementor-widget-container">
+                                    <div id="checkout-user-preferred-addresses" class="elementor-widget-container">
+                                        @foreach ($deliveryAddresses as $deliveryAddress_key => $deliveryAddress)
                                         <div class="addressess">
                                             <input
-                                                checked
+                                                {{$deliveryAddress_key == 0 ? "checked":""}}
                                                 type="radio"
-                                                id="preferred_address"
-                                                name="preferred_address"
-                                                value="1"
+                                                class="address"
+                                                name="preferred_address-{{$deliveryAddress['user_id']}}"
+                                                value="{{$deliveryAddress['id']}}"
                                             >
                                             <label for="html">
-                                                <b>#407 Sesame Street, Bonga Menor, Bustos Bulacan 3007 PH
+                                                <b>{{$deliveryAddress['address']}}, {{$deliveryAddress['city']}}, {{$deliveryAddress['state']}}, {{$deliveryAddress['country']}}
                                                     <br>(+63) 945 162 1033
                                                 </b>
                                             </label>
                                             <a href="#">Edit</a>
                                             <a href="#">Remove</a>
                                         </div>
-                                        <div class="addressess">
-                                            <input
-                                                type="radio"
-                                                id="second-address"
-                                                name="preferred_address"
-                                                value="2"
-                                            >
-                                            <label for="html">#123 Burgos Street, Poblacion, San Jose Del Monte Bulacan 3022 PH
-                                                <br>(+63) 945 321 5655
-                                            </label>
-                                            <a href="#">Edit</a>
-                                            <a href="#">Remove</a>
-                                        </div>
+                                        @endforeach
                                     </div>
                                 </div>
                                 <div
@@ -294,6 +283,7 @@
                                                         aria-required="true"
                                                     >
                                                 </div>
+                                                <div id="map"></div>
                                                 <div class="elementor-field-group elementor-column elementor-field-type-submit elementor-col-100 e-form__buttons">
                                                     <button type="submit" class="elementor-button elementor-size-sm">
                                                         <span>
@@ -326,6 +316,17 @@
                                         <div class="payment-gateway">
                                             <input
                                                 checked
+                                                type="radio"
+                                                id="COD"
+                                                name="paymentgateway"
+                                                value="COD"
+                                            >
+                                            <label for="html">
+                                                <b>COD</b>
+                                            </label>
+                                        </div>
+                                        <div class="payment-gateway">
+                                            <input
                                                 type="radio"
                                                 id="paymongo"
                                                 name="paymentgateway"
@@ -437,10 +438,10 @@
                                                         decoding="async"
                                                         width="800"
                                                         height="968"
-                                                        src="./images/2023-12-features-for-Accounting-Software-1-846x1024.png"
+                                                        src="{{ asset('front/images/product_images/small/' .$item['product']['product_image']) }}"
                                                         class="attachment-large size-large wp-image-422"
                                                         alt=""
-                                                        srcset="./images/2023-12-features-for-Accounting-Software-1-846x1024.png 846w, ./images/2023-12-features-for-Accounting-Software-1-248x300.png 248w, ./images/2023-12-features-for-Accounting-Software-1-768x930.png 768w, ./images/2023-12-features-for-Accounting-Software-1.png 879w"
+                                                        srcset="{{ asset('front/images/product_images/small/'.$item['product']['product_image']) }} 846w, {{asset('front/images/product_images/small/'.$item['product']['product_image'])}} 248w, {{asset('front/images/product_images/small/'.$item['product']['product_image'])}} 768w, {{asset('front/images/product_images/small/'.$item['product']['product_image'])}} 879w"
                                                         sizes="(max-width: 800px) 100vw, 800px"
                                                     >
                                                 </div>
@@ -511,12 +512,16 @@
                                         <table>
                                             <tr>
                                                 <td>Sub total</td>
-                                                <td class="align-right">₱{{$total_price}}</td>
+                                                <td class="align-right">₱{{$sub_total}}</td>
                                             </tr>
                                             <!-- <tr>
                                                 <td>Coupon discount</td>
                                                 <td class="align-right">₱150.00</td>
                                             </tr> -->
+                                            <tr>
+                                                <td>Delivery Fee</td>
+                                                <td class="align-right">₱ {{number_format($lalamoveQuotation->priceBreakdown->total, 2)}}</td>
+                                            </tr>
                                             <tr>
                                                 <td style="padding-top: 40px">
                                                     <b>GRAND TOTAL</b>
@@ -554,6 +559,11 @@
 </div>
 
 @endsection
+
+<script
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg&callback=initMap&v=weekly"
+    defer
+></script>
 
 <script>
     var LALAMOVE = @json(config('app.lalamove'))

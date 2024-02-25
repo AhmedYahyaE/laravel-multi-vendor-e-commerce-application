@@ -15,10 +15,12 @@ use App\Models\Category;
 use App\Models\Product;
 use App\Models\Vendor;
 use App\Models\Brand;
+use App\Helpers\LalamoveAPIBodyHelper;
 
 
 class ProductsController extends Controller
 {
+    private $lalamoveAPI_Helper;
     // match() method is used for the HTTP 'GET' requests to render listing.blade.php page and the HTTP 'POST' method for the AJAX request of the Sorting Filter or the HTML Form submission and jQuery for the Sorting Filter WITHOUT AJAX, AND ALSO for submitting the Search Form in listing.blade.php    // e.g.    /men    or    /computers    
     public function listing(Request $request) { // using the Dynamic Routes with the foreach loop
         $type = $request->type;
@@ -671,6 +673,7 @@ class ProductsController extends Controller
 
     // Checkout page (using match() method for the 'GET' request for rendering the front/products/checkout.blade.php page or the 'POST' request for the HTML Form submission in the same page) (for submitting the user's Delivery Address and Payment Method))    
     public function checkout(Request $request) {
+        $this->lalamoveAPI_Helper = new LalamoveAPIBodyHelper;
         // Fetch all of the world countries from the database table `countries`
         $countries = \App\Models\Country::where('status', 1)->get()->toArray(); // get the countries which have status = 1 (to ignore the blacklisted countries, in case)
         
@@ -684,7 +687,8 @@ class ProductsController extends Controller
             return redirect('cart')->with('error_message', $message); // redirect user to the cart.blade.php page, and show an error message in cart.blade.php
         }
 
-
+        $vendor_model = new Vendor;
+        $pickupAddresses = [];
         // Calculate the total price    
         $total_price  = 0;
         $total_weight = 0;
@@ -693,14 +697,16 @@ class ProductsController extends Controller
             $attrPrice = \App\Models\Product::getDiscountAttributePrice($item['product_id'], $item['size']);
             $total_price = $total_price + ($attrPrice['final_price'] * $item['quantity']);
 
+            // Get Pickup Address
+            array_push($pickupAddresses, $vendor_model->where('id', $item['product']['vendor_id'])->with(['vendorbusinessdetails' => function ($q) {
+                $q->select('vendor_id', 'shop_name', 'shop_mobile', 'lat', 'long')->selectRaw("CONCAT(shop_address, ', ', shop_city, ', ', shop_state, ', ', shop_country, ', ', shop_pincode) AS shop_fulladdress");
+            }])->first()->toArray()['vendorbusinessdetails']);
             
             $product_weight = $item['product']['product_weight'];
             $total_weight = $total_weight + $product_weight;
         }
 
-
         $deliveryAddresses = \App\Models\DeliveryAddress::deliveryAddresses(); // the delivery addresses of the currently authenticated/logged in user
-
 
         // Calculating the Shipping Charges of every one of the user's Delivery Addresses (depending on the 'country' of the Delivery Address)    
         foreach ($deliveryAddresses as $key => $value) {
@@ -717,7 +723,35 @@ class ProductsController extends Controller
             $deliveryAddresses[$key]['prepaidpincodeCount'] = DB::table('prepaid_pincodes')->where('pincode', $value['pincode'])->count(); // Note that    $value['pincode']    denotes the `pincode` of the `delivery_addresses` table
         }
 
+        $selectedDeliveryAddress = $deliveryAddresses[0];
+        $this->lalamoveAPI_Helper->stops = [
+            [
+                "coordinates" => [
+                    "lat" => "{$pickupAddresses[0]['lat']}",
+                    "lng" => "{$pickupAddresses[0]['long']}",
+                ],
+                "address" => $pickupAddresses[0]['shop_fulladdress'],
+            ],
+            [
+                "coordinates" => [
+                    "lat" => "{$selectedDeliveryAddress['lat']}",
+                    "lng" => "{$selectedDeliveryAddress['long']}"
+                ],
+                "address" => "{$selectedDeliveryAddress['address']}, {$selectedDeliveryAddress['city']}, {$selectedDeliveryAddress['state']}, {$selectedDeliveryAddress['country']}, {$selectedDeliveryAddress['pincode']}",
+            ]
+        ];
+        $this->lalamoveAPI_Helper->item['weight'] = "LESS_THAN_3_KG";
+        $this->lalamoveAPI_Helper->item['categories'] = ["PHONE"];
+        $this->lalamoveAPI_Helper->item['quantity'] = (string) count($getCartItems);
 
+        $body = json_encode($this->lalamoveAPI_Helper->getQuote());
+        $lalamoveQuotation = $this->processLalamove($body)->data;
+
+        $this->lalamoveAPI_Helper->sender['name'] = $pickupAddresses[0]['shop_name'];
+        $this->lalamoveAPI_Helper->sender['phone'] = $pickupAddresses[0]['shop_mobile'];
+
+        $this->lalamoveAPI_Helper->recipients[0]['name'] = $selectedDeliveryAddress['name'];
+        $this->lalamoveAPI_Helper->recipients[0]['phone'] = $selectedDeliveryAddress['mobile'];
         
         if ($request->isMethod('post')) { // if the <form> in front/products/checkout.blade.php is submitted (the HTML Form that the user submits to submit their Delivery Address and Payment Method)
             $data = $request->all();
@@ -817,10 +851,10 @@ class ProductsController extends Controller
             }
 
             // Calculate Shipping Charges `shipping_charges`
-            $shipping_charges = 0;
+            $shipping_charges = $this->lalamoveAPI_Helper->priceBreakdown->total;
 
             // Get the Shipping Charge based on the chosen Delivery Address    
-            $shipping_charges = \App\Models\ShippingCharge::getShippingCharges($total_weight, $deliveryAddress['country']);
+            // $shipping_charges = \App\Models\ShippingCharge::getShippingCharges($total_weight, $deliveryAddress['country']);
 
             // Grand Total (`grand_total`)
             $grand_total = $total_price + $shipping_charges - Session::get('couponAmount');
@@ -848,6 +882,7 @@ class ProductsController extends Controller
             $order->order_status     = $order_status;
             $order->payment_method   = $payment_method;
             $order->payment_gateway  = $data['payment_gateway'];
+            $order->tracking_number  = $this->lalamoveAPI_Helper->quotationId;
             $order->grand_total      = $grand_total;
 
             $order->save(); // INSERT data INTO the `orders` table
@@ -919,6 +954,12 @@ class ProductsController extends Controller
 
             DB::commit(); // commit the Database Transaction
 
+            $this->lalamoveAPI_Helper->metadata = [
+                "orderId" => $order_id,
+                "shop" => "Kapiton Store"
+            ];
+            $this->processLalamove_placeOrder();
+
 
             // echo 'Order placed successfully!';
             // exit;
@@ -941,7 +982,7 @@ class ProductsController extends Controller
                 ];
 
                 \Illuminate\Support\Facades\Mail::send('emails.order', $messageData, function ($message) use ($email) { // Sending Mail: https://laravel.com/docs/9.x/mail#sending-mail    // 'emails.order' is the order.blade.php file inside the 'resources/views/emails' folder that will be sent as an email    // We pass in all the variables that order.blade.php will use    // https://www.php.net/manual/en/functions.anonymous.php
-                    $message->to($email)->subject('Order Placed - MultiVendorEcommerceApplication.com.eg');
+                    $message->to($email)->subject('Order Placed - Kapiton Store');
                 });
 
                 /*
@@ -974,29 +1015,110 @@ class ProductsController extends Controller
             ]; // redirect to front/products/thanks.blade.php page
         }
 
+        $sub_total = number_format($total_price, 2);
+        
+        $total_price += $lalamoveQuotation->priceBreakdown->total;
         $total_price = number_format($total_price, 2);
-        return view('front.products.checkout')->with(compact('deliveryAddresses', 'countries', 'getCartItems', 'total_price'));
+        
+        return view('front.products.checkout')->with(compact('deliveryAddresses', 'countries', 'getCartItems', 'sub_total', 'total_price', 'lalamoveQuotation'));
     }
 
-    public function processLalamove(Request $request) {
+    public function processLalamove($body) {
         $secret = config('app.lalamove.api_secret');
 
-        $body = json_encode($request->body);
-        $rawSignature = "{$request->time}\r\n{$request->method}\r\n/v3/quotations\r\n\r\n{$body}";
-        $signature = hash_hmac('sha256', $rawSignature, $secret);
-        $nonce = Str::uuid();
         $key = config('app.lalamove.api_key');
         $url = config('app.lalamove.api_url');
-        $token = "{$key}:{$request->time}:{$signature}";
 
-        return [
-            "token" => $token,
-            "api" => $url . "v3/quotations",
-            "nonce" => $nonce
+        $time = time() * 1000;
+
+        // $baseURL = 'https://rest.sandbox.lalamove.com'; // URL to Lalamove Sandbox API
+        $method = 'POST';
+        $path = '/v3/quotations';
+
+        $rawSignature = "{$time}\r\n{$method}\r\n{$path}\r\n\r\n{$body}";
+        $signature = hash_hmac("sha256", $rawSignature, $secret);
+        $token = "{$key}:{$time}:{$signature}";
+        $curl = curl_init();
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => $url.$path,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 3,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HEADER => false, // Enable this option if you want to see what headers Lalamove API returning in response
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => $body,
+            CURLOPT_HTTPHEADER => array(
+                "Content-type: application/json; charset=utf-8",
+                "Authorization: hmac ".$token, // A unique Signature Hash has to be generated for EVERY API call at the time of making such call.
+                "Accept: application/json",
+                "Market: PH" // Please note to which city are you trying to make API call
+            ),
+        ));
+
+        $response = curl_exec($curl);
+        $httpCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+        curl_close($curl);
+
+        $json_decoded_response = json_decode($response);
+        $this->lalamoveAPI_Helper->quotationId = $json_decoded_response->data->quotationId;
+        $this->lalamoveAPI_Helper->sender = [
+            'stopId' => $json_decoded_response->data->stops[0]->stopId,
         ];
+        $this->lalamoveAPI_Helper->recipients = [[
+            'stopId' => $json_decoded_response->data->stops[1]->stopId,
+        ]];
+        $this->lalamoveAPI_Helper->priceBreakdown = $json_decoded_response->data->priceBreakdown;
+
+        return $json_decoded_response;
     }
 
+    public function processLalamove_placeOrder() {
+        $body = $this->lalamoveAPI_Helper->getPlaceOrder();
+        $secret = config('app.lalamove.api_secret');
 
+        $key = config('app.lalamove.api_key');
+        $url = config('app.lalamove.api_url');
+
+        $time = time() * 1000;
+
+        // $baseURL = 'https://rest.sandbox.lalamove.com'; // URL to Lalamove Sandbox API
+        $method = 'POST';
+        $path = '/v3/orders';
+
+        $rawSignature = "{$time}\r\n{$method}\r\n{$path}\r\n\r\n{$body}";
+        $signature = hash_hmac("sha256", $rawSignature, $secret);
+        $token = "{$key}:{$time}:{$signature}";
+        $curl = curl_init();
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => $url.$path,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 3,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HEADER => false, // Enable this option if you want to see what headers Lalamove API returning in response
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => $body,
+            CURLOPT_HTTPHEADER => array(
+                "Content-type: application/json; charset=utf-8",
+                "Authorization: hmac ".$token, // A unique Signature Hash has to be generated for EVERY API call at the time of making such call.
+                "Accept: application/json",
+                "Market: PH" // Please note to which city are you trying to make API call
+            ),
+        ));
+
+        $response = curl_exec($curl);
+        $httpCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+        curl_close($curl);
+
+        // dd($response);
+        $json_decoded_response = json_decode($response);
+        return $json_decoded_response;
+    }
 
     // Rendering Thanks page (after placing an order)    
     public function thanks() {
