@@ -8,12 +8,19 @@
     class="elementor elementor-491"
     data-elementor-post-type="page"
 >
+<div class="popup_review_container">
+    <img src="{{ asset('front/images/product/no-available-image.jpg')}}">
+    <a href="#" class="close_image_review_popup">X</a>
+</div>
+
+
     <div
         class="elementor-element elementor-element-51b2b2e e-flex e-con-boxed e-con e-parent"
         data-id="51b2b2e"
         data-element_type="container"
         data-settings="{&quot;background_background&quot;:&quot;classic&quot;,&quot;container_type&quot;:&quot;flex&quot;,&quot;content_width&quot;:&quot;boxed&quot;}"
         data-core-v316-plus="true">
+
         <div class="e-con-inner">
             <div
                 class="elementor-element elementor-element-37b0796 e-con-full e-flex e-con e-child"
@@ -435,6 +442,11 @@
             </div>
         </div>
     </div>
+
+   
+    
+    @include('front.products.ajax_related_products_listings')
+
 
     <div
         class="elementor-element elementor-element-8916704 e-flex e-con-boxed e-con e-parent"
@@ -1048,6 +1060,18 @@
                                 </h5>
                             </div>
                         </div>
+
+                        <div class="reviews_images">
+                            <a href="#" class="popup_image_review_link">
+                                <img src="{{ asset('front/images/product/no-available-image.jpg')}}">
+                            </a>
+
+                            <a href="#" class="popup_image_review_link">
+                                <img src="{{ asset('front/images/product/no-available-image.jpg')}}">
+                            </a>
+                        </div>
+
+
                         <div
                             class="elementor-element elementor-element-ca9f8fc elementor-widget elementor-widget-text-editor"
                             data-id="ca9f8fc"
@@ -2363,9 +2387,6 @@
 
 
 
-
-    
-    @include('front.products.ajax_related_products_listings')
 </div>
 <div class="post-tags"></div>
 @endsection

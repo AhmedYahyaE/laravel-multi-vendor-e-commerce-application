@@ -966,6 +966,16 @@ $(document).ready(function() {
         $("#form_write_review").toggleClass("active");
     });
 
+    $(".popup_image_review_link").click(function(event) {
+        event.preventDefault();
+        $(".popup_review_container").addClass("active");
+    });
+
+    $(".popup_review_container .close_image_review_popup").click(function(event) {
+        event.preventDefault();
+        $(".popup_review_container").removeClass("active");
+    });
+
 
 
 

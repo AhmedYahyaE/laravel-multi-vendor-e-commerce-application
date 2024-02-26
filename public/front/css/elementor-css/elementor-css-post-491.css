@@ -250,7 +250,9 @@
 	src: url(./../../fonts/Lexend-Medium.ttf) format('truetype');
 }
 /* End Custom Fonts CSS */
-/* CUSTOM CSS */
+
+
+/* CUSTOM CSS NINO FELICIANO*/
 .list-of-tags {
     display: flex;
     gap: 6px;
@@ -270,4 +272,87 @@
 }
 .elementor-491 .elementor-element.elementor-element-1dc2f32.active{
     display: block;
+}
+.elementor-491 .reviews_images{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
+}
+.elementor-491 .reviews_images a{
+    width: 50px;
+    border-radius: 5px;
+    overflow: hidden;
+}
+.elementor-491.reviews_images a img{
+    width: 100%;
+}
+.elementor-491 .popup_review_container{
+    position: fixed;
+    z-index: 9;
+    left: 0;
+    right: 0;
+    top: auto;
+    bottom: 0;
+    background: #000000a8;
+    height: calc(100vh - 126px);
+    display: none;
+}
+.elementor-491 .popup_review_container.active{
+    display: block;
+}
+.elementor-491 .popup_review_container img{
+    width: 100%;
+    max-width: 65vw;
+    margin: auto;
+    display: block;
+    max-height: 80vh;
+    object-fit: contain;
+    border-radius: 20px;
+    position: absolute;
+    right: 0;
+    top: 0;
+    left: 0;
+    bottom: 0;
+}
+.elementor-491 .popup_review_container .close_image_review_popup{
+    background: white;
+    color: black;
+    padding: 5px;
+    top: 10px;
+    position: absolute;
+    left: auto;
+    right: 20px;
+    border-radius: 100px;
+    height: 30px;
+    width: 30px;
+    text-align: center;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 0px white;
+    
+}
+.elementor-491 .popup_review_container .close_image_review_popup:hover{
+    box-shadow: 0 0 20px -5px white;
+}
+@media (max-width: 1024px){
+    .elementor-491 .popup_review_container{
+        height: calc(100vh - 117px);
+    }
+}
+@media (max-width: 767px){
+    .elementor-491 .popup_review_container{
+        height: calc(100vh - 115px);
+    }
+    .elementor-491 .popup_review_container img{
+        max-width: 90vw;
+    }
+    .elementor-491 .popup_review_container .close_image_review_popup{
+        top: 10px;
+        right: 5px;
+    }
 }

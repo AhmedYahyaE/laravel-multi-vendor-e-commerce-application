@@ -841,6 +841,22 @@ body {
     border-color: #b2b2b2; }
 
 /* Checkbox Component */
+ul.filter-categories{
+  padding-left: 25px;
+}
+ul.filter-categories li a{
+  position: relative;
+  cursor: pointer;
+  user-select: none;
+  font-size: 14px;
+  color: #292929;
+  margin: 0;
+}
+ul.filter-categories ul{
+  padding-left: 25px;
+  line-height: 20px;
+  margin-bottom: 12px;
+}
 .check-box {
   display: none; }
   .check-box + .label-text {
