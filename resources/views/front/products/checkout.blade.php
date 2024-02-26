@@ -509,6 +509,10 @@
                                     <div class="elementor-widget-container">
                                         <table>
                                             <tr>
+                                                <td>Shipping Fee</td>
+                                                <td class="align-right">₱499.00</td>
+                                            </tr>
+                                            <tr>
                                                 <td>Sub total</td>
                                                 <td class="align-right">₱{{$total_price}}</td>
                                             </tr>
