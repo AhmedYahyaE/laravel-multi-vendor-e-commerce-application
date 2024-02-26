@@ -123,4 +123,10 @@
 .edit-address-checkout.active{
 	display: block;
 }
+.iframe-map iframe{
+	border-radius: 10px !important;
+}
+.iframe-map{
+	padding: 0 5px;
+}
 /* CUSTOM CSS NINO FELICIANO */
