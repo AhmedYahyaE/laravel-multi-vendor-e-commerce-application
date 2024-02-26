@@ -58,12 +58,13 @@
                                 <link rel="stylesheet" href="{{ url('front/css/elementor-css/elementor-pro-assets-css-widget-nested-carousel.min.css') }}">
                                 <div class="e-n-carousel swiper" dir="ltr">
                                     <div class="swiper-wrapper" aria-live="off">
+                                        @empty($productDetails['images'])
                                         <div
                                             class="swiper-slide"
                                             data-slide="1"
                                             role="group"
                                             aria-roledescription="slide"
-                                            aria-label="1 of 6"
+                                            aria-label="1 of 1"
                                         >
                                             <div
                                                 class="elementor-element elementor-element-09d9b51 e-flex e-con-boxed e-con e-child"
@@ -104,6 +105,55 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        @endempty
+                                        @foreach ($productDetails['images'] as $product_key => $product_image)
+                                        <div
+                                            class="swiper-slide"
+                                            data-slide="{{$product_key}}"
+                                            role="group"
+                                            aria-roledescription="slide"
+                                            aria-label="{{$product_key}} of {{count($productDetails['images'])}}"
+                                        >
+                                            <div
+                                                class="elementor-element elementor-element-09d9b5{{$product_key}} e-flex e-con-boxed e-con e-child"
+                                                data-id="09d9b5{{$product_key}}"
+                                                data-element_type="container"
+                                                data-settings="{&quot;container_type&quot;:&quot;flex&quot;,&quot;content_width&quot;:&quot;boxed&quot;}"
+                                            >
+                                                <div class="e-con-inner">
+                                                    <div
+                                                        class="elementor-element elementor-element-7496269 e-flex e-con-boxed e-con e-child"
+                                                        data-id="7496269"
+                                                        data-element_type="container"
+                                                        data-settings="{&quot;container_type&quot;:&quot;flex&quot;,&quot;content_width&quot;:&quot;boxed&quot;}"
+                                                    >
+                                                        <div class="e-con-inner">
+                                                            <div
+                                                                class="elementor-element elementor-element-9905f7b elementor-widget elementor-widget-image"
+                                                                data-id="9905f7b"
+                                                                data-element_type="widget"
+                                                                data-widget_type="image.default"
+                                                            >
+                                                                <div class="elementor-widget-container">
+                                                                    <img
+                                                                        fetchpriority="high"
+                                                                        decoding="async"
+                                                                        width="522"
+                                                                        height="522"
+                                                                        src="{{ asset('front/images/product_images/small/' . $product_image['image'])}}"
+                                                                        class="attachment-large size-large wp-image-503"
+                                                                        alt=""
+                                                                        srcset="{{ asset('front/images/product_images/small/' . $product_image['image'])}} 522w, {{ asset('front/images/product_images/small/' . $product_image['image'])}} 300w, {{ asset('front/images/product_images/small/' . $product_image['image'])}} 150w"
+                                                                        sizes="(max-width: 522px) 100vw, 522px"
+                                                                    >
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        @endforeach
                                     </div>
                                 </div>
                                 <div class="elementor-swiper-button elementor-swiper-button-prev" role="button" tabindex="0">
@@ -794,6 +844,15 @@
                                             required="required"
                                             aria-required="true"
                                         ></textarea>
+                                    </div>
+                                    <div class="elementor-field-type-checkbox elementor-field-group elementor-column elementor-field-group-field_e55c601 elementor-col-100">
+                                        <label for="form-field-field_e55c601" class="elementor-field-label elementor-screen-only">Write review anonymously</label>
+                                        <div class="elementor-field-subgroup">
+                                            <span class="elementor-field-option">
+                                                <input type="checkbox" value="Write review anonymously" id="form-field-field_e55c601-0" name="accept" required="required" aria-required="true">
+                                                <label for="form-field-field_e55c601-0">Write review anonymously</label>
+                                            </span>
+                                        </div>
                                     </div>
                                     <div class="elementor-field-group elementor-column elementor-field-type-submit elementor-col-100 e-form__buttons">
                                         <button type="submit" class="elementor-button elementor-size-sm">

@@ -22,6 +22,7 @@
                                             <th>Mobile</th>
                                             <th>Email</th>
                                             <th>Image</th>
+                                            <th>Verified</th>
                                             <th>Status</th>
                                             <th>Actions</th>
                                         </tr>
@@ -39,6 +40,17 @@
                                                         <img src="{{ asset('admin/images/photos/' . $admin['image']) }}">
                                                     @else
                                                         <img src="{{ asset('admin/images/photos/no-image.gif') }}">
+                                                    @endif
+                                                </td>
+                                                <td>
+                                                    @if ($admin['confirm'] == 'Yes')
+                                                        <a class="updateAdminConfirmed" id="admin-{{ $admin['id'] }}" admin_id="{{ $admin['id'] }}" href="javascript:void(0)"> {{-- Using HTML Custom Attributes. Check admin/js/custom.js --}}
+                                                            <i style="font-size: 25px" class="mdi mdi-bookmark-check" status="Active"></i> {{-- Icons from Skydash Admin Panel Template --}}
+                                                        </a>
+                                                    @else {{-- if the admin status is inactive --}}
+                                                        <a class="updateAdminConfirmed" id="admin-{{ $admin['id'] }}" admin_id="{{ $admin['id'] }}" href="javascript:void(0)"> {{-- Using HTML Custom Attributes. Check admin/js/custom.js --}}
+                                                            <i style="font-size: 25px" class="mdi mdi-bookmark-outline" status="Inactive"></i> {{-- Icons from Skydash Admin Panel Template --}}
+                                                        </a>
                                                     @endif
                                                 </td>
                                                 <td>
