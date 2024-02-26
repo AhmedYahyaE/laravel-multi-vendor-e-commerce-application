@@ -30,7 +30,15 @@
     line-height: 210%;
     text-align: center;
 }
-
+#form-vendor_registration .iframe-map{
+    padding: 0 5px;
+    margin-top: 10px;
+}
+#form-vendor_registration .iframe-map iframe{
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 20px;
+}
 @media (max-width: 767px){
     #form-vendor_registration .alert ul{
         padding-left: 20px;
