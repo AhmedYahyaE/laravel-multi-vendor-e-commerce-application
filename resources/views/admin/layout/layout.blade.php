@@ -105,6 +105,7 @@
         <!-- endinject -->
         <!-- Custom js for this page-->
         <script src="{{ url('admin/js/dashboard.js') }}"></script>
+        <script src="{{ url('admin/js/chart.js') }}"></script>
         <script src="{{ url('admin/js/Chart.roundedBarCharts.js') }}"></script>
         <!-- End custom js for this page-->
 

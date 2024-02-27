@@ -142,6 +142,8 @@ Route::middleware(['web'])->prefix('/admin')->namespace('App\Http\Controllers\Ad
         // Render admin/shipping/edit_shipping_charges.blade.php page in case of HTTP 'GET' request ('Edit/Update Shipping Charges'), or hadle the HTML Form submission in the same page in case of HTTP 'POST' request
         Route::match(['get', 'post'], 'edit-shipping-charges/{id}', 'ShippingController@editShippingCharges'); 
 
+        // Reports
+        Route::get('reports/sales', 'ReportsController@salesReports');
 
 
         // Newsletter Subscribers module
