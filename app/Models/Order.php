@@ -201,4 +201,9 @@ class Order extends Model
         ];
     }
 
+    // Lalamove API Integration
+    public static function pushOrder_to_Lalamove($order_id) {
+        
+    }
+
 }

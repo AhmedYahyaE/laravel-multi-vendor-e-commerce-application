@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('delivery_addresses', function (Blueprint $table) {
+        Schema::table('orders', function($table) {
             $table->double('lat')->after('pincode')->nullable();
             $table->double('lng')->after('lat')->nullable();
         });
@@ -22,7 +22,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('delivery_addresses', function (Blueprint $table) {
+        Schema::table('orders', function($table) {
+            $table->dropColumn('vendor_id');
             $table->dropColumn('lat');
             $table->dropColumn('lng');
         });

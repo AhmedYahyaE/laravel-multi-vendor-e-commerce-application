@@ -3,23 +3,86 @@ namespace App\Helpers;
 
 class LalamoveAPIBodyHelper
 {
-    public $serviceType = "MOTORCYCLE", $specialRequests = [], $language = "en_PH", $isRouteOptimized = true;
-
-    public $quotationId = null, $sender = [], $recipients = [], $priceBreakdown = [], $metadata = [];
-    
-    public $stops = [
-        'coordinates' => [],
-        'address' => "",
-        'name' => "",
-        'phone' => ""
+    private $arr_service_type = [
+        'MOTORCYCLE' => [
+            'min_weight' => '0',
+            'max_weight' => '10'
+        ],
+        'SEDAN200KG' => [
+            'min_weight' => '10',
+            'max_weight' => '200'
+        ],
+        'MPV300KG' => [
+            'min_weight' => '200',
+            'max_weight' => '300'
+        ],
+        'MPV600KG' => [
+            'min_weight' => '300',
+            'max_weight' => '600'
+        ],
     ];
-    
-    public $item = [
-        'weight' => "",
-        'categories' => [],
-        'quantity' => ""
-    ];
 
+    public $priceBreakdown = [], $quotation = [], $total_delivery_fee = 0.0;
+
+    public function setQuoteData($data){
+        extract($data);
+
+        // ship to coordinates
+        $ship_to = [
+            "coordinates" => [
+                'lat' => (string) $selectedDeliveryAddress['lat'],
+                'lng' => (string) $selectedDeliveryAddress['lng'],
+            ],
+            "address" => "{$selectedDeliveryAddress['address']}, {$selectedDeliveryAddress['city']}, {$selectedDeliveryAddress['state']}, {$selectedDeliveryAddress['country']}, {$selectedDeliveryAddress['pincode']}"
+        ];
+
+        $body = [
+            'serviceType' => '',
+            'language' => 'en_PH',
+            'stops' => [],
+            'item' => [
+                'quantity' => (string) $total_qty,
+                'weight' => '',
+                'categories' => $categories,
+                'handlingInstructions' => []
+            ],
+            'isRouteOptimized' => true,
+        ];
+
+        // set service type
+        foreach ($this->arr_service_type as $key => $service_type_weight) {
+            if ($service_type_weight['min_weight'] <= $total_weight && $total_weight <= $service_type_weight['max_weight'])
+                $body['serviceType'] = $key; $body['item']['weight'] = (string) $total_weight;
+        }
+
+        $responses = [];
+
+        // set stops
+        foreach ($pickupAddresses as $pickup_address) {
+            $body['stops'] = [
+                [
+                    "coordinates" => [
+                        'lat' => (string) $pickup_address['lat'],
+                        'lng' => (string) $pickup_address['long'],
+                    ],
+                    'address' => $pickup_address['shop_fulladdress']
+                ], $ship_to
+            ];
+            
+            $responses[] = $this->processLalamove(json_encode(['data' => $body]));
+        }
+
+        $this->quotation = $responses;
+
+        return $this;
+    }
+
+    public function getTotal_PriceBreakdown () {
+        $col_quotations = collect($this->quotation);
+        $this->priceBreakdown = $col_quotations->pluck('data.priceBreakdown');
+        $this->total_delivery_fee = $col_quotations->pluck('data.priceBreakdown.total')->sum();
+        return $this;
+    }
     public function getQuote() {
         $data = [];
         foreach ($this as $key => $value) {
@@ -42,5 +105,84 @@ class LalamoveAPIBodyHelper
                 'metadata' => $this->metadata
             ]
         ]);
+    }
+
+    public function getQuotation ($order_id) {
+        $order_model = new \App\Models\Order;
+        $user_model = new \App\Models\User;
+
+        $order = $order_model->with('orders_products')->find($order_id);
+
+        // create quotation body
+        $body = [
+            'serviceType' => '',
+            'language' => 'en_PH',
+            'stops' => [],
+            'item' => [
+                'quantity' => '',
+                'weight' => '',
+                'categories' => [],
+                'handlingInstructions' => []
+            ],
+            'isRouteOptimized' => true,
+        ];
+
+        // set service type
+        foreach ($this->arr_service_type as $key => $service_type_weight) {
+            if ($service_type_weight['min_weight'] <= $order->total_weight && $order->total_weight <= $service_type_weight['max_weight']) {
+                $body['serviceType'] = $key;
+            }
+        }
+
+        // set stops
+        $user = $user_model->with('userDeliveryAddresses')->find($order->user_id);
+        // dd($user);
+
+        return $order;
+        // $this->getQuote();
+    }
+
+    public function processLalamove($body) {
+        $secret = config('app.lalamove.api_secret');
+
+        $key = config('app.lalamove.api_key');
+        $url = config('app.lalamove.api_url');
+
+        $time = time() * 1000;
+
+        // $baseURL = 'https://rest.sandbox.lalamove.com'; // URL to Lalamove Sandbox API
+        $method = 'POST';
+        $path = '/v3/quotations';
+
+        $rawSignature = "{$time}\r\n{$method}\r\n{$path}\r\n\r\n{$body}";
+        $signature = hash_hmac("sha256", $rawSignature, $secret);
+        $token = "{$key}:{$time}:{$signature}";
+        $curl = curl_init();
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => $url.$path,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 3,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HEADER => false, // Enable this option if you want to see what headers Lalamove API returning in response
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => $body,
+            CURLOPT_HTTPHEADER => array(
+                "Content-type: application/json; charset=utf-8",
+                "Authorization: hmac ".$token, // A unique Signature Hash has to be generated for EVERY API call at the time of making such call.
+                "Accept: application/json",
+                "Market: PH" // Please note to which city are you trying to make API call
+            ),
+        ));
+
+        $response = curl_exec($curl);
+        $httpCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+        curl_close($curl);
+
+        $json_decoded_response = json_decode($response);
+
+        return $json_decoded_response;
     }
 }

@@ -520,7 +520,7 @@
                                             </tr> -->
                                             <tr>
                                                 <td>Delivery Fee</td>
-                                                <td class="align-right">₱ {{number_format($lalamoveQuotation->priceBreakdown->total, 2)}}</td>
+                                                <td class="align-right">₱ {{number_format($delivery_fee, 2)}}</td>
                                             </tr>
                                             <tr>
                                                 <td style="padding-top: 40px">
