@@ -72,7 +72,7 @@
                 </a>
                 <div class="collapse" id="ui-reports">
                     <ul class="nav flex-column sub-menu" style="background: #fff !important; color: #052CA3 !important">
-                        <li class="nav-item"> <a @if (Session::get('page') == 'sales')   style="background: #052CA3 !important; color: #FFF !important" @else style="background: #fff !important; color: #052CA3 !important" @endif class="nav-link" href="{{ url('admin/reports/sales') }}">sales</a></li>
+                        <li class="nav-item"> <a @if (Session::get('page') == 'sales')   style="background: #052CA3 !important; color: #FFF !important" @else style="background: #fff !important; color: #052CA3 !important" @endif class="nav-link" href="{{ url('admin/reports/sales') }}">Sales</a></li>
                     </ul>
                 </div>
             </li>
