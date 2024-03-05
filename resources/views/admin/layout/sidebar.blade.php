@@ -3,6 +3,11 @@
 
 <!-- partial:partials/_sidebar.html -->
 <nav class="sidebar sidebar-offcanvas" id="sidebar">
+    <button class="custom_btn_for_navbar_mobile navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
+        <span class="icon-menu"></span>
+    </button>
+    <img class="dashboard_admin_logo" width="154" height="34" src="{{ asset('front/images/main-logo/2023-12-logo-black-text-150x34.png') }}">
+
     <ul class="nav">
         <li class="nav-item">
             <a @if (Session::get('page') == 'dashboard') style="background: #5f7a61 !important; color: #FFF !important" @endif class="nav-link" href="{{ url('admin/dashboard') }}">
