@@ -138,16 +138,19 @@ class OrderController extends Controller
                 // dd('Inside Automatic Shipping Process if statement in updateOrderStatus() method in Admin/OrderController.php<br>');
                 // echo 'Inside Automatic Shipping Process if statement in updateOrderStatus() method in Admin/OrderController.php<br>';
                 // exit;
-                $quotation = $this->lalamoveAPI_Helper->getQuotation($data['order_id']);
-                dd($quotation);
-
-                $getResults = \App\Models\Order::pushOrder_to_Lalamove($data['order_id']);
-                // dd($getResults);
-                if (!isset($getResults['status']) || (isset($getResults['status']) && $getResults['status'] == false)) { // If Status is not coming at all, or it's coming but it's false
-                    Session::put('error_message', $getResults['message']); // The message is coming from the Shiprocket API    // Storing Data: https://laravel.com/docs/9.x/session#storing-data
-
+                $all_lalamove_data = $this->lalamoveAPI_Helper->getQuotation($data['order_id'], Auth::guard('admin')->user()->vendor_id);
+                $getResults = \App\Models\Order::pushOrder_to_Lalamove($all_lalamove_data, $data['order_id']);
+                // dd(collect($getResults->errors)->pluck('message')->toArray());
+                if (isset($getResults->errors)) {
+                    Session::put('error_message', collect($getResults->errors)->pluck('message')->toArray()); // The message is coming from the Shiprocket API    // Storing Data: https://laravel.com/docs/9.x/session#storing-data
+    
                     return redirect()->back(); // Redirecting With Flashed Session Data: https://laravel.com/docs/10.x/responses#redirecting-with-flashed-session-data
-                    // return redirect()->back()->with('error_message', $getResults['message']); // Redirecting With Flashed Session Data: https://laravel.com/docs/10.x/responses#redirecting-with-flashed-session-data
+                } else {
+                    \App\Models\Order::where('id', $data['order_id'])->update([
+                        'is_pushed' => 1,
+                        'courier_name'    => $getResults->data->shareLink,
+                        'tracking_number' => "{$getResults->data->orderId}-{$getResults->data->quotationId}-{$getResults->data->driverId}"
+                    ]);
                 }
             }
 

@@ -1,6 +1,8 @@
 <?php
 namespace App\Helpers;
 
+use Illuminate\Support\Facades\Auth;
+
 class LalamoveAPIBodyHelper
 {
     private $arr_service_type = [
@@ -22,7 +24,7 @@ class LalamoveAPIBodyHelper
         ],
     ];
 
-    public $priceBreakdown = [], $quotation = [], $total_delivery_fee = 0.0;
+    public $priceBreakdown = [], $quotation = [], $total_delivery_fee = 0.0, $sender = null, $recipient = null;
 
     public function setQuoteData($data){
         extract($data);
@@ -96,32 +98,22 @@ class LalamoveAPIBodyHelper
         return ["data" => $data];
     }
 
-    public function getPlaceOrder(){
-        return json_encode([
-            "data" => [
-                'quotationId' => $this->quotationId,
-                'sender' => $this->sender,
-                'recipients' => $this->recipients,
-                'metadata' => $this->metadata
-            ]
-        ]);
-    }
-
-    public function getQuotation ($order_id) {
+    public function getQuotation ($order_id, $vendor_id) {
         $order_model = new \App\Models\Order;
         $user_model = new \App\Models\User;
+        $vendor_model = new \App\Models\Vendor;
 
-        $order = $order_model->with('orders_products')->find($order_id);
-
+        $order = $order_model->with('orders_products_categories')->find($order_id);
+        // dd($order);
         // create quotation body
         $body = [
             'serviceType' => '',
             'language' => 'en_PH',
             'stops' => [],
             'item' => [
-                'quantity' => '',
-                'weight' => '',
-                'categories' => [],
+                'quantity' => (string) $order->orders_products_categories->pluck('product_qty')->sum(),
+                'weight' => (string) $order->total_weight,
+                'categories' => $order->orders_products_categories->pluck('product_category.category_name')->toArray(),
                 'handlingInstructions' => []
             ],
             'isRouteOptimized' => true,
@@ -133,13 +125,34 @@ class LalamoveAPIBodyHelper
                 $body['serviceType'] = $key;
             }
         }
-
+        
         // set stops
-        $user = $user_model->with('userDeliveryAddresses')->find($order->user_id);
-        // dd($user);
+        // get vendor details
+        $vendor = $vendor_model->with('vendorbusinessdetails')->find($vendor_id);
+        $this->sender = $vendor;
+        $vendor_address = "{$vendor->vendorbusinessdetails->shop_name}, {$vendor->vendorbusinessdetails->shop_address}, {$vendor->vendorbusinessdetails->shop_city}, {$vendor->vendorbusinessdetails->shop_state}, {$vendor->vendorbusinessdetails->country}, {$vendor->vendorbusinessdetails->shop_pincode}";
 
-        return $order;
-        // $this->getQuote();
+        $body['stops'] = [
+            [ // vendor stop
+                'coordinates' => [
+                    'lat' => (string) $vendor->vendorbusinessdetails['lat'],
+                    'lng' => (string) $vendor->vendorbusinessdetails['long']
+                ],
+                "address" => $vendor_address
+            ],
+            [ // recipient stop
+                'coordinates' => [
+                    'lat' => (string) $order->lat,
+                    'lng' => (string) $order->lng
+                ],
+                "address" => "{$order->address}, {$order->city}, {$order->state}, {$order->country}, {$order->pincode}"
+            ]
+        ];
+
+        $this->recipient = $user_model->find($order->user_id);
+        $this->quotation = $this->processLalamove(json_encode(["data" => $body]));
+
+        return $this;
     }
 
     public function processLalamove($body) {

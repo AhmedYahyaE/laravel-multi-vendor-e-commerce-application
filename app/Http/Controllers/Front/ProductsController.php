@@ -849,11 +849,12 @@ class ProductsController extends Controller
             $order->state            = $deliveryAddress['state'];
             $order->country          = $deliveryAddress['country'];
             $order->pincode          = $deliveryAddress['pincode'];
-            $order->pincode          = $deliveryAddress['lat'];
-            $order->pincode          = $deliveryAddress['lng'];
+            $order->lat          = $deliveryAddress['lat'];
+            $order->lng          = $deliveryAddress['lng'];
             $order->mobile           = $deliveryAddress['mobile'];
             $order->email            = Auth::user()->email; // Retrieving The Authenticated User: https://laravel.com/docs/9.x/authentication#retrieving-the-authenticated-user
             $order->shipping_charges = $shipping_charges;
+            $order->total_weight     = $total_weight;
             $order->coupon_code      = Session::get('couponCode');   // it was set inside applyCoupon() method
             $order->coupon_amount    = Session::get('couponAmount'); // it was set inside applyCoupon() method
             $order->order_status     = $order_status;
@@ -986,51 +987,6 @@ class ProductsController extends Controller
         $total_price = number_format($total_price, 2);
         
         return view('front.products.checkout')->with(compact('deliveryAddresses', 'countries', 'getCartItems', 'sub_total', 'delivery_fee', 'total_price'));
-    }
-
-    public function processLalamove_placeOrder() {
-        $body = $this->lalamoveAPI_Helper->getPlaceOrder();
-        $secret = config('app.lalamove.api_secret');
-
-        $key = config('app.lalamove.api_key');
-        $url = config('app.lalamove.api_url');
-
-        $time = time() * 1000;
-
-        // $baseURL = 'https://rest.sandbox.lalamove.com'; // URL to Lalamove Sandbox API
-        $method = 'POST';
-        $path = '/v3/orders';
-
-        $rawSignature = "{$time}\r\n{$method}\r\n{$path}\r\n\r\n{$body}";
-        $signature = hash_hmac("sha256", $rawSignature, $secret);
-        $token = "{$key}:{$time}:{$signature}";
-        $curl = curl_init();
-        curl_setopt_array($curl, array(
-            CURLOPT_URL => $url.$path,
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => '',
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 3,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_HEADER => false, // Enable this option if you want to see what headers Lalamove API returning in response
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => 'POST',
-            CURLOPT_POSTFIELDS => $body,
-            CURLOPT_HTTPHEADER => array(
-                "Content-type: application/json; charset=utf-8",
-                "Authorization: hmac ".$token, // A unique Signature Hash has to be generated for EVERY API call at the time of making such call.
-                "Accept: application/json",
-                "Market: PH" // Please note to which city are you trying to make API call
-            ),
-        ));
-
-        $response = curl_exec($curl);
-        $httpCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
-        curl_close($curl);
-
-        // dd($response);
-        $json_decoded_response = json_decode($response);
-        return $json_decoded_response;
     }
 
     // Rendering Thanks page (after placing an order)    

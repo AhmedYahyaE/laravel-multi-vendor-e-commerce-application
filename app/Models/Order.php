@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class Order extends Model
 {
@@ -16,6 +17,10 @@ class Order extends Model
     // Relationship of an Order `orders` table with Order_Products `orders_products` table (every Order has many Order_Products)    
     public function orders_products() {    
         return $this->hasMany('App\Models\OrdersProduct', 'order_id'); // 'order_id' (column of `orders_products` table) is the Foreign Key of the Relationship
+    }
+
+    public function orders_products_categories() {
+        return $this->hasMany('App\Models\OrdersProduct', 'order_id')->with('product_category');
     }
 
 
@@ -202,8 +207,74 @@ class Order extends Model
     }
 
     // Lalamove API Integration
-    public static function pushOrder_to_Lalamove($order_id) {
-        
+    public static function pushOrder_to_Lalamove($lalamove_data, $order_id) {
+        $quotation_data = $lalamove_data->quotation->data;
+        $body = json_encode(["data" => [
+            "quotationId" => "{$quotation_data->quotationId}",
+            "sender" => [
+                "stopId" => "{$quotation_data->stops[0]->stopId}",
+                "name" => $lalamove_data->sender->name,
+                "phone" => $lalamove_data->sender->vendorbusinessdetails->shop_mobile
+            ],
+            "recipients" => [
+                [
+                    "stopId" => "{$quotation_data->stops[1]->stopId}",
+                    "name" => "{$lalamove_data->recipient->first_name} {$lalamove_data->recipient->last_name}",
+                    "phone" => "{$lalamove_data->recipient->mobile}",
+                    // "remarks" => "YYYYYY" // optional
+                ]
+            ],
+            // "isPODEnabled" => true, // optional
+            "partner" => "Lalamove - Kapiton Store NCR - {$lalamove_data->sender->vendorbusinessdetails->shop_name}", // optional 
+            "metadata" => [
+                "KapitonStoreOrderId" => "{$order_id}",
+                "ShopName" => $lalamove_data->sender->vendorbusinessdetails->shop_name
+            ]
+        ]]);
+
+        $secret = config('app.lalamove.api_secret');
+
+        $key = config('app.lalamove.api_key');
+        $url = config('app.lalamove.api_url');
+
+        $time = time() * 1000;
+
+        // $baseURL = 'https://rest.sandbox.lalamove.com'; // URL to Lalamove Sandbox API
+        $method = 'POST';
+        $path = '/v3/orders';
+
+        $rawSignature = "{$time}\r\n{$method}\r\n{$path}\r\n\r\n{$body}";
+        $signature = hash_hmac("sha256", $rawSignature, $secret);
+        $token = "{$key}:{$time}:{$signature}";
+        $nonce = $nonce = Str::uuid();
+        $curl = curl_init();
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => $url.$path,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 3,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HEADER => false, // Enable this option if you want to see what headers Lalamove API returning in response
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => $body,
+            CURLOPT_HTTPHEADER => array(
+                "Content-type: application/json; charset=utf-8",
+                "Authorization: hmac ".$token, // A unique Signature Hash has to be generated for EVERY API call at the time of making such call.
+                "Accept: application/json",
+                "Market: PH", // Please note to which city are you trying to make API call
+                "Request-ID: " . $nonce
+            ),
+        ));
+
+        $response = curl_exec($curl);
+        $httpCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+        curl_close($curl);
+
+        $json_decoded_response = json_decode($response);
+
+        return $json_decoded_response;
     }
 
 }
