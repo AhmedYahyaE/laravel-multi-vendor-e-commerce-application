@@ -21,7 +21,7 @@
         {{-- In case the authenticated user (the logged-in user) (using the 'admin' Authentication Guard in auth.php) type is 'vendor' --}}
         @if (Auth::guard('admin')->user()->type == 'vendor') {{-- Accessing Specific Guard Instances: https://laravel.com/docs/9.x/authentication#accessing-specific-guard-instances --}}
             <li class="nav-item">
-                <a @if (Session::get('page') == 'update_personal_details' || Session::get('page') == 'update_business_details' || Session::get('page') == 'update_bank_details') style="background: #5f7a61 !important; color: #FFF !important" @endif class="nav-link" data-toggle="collapse" href="#ui-vendors" aria-expanded="false" aria-controls="ui-vendors">
+                <a @if (in_array(Session::get('page'), ['update_personal_details','update_business_details','update_bank_details'])) style="background: #052CA3 !important; color: #FFF !important" @endif class="nav-link" data-toggle="collapse" href="#ui-vendors" aria-expanded="false" aria-controls="ui-vendors">
                     <i class="icon-layout menu-icon"></i>
                     <span class="menu-title">Vendor Details</span>
                     <i class="menu-arrow"></i>
@@ -37,7 +37,7 @@
 
             
             <li class="nav-item">
-                <a @if (Session::get('page') == 'sections' || Session::get('page') == 'categories' || Session::get('page') == 'products' || Session::get('page') == 'brands' || Session::get('page') == 'filters' || Session::get('page') == 'coupons') style="background: #5f7a61 !important; color: #FFF !important" @endif class="nav-link" data-toggle="collapse" href="#ui-catalogue" aria-expanded="false" aria-controls="ui-catalogue">
+                <a @if (in_array(Session::get('page'), ['sections','categories','products','brands','filters','coupons'])) style="background: #052CA3 !important; color: #FFF !important" @endif class="nav-link" data-toggle="collapse" href="#ui-catalogue" aria-expanded="false" aria-controls="ui-catalogue">
                     <i class="icon-layout menu-icon"></i>
                     <span class="menu-title">Catalogue Management</span>
                     <i class="menu-arrow"></i>
@@ -63,10 +63,23 @@
                     </ul>
                 </div>
             </li>
+            
+            <li class="nav-item">
+                <a @if (Session::get('page') == 'sales') style="background: #052CA3 !important; color: #FFF !important" @endif class="nav-link" data-toggle="collapse" href="#ui-reports" aria-expanded="false" aria-controls="ui-reports">
+                    <i class="icon-layout menu-icon"></i>
+                    <span class="menu-title">Reports</span>
+                    <i class="menu-arrow"></i>
+                </a>
+                <div class="collapse" id="ui-reports">
+                    <ul class="nav flex-column sub-menu" style="background: #fff !important; color: #052CA3 !important">
+                        <li class="nav-item"> <a @if (Session::get('page') == 'sales')   style="background: #052CA3 !important; color: #FFF !important" @else style="background: #fff !important; color: #052CA3 !important" @endif class="nav-link" href="{{ url('admin/reports/sales') }}">Sales</a></li>
+                    </ul>
+                </div>
+            </li>
 
         @else {{-- In case the authenticated user (the logged-in user) (using the 'admin' Authentication Guard in auth.php) type is 'superadmin', or 'admin', or 'subadmin' --}}
             <li class="nav-item">
-                <a @if (Session::get('page') == 'update_admin_password' || Session::get('page') == 'update_admin_details') style="background: #5f7a61 !important; color: #FFF !important" @endif class="nav-link" data-toggle="collapse" href="#ui-settings" aria-expanded="false" aria-controls="ui-settings">
+                <a @if (in_array(Session::get('page'), ['update_admin_password','update_admin_details'])) style="background: #052CA3 !important; color: #FFF !important" @endif class="nav-link" data-toggle="collapse" href="#ui-settings" aria-expanded="false" aria-controls="ui-settings">
                     <i class="icon-layout menu-icon"></i>
                     <span class="menu-title">Settings</span>
                     <i class="menu-arrow"></i>
@@ -82,7 +95,7 @@
             
             
             <li class="nav-item">
-                <a @if (Session::get('page') == 'view_admins' || Session::get('page') == 'view_subadmins' || Session::get('page') == 'view_vendors' || Session::get('page') == 'view_all') style="background: #5f7a61 !important; color: #FFF !important" @endif class="nav-link" data-toggle="collapse" href="#ui-admins" aria-expanded="false" aria-controls="ui-admins">
+                <a @if (in_array(Session::get('page'), ['view_admins','view_subadmins','view_vendors','view_all'])) style="background: #052CA3 !important; color: #FFF !important" @endif class="nav-link" data-toggle="collapse" href="#ui-admins" aria-expanded="false" aria-controls="ui-admins">
                     <i class="icon-layout menu-icon"></i>
                     <span class="menu-title">Admin Management</span>
                     <i class="menu-arrow"></i>
@@ -100,7 +113,7 @@
             </li>
 
             <li class="nav-item">
-                <a @if (Session::get('page') == 'sections' || Session::get('page') == 'categories' || Session::get('page') == 'products' || Session::get('page') == 'brands' || Session::get('page') == 'filters' || Session::get('page') == 'coupons') style="background: #5f7a61 !important; color: #FFF !important" @endif class="nav-link" data-toggle="collapse" href="#ui-catalogue" aria-expanded="false" aria-controls="ui-catalogue">
+                <a @if (in_array(Session::get('page'), ['sections','categories','products','brands','filters','coupons'])) style="background: #052CA3 !important; color: #FFF !important" @endif class="nav-link" data-toggle="collapse" href="#ui-catalogue" aria-expanded="false" aria-controls="ui-catalogue">
                     <i class="icon-layout menu-icon"></i>
                     <span class="menu-title">Catalogue Management</span>
                     <i class="menu-arrow"></i>
