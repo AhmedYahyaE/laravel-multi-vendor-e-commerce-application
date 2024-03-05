@@ -17,6 +17,7 @@ return new class extends Migration
         Schema::table('orders', function($table) {
             $table->string('courier_name')->after('grand_total')->nullable();
             $table->string('tracking_number')->after('courier_name')->nullable();
+            $table->string('total_weight')->after('shipping_charges')->nullable();
         });
     }
 
@@ -31,6 +32,7 @@ return new class extends Migration
         Schema::table('orders', function($table) {
             $table->dropColumn('courier_name');
             $table->dropColumn('tracking_number');
+            $table->dropColumn('total_weight');
         });
     }
 };

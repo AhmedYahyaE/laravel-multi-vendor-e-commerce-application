@@ -14,7 +14,7 @@
                 <h3 class="title-name">{{$filterKey}}</h3>
 
                 @if ($filterKey == "categories")
-                <ul>
+                <ul class="filter-categories">
                     @foreach ($filter as $categoryKey => $category)
                        <li class=""><a href="{{ url('products/category/'.$category['url']) }}">{{$category['category_name']}}</a></li> 
                        @if (count($category['sub_categories']) > 0)
