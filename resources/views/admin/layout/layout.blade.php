@@ -85,6 +85,10 @@
         <link rel="stylesheet" href="{{ url('admin/css/bootstrap.css') }}">
         <link rel="stylesheet" href="{{ url('admin/css/dataTables.bootstrap4.min.css') }}">
 
+
+        <!-- CUSTOM CSS -->
+        <link rel="stylesheet" href="{{ url('admin/css/custom.css') }}">
+
         <!-- Google tag (gtag.js) -->
         <script async src="https://www.googletagmanager.com/gtag/js?id=G-W02N3JGNCH"></script>
         <script>
@@ -140,13 +144,10 @@
 
 
 
-          @include('admin.layout.header')
-
-
 
 
             <!-- partial -->
-            <div class="container-fluid page-body-wrapper">
+            <div class="container-fluid page-body-wrapper wrapper_outer_admin">
             <!-- partial -->
 
 

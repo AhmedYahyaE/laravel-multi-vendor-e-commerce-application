@@ -6,12 +6,13 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Auth;
+use App\Helpers\LalamoveAPIBodyHelper;
 
 class OrderController extends Controller
 {
     // Note: In the Admin Panel, in the Orders Management section, if the authenticated/logged-in user is 'vendor', we'll show the orders of the products added by/related to that 'vendor' ONLY, but if the authenticated/logged-in user is 'admin', we'll show ALL orders    
 
-
+    private $lalamoveAPI_Helper;
 
     // Render admin/orders/orders.blade.php page (Orders Management section) in the Admin Panel    
     public function orders() {
@@ -132,18 +133,24 @@ class OrderController extends Controller
 
             // Note: There are two types of Shipping Process: "manual" and "automatic". "Manual" is in the case like small businesses, where the courier arrives at the owner warehouse to to pick up the order for shipping, and the small business owner takes the shipment details (like courier name, tracking number, ...) from the courier, and inserts those details themselves in the Admin Panel when they "Update Order Status" Section (by an 'admin') or "Update Item Status" Section (by a 'vendor' or 'admin') (in admin/orders/order_details.blade.php). With "automatic" shipping process, we're integrating third-party APIs (e.g. Shiprocket API) and orders go directly to the shipping partner, and the updates comes from the courier's end, and orders are automatically delivered to customers
             // "Automatic" Shipping Process (when 'admin' does NOT enter the Courier Name and Tracking Number): Configure the Shiprocket API in our Admin Panel in admin/orders/order_details.blade.php (to automate Pushing Orders to Shiprocket API by selecting "Shipped" from the drop-down menu)    
-            if (empty($data['courier_name']) && empty($data['tracking_number']) && $data['order_status'] == 'Shipped') { // if the 'admin' didn't enter the Courier Name and Tracking Nubmer when they selected "Shipped" from the drop-down menu in admin/orders/order_details.blade.php, use the "Automatic" Shipping Process (Push Orders to Shiprocket API), not the "Manual" Shipping process. Check the "Manual" Shipping process in the next if statement
+            if (empty($data['courier_name']) && empty($data['tracking_number']) && $data['order_status'] == 'For Delivery') { // if the 'admin' didn't enter the Courier Name and Tracking Nubmer when they selected "Shipped" from the drop-down menu in admin/orders/order_details.blade.php, use the "Automatic" Shipping Process (Push Orders to Shiprocket API), not the "Manual" Shipping process. Check the "Manual" Shipping process in the next if statement
+                $this->lalamoveAPI_Helper = new LalamoveAPIBodyHelper;
                 // dd('Inside Automatic Shipping Process if statement in updateOrderStatus() method in Admin/OrderController.php<br>');
                 // echo 'Inside Automatic Shipping Process if statement in updateOrderStatus() method in Admin/OrderController.php<br>';
                 // exit;
-
-                $getResults = \App\Models\Order::pushOrder($data['order_id']);
-                // dd($getResults);
-                if (!isset($getResults['status']) || (isset($getResults['status']) && $getResults['status'] == false)) { // If Status is not coming at all, or it's coming but it's false
-                    Session::put('error_message', $getResults['message']); // The message is coming from the Shiprocket API    // Storing Data: https://laravel.com/docs/9.x/session#storing-data
-
+                $all_lalamove_data = $this->lalamoveAPI_Helper->getQuotation($data['order_id'], Auth::guard('admin')->user()->vendor_id);
+                $getResults = \App\Models\Order::pushOrder_to_Lalamove($all_lalamove_data, $data['order_id']);
+                // dd(collect($getResults->errors)->pluck('message')->toArray());
+                if (isset($getResults->errors)) {
+                    Session::put('error_message', collect($getResults->errors)->pluck('message')->toArray()); // The message is coming from the Shiprocket API    // Storing Data: https://laravel.com/docs/9.x/session#storing-data
+    
                     return redirect()->back(); // Redirecting With Flashed Session Data: https://laravel.com/docs/10.x/responses#redirecting-with-flashed-session-data
-                    // return redirect()->back()->with('error_message', $getResults['message']); // Redirecting With Flashed Session Data: https://laravel.com/docs/10.x/responses#redirecting-with-flashed-session-data
+                } else {
+                    \App\Models\Order::where('id', $data['order_id'])->update([
+                        'is_pushed' => 1,
+                        'courier_name'    => $getResults->data->shareLink,
+                        'tracking_number' => "{$getResults->data->orderId}-{$getResults->data->quotationId}-{$getResults->data->driverId}"
+                    ]);
                 }
             }
 
@@ -189,7 +196,7 @@ class OrderController extends Controller
                 ];
 
                 \Illuminate\Support\Facades\Mail::send('emails.order_status', $messageData, function ($message) use ($email) { // Sending Mail: https://laravel.com/docs/9.x/mail#sending-mail    // 'emails.order_status' is the order_status.blade.php file inside the 'resources/views/emails' folder that will be sent as an email    // We pass in all the variables that order_status.blade.php will use    // https://www.php.net/manual/en/functions.anonymous.php
-                    $message->to($email)->subject('Order Status Updated - MultiVendorEcommerceApplication.com.eg');
+                    $message->to($email)->subject('Order Status Updated - ' . env('APP_URL'));
                 });
 
             } else { // if there are no Courier Name and Tracking Number data, don't include them in the email
@@ -205,7 +212,7 @@ class OrderController extends Controller
                 ];
     
                 \Illuminate\Support\Facades\Mail::send('emails.order_status', $messageData, function ($message) use ($email) { // Sending Mail: https://laravel.com/docs/9.x/mail#sending-mail    // 'emails.order_status' is the order_status.blade.php file inside the 'resources/views/emails' folder that will be sent as an email    // We pass in all the variables that order_status.blade.php will use    // https://www.php.net/manual/en/functions.anonymous.php
-                    $message->to($email)->subject('Order Status Updated - MultiVendorEcommerceApplication.com.eg');
+                    $message->to($email)->subject('Order Status Updated - ' . env('APP_URL'));
                 });
             }
 
@@ -279,7 +286,7 @@ class OrderController extends Controller
                 ];
 
                 \Illuminate\Support\Facades\Mail::send('emails.order_item_status', $messageData, function ($message) use ($email) { // Sending Mail: https://laravel.com/docs/9.x/mail#sending-mail    // 'emails.order_item_status' is the order_item_status.blade.php file inside the 'resources/views/emails' folder that will be sent as an email    // We pass in all the variables that order_item_status.blade.php will use    // https://www.php.net/manual/en/functions.anonymous.php
-                    $message->to($email)->subject('Order Item Status Updated - MultiVendorEcommerceApplication.com.eg');
+                    $message->to($email)->subject('Order Item Status Updated - ' . env('APP_URL'));
                 });
 
             } else { // if there are no Courier Name and Tracking Number data, don't include them in the email
@@ -295,7 +302,7 @@ class OrderController extends Controller
                 ];
     
                 \Illuminate\Support\Facades\Mail::send('emails.order_item_status', $messageData, function ($message) use ($email) { // Sending Mail: https://laravel.com/docs/9.x/mail#sending-mail    // 'emails.order_item_status' is the order_item_status.blade.php file inside the 'resources/views/emails' folder that will be sent as an email    // We pass in all the variables that order_item_status.blade.php will use    // https://www.php.net/manual/en/functions.anonymous.php
-                    $message->to($email)->subject('Order Item Status Updated - MultiVendorEcommerceApplication.com.eg');
+                    $message->to($email)->subject('Order Item Status Updated - ' . env('APP_URL'));
                 });
             }
 
