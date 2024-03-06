@@ -545,4 +545,21 @@ $(document).ready(function() {
         }
     });
 
+    // Reports
+    // Sales Filter form
+    $('#filterBy').change(function (v) {
+        // Set the search filter label to what is selected from Filter By: input
+        $('#filterBy-labelValue').text($(v.currentTarget).find('option:selected').text() + ":");
+        let filterVal = v.currentTarget.value;
+        
+        $('.filter-container .input-group[data-filterFor]').each((k, el) => {
+            $(el).hide();
+            let filterFor = $(el).attr('data-filterFor').split(",");
+            // show filterFor search input
+            if (filterFor.find(d => d == filterVal)) {
+                $(el).show();
+            }
+        })
+    })
+
 }); // End of $(document).ready()

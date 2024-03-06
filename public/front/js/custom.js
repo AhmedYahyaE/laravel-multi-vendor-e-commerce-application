@@ -801,7 +801,7 @@ $(document).ready(function() {
             }
         });
 
-    });
+    });    
 
     /**
      * Submit checkout
@@ -820,7 +820,7 @@ $(document).ready(function() {
             contentType: 'application/json',
             data   : JSON.stringify(data), // Sending name/value pairs to server with the AJAX request (AJAX call)
             success: function(resp) { // if the AJAX request / AJAX call is successful
-                if (resp.data.success) {
+                if (resp.success) {
                     window.location.href = "/thanks";
                 }
             },
