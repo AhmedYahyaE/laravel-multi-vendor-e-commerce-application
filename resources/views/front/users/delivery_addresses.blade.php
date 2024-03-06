@@ -145,57 +145,7 @@
                                 data-settings="{&quot;container_type&quot;:&quot;flex&quot;,&quot;content_width&quot;:&quot;boxed&quot;}"
                             >
                                 <div class="e-con-inner">
-                                    <div
-                                        class="elementor-element elementor-element-63746a5 e-con-full e-flex e-con e-child"
-                                        data-id="63746a5"
-                                        data-element_type="container"
-                                        data-settings="{&quot;background_background&quot;:&quot;classic&quot;,&quot;content_width&quot;:&quot;full&quot;,&quot;container_type&quot;:&quot;flex&quot;}"
-                                    >
-                                        <div
-                                            class="elementor-element elementor-element-ca26535 elementor-widget elementor-widget-heading"
-                                            data-id="ca26535"
-                                            data-element_type="widget"
-                                            data-widget_type="heading.default"
-                                        >
-                                            <div class="elementor-widget-container">
-                                                <h6 class="elementor-heading-title elementor-size-default">DEFAULT</h6>
-                                            </div>
-                                        </div>
-                                        <div
-                                            class="elementor-element elementor-element-4721cbd elementor-widget elementor-widget-heading"
-                                            data-id="4721cbd"
-                                            data-element_type="widget"
-                                            data-widget_type="heading.default"
-                                        >
-                                            <div class="elementor-widget-container">
-                                                <h5 class="elementor-heading-title elementor-size-default">Niño Feliciano
-                                                    <br> #407 Bonga Menor, Bustos, Bulacan 3007 Philippines
-                                                    <br> (+63) 945 162 1033
-                                                    <br> 14.621911, 121.046155
-                                                </h5>
-                                            </div>
-                                        </div>
-                                        <div
-                                            class="elementor-element elementor-element-51d3094 elementor-widget elementor-widget-text-editor"
-                                            data-id="51d3094"
-                                            data-element_type="widget"
-                                            data-widget_type="text-editor.default"
-                                        >
-                                            <div class="elementor-widget-container">
-                                                <style>/*! elementor - v3.18.0 - 08-12-2023 */ .elementor-widget-text-editor.elementor-drop-cap-view-stacked .elementor-drop-cap{background-color:#69727d;color:#fff}.elementor-widget-text-editor.elementor-drop-cap-view-framed .elementor-drop-cap{color:#69727d;border:3px solid;background-color:transparent}.elementor-widget-text-editor:not(.elementor-drop-cap-view-default) .elementor-drop-cap{margin-top:8px}.elementor-widget-text-editor:not(.elementor-drop-cap-view-default) .elementor-drop-cap-letter{width:1em;height:1em}.elementor-widget-text-editor .elementor-drop-cap{float:left;text-align:center;line-height:1;font-size:50px}.elementor-widget-text-editor .elementor-drop-cap-letter{display:inline-block}</style>
-                                                <p>
-                                                    <span style="text-decoration: underline; color: #000000;">
-                                                        <a class="edit-address" style="color: #000000; text-decoration: underline;" href="#">Edit</a>
-                                                    </span>
-                                                </p>
-                                                <p>
-                                                    <span style="text-decoration: underline; color: #000000;">
-                                                        <a style="color: #000000; text-decoration: underline;" href="#">Delete</a>
-                                                    </span>
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    @foreach ($delivery_addresses as $delivery_address)
                                     <div
                                         class="elementor-element elementor-element-39fce9a e-con-full e-flex e-con e-child"
                                         data-id="39fce9a"
@@ -209,7 +159,7 @@
                                             data-widget_type="heading.default"
                                         >
                                             <div class="elementor-widget-container">
-                                                <h6 class="elementor-heading-title elementor-size-default">ADDRESS #2</h6>
+                                                <h6 class="elementor-heading-title elementor-size-default">{{$delivery_address['name']}}</h6>
                                             </div>
                                         </div>
                                         <div
@@ -219,10 +169,9 @@
                                             data-widget_type="heading.default"
                                         >
                                             <div class="elementor-widget-container">
-                                                <h5 class="elementor-heading-title elementor-size-default">Abdul Mohammad
-                                                    <br> #407 Bonga Menor, Bustos, Bulacan 3007 Philippines
-                                                    <br> (+63) 941 321 3790
-                                                    <br> 12.69823, 315.216155
+                                                <h5 class="elementor-heading-title elementor-size-default">
+                                                    {{$delivery_address['address']}} {{$delivery_address['city']}} {{$delivery_address['state']}} {{$delivery_address['country']}} {{$delivery_address['pincode']}}
+                                                    <br> {{$delivery_address['mobile']}}
                                                 </h5>
                                             </div>
                                         </div>
@@ -246,6 +195,7 @@
                                             </div>
                                         </div>
                                     </div>
+                                    @endforeach
                                     <div
                                         class="elementor-element elementor-element-a0b40fb elementor-widget__width-auto elementor-widget elementor-widget-button"
                                         data-id="a0b40fb"
@@ -307,7 +257,7 @@
                                                         <label for="form-field-field_db46221" class="elementor-field-label elementor-screen-only"> 								Address 1</label>
                                                         <textarea
                                                             class="elementor-field-textual elementor-field  elementor-size-sm"
-                                                            name="form_fields[field_db46221]"
+                                                            name="address"
                                                             id="form-field-field_db46221"
                                                             rows="2"
                                                             placeholder="Address 1"
@@ -329,15 +279,17 @@
                                                                 </svg>
                                                             </div>
                                                             <select
-                                                                name="form_fields[field_7dbec52]"
+                                                                name="country"
                                                                 id="form-field-field_7dbec52"
-                                                                class="elementor-field-textual elementor-size-sm"
+                                                                class="elementor-field-textual address-field elementor-size-sm country-edit"
                                                                 required="required"
                                                                 aria-required="true"
                                                             >
                                                                 <option value="Select Country">Select Country</option>
-                                                                <option value="Philippines">Philippines</option>
-                                                                <option value="United States">United States</option>
+
+                                                                @foreach ($countries as $country) {{-- $countries was passed from UserController to view using compact() method --}}
+                                                                    <option value="{{ $country['country_name'] }}"  @if ($country['country_name'] == \Illuminate\Support\Facades\Auth::user()->country) selected @endif>{{ $country['country_name'] }}</option>
+                                                                @endforeach
                                                             </select>
                                                         </div>
                                                     </div>
@@ -355,15 +307,13 @@
                                                                 </svg>
                                                             </div>
                                                             <select
-                                                                name="form_fields[field_01a6d54]"
+                                                                name="state"
                                                                 id="form-field-field_01a6d54"
-                                                                class="elementor-field-textual elementor-size-sm"
+                                                                class="elementor-field-textual address-field elementor-size-sm state-edit"
                                                                 required="required"
                                                                 aria-required="true"
                                                             >
                                                                 <option value="Select Province">Select Province</option>
-                                                                <option value="Metro Manila">Metro Manila</option>
-                                                                <option value="Bulacan">Bulacan</option>
                                                             </select>
                                                         </div>
                                                     </div>
@@ -381,15 +331,13 @@
                                                                 </svg>
                                                             </div>
                                                             <select
-                                                                name="form_fields[field_81b413f]"
+                                                                name="city"
                                                                 id="form-field-field_81b413f"
-                                                                class="elementor-field-textual elementor-size-sm"
+                                                                class="elementor-field-textual address-field elementor-size-sm city-edit"
                                                                 required="required"
                                                                 aria-required="true"
                                                             >
                                                                 <option value="Select City">Select City</option>
-                                                                <option value="Baliuag">Baliuag</option>
-                                                                <option value="Bustos">Bustos</option>
                                                             </select>
                                                         </div>
                                                     </div>
