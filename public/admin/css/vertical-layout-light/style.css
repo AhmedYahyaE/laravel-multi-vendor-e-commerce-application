@@ -28625,6 +28625,9 @@ div.tagsinput span.tag a {
   background: #5f7a61;
   color: #fff;
 }
+.sidebar .nav .nav-item:hover > .nav-link svg{
+  fill: white !important;
+}
 .sidebar .nav:not(.sub-menu) > .nav-item > .nav-link[aria-expanded="true"] i,
 .sidebar .nav:not(.sub-menu) > .nav-item > .nav-link[style] i{
   color: white !important;
