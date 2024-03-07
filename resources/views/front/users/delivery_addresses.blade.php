@@ -232,7 +232,7 @@
                                                         <input
                                                             size="1"
                                                             type="text"
-                                                            name="form_fields[field_f4dd461]"
+                                                            name="name"
                                                             id="form-field-field_f4dd461"
                                                             class="elementor-field elementor-size-sm  elementor-field-textual"
                                                             placeholder="Name"
