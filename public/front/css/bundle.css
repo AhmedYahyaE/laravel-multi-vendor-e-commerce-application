@@ -3567,3 +3567,35 @@ ul.filter-categories ul{
     left: 90px;
     top: 8px; } }
 
+
+
+
+
+
+
+
+/*CUSTOM CSS OVERRIDE NINO FELICIANO FOR SIDEBAR CART*/
+.mini-cart-list > li > a img{
+  max-width: 100px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px 0px #00000036;
+}
+.mini-cart-list > li > a .mini-item-name,
+.mini-cart-list > li > a .mini-item-price,
+.mini-shop-total .mini-total-price{
+  color: black !important;
+}
+.mini-action-anchors .cart-anchor{
+  border-radius: 100px;
+}
+.mini-action-anchors .checkout-anchor{
+  background-color: #000000;
+  color: #ffffff;
+  border-radius: 100px;
+}
+.mini-cart .mini-cart-header button{
+  border: none;
+}
+.mini-cart .mini-cart-header button:before{
+  color: black;
+}
