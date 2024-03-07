@@ -701,6 +701,8 @@ class ProductsController extends Controller
             $total_price = $total_price + ($attrPrice['final_price'] * $item['quantity']);
             $total_qty += $item['quantity'];
 
+
+
             // Get Pickup Address
             array_push($pickupAddresses, $vendor_model->where('id', $item['product']['vendor_id'])->with(['vendorbusinessdetails' => function ($q) {
                 $q->select('vendor_id', 'shop_name', 'shop_mobile', 'lat', 'long')->selectRaw("CONCAT(shop_address, ', ', shop_city, ', ', shop_state, ', ', shop_country, ', ', shop_pincode) AS shop_fulladdress");

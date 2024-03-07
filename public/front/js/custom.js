@@ -989,5 +989,12 @@ $(document).ready(function() {
 
 
 
+    $(".address_edit_checkout").click(function(event){
+        event.preventDefault();
+        $(".edit-address-checkout").toggleClass("active");
+    })
+
+
+
 
 });
