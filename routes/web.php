@@ -268,6 +268,8 @@ Route::namespace('App\Http\Controllers\Front')->group(function() {
 
         // User Account Update Password HTML Form submission via AJAX. Check front/js/custom.js
         Route::post('user/update-password', 'UserController@userUpdatePassword');
+        
+        Route::get('user/delivery-addresses', 'UserController@showDeliveryAddresses')->name('user.delivery_address_list.show');
 
         Route::get('user/security', 'UserController@showSecurity')->name('front.user.security');
 

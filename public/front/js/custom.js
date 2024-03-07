@@ -977,6 +977,24 @@ $(document).ready(function() {
     });
 
 
+    $("#add-address-btn").click(function(event) {
+        event.preventDefault();
+        $(".form-address").toggleClass("active");
+    });
+
+    $(".edit-address").click(function(event) {
+        event.preventDefault();
+        $(".form-address").toggleClass("active");
+    });
+
+
+
+    $(".address_edit_checkout").click(function(event){
+        event.preventDefault();
+        $(".edit-address-checkout").toggleClass("active");
+    })
+
+
 
 
 });
