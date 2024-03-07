@@ -122,34 +122,21 @@
                                                 <input type="hidden" name="referer_title" value="Checkout">
                                                 <input type="hidden" name="queried_id" value="992">
                                                 <div class="elementor-form-fields-wrapper elementor-labels-">
-                                                    <div class="elementor-field-type-email elementor-field-group elementor-column elementor-field-group-field_f4dd461 elementor-col-50 elementor-field-required">
-                                                        <label for="form-field-field_f4dd461" class="elementor-field-label elementor-screen-only"> 								First Name</label>
+                                                    <div class="elementor-field-type-email elementor-field-group elementor-column elementor-field-group-field_f4dd461 elementor-col-100 elementor-field-required">
+                                                        <label for="form-field-field_f4dd461" class="elementor-field-label elementor-screen-only"> 								Name</label>
                                                         <input
                                                             size="1"
                                                             type="email"
                                                             name="form_fields[field_f4dd461]"
                                                             id="form-field-field_f4dd461"
                                                             class="elementor-field elementor-size-sm  elementor-field-textual"
-                                                            placeholder="First Name"
+                                                            placeholder="Name"
                                                             required="required"
                                                             aria-required="true"
                                                             value="Nino"
                                                         >
                                                     </div>
-                                                    <div class="elementor-field-type-email elementor-field-group elementor-column elementor-field-group-field_11df834 elementor-col-50 elementor-field-required">
-                                                        <label for="form-field-field_11df834" class="elementor-field-label elementor-screen-only"> 								Last Name</label>
-                                                        <input
-                                                            size="1"
-                                                            type="email"
-                                                            name="form_fields[field_11df834]"
-                                                            id="form-field-field_11df834"
-                                                            class="elementor-field elementor-size-sm  elementor-field-textual"
-                                                            placeholder="Last Name"
-                                                            required="required"
-                                                            aria-required="true"
-                                                            value="Feliciano"
-                                                        >
-                                                    </div>
+                                                   
                                                     <div class="elementor-field-type-textarea elementor-field-group elementor-column elementor-field-group-field_db46221 elementor-col-100 elementor-field-required">
                                                         <label for="form-field-field_db46221" class="elementor-field-label elementor-screen-only"> 								Address 1</label>
                                                         <textarea
@@ -246,8 +233,8 @@
                                                             value="3007"
                                                         >
                                                     </div>
-                                                    <div class="elementor-field-type-select elementor-field-group elementor-column elementor-field-group-field_81b413f elementor-col-100 elementor-field-required">
-                                                        <label for="form-field-field_81b413f" class="elementor-field-label elementor-screen-only"> 								Phone</label>
+                                                    <div class="elementor-field-type-select elementor-field-group elementor-column elementor-field-group-field_212z2x2 elementor-col-100 elementor-field-required">
+                                                        <label for="form-field-field_212z2x2" class="elementor-field-label elementor-screen-only"> 								Phone</label>
                                                         <div class="elementor-field elementor-select-wrapper remove-before">
                                                             <label for="form-field-field_212z2x2" class="elementor-field-label elementor-screen-only"> 								Phone</label>
                                                             <input
@@ -261,6 +248,40 @@
                                                                 aria-required="true"
                                                                 pattern="^0\d{10}$"
                                                                 value="09451621033"
+                                                            >
+                                                            
+                                                        </div>
+                                                    </div>
+                                                    <div class="elementor-field-type-select elementor-field-group elementor-column elementor-field-group-field_81b127o elementor-col-50 elementor-field-required">
+                                                    <label for="form-field-field_81b127o" class="elementor-field-label elementor-screen-only"> 								Longtitude</label>
+                                                    <div class="elementor-field elementor-select-wrapper remove-before">
+                                                            <label for="form-field-field_81b127o" class="elementor-field-label elementor-screen-only"> 								Longtitude</label>
+                                                            <input
+                                                                size="1"
+                                                                type="text"
+                                                                name="form_fields[field_81b127o]"
+                                                                id="form-field-field_81b127o"
+                                                                class="elementor-field elementor-size-sm  elementor-field-textual"
+                                                                placeholder="Longtitude"
+                                                                required="required"
+                                                                aria-required="true"
+                                                            >
+                                                            
+                                                        </div>
+                                                    </div>
+                                                    <div class="elementor-field-type-select elementor-field-group elementor-column elementor-field-group-field_81b127l elementor-col-50 elementor-field-required">
+                                                        <label for="form-field-field_81b127l" class="elementor-field-label elementor-screen-only"> 								Latitude</label>
+                                                        <div class="elementor-field elementor-select-wrapper remove-before">
+                                                            <label for="form-field-field_81b127l" class="elementor-field-label elementor-screen-only"> 								Latitude</label>
+                                                            <input
+                                                                size="1"
+                                                                type="text"
+                                                                name="form_fields[field_81b127l]"
+                                                                id="form-field-field_81b127l"
+                                                                class="elementor-field elementor-size-sm  elementor-field-textual"
+                                                                placeholder="Latitude"
+                                                                required="required"
+                                                                aria-required="true"
                                                             >
                                                             
                                                         </div>
@@ -334,28 +355,15 @@
                                             <input type="hidden" name="referer_title" value="Checkout">
                                             <input type="hidden" name="queried_id" value="992">
                                             <div class="elementor-form-fields-wrapper elementor-labels-">
-                                                <div class="elementor-field-type-email elementor-field-group elementor-column elementor-field-group-field_f4dd461 elementor-col-50 elementor-field-required">
-                                                    <label for="form-field-field_f4dd461" class="elementor-field-label elementor-screen-only"> 								First Name</label>
+                                                <div class="elementor-field-type-email elementor-field-group elementor-column elementor-field-group-field_f4dd461 elementor-col-100 elementor-field-required">
+                                                    <label for="form-field-field_f4dd461" class="elementor-field-label elementor-screen-only"> 								Name</label>
                                                     <input
                                                         size="1"
                                                         type="email"
                                                         name="form_fields[field_f4dd461]"
                                                         id="form-field-field_f4dd461"
                                                         class="elementor-field elementor-size-sm  elementor-field-textual"
-                                                        placeholder="First Name"
-                                                        required="required"
-                                                        aria-required="true"
-                                                    >
-                                                </div>
-                                                <div class="elementor-field-type-email elementor-field-group elementor-column elementor-field-group-field_11df834 elementor-col-50 elementor-field-required">
-                                                    <label for="form-field-field_11df834" class="elementor-field-label elementor-screen-only"> 								Last Name</label>
-                                                    <input
-                                                        size="1"
-                                                        type="email"
-                                                        name="form_fields[field_11df834]"
-                                                        id="form-field-field_11df834"
-                                                        class="elementor-field elementor-size-sm  elementor-field-textual"
-                                                        placeholder="Last Name"
+                                                        placeholder="Name"
                                                         required="required"
                                                         aria-required="true"
                                                     >
@@ -468,6 +476,40 @@
                                                             required="required"
                                                             aria-required="true"
                                                             pattern="^0\d{10}$"
+                                                        >
+                                                        
+                                                    </div>
+                                                </div>
+                                                <div class="elementor-field-type-select elementor-field-group elementor-column elementor-field-group-field_81b127o elementor-col-50 elementor-field-required">
+                                                    <label for="form-field-field_81b127o" class="elementor-field-label elementor-screen-only"> 								Longtitude</label>
+                                                    <div class="elementor-field elementor-select-wrapper remove-before">
+                                                        <label for="form-field-field_81b127o" class="elementor-field-label elementor-screen-only"> 								Longtitude</label>
+                                                        <input
+                                                            size="1"
+                                                            type="text"
+                                                            name="form_fields[field_81b127o]"
+                                                            id="form-field-field_81b127o"
+                                                            class="elementor-field elementor-size-sm  elementor-field-textual"
+                                                            placeholder="Longtitude"
+                                                            required="required"
+                                                            aria-required="true"
+                                                        >
+                                                        
+                                                    </div>
+                                                </div>
+                                                <div class="elementor-field-type-select elementor-field-group elementor-column elementor-field-group-field_81b127l elementor-col-50 elementor-field-required">
+                                                    <label for="form-field-field_81b127l" class="elementor-field-label elementor-screen-only"> 								Latitude</label>
+                                                    <div class="elementor-field elementor-select-wrapper remove-before">
+                                                        <label for="form-field-field_81b127l" class="elementor-field-label elementor-screen-only"> 								Latitude</label>
+                                                        <input
+                                                            size="1"
+                                                            type="text"
+                                                            name="form_fields[field_81b127l]"
+                                                            id="form-field-field_81b127l"
+                                                            class="elementor-field elementor-size-sm  elementor-field-textual"
+                                                            placeholder="Latitude"
+                                                            required="required"
+                                                            aria-required="true"
                                                         >
                                                         
                                                     </div>
