@@ -3593,3 +3593,9 @@ ul.filter-categories ul{
   color: #ffffff;
   border-radius: 100px;
 }
+.mini-cart .mini-cart-header button{
+  border: none;
+}
+.mini-cart .mini-cart-header button:before{
+  color: black;
+}
