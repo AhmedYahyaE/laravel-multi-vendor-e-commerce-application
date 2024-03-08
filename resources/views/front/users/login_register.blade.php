@@ -86,6 +86,7 @@
                                                 required="required"
                                                 aria-required="true"
                                             >
+                                            <img onclick="showPass()" class="icon-eye-view-pass" src="{{ asset('front/images/icon-svg/eye-svgrepo-com.svg') }}">
                                             <span id="login-password"></span>
                                         </div>
                                         <div>
