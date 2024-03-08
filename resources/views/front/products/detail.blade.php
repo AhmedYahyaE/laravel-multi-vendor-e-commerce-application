@@ -413,6 +413,7 @@
                                                 aria-required="true"
                                                 min="1"
                                                 max=""
+                                                value="1"
                                             >
                                         </div>
                                         <div class="elementor-field-group elementor-column elementor-field-type-submit elementor-col-25 e-form__buttons elementor-md-60">

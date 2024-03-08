@@ -86,6 +86,6 @@
     overflow: hidden !important;
 	height: fit-content !important;
 }
-.elementor-15 .elementor-element.elementor-element-bfbcc32 img{
-
+.elementor-15 .elementor-element.elementor-element-bfbcc32 > .elementor-widget-container a{
+	width: 100%;
 }
