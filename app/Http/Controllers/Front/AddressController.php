@@ -61,8 +61,8 @@ class AddressController extends Controller
                 $address['state']   = $data['delivery_state'];
                 $address['country'] = $data['delivery_country'];
                 $address['pincode'] = $data['delivery_pincode'];
-                $address['lat'] = $data['delivery_lat'];
-                $address['lng'] = $data['delivery_lng'];
+                $address['lat'] = floatval($data['delivery_lat']);
+                $address['lng'] = floatval($data['delivery_lng']);
                 $address['mobile']  = $data['mobile-dialing-code'].$data['delivery_mobile'];
     
     

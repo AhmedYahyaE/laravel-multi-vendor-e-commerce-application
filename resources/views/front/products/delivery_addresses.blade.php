@@ -269,7 +269,7 @@
                 content: "" !important
             }
         </style>
-        <form id="form-editAddress" action="javascript:;" method="post" name="Add Address">
+        <form id="form-editAddress" action="javascript:;" name="Add Address">
             <input type="hidden" name="post_id" value="992">
             <input type="hidden" name="form_id" value="1f78c63">
             <input type="hidden" name="referer_title" value="Checkout">

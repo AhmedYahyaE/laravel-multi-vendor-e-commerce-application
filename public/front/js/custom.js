@@ -627,31 +627,6 @@ $(document).ready(function() {
         });
     });
 
-    // Remove Delivery Addresse via AJAX (Page refresh and fill in the <input> fields with the authenticated/logged in user Delivery Addresses details from the `delivery_addresses` database table when clicking on the Remove button) in front/products/delivery_addresses.blade.php (which is 'include'-ed in front/products/checkout.blade.php) via AJAX, check front/js/custom.js    
-    $(document).on('click', '.removeAddress', function() {
-        if (confirm('Are you sure you want to remove this?')) { // if the user clicks on Yes/OK    // confirm(): https://www.w3schools.com/jsref/met_win_confirm.asp
-            var addressid = $(this).data('addressid'); // We use the jQuery data() function to get the Custom HTML Attribute value
-            // alert(addressid);
-
-            $.ajax({
-                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}, // X-CSRF-TOKEN: https://laravel.com/docs/9.x/csrf#csrf-x-csrf-token    
-                url    : '/remove-delivery-address', // check this route in web.php
-                type   : 'post',
-                data   : {addressid: addressid}, // Sending name/value pairs to server with the AJAX request (AJAX call)
-                success: function(resp) { // if the AJAX request / AJAX call is successful
-                    // alert(resp);
-
-                    $('#deliveryAddresses').html(resp.view); // refresh the whole delivery_addresses.blade.php view    // 'view' is sent as a PHP array key (in the HTTP response from the server (backend)) from inside the saveDeliveryAddress() method in Front/AddressController.php
-
-                    window.location.href = 'checkout';
-                },
-                error  : function() { // if the AJAX request is unsuccessful
-                    alert('Error');
-                }
-            });
-        }
-    });
-
     // Calculate the Grand Total, Shipping Charges and Coupon Amount and displaying them depending on the chosen Delivery Address in front/products/checkout.blade.php
     $('input[name=address_id]').bind('change', function() {
 

@@ -209,7 +209,8 @@ window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/14
                 ],
                 'user.delivery_address_list.show' => [
                     'id' => 'elementor-post-1628-css',
-                    'href' => 'front/css/elementor-css/elementor-css-post-1628.css'
+                    'href' => 'front/css/elementor-css/elementor-css-post-1628.css',
+                    'javascript_src' => 'front/js/custom-user-account.js'
                 ],
             ];
 
