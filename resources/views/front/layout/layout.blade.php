@@ -195,7 +195,8 @@ window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/14
                 ],
                 'front.user.checkout' => [
                     'id' => 'elementor-post-992-css',
-                    'href' => 'front/css/elementor-css/elementor-css-post-992.css'
+                    'href' => 'front/css/elementor-css/elementor-css-post-992.css',
+                    'javascript_src' => 'front/js/custom-checkout.js',
                 ],
                 'front.vendor.account.create' => [
                     'id' => 'elementor-post-1070-css',
