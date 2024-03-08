@@ -425,3 +425,21 @@
 .elementor .elementor-element.elementor-widget-n-tabs>.elementor-widget-container>.e-n-tabs[data-touch-mode=false]>.e-n-tabs-heading .e-n-tab-title[aria-selected=false]:hover{
     background-color: #5f7a61 !important;
 }
+.plot-container.plotly > .user-select-none,
+.plot-container.plotly > .user-select-none .main-svg{
+    width: 100% !important;
+}
+.sales-rep .e-n-tabs-heading{
+    flex-basis: 0 !important;
+}
+.sales-rep.elementor-widget-n-tabs .e-n-tab-title{
+    padding: 15px 10px !important;
+    height: auto !important;
+    gap: 8px;
+}
+.sales-rep.elementor-widget-n-tabs .e-n-tab-title .e-n-tab-title-text{
+    font-size: 12px;
+}
+.js-plotly-plot{
+    max-width: 100% !important;
+}

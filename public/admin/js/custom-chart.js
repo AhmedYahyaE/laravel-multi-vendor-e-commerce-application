@@ -47,7 +47,15 @@ var config = {responsive: true}
 // Display using Plotly
 Plotly.newPlot("revenue-chart", data, layout, config);
                                                                     
-                                             
+                
+
+
+
+
+
+
+
+
 
 
 const xArray2 = [40,50,60,70,80,90,100,110,120,130,140];
@@ -71,11 +79,21 @@ range: [7, 16]
 margin: {t:30, l:10, b:25, r:15}
 };
 
-var config = {responsive: true}
+var config2 = {responsive: true}
 
 // Display using Plotly
-Plotly.newPlot("visitors-chart", data2, layout2, config);
-                                                                      
+Plotly.newPlot("visitors-chart", data2, layout2, config2);
+                                                              
+
+
+
+
+
+
+
+
+
+
 
 
 const xArray3 = [60,70,80,90,100,110,120,130,140,150,160];
@@ -99,10 +117,10 @@ range: [6, 16]
 margin: {t:30, l:10, b:25, r:15}
 };
 
-var config = {responsive: true}
+var config3 = {responsive: true}
 
 // Display using Plotly
-Plotly.newPlot("buyers-chart", data3, layout3, config);
+Plotly.newPlot("buyers-chart", data3, layout3, config3);
                                                                      
 
 
@@ -127,10 +145,10 @@ range: [7, 16]
 margin: {t:30, l:10, b:25, r:15}
 };
 
-var config = {responsive: true}
+var config4 = {responsive: true}
 
 // Display using Plotly
-Plotly.newPlot("pageviews-chart", data4, layout4, config);
+Plotly.newPlot("pageviews-chart", data4, layout4, config4);
                                                                  
 
 
@@ -155,10 +173,10 @@ range: [8, 16]
 margin: {t:30, l:10, b:25, r:15}
 };
 
-var config = {responsive: true}
+var config5 = {responsive: true}
 
 // Display using Plotly
-Plotly.newPlot("orders-chart", data5, layout5, config);
+Plotly.newPlot("orders-chart", data5, layout5, config5);
                                                                      
 
 const xArray7 = ["Mobile", "Desktop", "Tablet", "Other"];
@@ -181,5 +199,5 @@ margin: {t:10, l:10, b:10, r:10}
 };
 
 var config7 = {responsive: true}
-Plotly.newPlot("device-chart", data7, layout7, config);
+Plotly.newPlot("device-chart", data7, layout7, config7);
                                               
