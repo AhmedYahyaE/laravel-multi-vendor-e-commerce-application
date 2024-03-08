@@ -889,6 +889,17 @@ $(document).ready(function() {
     })
 
 
+    $(".icon-eye-view-pass").click(function(event){
+
+        var passfield = $("#form-field-password");
+        if (passfield.attr("type") === "password") {
+            passfield.attr("type", "text");
+        } else {
+            passfield.attr("type", "password");
+        }
+    })
+    
+      
 
 
 });
