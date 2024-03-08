@@ -34,7 +34,7 @@ $(document).ready(function () {
             return newOption;
         })
 
-        $('#form-editAddress .mobile-dialing-codes[name*="mobile-dialing-code"]').append(html_dialingcodes_options);
+        $('.mobile-dialing-codes[name*="mobile-dialing-code"]').append(html_dialingcodes_options);
     }
 
     // Edit Delivery Addresses via AJAX (Page refresh and fill in the <input> fields with the authenticated/logged in user Delivery Addresses details from the `delivery_addresses` database table when clicking on the Edit button) in front/products/delivery_addresses.blade.php (which is 'include'-ed in front/products/checkout.blade.php) via AJAX, check front/js/custom.js
@@ -110,7 +110,8 @@ $(document).ready(function () {
     });
 
     // Save Delivery Addresses via AJAX (save the delivery addresses of the authenticated/logged-in user in `delivery_addresses` database table when submitting the HTML Form) in front/products/delivery_addresses.blade.php (which is 'include'-ed in front/products/checkout.blade.php) via AJAX, check front/js/custom.js
-    $(document).on("submit", "#form-editAddress", function () {
+    $(document).on("submit", "#form-editAddress, #form-checkoutNewDeliveryAddress", function (el) {
+        console.log(el.currentTarget);
         // var formdata = $(this).serialize(); // serialize() method comes in handy when submitting an HTML Form using an AJAX request / Ajax call, as it collects all the name/value pairs from the HTML Form input fields like: <input>, <textarea>, <select><option>, ... HTML elements of the <form> (instead of the heavy work of assigning an identifier/handle for every <input> and <textarea>, ... using an HTML 'id' or CSS 'class', and then getting the value for every one of them like this:    $('#username).val();    )    // serialize() jQuery method: https://www.w3schools.com/jquery/ajax_serialize.asp
         var formdata = $("#form-editAddress").serialize(); // serialize() method comes in handy when submitting an HTML Form using an AJAX request / Ajax call, as it collects all the name/value pairs from the HTML Form input fields like: <input>, <textarea>, <select><option>, ... HTML elements of the <form> (instead of the heavy work of assigning an identifier/handle for every <input> and <textarea>, ... using an HTML 'id' or CSS 'class', and then getting the value for every one of them like this:    $('#username).val();    )    // serialize() jQuery method: https://www.w3schools.com/jquery/ajax_serialize.asp
 
@@ -154,22 +155,29 @@ $(document).ready(function () {
         });
     });
 
-    // var countryElement = $('.address-field[name*="delivery_country"]');
-
-    // // Check if the element has a value
-    // if (countryElement.val()) {
-    //     // Trigger the change event
-    //     setTimeout(function() {
-    //         countryElement.trigger('change');
-    //     }, 500)
-    // }
+    var my_form = "";
+    setMobileDialingCodes();
+    var countryElement = $('#form-checkoutNewDeliveryAddress .address-field[name*="delivery_country"]');
+    
+    // Check if the element has a value
+    if (countryElement.val()) {
+        my_form = "form-checkoutNewDeliveryAddress";
+        // Trigger the change event
+        setTimeout(function() {
+            countryElement.trigger('change');
+            $('#form-checkoutNewDeliveryAddress [name="mobile-dialing-code"]')
+                .val(dialingcodes.find(d => d.name == countryElement.val())?.dial_code)
+                .change();
+        }, 500)
+    }
 
     /**
      * On change of country name - load city
      */
-    $('#form-editAddress .address-field[name*="delivery_country"]').change(
+    $('.address-field[name*="delivery_country"]').change(
         (el) => {
-            let country = $(el.currentTarget).val();
+            my_form = $(el.currentTarget).closest('form').attr('id');
+            let country = $(`#${my_form}`).find(el.currentTarget).val();
 
             var settings = {
                 url: "https://countriesnow.space/api/v0.1/countries/states",
@@ -181,9 +189,7 @@ $(document).ready(function () {
 
             $.ajax(settings).done(function (response) {
                 if (!response.error) {
-                    $(
-                        '#form-editAddress .address-field[name*="delivery_state"] .added-through-api'
-                    ).remove();
+                    $(`#${my_form} .address-field[name*="delivery_state"] .added-through-api`).remove();
 
                     let states = response.data.states.map((state) => {
                         let newOption = $("<option>", {
@@ -195,9 +201,7 @@ $(document).ready(function () {
                         return newOption;
                     });
 
-                    $(
-                        '#form-editAddress .address-field[name*="delivery_state"]'
-                    ).append(states);
+                    $(`#${my_form} .address-field[name*="delivery_state"]`).append(states);
                 }
             });
         }
@@ -206,10 +210,10 @@ $(document).ready(function () {
     /**
      * On change of state get cities
      */
-    $('#form-editAddress .address-field[name*="delivery_state"]').change(
+    $(`#${my_form} .address-field[name*="delivery_state"]`).change(
         (el) => {
-            let country = $('.address-field[name*="delivery_country"]').val();
-            let state = $(el.currentTarget).val();
+            let country = $(`#${my_form} .address-field[name*="delivery_country"]`).val();
+            let state = $(`#${my_form}`).find(el.currentTarget).val();
 
             var settings = {
                 url: "https://countriesnow.space/api/v0.1/countries/state/cities",
@@ -222,9 +226,7 @@ $(document).ready(function () {
 
             $.ajax(settings).done(function (response) {
                 if (!response.error) {
-                    $(
-                        '#form-editAddress .address-field[name*="delivery_city"] .added-through-api'
-                    ).remove();
+                    $(`#${my_form} .address-field[name*="delivery_city"] .added-through-api`).remove();
 
                     let cities = response.data.map((city) => {
                         let newOption = $("<option>", {
@@ -236,9 +238,7 @@ $(document).ready(function () {
                         return newOption;
                     });
 
-                    $(
-                        '#form-editAddress .address-field[name*="delivery_city"]'
-                    ).append(cities);
+                    $(`#${my_form} .address-field[name*="delivery_city"]`).append(cities);
                 }
             });
         }
