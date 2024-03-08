@@ -42,13 +42,14 @@ class AddressController extends Controller
                 'delivery_city'    => 'required|string|max:100',   // string: https://laravel.com/docs/9.x/validation#rule-string    // max:value: https://laravel.com/docs/9.x/validation#rule-max
                 'delivery_state'   => 'required|string|max:100',   // string: https://laravel.com/docs/9.x/validation#rule-string    // max:value: https://laravel.com/docs/9.x/validation#rule-max
                 'delivery_country' => 'required|string|max:100',   // string: https://laravel.com/docs/9.x/validation#rule-string    // max:value: https://laravel.com/docs/9.x/validation#rule-max
-                'delivery_pincode' => 'required|digits:6',         // digits:value: https://laravel.com/docs/9.x/validation#rule-digits
-                'delivery_mobile'  => 'required|numeric|digits:10' // digits:value: https://laravel.com/docs/9.x/validation#rule-digits
+                'delivery_pincode' => 'required|min_digits:4|max_digits:6',         // digits:value: https://laravel.com/docs/9.x/validation#rule-digits
+                'delivery_mobile'  => 'required|numeric|digits:10', // digits:value: https://laravel.com/docs/9.x/validation#rule-digits
+                'delivery_lat'     => 'required',
+                'delivery_lng'    => 'required'
             ]);
 
             if ($validator->passes()) { // if the user passes validation, add a new (INSERT) or edit (UPDATE) the delivery address
                 $data = $request->all(); // Getting the name/value pairs array that are sent from the AJAX request (AJAX call)
-                // dd($data);
     
     
                 $address = array();
@@ -60,7 +61,9 @@ class AddressController extends Controller
                 $address['state']   = $data['delivery_state'];
                 $address['country'] = $data['delivery_country'];
                 $address['pincode'] = $data['delivery_pincode'];
-                $address['mobile']  = $data['delivery_mobile'];
+                $address['lat'] = floatval($data['delivery_lat']);
+                $address['lng'] = floatval($data['delivery_lng']);
+                $address['mobile']  = $data['mobile-dialing-code'].$data['delivery_mobile'];
     
     
                 // EDIT delivery address (UPDATE the `delivery_addresses` database table)
@@ -73,19 +76,9 @@ class AddressController extends Controller
                     // INSERT INTO the `delivery_addresses` database table
                     \App\Models\DeliveryAddress::create($address); // Check the DeliveryAddress.php model for Mass Assignment: https://laravel.com/docs/10.x/eloquent#mass-assignment    // Check 5:56 in 
                 }
-    
-    
-                // Note: You must pass in to view the SAME variables ($deliveryAddresses and $countries) that were passed in to it in checkout() method in Front/ProductsController.php
-                $deliveryAddresses = \App\Models\DeliveryAddress::deliveryAddresses(); // Get all the delivery addresses of the currently authenticated/logged-in user    
 
-                // Fetch all of the world countries from the database table `countries`
-                $countries = \App\Models\Country::where('status', 1)->get()->toArray(); // get the countries which have status = 1 (to ignore the blacklisted countries, in case)
-                // dd($countries);
-    
-    
-                return response()->json([ // JSON Responses: https://laravel.com/docs/9.x/responses#json-responses
-                    // Note: You must pass in to view the SAME variables ($deliveryAddresses and $countries) that were passed in to it in checkout() method in Front/ProductsController.php
-                    'view' => (string) \Illuminate\Support\Facades\View::make('front.products.delivery_addresses')->with(compact('deliveryAddresses', 'countries')) // View Responses: https://laravel.com/docs/9.x/responses#view-responses    // Creating & Rendering Views: https://laravel.com/docs/9.x/views#creating-and-rendering-views    // Passing Data To Views: https://laravel.com/docs/9.x/views#passing-data-to-views
+                return response()->json([
+                    'success' => true
                 ]);
 
             } else { // if the user fails validation, return an error message
