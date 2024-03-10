@@ -185,10 +185,10 @@
 	flex-wrap: wrap;
 	justify-content: initial;
 	align-items: initial;
-	align-content: initial;
 	flex-basis: auto;
 	flex-grow: 1;
 	align-self: auto;
+	align-content: flex-start;
 }
 .filter_outer_container{
 	width: calc(25% - 25px);
@@ -247,6 +247,12 @@
 body, html{
 	overflow-x: hidden;
 }
+.elementor-682 .elementor-element.elementor-element-826026e > .elementor-widget-container h2{
+	font-size: 18px !important;
+    max-height: 2em !important;
+    overflow: hidden !important;
+    line-height: 1em !important;
+}
 
 @media (max-width: 1024px){
 	.elementor-682 .elementor-element.elementor-element-80f00c9 {
@@ -283,4 +289,20 @@ body, html{
 	.filters-inner.active{
 		height: fit-content;
 	}
+	.elementor-682 .elementor-element.elementor-element-e6b737c .elementor-element-ad41e9d{
+		display: none !important;
+	}
+}
+
+
+
+/*CUSTOM CSS NINO FELICIANO*/
+.elementor-682 .elementor-element.elementor-element-bfbcc32 > .elementor-widget-container{
+	border-radius: 10px 10px 10px 10px !important;
+    box-shadow: 0px 0px 20px 0px rgb(0 0 0 / 14%) !important;
+    overflow: hidden !important;
+	height: fit-content !important;
+}
+.elementor-682 .elementor-element.elementor-element-bfbcc32 > .elementor-widget-container a{
+	width: 100%;
 }
