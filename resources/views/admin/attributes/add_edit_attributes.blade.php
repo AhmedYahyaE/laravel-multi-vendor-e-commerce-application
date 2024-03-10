@@ -118,6 +118,7 @@
                                 <div class="form-group">
                                     <div class="field_wrapper">
                                         <div>
+                                            <input type="text" name="color[]"  placeholder="Color"  style="width:100px" required> {{-- !! Note that the "name" HTML attribute is an ARRAY (using SQUARE BRAKETS [] !!) --}}
                                             <input type="text" name="size[]"  placeholder="Size"  style="width:100px" required> {{-- !! Note that the "name" HTML attribute is an ARRAY (using SQUARE BRAKETS [] !!) --}}
                                             <input type="text" name="sku[]"   placeholder="SKU"   style="width:100px" required> {{-- !! Note that the "name" HTML attribute is an ARRAY (using SQUARE BRAKETS [] !!) --}}
                                             <input type="text" name="price[]" placeholder="Price" style="width:100px" required> {{-- !! Note that the "name" HTML attribute is an ARRAY (using SQUARE BRAKETS [] !!) --}}
@@ -142,6 +143,7 @@
                                     <thead>
                                         <tr>
                                             <th>ID</th>
+                                            <th>Color</th>
                                             <th>Size</th>
                                             <th>SKU</th>
                                             <th>Price</th>
@@ -155,6 +157,7 @@
                                             <input style="display: none" type="text" name="attributeId[]" value="{{ $attribute['id'] }}"> {{-- A hidden input field --}}
                                             <tr>
                                                 <td>{{ $attribute['id'] }}</td>
+                                                <td>{{ $attribute['color'] }}</td>
                                                 <td>{{ $attribute['size'] }}</td>
                                                 <td>{{ $attribute['sku'] }}</td>
                                                 <td>
