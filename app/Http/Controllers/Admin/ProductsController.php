@@ -408,6 +408,7 @@ class ProductsController extends Controller
 
                     $attribute->product_id = $id; // $id is passed in up there to the addAttributes() method
                     $attribute->sku        = $value;
+                    $attribute->color       = $data['color'][$key];  // $key denotes the iteration/loop cycle number (0, 1, 2, ...), e.g. $data['color'][0]
                     $attribute->size       = $data['size'][$key];  // $key denotes the iteration/loop cycle number (0, 1, 2, ...), e.g. $data['size'][0]
                     $attribute->price      = $data['price'][$key]; // $key denotes the iteration/loop cycle number (0, 1, 2, ...), e.g. $data['price'][0]
                     $attribute->stock      = $data['stock'][$key]; // $key denotes the iteration/loop cycle number (0, 1, 2, ...), e.g. $data['stock'][0]
