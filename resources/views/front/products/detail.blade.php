@@ -825,12 +825,13 @@
                                         <input
                                             size="1"
                                             type="text"
-                                            name="form_fields[field_009055d]"
+                                            name="Name"
                                             id="form-field-field_009055d"
                                             class="elementor-field elementor-size-sm  elementor-field-textual"
                                             placeholder="Name"
                                             required="required"
                                             aria-required="true"
+                                            value="{{Auth::check() ? Auth::user()->first_name . ' ' . Auth::user()->last_name:''}}"
                                         >
                                     </div>
                                     <div class="elementor-field-type-text elementor-field-group elementor-column elementor-field-group-name elementor-col-100 elementor-field-required">
