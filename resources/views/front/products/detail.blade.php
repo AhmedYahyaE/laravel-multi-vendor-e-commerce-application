@@ -204,9 +204,9 @@
                     <div class="elementor-widget-container">
 
                         <div class="list-of-tags">
-                            <span>100% Cotton</span>
-                            <span>Recycled Materials</span>
-                            <span>Eco - Friendly</span>
+                            @foreach (explode(",", $meta_keywords) as $tags)
+                                <span>{{$tags}}</span>
+                            @endforeach
                         </div>
 
                         <h1 class="elementor-heading-title elementor-size-default">{{$productDetails['product_name']}}</h1>
@@ -399,7 +399,8 @@
                                     <input type="hidden" name="referer_title" value="Product Page">
                                     <input type="hidden" name="queried_id" value="491">
                                     <input type="hidden" name="product_id" value="{{ $productDetails['id'] }}">
-                                    <input type="hidden" name="size" value="{{ isset($productDetails['attributes'][0]) ? $productDetails['attributes'][0]['size']:"" }}">
+                                    <input name="color" value="{{ isset($productDetails['attributes'][0]) ? $productDetails['attributes'][0]['color']:"" }}">
+                                    <input name="size" value="{{ isset($productDetails['attributes'][0]) ? $productDetails['attributes'][0]['size']:"" }}">
                                     <div class="elementor-form-fields-wrapper elementor-labels-">
                                         <div class="elementor-field-type-number elementor-field-group elementor-column elementor-field-group-name elementor-col-20 elementor-field-required">
                                             <label for="form-field-name" class="elementor-field-label elementor-screen-only">Quantity</label>
