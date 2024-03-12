@@ -900,6 +900,13 @@ $(document).ready(function() {
     })
     
       
+    $('#anonymousCheckbox').on('change', function() {        
+        if ($(this).prop('checked')) {
+            $('#form-field-field_009055d').val('Anonymous').prop('disabled', true).css('opacity', '0.4');
+        } else {
+            $('#form-field-field_009055d').val('').prop('disabled', false).css('opacity', '1');
+        }
+    });
 
 
 });

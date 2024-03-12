@@ -399,9 +399,66 @@
                                     <input type="hidden" name="referer_title" value="Product Page">
                                     <input type="hidden" name="queried_id" value="491">
                                     <input type="hidden" name="product_id" value="{{ $productDetails['id'] }}">
+
+
                                     <input name="color" value="{{ isset($productDetails['attributes'][0]) ? $productDetails['attributes'][0]['color']:"" }}">
                                     <input name="size" value="{{ isset($productDetails['attributes'][0]) ? $productDetails['attributes'][0]['size']:"" }}">
+
+                                    
+
+
                                     <div class="elementor-form-fields-wrapper elementor-labels-">
+
+                                        <div class="elementor-field-type-select elementor-field-group elementor-column elementor-field-group-field_cfabe28 elementor-col-30 elementor-field-required">
+                                            <label for="form-field-field_cfabe28" class="elementor-field-label elementor-screen-only" style="
+                                                display: block !important;
+                                                position: relative;
+                                                top: 0;
+                                                height: auto;
+                                                width: auto;
+                                                margin-bottom: 5px;">Color</label>
+                                            <div class="elementor-field elementor-select-wrapper remove-before ">
+                                                    <div class="select-caret-down-wrapper">
+                                                            <svg aria-hidden="true" class="e-font-icon-svg e-eicon-caret-down" viewBox="0 0 571.4 571.4" xmlns="http://www.w3.org/2000/svg">
+                                                                <path d="M571 393Q571 407 561 418L311 668Q300 679 286 679T261 668L11 418Q0 407 0 393T11 368 36 357H536Q550 357 561 368T571 393Z"></path>
+                                                            </svg>			
+                                                    </div>
+                                                    <select name="form_fields[field_cfabe28]" id="form-field-field_cfabe28" class="elementor-field-textual elementor-size-sm" required="required" aria-required="true">
+                                                            <option value="Black">Red</option>
+                                                            <option value="Black">Black</option>
+                                                            <option value="Black">Yellow</option>
+                                                            <option value="Black">Green</option>
+                                                    </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="elementor-field-type-select elementor-field-group elementor-column elementor-field-group-field_9ef7990 elementor-col-30 elementor-field-required">
+                                            <label for="form-field-field_9ef7990" class="elementor-field-label elementor-screen-only" style="
+                                                display: block !important;
+                                                position: relative;
+                                                top: 0;
+                                                height: auto;
+                                                width: auto;
+                                                margin-bottom: 5px;">Size</label>
+                                            <div class="elementor-field elementor-select-wrapper remove-before ">
+                                                    <div class="select-caret-down-wrapper">
+                                                            <svg aria-hidden="true" class="e-font-icon-svg e-eicon-caret-down" viewBox="0 0 571.4 571.4" xmlns="http://www.w3.org/2000/svg">
+                                                                <path d="M571 393Q571 407 561 418L311 668Q300 679 286 679T261 668L11 418Q0 407 0 393T11 368 36 357H536Q550 357 561 368T571 393Z"></path>
+                                                            </svg>			
+                                                    </div>
+                                                    <select name="form_fields[field_9ef7990]" id="form-field-field_9ef7990" class="elementor-field-textual elementor-size-sm" required="required" aria-required="true">
+                                                            <option value="Black">Small</option>
+                                                            <option value="Black">Medium</option>
+                                                            <option value="Black">Large</option>
+                                                            <option value="Black">XLarge</option>
+                                                    </select>
+                                            </div>
+                                        </div>
+
+                                        <div style="height: 0; margin-bottom: 0;" class="elementor-field-type-html elementor-field-group elementor-column elementor-field-group-field_bcf74c7 elementor-col-100">
+                                            <br>				
+                                        </div>
+
                                         <div class="elementor-field-type-number elementor-field-group elementor-column elementor-field-group-name elementor-col-20 elementor-field-required">
                                             <label for="form-field-name" class="elementor-field-label elementor-screen-only">Quantity</label>
                                             <input
@@ -835,6 +892,17 @@
                                             value="{{Auth::check() ? Auth::user()->first_name . ' ' . Auth::user()->last_name:''}}"
                                         >
                                     </div>
+                                    <div class="elementor-field-type-checkbox elementor-field-group elementor-column elementor-field-group-field_ff7cdbc elementor-col-100">
+                                            <label for="form-field-field_ff7cdbc" class="elementor-field-label elementor-screen-only">Write as Anonymous</label>
+                                            <div class="elementor-field-subgroup  ">
+                                                <span class="elementor-field-option">
+                                                    <input type="checkbox" value="Write as Anonymous" id="anonymousCheckbox" name="form_fields[field_ff7cdbc]"> 
+                                                    <label for="anonymousCheckbox">Write as Anonymous</label>
+                                                </span>
+                                            </div>				
+                                    </div>
+
+
                                     <div class="elementor-field-type-text elementor-field-group elementor-column elementor-field-group-name elementor-col-100 elementor-field-required">
                                         <label for="form-field-name" class="elementor-field-label elementor-screen-only"> 								Review Title</label>
                                         <input
