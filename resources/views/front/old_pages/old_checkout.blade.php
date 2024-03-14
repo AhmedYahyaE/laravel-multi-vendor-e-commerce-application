@@ -124,7 +124,7 @@
                                                             <span class="order-span-quantity">x {{ $item['quantity'] }}</span>
                                                         </td>
                                                         <td>
-                                                            <h6 class="order-h6">EGP{{ $getDiscountAttributePrice['final_price'] * $item['quantity'] }}</h6> {{-- price of all products (after discount (if any)) (= price (after discoutn) * no. of products) --}}
+                                                            <h6 class="order-h6">₱{{ $getDiscountAttributePrice['final_price'] * $item['quantity'] }}</h6> {{-- price of all products (after discount (if any)) (= price (after discoutn) * no. of products) --}}
                                                         </td>
                                                     </tr>
 
@@ -140,7 +140,7 @@
                                                         <h3 class="order-h3">Subtotal</h3>
                                                     </td>
                                                     <td>
-                                                        <h3 class="order-h3">EGP{{ $total_price }}</h3>
+                                                        <h3 class="order-h3">₱{{ $total_price }}</h3>
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -149,7 +149,7 @@
                                                     </td>
                                                     <td>
                                                         <h6 class="order-h6">
-                                                            <span class="shipping_charges">EGP0</span>
+                                                            <span class="shipping_charges">₱0</span>
                                                         </h6>
                                                     </td>
                                                 </tr>
@@ -161,9 +161,9 @@
                                                         <h6 class="order-h6">
                                                             
                                                             @if (\Illuminate\Support\Facades\Session::has('couponAmount')) {{-- We stored the 'couponAmount' in a Session Variable inside the applyCoupon() method in Front/ProductsController.php --}}
-                                                                <span class="couponAmount">EGP{{ \Illuminate\Support\Facades\Session::get('couponAmount') }}</span>
+                                                                <span class="couponAmount">₱{{ \Illuminate\Support\Facades\Session::get('couponAmount') }}</span>
                                                             @else
-                                                                EGP0
+                                                                ₱0
                                                             @endif
                                                         </h6>
                                                     </td>
@@ -174,7 +174,7 @@
                                                     </td>
                                                     <td>
                                                         <h3 class="order-h3">
-                                                            <strong class="grand_total">EGP{{ $total_price - \Illuminate\Support\Facades\Session::get('couponAmount') }}</strong> {{-- We create the 'grand_total' CSS class to use it as a handle for AJAX inside    $('#applyCoupon').submit();    function in front/js/custom.js --}} {{-- We stored the 'couponAmount' a Session Variable inside the applyCoupon() method in Front/ProductsController.php --}}
+                                                            <strong class="grand_total">₱{{ $total_price - \Illuminate\Support\Facades\Session::get('couponAmount') }}</strong> {{-- We create the 'grand_total' CSS class to use it as a handle for AJAX inside    $('#applyCoupon').submit();    function in front/js/custom.js --}} {{-- We stored the 'couponAmount' a Session Variable inside the applyCoupon() method in Front/ProductsController.php --}}
                                                         </h3>
                                                     </td>
                                                 </tr>
