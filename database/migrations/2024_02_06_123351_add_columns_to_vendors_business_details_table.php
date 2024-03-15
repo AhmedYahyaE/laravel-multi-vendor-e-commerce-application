@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::table('vendors_business_details', function (Blueprint $table) {
             $table->string("license_image")->nullable()->after('business_license_number');
             $table->string("address_proof")->nullable()->after('license_image');
-            $table->string("business_proof_image")->nullable()->after('address_proof');
+            $table->string("address_proof_image")->nullable()->after('address_proof');
         });
     }
 
@@ -26,7 +26,7 @@ return new class extends Migration
         Schema::table('vendors_business_details', function (Blueprint $table) {
             $table->dropColumn('license_image');
             $table->dropColumn('address_proof');
-            $table->dropColumn('business_proof_image');
+            $table->dropColumn('address_proof_image');
         });
     }
 };
