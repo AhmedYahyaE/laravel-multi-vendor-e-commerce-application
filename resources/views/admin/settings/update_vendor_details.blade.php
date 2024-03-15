@@ -257,14 +257,6 @@
                                         <input type="text" class="form-control" id="business_license_number" placeholder="Enter Business License Number" name="business_license_number"  @if (isset($vendorDetails['business_license_number'])) value="{{ $vendorDetails['business_license_number'] }}" @endif> {{-- $vendorDetails was passed from AdminController --}}
                                     </div>
                                     <div class="form-group">
-                                        <label for="gst_number">GST Number</label>
-                                        <input type="text" class="form-control" id="gst_number" placeholder="Enter GST Number" name="gst_number"  @if (isset($vendorDetails['gst_number'])) value="{{ $vendorDetails['gst_number'] }}" @endif> {{-- $vendorDetails was passed from AdminController --}}
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="pan_number">PAN Number</label>
-                                        <input type="text" class="form-control" id="pan_number" placeholder="Enter PAN Number" name="pan_number"  @if (isset($vendorDetails['pan_number'])) value="{{ $vendorDetails['pan_number'] }}" @endif> {{-- $vendorDetails was passed from AdminController --}}
-                                    </div>
-                                    <div class="form-group">
                                         <label for="shop_logo">Shop Logo</label>
                                         <input type="file" class="form-control" id="shop_logo" name="shop_logo">
                                         {{-- Show the admin image if exists --}}

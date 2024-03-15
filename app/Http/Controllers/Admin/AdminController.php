@@ -342,8 +342,6 @@ class AdminController extends Controller
                         'shop_country'            => $data['shop_country'],
                         'shop_pincode'            => $data['shop_pincode'],
                         'business_license_number' => $data['business_license_number'],
-                        'gst_number'              => $data['gst_number'],
-                        'pan_number'              => $data['pan_number'],
                         'address_proof'           => $data['address_proof'],
                         'address_proof_image'     => $imageName,
                     ]);
@@ -361,8 +359,6 @@ class AdminController extends Controller
                         'shop_country'            => $data['shop_country'],
                         'shop_pincode'            => $data['shop_pincode'],
                         'business_license_number' => $data['business_license_number'],
-                        'gst_number'              => $data['gst_number'],
-                        'pan_number'              => $data['pan_number'],
                         'address_proof'           => $data['address_proof'],
                         'address_proof_image'     => $imageName,
                     ]);
