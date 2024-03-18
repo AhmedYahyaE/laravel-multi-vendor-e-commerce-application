@@ -29,7 +29,10 @@ class RatingController extends Controller
 
             if ($ratingCount > 0) {
                 $message = 'You\'ve already rated this product before!';
-                return redirect()->back()->with('error_message', $message);
+                return response()->json([
+                    'success' => false,
+                    'message' => $message
+                ]);
             } else { // Add the Rating
                 // echo 'Add Rating<br>';
 
@@ -37,7 +40,11 @@ class RatingController extends Controller
                 // Check if the user has clicked on one of the stars to rate the product
                 if (empty($data['rating'])) {
                     $message = 'Please click on a star to rate the product!';
-                    return redirect()->back()->with('error_message', $message);
+                    // return redirect()->back()->with('error_message', $message);
+                    return response()->json([
+                        'success' => false,
+                        'message' => $message
+                    ]);
                 } else {
 
                     $rating = new \App\Models\Rating();
@@ -52,7 +59,11 @@ class RatingController extends Controller
 
                     // Show a Success Message
                     $message = 'Thanks for rating the product! It\'ll be shown after being approved by an admin!';
-                    return redirect()->back()->with('success_message', $message);
+                    // return redirect()->back()->with('success_message', $message);
+                    return response()->json([
+                        'success' => true,
+                        'message' => $message
+                    ]);
                 }
             }
         }
