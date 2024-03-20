@@ -864,7 +864,11 @@ $(document).ready(function() {
             type: "POST",
             data: formdata,
             success: function (resp) {
-                console.log(resp)
+                if (typeof(resp) == "object") {
+                    console.log(resp);
+                } else {
+                    $('#container-productreviews').html(resp);
+                }
             }, error: function (err) {
                 console.log(err)
             }
