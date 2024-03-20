@@ -316,6 +316,12 @@
                     >
                         <div class="elementor-widget-container">
                             <form id="form-productReview" action="javascript:;" name="Write a review">
+
+                                @csrf
+                                @if (session('success_message'))
+                                    <div class="alert success">{{ session('success_message') }}</div>
+                                @endif
+
                                 <input type="hidden" name="post_id" value="491">
                                 <input type="hidden" name="form_id" value="1dc2f32">
                                 <input type="hidden" name="referer_title" value="Product Page">
@@ -420,6 +426,15 @@
                                             aria-required="true"
                                         ></textarea>
                                     </div>
+                                    @if ($errors->any())
+                                        <div class="alert alert-danger">
+                                            <ul>
+                                                @foreach ($errors->all() as $error)
+                                                    <li>{{ $error }}</li>
+                                                @endforeach
+                                            </ul>
+                                        </div>
+                                    @endif
                                     <div class="elementor-field-group elementor-column elementor-field-type-submit elementor-col-100 e-form__buttons">
                                         <button type="submit" class="elementor-button elementor-size-sm">
                                             <span>
