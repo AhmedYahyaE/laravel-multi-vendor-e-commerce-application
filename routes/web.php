@@ -227,10 +227,10 @@ Route::namespace('App\Http\Controllers\Front')->group(function() {
 
 
     // Delete a Cart Item AJAX call in front/products/cart_items.blade.php. Check front/js/custom.js
-    Route::get('about-us', 'IndexController@aboutUs');
+    Route::get('about-us', 'IndexController@aboutUs')->name('front.user.about-us');
 
     // Delete a Cart Item AJAX call in front/products/cart_items.blade.php. Check front/js/custom.js
-    Route::get('management', 'IndexController@aboutUsManagement');
+    Route::get('management', 'IndexController@aboutUsManagement')->name('front.user.management');
 
 
 
