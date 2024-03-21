@@ -400,13 +400,6 @@
                                     <input type="hidden" name="queried_id" value="491">
                                     <input type="hidden" name="product_id" value="{{ $productDetails['id'] }}">
 
-
-                                    <input name="color" value="{{ isset($productDetails['attributes'][0]) ? $productDetails['attributes'][0]['color']:"" }}">
-                                    <input name="size" value="{{ isset($productDetails['attributes'][0]) ? $productDetails['attributes'][0]['size']:"" }}">
-
-                                    
-
-
                                     <div class="elementor-form-fields-wrapper elementor-labels-">
 
                                         <div class="elementor-field-type-select elementor-field-group elementor-column elementor-field-group-field_cfabe28 elementor-col-30 elementor-field-required">
@@ -418,17 +411,18 @@
                                                 width: auto;
                                                 margin-bottom: 5px;">Color</label>
                                             <div class="elementor-field elementor-select-wrapper remove-before ">
-                                                    <div class="select-caret-down-wrapper">
-                                                            <svg aria-hidden="true" class="e-font-icon-svg e-eicon-caret-down" viewBox="0 0 571.4 571.4" xmlns="http://www.w3.org/2000/svg">
-                                                                <path d="M571 393Q571 407 561 418L311 668Q300 679 286 679T261 668L11 418Q0 407 0 393T11 368 36 357H536Q550 357 561 368T571 393Z"></path>
-                                                            </svg>			
-                                                    </div>
-                                                    <select name="form_fields[field_cfabe28]" id="form-field-field_cfabe28" class="elementor-field-textual elementor-size-sm" required="required" aria-required="true">
-                                                            <option value="Black">Red</option>
-                                                            <option value="Black">Black</option>
-                                                            <option value="Black">Yellow</option>
-                                                            <option value="Black">Green</option>
-                                                    </select>
+                                                <div class="select-caret-down-wrapper">
+                                                    <svg aria-hidden="true" class="e-font-icon-svg e-eicon-caret-down" viewBox="0 0 571.4 571.4" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M571 393Q571 407 561 418L311 668Q300 679 286 679T261 668L11 418Q0 407 0 393T11 368 36 357H536Q550 357 561 368T571 393Z"></path>
+                                                    </svg>			
+                                                </div>
+                                                <select name="color" id="form-field-field_cfabe28" class="elementor-field-textual elementor-size-sm" required="required" aria-required="true">
+                                                    @foreach ($productDetails['attributes'] as $attribute)
+                                                        @if (!is_null($attribute['color']))
+                                                        <option value="{{$attribute['color']}}">{{$attribute['color']}}</option>
+                                                        @endif
+                                                    @endforeach
+                                                </select>
                                             </div>
                                         </div>
 
@@ -441,17 +435,18 @@
                                                 width: auto;
                                                 margin-bottom: 5px;">Size</label>
                                             <div class="elementor-field elementor-select-wrapper remove-before ">
-                                                    <div class="select-caret-down-wrapper">
-                                                            <svg aria-hidden="true" class="e-font-icon-svg e-eicon-caret-down" viewBox="0 0 571.4 571.4" xmlns="http://www.w3.org/2000/svg">
-                                                                <path d="M571 393Q571 407 561 418L311 668Q300 679 286 679T261 668L11 418Q0 407 0 393T11 368 36 357H536Q550 357 561 368T571 393Z"></path>
-                                                            </svg>			
-                                                    </div>
-                                                    <select name="form_fields[field_9ef7990]" id="form-field-field_9ef7990" class="elementor-field-textual elementor-size-sm" required="required" aria-required="true">
-                                                            <option value="Black">Small</option>
-                                                            <option value="Black">Medium</option>
-                                                            <option value="Black">Large</option>
-                                                            <option value="Black">XLarge</option>
-                                                    </select>
+                                                <div class="select-caret-down-wrapper">
+                                                    <svg aria-hidden="true" class="e-font-icon-svg e-eicon-caret-down" viewBox="0 0 571.4 571.4" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M571 393Q571 407 561 418L311 668Q300 679 286 679T261 668L11 418Q0 407 0 393T11 368 36 357H536Q550 357 561 368T571 393Z"></path>
+                                                    </svg>			
+                                                </div>
+                                                <select name="size" id="form-field-field_9ef7990" class="elementor-field-textual elementor-size-sm" required="required" aria-required="true">
+                                                    @foreach ($productDetails['attributes'] as $attribute)
+                                                        @if (!is_null($attribute['size']))
+                                                        <option value="{{$attribute['size']}}">{{$attribute['size']}}</option>
+                                                        @endif
+                                                    @endforeach
+                                                </select>
                                             </div>
                                         </div>
 
