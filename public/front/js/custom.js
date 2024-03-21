@@ -853,7 +853,27 @@ $(document).ready(function() {
     $(".filter_outer_container #slide-price-min").text($(".filter_outer_container #slide-price-range").slider("values", 0));
     $(".filter_outer_container #slide-price-max").text($(".filter_outer_container #slide-price-range").slider("values", 1));
 
+    $('#form-productReview').on('submit', (e) => {
+        e.preventDefault();
 
+        var formdata = $(e.currentTarget).serialize();
+
+        $.ajax({
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+            url: "/add-rating",
+            type: "POST",
+            data: formdata,
+            success: function (resp) {
+                if (typeof(resp) == "object") {
+                    console.log(resp);
+                } else {
+                    $('#container-productreviews').html(resp);
+                }
+            }, error: function (err) {
+                console.log(err)
+            }
+        });
+    })
 
     $("#write_review_btn").click(function(event) {
         event.preventDefault();
