@@ -143,7 +143,7 @@
                     <div class="elementor-widget-container">
                         <p>
                             <span style="color: #ffffff;">
-                                <a style="color: #ffffff;" href="#">About Us</a>
+                                <a style="color: #ffffff;" href="{{ url('/about-us') }}">About Us</a>
                             </span>
                             <br>
                             <span style="color: #ffffff;">

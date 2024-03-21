@@ -33,4 +33,10 @@ class IndexController extends Controller
 
         return view('front.index')->with(compact('sliderBanners', 'fixBanners', 'newProducts', 'bestSellers', 'discountedProducts', 'featuredProducts', 'meta_title', 'meta_description', 'meta_keywords', 'categories')); // this is the same as:    return view('front/index');
     }
+    public function aboutUs() {
+        return view('front.pages.about-us');
+    }
+    public function aboutUsManagement() {
+        return view('front.pages.management');
+    }
 }
