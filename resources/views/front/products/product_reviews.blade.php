@@ -6,10 +6,10 @@
         data-core-v316-plus="true">
         <div class="e-con-inner">
             <div
-                class="elementor-element elementor-element-bc9eac4 e-flex e-con-boxed elementor-invisible e-con e-child"
+                class="elementor-element elementor-element-bc9eac4 e-flex e-con-boxed e-con e-child"
                 data-id="bc9eac4"
                 data-element_type="container"
-                data-settings="{&quot;background_background&quot;:&quot;classic&quot;,&quot;animation&quot;:&quot;fadeInUp&quot;,&quot;container_type&quot;:&quot;flex&quot;,&quot;content_width&quot;:&quot;boxed&quot;}"
+                data-settings="{&quot;background_background&quot;:&quot;classic&quot;,&quot;container_type&quot;:&quot;flex&quot;,&quot;content_width&quot;:&quot;boxed&quot;}"
             >
                 <div class="e-con-inner">
                     <div
@@ -450,10 +450,10 @@
                 </div>
             </div>
             <div
-                class="elementor-element elementor-element-4e9dd00 e-flex e-con-boxed elementor-invisible e-con e-child"
+                class="elementor-element elementor-element-4e9dd00 e-flex e-con-boxed e-con e-child"
                 data-id="4e9dd00"
                 data-element_type="container"
-                data-settings="{&quot;background_background&quot;:&quot;classic&quot;,&quot;animation&quot;:&quot;fadeInUp&quot;,&quot;container_type&quot;:&quot;flex&quot;,&quot;content_width&quot;:&quot;boxed&quot;}"
+                data-settings="{&quot;background_background&quot;:&quot;classic&quot;,&quot;container_type&quot;:&quot;flex&quot;,&quot;content_width&quot;:&quot;boxed&quot;}"
             >
                 @foreach ($ratings as $rating)
                     {{ $rating['rating'] }}&nbsp;&nbsp;&nbsp;&nbsp;
