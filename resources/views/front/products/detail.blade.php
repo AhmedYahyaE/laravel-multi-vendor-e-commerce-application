@@ -505,7 +505,9 @@
    
     
     @include('front.products.ajax_related_products_listings')
-    @include('front.products.product_reviews')
+    <div id="container-productreviews">
+        @include('front.products.product_reviews')
+    </div>
 
 
 
