@@ -108,7 +108,8 @@
                     >
                         <div class="elementor-widget-container">
                             <a href="{{ url('product/' . $product['id']) }}">
-                                @if (!empty($product['product_image']) && file_exists($product_image_path)) {{-- if the product image exists in BOTH database table AND filesystem (on server) --}}
+                                @if (!empty($product['product_image']) && file_exists($product_image_path))
+                                {{-- if the product image exists in BOTH database table AND filesystem (on server) --}}
                                 <img
                                     loading="lazy"
                                     decoding="async"
@@ -120,7 +121,8 @@
                                     srcset="{{ asset($product_image_path) }} 846w, {{ asset($product_image_path) }} 248w, {{ asset($product_image_path) }} 768w, {{ asset($product_image_path) }} 879w"
                                     sizes="(max-width: 800px) 100vw, 800px"
                                 >
-                                @else {{-- show the dummy image --}}
+                                @else
+                                {{-- show the dummy image --}}
                                 <img
                                     loading="lazy"
                                     decoding="async"
@@ -151,7 +153,8 @@
                         $getDiscountPrice = \App\Models\Product::getDiscountPrice($product['id']);
                     @endphp
 
-                    @if ($getDiscountPrice > 0) {{-- If there's a discount on the price, show the price before (the original price) and after (the new price) the discount --}}
+                    @if ($getDiscountPrice > 0)
+                    {{-- If there's a discount on the price, show the price before (the original price) and after (the new price) the discount --}}
                     <div
                         class="elementor-element elementor-element-753d4d0 elementor-widget elementor-widget-text-editor"
                         data-id="753d4d0"
@@ -295,12 +298,183 @@
                 </div>
                 @endforeach
             </div>
-
-            
-
-
         </div>
-
+        @if ($collection->hasPages())
+        @php
+            $lastNumInRange = $collection->lastPage();
+            $urlRange = $collection->getUrlRange(1, $collection->lastPage());
+            
+            if ($collection->lastPage() > 5) {
+                if ($collection->currentPage() + 2 < $collection->lastPage()) {
+                    $lastNumInRange = $collection->currentPage() + 2;
+                    $urlRange = $collection->getUrlRange($collection->currentPage(), $collection->currentPage() + 2);
+                } else {
+                    $lastNumInRange = $collection->lastPage();
+                    if ($collection->currentPage() - 2 < 1) {
+                        $urlRange = $collection->getUrlRange($collection->currentPage(), $collection->currentPage() + 2);
+                    } else {
+                        $urlRange = $collection->getUrlRange($collection->currentPage() -2, $collection->lastPage());
+                    }
+                }
+            }
+        @endphp
+            
+        <div
+            class="elementor-element elementor-element-77cf768 e-con-full e-flex elementor-invisible e-con e-child"
+            data-id="77cf768"
+            data-element_type="container"
+            data-settings="{&quot;content_width&quot;:&quot;full&quot;,&quot;animation&quot;:&quot;fadeInUp&quot;,&quot;container_type&quot;:&quot;flex&quot;}"
+        >
+            {{-- link to prev page --}}
+            @if ($collection->currentPage() > 1)
+            <div
+                class="elementor-element elementor-element-4e10030 elementor-align-left elementor-widget elementor-widget-button"
+                data-id="4e10030"
+                data-element_type="widget"
+                data-widget_type="button.default"
+            >
+                <div class="elementor-widget-container">
+                    <div class="elementor-button-wrapper">
+                        <a class="elementor-button elementor-button-link elementor-size-sm" href="{{$collection->previousPageUrl()}}">
+                            <span class="elementor-button-content-wrapper">
+                                <span class="elementor-button-icon elementor-align-icon-left">
+                                    <svg
+                                        aria-hidden="true"
+                                        class="e-font-icon-svg e-fas-angle-right"
+                                        viewbox="0 0 256 512"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                        <path d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"></path>
+                                    </svg>
+                                </span>
+                                <span class="elementor-button-text"></span>
+                            </span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            @endif
+            @if ($collection->currentPage() != 1 && $collection->lastPage() > 5)
+            <div
+                class="elementor-element elementor-element-cf4102a elementor-align-left elementor-widget elementor-widget-button"
+                data-id="cf4102a"
+                data-element_type="widget"
+                data-widget_type="button.default"
+            >
+                <div class="elementor-widget-container">
+                    <div class="elementor-button-wrapper">
+                        <a class="elementor-button elementor-button-link elementor-size-sm" href="{{$collection->url(1)}}">
+                            <span class="elementor-button-content-wrapper">
+                                <span class="elementor-button-text">1</span>
+                            </span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            @endif
+            @if ($collection->currentPage() - 1 > 1)
+                <div
+                    class="elementor-element elementor-element-21e3336 elementor-align-left elementor-widget elementor-widget-button"
+                    data-id="21e3336"
+                    data-element_type="widget"
+                    data-widget_type="button.default"
+                >
+                    <div class="elementor-widget-container">
+                        <div class="elementor-button-wrapper">
+                            <a class="elementor-button elementor-size-sm" role="button">
+                                <span class="elementor-button-content-wrapper">
+                                    <span class="elementor-button-text">...</span>
+                                </span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            @endif
+            @foreach ($urlRange as $urlKey => $url)
+            <div
+                class="elementor-element elementor-element-cf4102a elementor-align-left elementor-widget elementor-widget-button"
+                data-id="cf4102a"
+                data-element_type="widget"
+                data-widget_type="button.default"
+            >
+                <div class="elementor-widget-container">
+                    <div class="elementor-button-wrapper">
+                        <a class="elementor-button elementor-size-sm" href="{{$url}}" role="button">
+                            <span class="elementor-button-content-wrapper">
+                                <span class="elementor-button-text">{{$urlKey}}</span>
+                            </span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            @endforeach
+            @if ($collection->lastPage() - $collection->currentPage() > 3)
+                <div
+                    class="elementor-element elementor-element-21e3336 elementor-align-left elementor-widget elementor-widget-button"
+                    data-id="21e3336"
+                    data-element_type="widget"
+                    data-widget_type="button.default"
+                >
+                    <div class="elementor-widget-container">
+                        <div class="elementor-button-wrapper">
+                            <a class="elementor-button elementor-size-sm" role="button">
+                                <span class="elementor-button-content-wrapper">
+                                    <span class="elementor-button-text">...</span>
+                                </span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            @endif
+            @if ($lastNumInRange != $collection->lastPage() && $collection->lastPage() > 5)
+            <div
+                class="elementor-element elementor-element-cf4102a elementor-align-left elementor-widget elementor-widget-button"
+                data-id="cf4102a"
+                data-element_type="widget"
+                data-widget_type="button.default"
+            >
+                <div class="elementor-widget-container">
+                    <div class="elementor-button-wrapper">
+                        <a class="elementor-button elementor-button-link elementor-size-sm" href="{{$collection->url($collection->lastPage())}}">
+                            <span class="elementor-button-content-wrapper">
+                                <span class="elementor-button-text">{{$collection->lastPage()}}</span>
+                            </span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            @endif
+            @if ($collection->currentPage() < $collection->lastPage())
+            <div
+                class="elementor-element elementor-element-4e10030 elementor-align-left elementor-widget elementor-widget-button"
+                data-id="4e10030"
+                data-element_type="widget"
+                data-widget_type="button.default"
+            >
+                <div class="elementor-widget-container">
+                    <div class="elementor-button-wrapper">
+                        <a class="elementor-button elementor-button-link elementor-size-sm" href="{{$collection->nextPageUrl()}}">
+                            <span class="elementor-button-content-wrapper">
+                                <span class="elementor-button-icon elementor-align-icon-left">
+                                    <svg
+                                        aria-hidden="true"
+                                        class="e-font-icon-svg e-fas-angle-right"
+                                        viewbox="0 0 256 512"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                        <path d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"></path>
+                                    </svg>
+                                </span>
+                                <span class="elementor-button-text"></span>
+                            </span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            @endif
+        </div>
+        @endif
+        
         {{-- $collection->links() --}}
     </div>
 </div>
