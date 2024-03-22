@@ -104,23 +104,25 @@
                                                 <td>
                                                     <div class="prod-cart">
                                                         <div class="cart-img">
-                                                            <img decoding="async" class="prod-img" src="./images/2023-12-features-for-Accounting-Software-1.png">
+                                                            <img decoding="async" class="prod-img" src="{{ asset('front/images/product_images/small/' . $item['product']['product_image']) }}">
                                                         </div>
                                                         <div class="cart-prod-desc">
                                                             <h4>{{ $item['product']['product_name'] }} ({{ $item['product']['product_code'] }}) - {{ $item['size'] }}</h4>
-                                                            @if ($getDiscountAttributePrice['discount'] > 0) {{-- If there's a discount on the price, show the price before (the original price) and after (the new price) the discount --}}
+                                                            @if ($getDiscountAttributePrice['discount'] > 0) 
+                                                                {{-- If there's a discount on the price, show the price before (the original price) and after (the new price) the discount --}}
                                                                 <div class="price-template">
                                                                     <div class="item-new-price">
-                                                                        {{ $getDiscountAttributePrice['final_price'] }}
+                                                                        {{ number_format($getDiscountAttributePrice['final_price'], 2) }}
                                                                     </div>
                                                                     <div class="item-old-price">
                                                                         {{ $getDiscountAttributePrice['product_price'] }}
                                                                     </div>
                                                                 </div>
-                                                            @else {{-- if there's no discount on the price, show the original price --}}
+                                                            @else 
+                                                                {{-- if there's no discount on the price, show the original price --}}
                                                                 <div class="price-template">
                                                                     <div class="item-new-price">
-                                                                        {{ $getDiscountAttributePrice['final_price'] }}
+                                                                        {{ number_format($getDiscountAttributePrice['final_price'], 2) }}
                                                                     </div>
                                                                 </div>
                                                             @endif
@@ -151,7 +153,7 @@
                                                     <div class="cart-price">
                                                         <div class="price-template">
                                                             <div class="item-new-price">
-                                                                {{ $getDiscountAttributePrice['final_price'] * $item['quantity'] }}
+                                                                {{ number_format($getDiscountAttributePrice['final_price'] * $item['quantity'], 2) }}
                                                             </div>
                                                         </div>
                                                     </div>
@@ -299,7 +301,7 @@
                                                     </tr>
                                                     <tr>
                                                         <td>Sub total</td>
-                                                        <td>₱{{$total_price}}</td>
+                                                        <td>₱{{number_format($total_price, 2)}}</td>
                                                     </tr>
                                                     <tr>
                                                         <td>Coupon discount</td>
@@ -310,7 +312,7 @@
                                                             <b>GRAND TOTAL</b>
                                                         </td>
                                                         <td style="padding-top: 40px">
-                                                            <b>₱{{$total_price}}</b>
+                                                            <b>₱{{number_format($total_price, 2)}}</b>
                                                         </td>
                                                     </tr>
                                                 </table>
