@@ -288,6 +288,8 @@
                                     </div>
                                 </div>
                             </div>
+                            @auth
+                            @if (\App\Models\OrdersProduct::hasUserOrderedThisProduct(Auth::user()->id, $productDetails['id']))
                             <div
                                 class="elementor-element elementor-element-f5186bb elementor-align-justify elementor-mobile-align-justify elementor-widget-tablet__width-initial elementor-widget elementor-widget-button"
                                 data-id="f5186bb"
@@ -304,6 +306,8 @@
                                     </div>
                                 </div>
                             </div>
+                            @endif
+                            @endauth
                         </div>
                     </div>
                     <div
