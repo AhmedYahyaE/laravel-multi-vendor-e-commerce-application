@@ -204,7 +204,7 @@
                     <div class="elementor-widget-container">
 
                         <div class="list-of-tags">
-                            @foreach (explode(",", $meta_keywords) as $tags)
+                            @foreach (explode(",", $productDetails['group_code']) as $tags)
                                 <span>{{$tags}}</span>
                             @endforeach
                         </div>
