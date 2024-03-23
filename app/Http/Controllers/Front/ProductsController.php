@@ -50,7 +50,7 @@ class ProductsController extends Controller
         // collection, filters, categoryDetails, meta_title, meta_description, meta_keywords
         extract($result);
 
-        $collection = $collection->paginate(30);
+        $collection = $collection->paginate(12);
         // dd($filters);
         return view('front.products.collection_listings')->with(compact('pageTitle', 'categoryDetails', 'collection', 'type', 'filters', 'meta_title', 'meta_description', 'meta_keywords'));
     }
@@ -364,8 +364,14 @@ class ProductsController extends Controller
                 $item->save();
             }
 
+            $getCartItems = \App\Models\Cart::getCartItems();
 
-            return redirect()->back()->with('success_message', 'Product has been added in Cart! <a href="/cart" style="text-decoration: underline !important">View Cart</a>');
+            return response()->json([
+                'success' => true,
+                'message' => 'Product has been added in Cart! <a href="/cart" style="text-decoration: underline !important">View Cart</a>',
+                'view' => (String) \Illuminate\Support\Facades\View::make('front.layout.header_cart_items')->with(compact('getCartItems')),
+            ]);
+            // return redirect()->back()->with('success_message', 'Product has been added in Cart! <a href="/cart" style="text-decoration: underline !important">View Cart</a>');
         }
     }
 
