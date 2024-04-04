@@ -44,27 +44,26 @@
                         <div class="elementor-widget-container mobile-height-auto">
                             <h5 class="elementor-heading-title elementor-size-default">{{ $collection->count() }} PRODUCTS </h5>
                         </div>
-
-                        
-
                     </div>
                     <div
-                        class="elementor-element elementor-element-353f84f elementor-widget__width-auto elementor-widget elementor-widget-html sort-outer-wrap"
+                        class="collection-container collection-sort-by elementor-element elementor-element-353f84f elementor-widget__width-auto elementor-widget elementor-widget-html sort-outer-wrap"
                         data-id="353f84f"
                         data-element_type="widget"
                         data-widget_type="html.default"
                     >
                         <div class="elementor-widget-container">
                             <h6 style="margin-bottom: 4px; font-size: 12px;">Sort by:</h6>
-                            <select id="sort_by">
-                                <option value="Best Selling">Best Selling</option>
-                                <option value="Alphabetically , A-Z">Alphabetically , A-Z</option>
-                                <option value="Alphabetically , Z-A">Alphabetically , Z-A</option>
-                                <option value="Price, low to high">Price, low to high</option>
-                                <option value="Price, high to low">Price, high to low</option>
-                                <option value="Date, old to new">Date, old to new</option>
-                                <option value="Date, new to old">Date, new to old</option>
-                            </select>
+                            <form id="form-collection-sortby" method="get">
+                                <select id="sort_by" name="sortby">
+                                    <option value="date-1">Date, new to old</option>
+                                    <option value="date-2">Date, old to new</option>
+                                    <option value="price-1">Price, low to high</option>
+                                    <option value="price-2">Price, high to low</option>
+                                    <option value="alphabetically-A">Alphabetically , A-Z</option>
+                                    <option value="alphabetically-Z">Alphabetically , Z-A</option>
+                                    <option value="rating">Best Selling</option>
+                                </select>
+                            </form>
                         </div>
                         
                     </div>
@@ -89,7 +88,7 @@
                 @include('front.products.filters')
             </div>
 
-            <div class="product_list_container">
+            <div id="container-product_list" class="product_list_container">
                 <!-- Start of product list -->
                 @foreach ($collection as $product)
                 @php

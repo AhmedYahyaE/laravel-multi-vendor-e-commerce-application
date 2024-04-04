@@ -928,5 +928,7 @@ $(document).ready(function() {
         }
     });
 
-
+    $('.collection-container.collection-sort-by #form-collection-sortby #sort_by').change((e) => {
+        $('#form-collection-sortby').submit();
+    })
 });
