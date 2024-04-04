@@ -1242,6 +1242,35 @@ class ProductsController extends Controller
                     $collection->whereJsonContains("features->".$filter['filter_column'], $data[$filter['filter_column']]);
                 }
             }
+
+            // sorts
+            switch ($data['sortby']) {
+                case 'date-1':
+                    $collection->orderBy('created_at');
+                    break;
+                case 'date-2':
+                    $collection->orderByDesc('created_at');
+                    break;
+                case 'price-1':
+                    $collection->orderBy('product_price');
+                    break;
+                case 'price-2':
+                    $collection->orderByDesc('product_price');
+                    break;
+                case 'alphabetically-A':
+                    $collection->orderBy('product_name');
+                    break;
+                case 'alphabetically-Z':
+                    $collection->orderByDesc('product_name');
+                    break;
+                case 'rating':
+                    $collection->orderBy('ratings');
+                    break;
+                
+                default:
+                    # code...
+                    break;
+            }
         }
 
         return $collection;
