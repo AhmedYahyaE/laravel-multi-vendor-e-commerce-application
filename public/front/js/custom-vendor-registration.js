@@ -4,6 +4,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 let map;
+let marker;
+let geocoder;
 
 async function initMap() {
     const position = { lat: 14.5806494, lng: 121.0203798 };
@@ -17,8 +19,8 @@ async function initMap() {
         // mapTypeControl: false,
         mapId: "e36eca20b19b9c"
     });
-    // geocoder = new google.maps.Geocoder();
-    const marker = new AdvancedMarkerElement({
+    geocoder = new google.maps.Geocoder();
+    marker = new AdvancedMarkerElement({
         map: map,
         position: new google.maps.LatLng(14.5806494, 121.0203798),
         title: "Metro Manila"
@@ -28,6 +30,21 @@ async function initMap() {
 window.addEventListener("load", initMap);
 
 $(document).ready(function() {
+
+    function requestGeocode(address) {
+        geocoder.geocode({
+            "address": address
+        }, function (results, status) {
+            if (status == "OK") {
+                map.setCenter(results[0].geometry.location);
+                marker.position = results[0].geometry.location;
+
+                $('#form-vendor_registration div.business-details #business_address_lat[name*="lat"]').val(Object.values(marker.position)[0])
+                $('#form-vendor_registration div.business-details #business_address_lng[name*="lng"]').val(Object.values(marker.position)[1])
+            }
+        })
+    }
+
     /**
      * On change of country name - load city
      */
@@ -130,6 +147,7 @@ $(document).ready(function() {
                 });
                 
                 $('#form-vendor_registration div.business-details .address-field[name*="state"]').append(states);
+                requestGeocode(country);
             }
         });
     })
@@ -164,7 +182,37 @@ $(document).ready(function() {
                 });
                 
                 $('#form-vendor_registration div.business-details .address-field[name*="city"]').append(cities);
+                requestGeocode(`${state}, ${country}`);
             }
         });
     });
+
+    let business_address;
+    let timeoutId;
+    $('#form-vendor_registration div.business-details .address-field[name*="city"]').keyup(function (e) {
+        let business_city_val = $(e.currentTarget).val();
+        clearTimeout(timeoutId);
+        
+        let country = $('#form-vendor_registration div.business-details .address-field[name*="country"]').val();
+        let state = $('#form-vendor_registration div.business-details .address-field[name*="state"]').val();
+        business_address = `${business_city_val}, ${state}, ${country}`;
+        timeoutId = setTimeout(() => {
+            requestGeocode(business_address)
+        }, 300);
+    })
+    
+
+    $('#form-vendor_registration div.business-details .address-field[name*="address"]').keyup(function (e) {
+        let business_address_val = $(e.currentTarget).val();
+        clearTimeout(timeoutId);
+
+        let country = $('#form-vendor_registration div.business-details .address-field[name*="country"]').val();
+        let state = $('#form-vendor_registration div.business-details .address-field[name*="state"]').val();
+        let city = $('#form-vendor_registration div.business-details .address-field[name*="city"]');
+        business_address = `${business_address_val} ${city}, ${state}, ${country}`;
+        timeoutId = setTimeout(() => {
+            requestGeocode(business_address)
+        }, 300);
+    })
+
 })

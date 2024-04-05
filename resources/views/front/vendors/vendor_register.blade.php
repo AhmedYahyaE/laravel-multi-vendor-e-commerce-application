@@ -303,7 +303,13 @@
                                                     aria-required="true"
                                                 >
                                             </div>
+
+                                            <div class="hidden">
+                                                <input type="hidden" id="business_address_lat" name="business[lat]" value="">
+                                                <input type="hidden" id="business_address_lng" name="business[lng]" value="">
+                                            </div>
                                             <div class="elementor-field-type-html elementor-field-group elementor-column elementor-field-group-field_145d2ce elementor-col-100">
+                                                <div id="map"></div>
                                                 <p></p>
                                             </div>
                                             <div class="elementor-field-type-text elementor-field-group elementor-column elementor-field-group-field_ecc2175 elementor-col-100 elementor-field-required">
@@ -377,9 +383,6 @@
                                                     data-maxsize-message="This file exceeds the maximum allowed size."
                                                     required
                                                 >
-                                            </div>
-                                            <div class="elementor-col-100 elementor-column iframe-map">
-                                                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1398948.4068947558!2d120.6476580567829!3d14.422244530750318!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x324053215f87de63%3A0x784790ef7a29da57!2sPhilippines!5e0!3m2!1sen!2sph!4v1708934881306!5m2!1sen!2sph" width="100%" height="250" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                                             </div>
                                             <div class="elementor-field-type-checkbox elementor-field-group elementor-column elementor-field-group-field_e55c601 elementor-col-100" style="margin-top: 10px;">
                                                 <label for="form-field-field_e55c601" class="elementor-field-label elementor-screen-only"> Accept Our Terms and Conditions</label>
