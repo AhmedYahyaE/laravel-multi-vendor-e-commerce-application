@@ -282,6 +282,14 @@ async function initMapEdit() {
         position: new google.maps.LatLng(14.5806494, 121.0203798),
         title: "Metro Manila"
     });
+
+    mapEdit.addListener('click', function(event) {
+        
+        markerEdit.position = event.latLng;
+
+        $('#form-editAddress #shipping_address_lat[name*="lat"]').val(Object.values(markerEdit.position)[0])
+        $('#form-editAddress #shipping_address_lng[name*="lng"]').val(Object.values(markerEdit.position)[1])
+    });
 }
 
 
@@ -302,6 +310,14 @@ async function initMapAdd() {
         map: mapAdd,
         position: new google.maps.LatLng(14.5806494, 121.0203798),
         title: "Metro Manila"
+    });
+
+    mapAdd.addListener('click', function(event) {
+        
+        markerAdd.position = event.latLng;
+
+        $('#form-checkoutNewDeliveryAddress #shipping_address_lat[name*="lat"]').val(Object.values(markerAdd.position)[0])
+        $('#form-checkoutNewDeliveryAddress #shipping_address_lng[name*="lng"]').val(Object.values(markerAdd.position)[1])
     });
 }
 

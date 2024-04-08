@@ -300,6 +300,14 @@ async function initMap() {
         position: new google.maps.LatLng(14.5806494, 121.0203798),
         title: "Metro Manila"
     });
+
+    map.addListener('click', function(event) {
+        
+        marker.position = event.latLng;
+
+        $('#form-addDeliveryAddress #shipping_address_lat[name*="lat"]').val(Object.values(marker.position)[0])
+        $('#form-addDeliveryAddress #shipping_address_lng[name*="lng"]').val(Object.values(marker.position)[1])
+    });
 }
 
 window.addEventListener("load", initMap);
