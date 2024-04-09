@@ -15,8 +15,8 @@ use Illuminate\Support\Facades\Route;
 
 require __DIR__.'/auth.php';
 
-if (env('APP_ENV' == "local")) {
+if (env('APP_ENV') == "development") {
     require __DIR__ . "/web_local.php";
-} elseif (env('APP_ENV') == "uat") {
+} elseif (env('APP_ENV') == "testing") {
     require __DIR__ . "/web_uat.php";
 }
