@@ -13,8 +13,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-require __DIR__.'/auth.php';
-
 Route::domain('admin.kapiton.store')->group(function () {
     Route::redirect('', '/login');
 
