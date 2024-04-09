@@ -14,13 +14,13 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::domain('admin.kapiton.store')->group(function () {
-    Route::redirect('', '/login');
+    Route::redirect('', 'admin/login');
 
     require __DIR__ . "/web_uat_admin.php";
 });
 
-Route::domain('seller.kapiton.store')->group(function () {
-    Route::redirect('', '/login');
+Route::domain('')->group(function () {
+    Route::redirect('', 'admin/login');
 
     require __DIR__ . "/web_uat_vendor.php";
 });
