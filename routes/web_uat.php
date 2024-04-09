@@ -19,7 +19,7 @@ Route::domain('admin.kapiton.store')->group(function () {
     require __DIR__ . "/web_uat_admin.php";
 });
 
-Route::domain('')->group(function () {
+Route::domain('seller.kapiton.store')->group(function () {
     Route::redirect('', 'admin/login');
 
     require __DIR__ . "/web_uat_vendor.php";
