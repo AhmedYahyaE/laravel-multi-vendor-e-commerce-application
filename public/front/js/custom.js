@@ -152,16 +152,16 @@ $(document).ready(function() {
     });
 
     // Update Cart Item Quantity in front/products/cart_items.blade.php (which is 'include'-ed by front/products/cart.blade.php)     
-    $(document).on('click', '.updateCartItem', function() {
+    $(document).on('click', '.qty-cart', function() {
         // alert('test');
-        if ($(this).hasClass('plus-a')) { // if this clicked <a> tag has the CSS class 'plus-a', this means increase quantity by 1
+        if ($(this).hasClass('add')) { // if this clicked <a> tag has the CSS class 'plus-a', this means increase quantity by 1
             var quantity = $(this).data('qty'); // the already existing current quantity    // using Custom HTML Attributes (data-*)
             // alert(quantity);
             // new_qty = quantity + 1; // Increase quantity by 1
             new_qty = parseInt(quantity) + 1; // Increase quantity by 1    // parseInt() method is used to make sure that quantity is always a number (in case it might be a string)
         }
 
-        if ($(this).hasClass('minus-a')) { // if this clicked <a> tag has the CSS class 'minus-a', this means decrease quantity by 1
+        if ($(this).hasClass('minus')) { // if this clicked <a> tag has the CSS class 'minus-a', this means decrease quantity by 1
             var quantity = $(this).data('qty'); // the already existing current quantity    // using Custom HTML Attributes (data-*)
             // alert(quantity);
             // new_qty = quantity + 1; // Decrease quantity by 1
