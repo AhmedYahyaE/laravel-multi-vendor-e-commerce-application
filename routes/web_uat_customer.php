@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
+
 // Second: FRONT section routes:
 Route::namespace('App\Http\Controllers\Front')->group(function() {
     Route::get('/', ['as' => 'home', 'uses' => 'IndexController@index']);
