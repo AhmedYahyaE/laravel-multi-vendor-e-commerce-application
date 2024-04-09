@@ -511,50 +511,6 @@ $(function () {
 
 })(jQuery, window, document);
 
-/*============================================================================*/
-/* Contact-page JavaScript functions
-/*============================================================================*/
-(function ($, window, document) {
-    'use strict';
-    /**
-     * GoogleMap Init
-     */
-    const googleinitMap = function () {
-        // Basic options for a simple Google Map
-        // For more options see: https://developers.google.com/maps/documentation/javascript/reference#MapOptions
-        let mapOptions = {
-            // How zoomed in you want the map to start at (always required)
-            zoom: 11,
-            scrollwheel: false,
-            // The latitude and longitude to center the map (always required)
-            center: new google.maps.LatLng(37.393322, -122.023780),
-        };
-        // Get the HTML DOM element that will contain your map
-        // We are using a div with id="map" seen below in the <body>
-        let mapElement = document.getElementById('map');
-        // Create the Google Map using our element and options defined above
-        let map = new google.maps.Map(mapElement, mapOptions);
-        // Let's also add a marker while we're at it
-        let marker = new google.maps.Marker({
-            position: new google.maps.LatLng(37.393322, -122.023780),
-            map: map,
-        });
-    };
-
-
-    $(function () {
-        // GoogleMap Init
-        if ($('#map').length !== 0 ) {
-            try {
-                google.maps.event.addDomListener(window, 'load', googleinitMap);
-            } catch (e) {
-                console.log('"Google Maps" refused to connect!');
-            }
-        }
-    });
-
-})(jQuery, window, document);
-
 
 /*============================================================================*/
 /* Product-Detail-page JavaScript functions
