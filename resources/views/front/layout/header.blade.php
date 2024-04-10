@@ -70,7 +70,7 @@ $sections = \App\Models\Section::sections();
                                         <a href="{{ url('products/collection/all') }}" class="elementor-item">PRODUCTS</a>
                                     </li>
                                     <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-40">
-                                        <a href="/offer" class="elementor-item">OFFER</a>
+                                        <a href="{{ url('merchants') }}" class="elementor-item">MERCHANTS</a>
                                     </li>
                                 </ul>
                             </nav>
@@ -103,7 +103,7 @@ $sections = \App\Models\Section::sections();
                                         <a href="{{ url('collection/all') }}" class="elementor-item" tabindex="-1">PRODUCTS</a>
                                     </li>
                                     <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-40">
-                                        <a href="/offer" class="elementor-item" tabindex="-1">OFFER</a>
+                                        <a href="{{ url('merchantLists') }}" class="elementor-item" tabindex="-1">MERCHANTS</a>
                                     </li>
                                 </ul>
                             </nav>
