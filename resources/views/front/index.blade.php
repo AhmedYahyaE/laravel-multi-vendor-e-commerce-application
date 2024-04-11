@@ -738,7 +738,7 @@
                     data-widget_type="heading.default"
                 >
                     <div class="elementor-widget-container">
-                        <h2 class="elementor-heading-title elementor-size-default">{{$product['product_name']}}</h2>
+                        <h2 class="elementor-heading-title elementor-size-default custom_h2_size">{{$product['product_name']}}</h2>
                     </div>
                 </div>
 
@@ -780,6 +780,73 @@
                     </div>
                 </div>
                 @endif
+
+                 <!-- Ratings -->
+                 <div
+                    class="custom_class_rating elementor-element elementor-element-036fcb9 elementor-widget elementor-widget-rating"
+                    data-id="036fcb9"
+                    data-element_type="widget"
+                    data-widget_type="rating.default">
+                    <div class="elementor-widget-container">
+                        <style>/*! elementor - v3.18.0 - 08-12-2023 */ .elementor-widget-rating{--e-rating-gap:0px;--e-rating-icon-font-size:16px;--e-rating-icon-color:#ccd6df;--e-rating-icon-marked-color:#f0ad4e;--e-rating-icon-marked-width:100%;--e-rating-justify-content:flex-start}.elementor-widget-rating .e-rating{display:flex;justify-content:var(--e-rating-justify-content)}.elementor-widget-rating .e-rating-wrapper{display:flex;justify-content:inherit;flex-direction:row;flex-wrap:wrap;width:-moz-fit-content;width:fit-content;margin-block-end:calc(0px - var(--e-rating-gap));margin-inline-end:calc(0px - var(--e-rating-gap))}.elementor-widget-rating .e-rating .e-icon{position:relative;margin-block-end:var(--e-rating-gap);margin-inline-end:var(--e-rating-gap)}.elementor-widget-rating .e-rating .e-icon-wrapper.e-icon-marked{--e-rating-icon-color:var(--e-rating-icon-marked-color);width:var(--e-rating-icon-marked-width);position:absolute;z-index:1;height:100%;left:0;top:0;overflow:hidden}.elementor-widget-rating .e-rating .e-icon-wrapper :is(i,svg){display:flex;flex-shrink:0}.elementor-widget-rating .e-rating .e-icon-wrapper i{font-size:var(--e-rating-icon-font-size);color:var(--e-rating-icon-color)}.elementor-widget-rating .e-rating .e-icon-wrapper svg{width:auto;height:var(--e-rating-icon-font-size);fill:var(--e-rating-icon-color)}
+                        .custom_class_rating{
+                            margin-left: auto;
+                            margin-top: 5px;
+                        }
+                        .custom_class_rating label{
+                            margin-right: 5px;
+                        }
+                        @media (max-width: 767px){
+                            .custom_class_rating{
+                                width: 100%;
+                                margin-top: -10px;
+                            }
+                            
+                        }
+                        </style>
+                        <div
+                            class="e-rating"
+                            itemtype="https://schema.org/Rating"
+                            itemscope=""
+                            itemprop="reviewRating"
+                        >
+                            <meta itemprop="worstRating" content="0">
+                            <meta itemprop="bestRating" content="5">
+                            <div
+                                class="e-rating-wrapper"
+                                itemprop="ratingValue"
+                                content="4"
+                                role="img"
+                                aria-label="Rated 4 out of 5"
+                            >
+                              <label>4.5</label>
+                                <div class="e-icon">
+                                    <div class="e-icon-wrapper e-icon-marked" style="">
+                                        <svg
+                                            aria-hidden="true"
+                                            class="e-font-icon-svg e-eicon-star"
+                                            viewbox="0 0 1000 1000"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                        >
+                                            <path d="M450 75L338 312 88 350C46 354 25 417 58 450L238 633 196 896C188 942 238 975 275 954L500 837 725 954C767 975 813 942 804 896L763 633 942 450C975 417 954 358 913 350L663 312 550 75C529 33 471 33 450 75Z"></path>
+                                        </svg>
+                                    </div>
+                                    <div class="e-icon-wrapper e-icon-unmarked">
+                                        <svg
+                                            aria-hidden="true"
+                                            class="e-font-icon-svg e-eicon-star"
+                                            viewbox="0 0 1000 1000"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                        >
+                                            <path d="M450 75L338 312 88 350C46 354 25 417 58 450L238 633 196 896C188 942 238 975 275 954L500 837 725 954C767 975 813 942 804 896L763 633 942 450C975 417 954 358 913 350L663 312 550 75C529 33 471 33 450 75Z"></path>
+                                        </svg>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
                 
             </div>
