@@ -34,7 +34,7 @@ class ProductsController extends Controller
                 $result = $this->getCollectionByCategory($name, $request->all());
                 break;
             case 'vendor':
-                $vendor = Vendor::find($name)->first();
+                $vendor = Vendor::find($name);
                 $pageTitle = "{$vendor->name} Shop";
                 $result = $this->vendorListing($vendor, $request->all());
                 break;
@@ -260,7 +260,13 @@ class ProductsController extends Controller
         $catDetails = Category::whereIn('id', $catIds)->where([
             'parent_id' => 0,
             'status'    => 1
-        ])->with('subCategories')->get()->first()->toArray();
+        ])->with('subCategories')->get();
+
+        if ($catDetails->count() > 0) {
+            $catDetails = $catDetails->first()->toArray();
+        } else {
+            $catDetails = $catDetails->toArray();
+        }
 
         
         $categoryDetails = [

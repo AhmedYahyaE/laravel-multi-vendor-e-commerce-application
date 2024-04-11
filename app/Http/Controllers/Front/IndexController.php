@@ -39,7 +39,4 @@ class IndexController extends Controller
     public function aboutUsManagement() {
         return view('front.pages.management');
     }
-    public function merchantsLists() {
-        return view('front.pages.merchants');
-    }
 }

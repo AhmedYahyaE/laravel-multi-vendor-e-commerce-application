@@ -197,7 +197,7 @@
                     >
                         <div class="e-con-inner">
                             @if (isset($product['vendor']))
-                            <a href="{{ url('vendor/' . $product->vendor->id) }}">
+                            <a href="{{ url('products/vendor/' . $product->vendor->id) }}">
                                 <div
                                     class="elementor-element elementor-element-a282fc6 e-con-full e-flex e-con e-child"
                                     data-id="a282fc6"
@@ -326,24 +326,6 @@
         >
             {{-- link to prev page --}}
 
-            <div class="elementor-element elementor-element-831ada5 elementor-align-left elementor-widget elementor-widget-button" data-id="831ada5" data-element_type="widget" data-widget_type="button.default">
-				<div class="elementor-widget-container">
-                    <div class="elementor-button-wrapper">
-                        <a class="elementor-button elementor-button-link elementor-size-sm" href="#">
-                            <span class="elementor-button-content-wrapper">
-                                <span class="elementor-button-icon elementor-align-icon-left">
-                                    <svg aria-hidden="true" class="e-font-icon-svg e-fas-angle-left" viewBox="0 0 256 512" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M31.7 239l136-136c9.4-9.4 24.6-9.4 33.9 0l22.6 22.6c9.4 9.4 9.4 24.6 0 33.9L127.9 256l96.4 96.4c9.4 9.4 9.4 24.6 0 33.9L201.7 409c-9.4 9.4-24.6 9.4-33.9 0l-136-136c-9.5-9.4-9.5-24.6-.1-34z"></path>
-                                    </svg>			
-                                </span>
-                                <span class="elementor-button-text"></span>
-                            </span>
-                        </a>
-                    </div>
-				</div>
-            </div>
-           
-
             @if ($collection->currentPage() > 1)
             <div
                 class="elementor-element elementor-element-4e10030 elementor-align-left elementor-widget elementor-widget-button"
@@ -355,13 +337,8 @@
                         <a class="elementor-button elementor-button-link elementor-size-sm" href="{{$collection->previousPageUrl()}}">
                             <span class="elementor-button-content-wrapper">
                                 <span class="elementor-button-icon elementor-align-icon-left">
-                                    <svg
-                                        aria-hidden="true"
-                                        class="e-font-icon-svg e-fas-angle-right"
-                                        viewbox="0 0 256 512"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                    >
-                                        <path d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"></path>
+                                    <svg aria-hidden="true" class="e-font-icon-svg e-fas-angle-left" viewBox="0 0 256 512" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M31.7 239l136-136c9.4-9.4 24.6-9.4 33.9 0l22.6 22.6c9.4 9.4 9.4 24.6 0 33.9L127.9 256l96.4 96.4c9.4 9.4 9.4 24.6 0 33.9L201.7 409c-9.4 9.4-24.6 9.4-33.9 0l-136-136c-9.5-9.4-9.5-24.6-.1-34z"></path>
                                     </svg>
                                 </span>
                                 <span class="elementor-button-text"></span>
