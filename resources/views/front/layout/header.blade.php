@@ -103,7 +103,7 @@ $sections = \App\Models\Section::sections();
                                         <a href="{{ url('collection/all') }}" class="elementor-item" tabindex="-1">PRODUCTS</a>
                                     </li>
                                     <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-40">
-                                        <a href="{{ url('merchantLists') }}" class="elementor-item" tabindex="-1">MERCHANTS</a>
+                                        <a href="{{ url('merchants') }}" class="elementor-item" tabindex="-1">MERCHANTS</a>
                                     </li>
                                 </ul>
                             </nav>
@@ -153,7 +153,7 @@ $sections = \App\Models\Section::sections();
                     </div>
                     <div class="elementor-element elementor-element-7cd9cbb elementor-hidden-tablet elementor-hidden-mobile elementor-widget elementor-widget-heading"
                         data-id="7cd9cbb" data-element_type="widget" data-widget_type="heading.default">
-                        <div class="elementor-widget-container">
+                        <div class="elementor-widget-container header-links-custom">
                             <style>
                                 /*! elementor - v3.18.0 - 08-12-2023 */
                                 .elementor-heading-title {
@@ -187,7 +187,12 @@ $sections = \App\Models\Section::sections();
                                 .elementor-widget-heading .elementor-heading-title.elementor-size-xxl {
                                     font-size: 59px
                                 }
+                                .header-links-custom{
+                                    display: flex;
+                                    gap: 20px;
+                                }
                             </style>
+                            <h6 class="elementor-heading-title elementor-size-default"><a href="{{ url('/vendor/register') }}">Become a Seller</a></h6>
                             <h6 class="elementor-heading-title elementor-size-default">
                                 {{-- If the user is authenticated/logged in, show 'My Account', if not, show 'Login/Register' --}} 
                                 @if (\Illuminate\Support\Facades\Auth::check()) {{-- Determining If The Current User Is Authenticated: https://laravel.com/docs/9.x/authentication#determining-if-the-current-user-is-authenticated --}}
