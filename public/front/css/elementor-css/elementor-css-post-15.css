@@ -89,3 +89,15 @@
 .elementor-15 .elementor-element.elementor-element-bfbcc32 > .elementor-widget-container a{
 	width: 100%;
 }
+.elementor-element-977d0d9 .custom_h2_size{
+	line-height: 130% !important;
+}
+.elementor-element-977d0d9 .custom_h2_size.two-line{
+    font-size: 26px;
+}
+.elementor-element-977d0d9 .custom_h2_size.three-line{
+	font-size: 20px;
+}
+.elementor-element-977d0d9 .custom_h2_size.four-line{
+	font-size: 16px;
+}

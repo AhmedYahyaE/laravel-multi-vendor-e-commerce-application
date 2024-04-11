@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
+use App\Models\Vendor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -19,6 +20,11 @@ class VendorController extends Controller
     public function create() {
         $countries = \App\Models\Country::where('status', 1)->get()->toArray();
         return view('front.vendors.vendor_register')->with(compact('countries'));
+    }
+
+    public function vendorList() {
+        $vendors = Vendor::where('status', 1)->paginate(9);
+        return view('front.pages.merchants')->with(compact('vendors'));
     }
 
     public function vendorRegister(Request $request) { // the register HTML form submission in vendor login_register.blade.php page    

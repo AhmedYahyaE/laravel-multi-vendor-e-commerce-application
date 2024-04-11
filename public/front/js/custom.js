@@ -931,4 +931,29 @@ $(document).ready(function() {
     $('.collection-container.collection-sort-by #form-collection-sortby #sort_by').change((e) => {
         $('#form-collection-sortby').submit();
     })
+
+
+
+    // Get all elements with class "title"
+    const titleElements = document.querySelectorAll('.custom_h2_size');
+
+    // Iterate through each title element
+    titleElements.forEach(element => {
+        // Remove leading and trailing spaces and then check the length
+        const textContentLength = element.textContent.trim().length;
+
+        // Check the length of the text content and add classes accordingly
+        if (textContentLength >= 10 && textContentLength <= 24) {
+            element.classList.add('two-line');
+        } else if (textContentLength > 24 && textContentLength <= 40) {
+            element.classList.add('three-line');
+        } else if (textContentLength > 40) {
+            element.classList.add('four-line');
+        }
+    });
+
+
+
+
+
 });
