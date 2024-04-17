@@ -257,4 +257,9 @@ class VendorController extends Controller
             abort(404);
         }
     }
+
+
+    public function becomeMerchant() {
+        return view('front.vendors.become-merchant');
+    }
 }

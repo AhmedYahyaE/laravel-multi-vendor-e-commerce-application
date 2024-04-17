@@ -224,6 +224,10 @@ window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/14
                     'id' => 'elementor-post-1751-css',
                     'href' => 'front/css/elementor-css/elementor-css-post-1751.css'
                 ],
+                'front.vendor.become-merchant' => [
+                    'id' => 'elementor-post-1761-css',
+                    'href' => 'front/css/elementor-css/elementor-css-post-1761.css'
+                ],
            
             ];
 

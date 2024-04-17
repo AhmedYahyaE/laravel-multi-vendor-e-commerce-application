@@ -49,6 +49,8 @@ Route::namespace('App\Http\Controllers\Front')->group(function() {
 
     Route::get('merchants', 'VendorController@vendorList')->name('front.user.merchants');
 
+    Route::get('become-merchant', 'VendorController@becomeMerchant')->name('front.vendor.become-merchant');
+
 
     // Render User Login/Register page (front/users/login_register.blade.php)
     Route::get('user/login-register', ['as' => 'login', 'uses' => 'UserController@loginRegister']); // 'as' => 'login'    is Giving this route a name 'login' route in order for the 'auth' middleware ('auth' middleware is the Authenticate.php) to redirect to the right page
