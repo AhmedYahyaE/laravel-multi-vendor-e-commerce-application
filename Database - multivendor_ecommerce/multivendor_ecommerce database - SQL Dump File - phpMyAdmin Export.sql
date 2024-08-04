@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Aug 13, 2023 at 11:59 PM
--- Server version: 8.0.28
--- PHP Version: 8.1.4
+-- Generation Time: Aug 04, 2024 at 01:20 AM
+-- Server version: 8.0.38
+-- PHP Version: 8.1.27
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -141,7 +141,7 @@ INSERT INTO `carts` (`id`, `session_id`, `user_id`, `product_id`, `size`, `quant
 (17, '5088d2b9d971513dc3fbf2b98f3dfb97', 0, 4, 'Small', 3, '2022-12-06 20:59:02', '2022-12-06 23:05:50'),
 (42, '5617d343aa7e9b62d5475c899ca3dae3', 1, 5, 'Medium', 1, '2023-03-22 22:24:40', '2023-03-22 23:53:31'),
 (67, 'f945daeb6a96dd25613f5da29ec2b2f1', 0, 2, 'Medium', 1, '2023-04-08 13:29:51', '2023-04-08 13:29:51'),
-(82, 'af690783e2408f23b745c76873d045b3', 2, 1, '128GB-4GB', 1, '2023-08-07 16:33:02', '2023-08-07 16:33:02');
+(84, '353379f27d45f77a258c3ab7594f84d3', 0, 1, '64GB-4GB', 1, '2024-08-03 20:13:11', '2024-08-03 20:13:11');
 
 -- --------------------------------------------------------
 
@@ -1125,7 +1125,12 @@ INSERT INTO `orders` (`id`, `user_id`, `name`, `address`, `city`, `state`, `coun
 (50, 2, 'Ibrahim', '16 El Fath St.', 'Cairo', 'Cairo', 'Egypt', '141001', '0119578625', 'ibrahim@gmail.com', 100.00, NULL, NULL, 'New', 'COD', 'COD', 4820.00, NULL, NULL, 0, '2023-06-09 13:19:38', '2023-06-09 13:19:38'),
 (53, 2, 'Ibrahim', '16 El Fath St.', 'Cairo', 'Cairo', 'Egypt', '141001', '0119578625', 'ibrahim@gmail.com', 0.00, NULL, NULL, 'New', 'COD', 'COD', 1000.00, NULL, NULL, 0, '2023-07-26 17:47:50', '2023-07-26 17:47:50'),
 (55, 2, 'Ibrahim', '16 El Fath St.', 'Cairo', 'Cairo', 'Egypt', '141001', '0119578625', 'ibrahim@gmail.com', 0.00, NULL, NULL, 'New', 'COD', 'COD', 1000.00, NULL, NULL, 0, '2023-07-26 20:15:04', '2023-07-26 20:15:04'),
-(56, 2, 'Ibrahim', '16 El Fath St.', 'Cairo', 'Cairo', 'Egypt', '141001', '0119578625', 'ibrahim@gmail.com', 100.00, NULL, NULL, 'Pending', 'Prepaid', 'Paypal', 14500.00, NULL, NULL, 0, '2023-08-07 16:33:30', '2023-08-07 16:33:30');
+(56, 2, 'Ibrahim', '16 El Fath St.', 'Cairo', 'Cairo', 'Egypt', '141001', '0119578625', 'ibrahim@gmail.com', 100.00, NULL, NULL, 'Pending', 'Prepaid', 'Paypal', 14500.00, NULL, NULL, 0, '2023-08-07 16:33:30', '2023-08-07 16:33:30'),
+(57, 2, 'Ibrahim', '16 El Fath St.', 'Cairo', 'Cairo', 'Egypt', '141001', '0119578625', 'ibrahim@gmail.com', 100.00, NULL, NULL, 'New', 'COD', 'COD', 14500.00, NULL, NULL, 0, '2023-12-18 22:08:58', '2023-12-18 22:08:58'),
+(58, 2, 'Ibrahim', '16 El Fath St.', 'Cairo', 'Cairo', 'Egypt', '141001', '0119578625', 'ibrahim@gmail.com', 100.00, NULL, NULL, 'New', 'COD', 'COD', 907.50, NULL, NULL, 0, '2023-12-18 22:54:38', '2023-12-18 22:54:38'),
+(59, 2, 'Ibrahim', '16 El Fath St.', 'Cairo', 'Cairo', 'Egypt', '141001', '0119578625', 'ibrahim@gmail.com', 100.00, NULL, NULL, 'New', 'COD', 'COD', 907.50, NULL, NULL, 0, '2023-12-19 00:10:32', '2023-12-19 00:10:32'),
+(60, 2, 'Ibrahim', '16 El Fath St.', 'Cairo', 'Cairo', 'Egypt', '141001', '0119578625', 'ibrahim@gmail.com', 100.00, NULL, NULL, 'New', 'COD', 'COD', 907.50, NULL, NULL, 0, '2023-12-19 00:22:44', '2023-12-19 00:22:44'),
+(61, 2, 'Ibrahim', '16 El Fath St.', 'Cairo', 'Cairo', 'Egypt', '141001', '0119578625', 'ibrahim@gmail.com', 100.00, NULL, NULL, 'New', 'COD', 'COD', 907.50, NULL, NULL, 0, '2023-12-19 00:24:52', '2023-12-19 00:24:52');
 
 -- --------------------------------------------------------
 
@@ -1257,7 +1262,12 @@ INSERT INTO `orders_products` (`id`, `order_id`, `user_id`, `vendor_id`, `admin_
 (63, 50, 2, 0, 1, 2, 'RC001', 'Red Casual T-Shirt', 'Red', 'Small', 1100.00, 1, NULL, NULL, NULL, 0, '2023-06-09 13:19:38', '2023-06-09 13:19:38'),
 (64, 53, 2, 0, 1, 4, 'BT01', 'Blue T-Shirt', 'Blue', 'Small', 1000.00, 1, NULL, NULL, NULL, NULL, '2023-07-26 17:47:50', '2023-07-26 17:47:50'),
 (65, 55, 2, 1, 2, 8, 'BT501', 'Blue T-Shirt', 'Blue', 'Small', 1000.00, 1, NULL, NULL, NULL, 2, '2023-07-26 20:15:04', '2023-07-26 20:15:04'),
-(66, 56, 2, 0, 1, 1, 'RN11', 'Redmi Note 11', 'Blue', '128GB-4GB', 14400.00, 1, NULL, NULL, NULL, NULL, '2023-08-07 16:33:30', '2023-08-07 16:33:30');
+(66, 56, 2, 0, 1, 1, 'RN11', 'Redmi Note 11', 'Blue', '128GB-4GB', 14400.00, 1, NULL, NULL, NULL, NULL, '2023-08-07 16:33:30', '2023-08-07 16:33:30'),
+(67, 57, 2, 0, 1, 1, 'RN11', 'Redmi Note 11', 'Blue', '128GB-4GB', 14400.00, 1, NULL, NULL, NULL, NULL, '2023-12-18 22:08:58', '2023-12-18 22:08:58'),
+(68, 58, 2, 9, 7, 10, 'PT01', 'Pink T-Shirt', 'Pink', 'Small', 807.50, 1, NULL, NULL, NULL, 0, '2023-12-18 22:54:38', '2023-12-18 22:54:38'),
+(69, 59, 2, 9, 7, 10, 'PT01', 'Pink T-Shirt', 'Pink', 'Small', 807.50, 1, NULL, NULL, NULL, 0, '2023-12-19 00:10:32', '2023-12-19 00:10:32'),
+(70, 60, 2, 9, 7, 10, 'PT01', 'Pink T-Shirt', 'Pink', 'Small', 807.50, 1, NULL, NULL, NULL, 0, '2023-12-19 00:22:44', '2023-12-19 00:22:44'),
+(71, 61, 2, 9, 7, 10, 'PT01', 'Pink T-Shirt', 'Pink', 'Small', 807.50, 1, NULL, NULL, NULL, 0, '2023-12-19 00:24:52', '2023-12-19 00:24:52');
 
 -- --------------------------------------------------------
 
@@ -1780,7 +1790,7 @@ INSERT INTO `products_attributes` (`id`, `product_id`, `size`, `price`, `stock`,
 (5, 2, 'Medium', 1200.00, 11, 'BT001-M', 1, '2022-10-10 13:43:40', '2023-04-07 19:49:51'),
 (6, 2, 'Large', 1300.00, 12, 'BT001-L', 1, '2022-10-10 13:43:40', '2023-04-25 13:24:20'),
 (7, 1, '64GB-4GB', 15000.00, 99, 'RN11644', 1, '2022-10-10 14:00:11', '2023-04-08 02:40:23'),
-(8, 1, '128GB-4GB', 18000.00, 149, 'RN111284', 1, '2022-10-10 15:27:56', '2023-08-07 16:33:30'),
+(8, 1, '128GB-4GB', 18000.00, 148, 'RN111284', 1, '2022-10-10 15:27:56', '2023-12-18 22:08:58'),
 (9, 7, '64GB-4GB', 12000.00, 100, 'RT001644', 1, '2022-10-10 17:21:27', '2022-10-10 17:21:27'),
 (10, 4, 'Small', 1000.00, 86, 'BT01-S', 1, '2022-10-10 21:36:38', '2023-07-26 17:47:50'),
 (11, 5, 'Small', 800.00, 2, 'GT01-S', 1, '2022-10-10 21:38:12', '2023-06-09 13:19:18'),
@@ -1790,7 +1800,7 @@ INSERT INTO `products_attributes` (`id`, `product_id`, `size`, `price`, `stock`,
 (15, 8, 'Small', 1000.00, 6, 'BT501-S', 1, '2023-03-01 12:36:27', '2023-07-26 20:15:04'),
 (16, 8, 'Medium', 1200.00, 9, 'BT501-M', 1, '2023-03-01 12:36:27', '2023-04-22 22:05:22'),
 (17, 9, 'Small', 1200.00, 3, 'BS001-S', 1, '2023-03-03 21:16:33', '2023-03-03 21:16:33'),
-(18, 10, 'Small', 950.00, 4, 'PT01', 1, '2023-03-05 20:56:31', '2023-03-05 20:56:31');
+(18, 10, 'Small', 950.00, 0, 'PT01', 1, '2023-03-05 20:56:31', '2023-12-19 00:24:52');
 
 -- --------------------------------------------------------
 
@@ -2068,7 +2078,9 @@ INSERT INTO `recently_viewed_products` (`id`, `product_id`, `session_id`, `creat
 (137, 3, 'ba8e260521c9e9e773e2080e131c7ea0', NULL, NULL),
 (138, 2, 'ba8e260521c9e9e773e2080e131c7ea0', NULL, NULL),
 (139, 1, 'ba8e260521c9e9e773e2080e131c7ea0', NULL, NULL),
-(140, 8, 'ba8e260521c9e9e773e2080e131c7ea0', NULL, NULL);
+(140, 8, 'ba8e260521c9e9e773e2080e131c7ea0', NULL, NULL),
+(141, 10, 'ffc49003025cc852d02b43295b4accfc', NULL, NULL),
+(142, 1, '353379f27d45f77a258c3ab7594f84d3', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -2403,7 +2415,8 @@ INSERT INTO `users` (`id`, `name`, `address`, `city`, `state`, `country`, `pinco
 (6, 'Mahmoud Samy', NULL, NULL, NULL, NULL, NULL, '01151548874', 'mahmoud@yahoo.com', NULL, '$2y$10$1JBFeFHmv9aIuKbnDUEoGOc/59wlvX/wJ3hbo1nrhcRgs/12HVXjS', 1, NULL, NULL, '2022-11-15 21:05:45', '2023-08-07 17:45:48'),
 (7, 'Nermin Yasser', NULL, NULL, NULL, NULL, NULL, '01050049566', 'nermin@hotmail.com', NULL, '$2a$12$xvkjSScUPRexfcJTAy9ATutIeGUuRgJrjDIdL/.xlrddEvRZINpeC', 0, NULL, 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiNmQwY2U3NTVjODBhZDM4NjIyY2FlOTM4YWI5YjIxZTQyYjU3NzkwYzA1ODFlMjJkNmI4NjBmYWZiZjVjYTJjZGNiMWMyZmZiZWRkZDJlM2IiLCJpYXQiOjE2ODI5MDg0MjIuNDA4MTExLCJuYmYiOjE2ODI5MDg0MjIuNDA4MTE1LCJleHAiOjE3MTQ1MzA4MjIuMTYxMTExLCJzdWIiOiI3Iiwic2NvcGVzIjpbXX0.JZSCQ0RtYOiQgutK4fD_oKKl6E6yyxQRioCRKxpOIwdN6byh0aos0MaYYQJ5uYHanon_NycnHxFobCRNbUuuoWsilmLwWYq3d0O-JLHamueZDBQdMWSe7-2pouHGKZ4Eg0tu669ASEJf-FVcIGVeWLDoyzIMJAgQARoV1rHtf_XHSBQjWiDZWP1aRTUoMizGdYNOldLYYNBVzCLkF_9-ZYUtMuZsYScncbW8MSuBGi_w4mMV9A_c6AYWw_KFMEsl55cD1SM8jupE05RDBeaUuVFIvJiz0XL1psQlVmoyv_LQj0FXM77y-Ot2QNpXsSQh_kztFDb5t-ttDaY7yXOCN2OSql_hAX_yomxbFzRVGm8Qs6l-vNVK4qT2bFK4lc5G2v8rWGM7A1JSqFAeByRe9dWF6Q-MBwz2JY-0OXNenmQ3SrLp59fc9DSKppSh6oSNzVHQx9uD0Fum5g9YFllpCRuGxd_c9AXoPHz6x9_EKIjLhtsywvEfVBhMu4hE9m4BWMtF9LqJzU-ogpme9rLouvqHzZTEjAtbPjbCLPZ8-BI7cNPy-Bozprl4mnzLCaSoE4Lb9Yvid3zzxBniNswchypqBBGIALlR84IHmRg_QCc7TYDlXLGzV63KCP29XOQZK29vHP7XalLRpnrVkYmVHhZip7QsexkcOKgkvJchN8k', '2022-11-17 22:55:47', '2023-04-30 23:33:42'),
 (30, 'Raouf', NULL, NULL, NULL, NULL, NULL, NULL, 'raouf@hotmail.com', NULL, '$2a$12$xvkjSScUPRexfcJTAy9ATutIeGUuRgJrjDIdL/.xlrddEvRZINpeC', 1, NULL, 'DUCpVtiKrL2j2Mr9FPfWdXwY9N74CRjUgBRTRIX1rEqnCMUVZQygaHyRLOoz', '2023-04-23 22:16:37', '2023-04-23 22:16:37'),
-(34, 'Farag', NULL, NULL, NULL, NULL, NULL, NULL, 'farag@hotmail.com', NULL, '$2a$12$xvkjSScUPRexfcJTAy9ATutIeGUuRgJrjDIdL/.xlrddEvRZINpeC', 1, NULL, 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiZmQ4YjVlZWE5MDg4ZjE1MmUwNzQ1YmJhNjJmYzE2NWQ3YjUzMTM5YjM3ZTAwZDQwYjEyMzU0NDI5NTYyZmNjMjFlZWZkMjlkYmRlODFjNDMiLCJpYXQiOjE2ODI5MDU2OTEuMDEyMjI2LCJuYmYiOjE2ODI5MDU2OTEuMDEyMjI5LCJleHAiOjE3MTQ1MjgwOTAuNzU3ODAyLCJzdWIiOiIzNCIsInNjb3BlcyI6W119.HWzoeLfegHgLJE_bxRgsQfvT-V-2SZNR-k5_Z9NV1cIEFPxcSziCYUlHFGh38JjDWGKQy2cQEVym4jtBNJo_OFj31OVBNmZfj6P7odQve-R-NRiDxBBoX43RNlh5bAVkw2UPMZZ9B8wLcsFjxBxfJMg5M1zU1X05OuQnp4x9tgQJJzlCV9l1XIRmthhmT7_mKeirOVW_j9cCeQY9HZyiZbzU_1hWltourDqVmWiQhAkdA4Im7JF4pD98jgfu_vBntdr-7KZZhkXDgF1YqelTpuzCP8bqPyqMry6GLLZYMAtrmo_iiN3I50GVE_MKw9mEy26o5y4dkLdkNHbHy5JFdxS2iVyc3MDj2LyxCUciyqheEDaavTPq48toBBexg2kv9EFvtnvzC9b68InwN1mM0U9xbPCne4-6gZb5WLKnu1ybj2ljNuW0StEWZqqWgohaOsKYb0-6u5l7-sJKH-EMsZhtnwml5sxlsfs5ZSpVpGqgJFN3NHow2IZ5sNn44Ig_2wALVaBHxeHKzSnK7jhFuWc-Ew_26gpQdbyqhHGNq5Rq_UOngqEPwdH0KgP4triZxsnehhMwJZrTMEefeBOfdc-x207iIQ_wN6cnsi5dG_FRu6Om9BCjjoohKkxbUhIOARBWHSZGCb3QHvB1sOCAlhxxAXwYBDLhyVMU438amQQ', '2023-04-30 22:48:10', '2023-04-30 22:48:11');
+(34, 'Farag', NULL, NULL, NULL, NULL, NULL, NULL, 'farag@hotmail.com', NULL, '$2a$12$xvkjSScUPRexfcJTAy9ATutIeGUuRgJrjDIdL/.xlrddEvRZINpeC', 1, NULL, 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiZmQ4YjVlZWE5MDg4ZjE1MmUwNzQ1YmJhNjJmYzE2NWQ3YjUzMTM5YjM3ZTAwZDQwYjEyMzU0NDI5NTYyZmNjMjFlZWZkMjlkYmRlODFjNDMiLCJpYXQiOjE2ODI5MDU2OTEuMDEyMjI2LCJuYmYiOjE2ODI5MDU2OTEuMDEyMjI5LCJleHAiOjE3MTQ1MjgwOTAuNzU3ODAyLCJzdWIiOiIzNCIsInNjb3BlcyI6W119.HWzoeLfegHgLJE_bxRgsQfvT-V-2SZNR-k5_Z9NV1cIEFPxcSziCYUlHFGh38JjDWGKQy2cQEVym4jtBNJo_OFj31OVBNmZfj6P7odQve-R-NRiDxBBoX43RNlh5bAVkw2UPMZZ9B8wLcsFjxBxfJMg5M1zU1X05OuQnp4x9tgQJJzlCV9l1XIRmthhmT7_mKeirOVW_j9cCeQY9HZyiZbzU_1hWltourDqVmWiQhAkdA4Im7JF4pD98jgfu_vBntdr-7KZZhkXDgF1YqelTpuzCP8bqPyqMry6GLLZYMAtrmo_iiN3I50GVE_MKw9mEy26o5y4dkLdkNHbHy5JFdxS2iVyc3MDj2LyxCUciyqheEDaavTPq48toBBexg2kv9EFvtnvzC9b68InwN1mM0U9xbPCne4-6gZb5WLKnu1ybj2ljNuW0StEWZqqWgohaOsKYb0-6u5l7-sJKH-EMsZhtnwml5sxlsfs5ZSpVpGqgJFN3NHow2IZ5sNn44Ig_2wALVaBHxeHKzSnK7jhFuWc-Ew_26gpQdbyqhHGNq5Rq_UOngqEPwdH0KgP4triZxsnehhMwJZrTMEefeBOfdc-x207iIQ_wN6cnsi5dG_FRu6Om9BCjjoohKkxbUhIOARBWHSZGCb3QHvB1sOCAlhxxAXwYBDLhyVMU438amQQ', '2023-04-30 22:48:10', '2023-04-30 22:48:11'),
+(35, 'Smith Mark', NULL, NULL, NULL, NULL, NULL, '01175799544', 'smith@smith.com', NULL, '$2y$10$iAPDGwzk3doqOvqEP4QPh.2ByR66vqTZdzIkBfs6GPDz8ykl.c8BS', 0, NULL, NULL, '2024-08-03 22:16:38', '2024-08-03 22:16:38');
 
 -- --------------------------------------------------------
 
@@ -2774,7 +2787,7 @@ ALTER TABLE `brands`
 -- AUTO_INCREMENT for table `carts`
 --
 ALTER TABLE `carts`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=83;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=85;
 
 --
 -- AUTO_INCREMENT for table `categories`
@@ -2828,19 +2841,25 @@ ALTER TABLE `newsletter_subscribers`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
 
 --
 -- AUTO_INCREMENT for table `orders_products`
 --
 ALTER TABLE `orders_products`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=72;
 
 --
 -- AUTO_INCREMENT for table `recently_viewed_products`
 --
 ALTER TABLE `recently_viewed_products`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=141;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=143;
+
+--
+-- AUTO_INCREMENT for table `users`
+--
+ALTER TABLE `users`
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
